@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fashion/app/config/colors.dart';
+import 'package:flutter_fashion/config/colors.dart';
 
 class DotPage extends StatelessWidget {
   const DotPage(

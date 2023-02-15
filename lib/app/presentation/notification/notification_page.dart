@@ -10,7 +10,7 @@ class NotificationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('Thông báo')],
+          children: const [Text('Thông báo')],
         ),
       ),
     );

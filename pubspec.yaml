@@ -36,9 +36,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  #animation_packages support for introduction page
-  introduction_screen: ^3.1.4
-
   #font app
   google_fonts: ^4.0.3
 
@@ -63,15 +60,48 @@ dependencies:
   #handle animation logic ui
   rxdart: ^0.27.7
 
+  #local_storage
+  flutter_secure_storage: ^8.0.0
+
+  #check connect internet
+  connectivity_plus: ^3.0.3
+
+  #dependency_injection
+  get_it: ^7.2.0
+
+  #...
+  dartz: ^0.10.1
+
+  #path
+  path_provider: ^2.0.12
+
+  #
+  hydrated_bloc: ^9.1.0
+
+  #equal object
+  equatable: ^2.0.5
+
+  #
+  encrypt: ^5.0.1
+
+  #
+  freezed_annotation: ^2.2.0
+
+  #
+  json_annotation: ^4.8.0
+
+  #
+  http:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  auto_route_generator:
-
-  build_runner:
+  build_runner: ^2.3.3
 
   flutter_lints: ^2.0.0
+  json_serializable: ^6.6.1
+  freezed: ^2.3.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -88,6 +118,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/profile/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

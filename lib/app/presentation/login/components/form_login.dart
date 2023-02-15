@@ -1,8 +1,17 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
+import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 
 class FormLogin extends StatefulWidget {
-  const FormLogin({super.key, required this.formKey});
+  const FormLogin(
+      {super.key,
+      required this.formKey,
+      required this.phoneController,
+      required this.passwordController});
   final GlobalKey<FormState> formKey;
+  final TextEditingController phoneController;
+  final TextEditingController passwordController;
   @override
   State<FormLogin> createState() => _FormLoginState();
 }
@@ -10,14 +19,23 @@ class FormLogin extends StatefulWidget {
 class _FormLoginState extends State<FormLogin> {
   GlobalKey<FormState> get _formKey => widget.formKey;
 
-  final phoneController = TextEditingController();
+  TextEditingController get _phoneController => widget.phoneController;
 
-  final passwordController = TextEditingController();
+  TextEditingController get _passwordController => widget.passwordController;
+
+  ValueNotifier<bool> isNotOpenEye = ValueNotifier(true);
+
+  late AuthCubit _authCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _authCubit = BlocProvider.of<AuthCubit>(context);
+  }
 
   @override
   void dispose() {
-    phoneController.dispose();
-    passwordController.dispose();
+    isNotOpenEye.dispose();
     super.dispose();
   }
 
@@ -29,14 +47,18 @@ class _FormLoginState extends State<FormLogin> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TextFormField(
-            controller: phoneController,
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.number,
+            key: const ValueKey("phone_form"),
+            controller: _phoneController,
+            keyboardType: TextInputType.phone,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            onChanged: (value) => _authCubit
+                .call(AuthEvent.changedPhone, param: {"phoneNumber": value}),
             decoration: InputDecoration(
               filled: true,
               fillColor: lightColor,
               hintText: 'Số điện thoại',
-              //contentPadding: const EdgeInsets.symmetric(vertical: horizontalPadding),
               prefixIconConstraints: const BoxConstraints(
                 minHeight: 20.0,
                 maxHeight: 50.0,
@@ -67,59 +89,75 @@ class _FormLoginState extends State<FormLogin> {
             },
           ),
           const SizedBox(height: 15.0),
-          TextFormField(
-            controller: passwordController,
-            obscureText: true,
-            textInputAction: TextInputAction.done,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: lightColor,
-              hintText: 'Mật khẩu',
-              isDense: true,
-              suffixIconConstraints: const BoxConstraints(
-                minHeight: 20.0,
-                maxHeight: 50.0,
-                minWidth: 20.0,
-                maxWidth: 50.0,
-              ),
-              suffixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: SvgPicture.asset(
-                  "assets/icons/eye.svg",
-                  fit: BoxFit.contain,
-                  width: 40.0,
-                  height: 40.0,
-                ),
-              ),
-              prefixIconConstraints: const BoxConstraints(
-                minHeight: 20.0,
-                maxHeight: 50.0,
-                minWidth: 20.0,
-                maxWidth: 50.0,
-              ),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: SvgPicture.asset(
-                  "assets/icons/lock.svg",
-                  fit: BoxFit.contain,
-                  width: 40.0,
-                  height: 40.0,
-                ),
-              ),
-              hintStyle: PrimaryFont.instance.copyWith(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w400,
-                color: disableDarkColor,
-              ),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "Không được để trống";
-              }
-              return null;
-            },
-          ),
+          ValueListenableBuilder<bool>(
+              valueListenable: isNotOpenEye,
+              builder: (context, bool currentEye, child) {
+                return TextFormField(
+                  key: const ValueKey("password_form"),
+                  controller: _passwordController,
+                  obscureText: currentEye,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.phone,
+                  onChanged: (value) => _authCubit.call(
+                      AuthEvent.changedPassword,
+                      param: {"password": value}),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: lightColor,
+                    hintText: 'Mật khẩu',
+                    isDense: true,
+                    suffixIconConstraints: const BoxConstraints(
+                      minHeight: 20.0,
+                      maxHeight: 50.0,
+                      minWidth: 20.0,
+                      maxWidth: 50.0,
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: () => isNotOpenEye.value = !currentEye,
+                        child: SvgPicture.asset(
+                          currentEye
+                              ? "assets/icons/eye.svg"
+                              : "assets/icons/eye_off.svg",
+                          fit: BoxFit.contain,
+                          width: 40.0,
+                          height: 40.0,
+                          // ignore: deprecated_member_use
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                    prefixIconConstraints: const BoxConstraints(
+                      minHeight: 20.0,
+                      maxHeight: 50.0,
+                      minWidth: 20.0,
+                      maxWidth: 50.0,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                      child: SvgPicture.asset(
+                        "assets/icons/lock.svg",
+                        fit: BoxFit.contain,
+                        width: 40.0,
+                        height: 40.0,
+                      ),
+                    ),
+                    hintStyle: PrimaryFont.instance.copyWith(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: disableDarkColor,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Không được để trống";
+                    }
+                    return null;
+                  },
+                );
+              }),
         ],
       ),
     );
