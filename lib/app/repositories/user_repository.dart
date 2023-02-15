@@ -23,6 +23,7 @@ class UserRepositoryImpl extends BaseRepository implements UserRepository {
     await baseRepo<String, UserModel>(
       excuteFunction: () async {
         final data = await _userProviderImpl.me();
+
         return data;
       },
       errorCallback: (String? error) {

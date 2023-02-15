@@ -8,8 +8,7 @@ class Image with _$Image {
   const factory Image({
     required int id,
     required String url,
-    required DateTime createdAt,
-    required DateTime updatedAt,
+    required DateTime created_at,
   }) = _Image;
 
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);

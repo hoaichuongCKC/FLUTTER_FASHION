@@ -90,8 +90,11 @@ dependencies:
   #
   json_annotation: ^4.8.0
 
-  #
+  #http
   http:
+
+  #image
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

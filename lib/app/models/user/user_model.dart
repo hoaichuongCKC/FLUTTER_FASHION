@@ -13,9 +13,8 @@ class UserModel with _$UserModel {
     required String fullName,
     required String phone,
     required String email,
-    required int imageId,
     required int role,
-    required DateTime createdAt,
+    required DateTime created_at,
     required Image image,
   }) = _UserModel;
 

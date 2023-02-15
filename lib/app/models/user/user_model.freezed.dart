@@ -25,9 +25,8 @@ mixin _$UserModel {
   String get fullName => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  int get imageId => throw _privateConstructorUsedError;
   int get role => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get created_at => throw _privateConstructorUsedError;
   Image get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,9 +46,8 @@ abstract class $UserModelCopyWith<$Res> {
       String fullName,
       String phone,
       String email,
-      int imageId,
       int role,
-      DateTime createdAt,
+      DateTime created_at,
       Image image});
 
   $ImageCopyWith<$Res> get image;
@@ -73,9 +71,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? fullName = null,
     Object? phone = null,
     Object? email = null,
-    Object? imageId = null,
     Object? role = null,
-    Object? createdAt = null,
+    Object? created_at = null,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
@@ -99,17 +96,13 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      imageId: null == imageId
-          ? _value.imageId
-          : imageId // ignore: cast_nullable_to_non_nullable
-              as int,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
       image: null == image
           ? _value.image
@@ -140,9 +133,8 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String fullName,
       String phone,
       String email,
-      int imageId,
       int role,
-      DateTime createdAt,
+      DateTime created_at,
       Image image});
 
   @override
@@ -165,9 +157,8 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? fullName = null,
     Object? phone = null,
     Object? email = null,
-    Object? imageId = null,
     Object? role = null,
-    Object? createdAt = null,
+    Object? created_at = null,
     Object? image = null,
   }) {
     return _then(_$_UserModel(
@@ -191,17 +182,13 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      imageId: null == imageId
-          ? _value.imageId
-          : imageId // ignore: cast_nullable_to_non_nullable
-              as int,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
       image: null == image
           ? _value.image
@@ -221,9 +208,8 @@ class _$_UserModel implements _UserModel {
       required this.fullName,
       required this.phone,
       required this.email,
-      required this.imageId,
       required this.role,
-      required this.createdAt,
+      required this.created_at,
       required this.image});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
@@ -240,17 +226,15 @@ class _$_UserModel implements _UserModel {
   @override
   final String email;
   @override
-  final int imageId;
-  @override
   final int role;
   @override
-  final DateTime createdAt;
+  final DateTime created_at;
   @override
   final Image image;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, fullName: $fullName, phone: $phone, email: $email, imageId: $imageId, role: $role, createdAt: $createdAt, image: $image)';
+    return 'UserModel(id: $id, username: $username, fullName: $fullName, phone: $phone, email: $email, role: $role, created_at: $created_at, image: $image)';
   }
 
   @override
@@ -265,17 +249,16 @@ class _$_UserModel implements _UserModel {
                 other.fullName == fullName) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
             (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, username, fullName, phone,
-      email, imageId, role, createdAt, image);
+      email, role, created_at, image);
 
   @JsonKey(ignore: true)
   @override
@@ -298,9 +281,8 @@ abstract class _UserModel implements UserModel {
       required final String fullName,
       required final String phone,
       required final String email,
-      required final int imageId,
       required final int role,
-      required final DateTime createdAt,
+      required final DateTime created_at,
       required final Image image}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -317,11 +299,9 @@ abstract class _UserModel implements UserModel {
   @override
   String get email;
   @override
-  int get imageId;
-  @override
   int get role;
   @override
-  DateTime get createdAt;
+  DateTime get created_at;
   @override
   Image get image;
   @override

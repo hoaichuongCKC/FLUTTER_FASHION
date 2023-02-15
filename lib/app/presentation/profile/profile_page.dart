@@ -3,6 +3,7 @@ import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_event.dart';
+import 'package:flutter_fashion/app/presentation/profile/components/data_body.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
 import 'package:flutter_fashion/dependency_injection.dart';
 
@@ -17,6 +18,7 @@ class ProfilePage extends StatelessWidget {
           create: (context) => getIt<AuthCubit>(),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) =>
               getIt<UserCubit>()..handleEvent(UserEvent.fetchUser),
         ),
@@ -64,28 +66,18 @@ class ProfilePage extends StatelessWidget {
         child: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxHeight: 100.0,
-                    minHeight: 80,
+            child: BlocBuilder<UserCubit, UserState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => const SizedBox(),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  fetchCompleted: (data) => DataBody(user: data),
+                  failure: (error) => Center(
+                    child: Text(error),
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: const [
-                      UserAvatarApp(
-                          imageUrl: "assets/images/avatar_user_fake.jpg"),
-                      SizedBox(width: 10.0),
-                      UserInformation()
-                    ],
-                  ),
-                ),
-                const BuildFrameFeature(),
-                const OrderHistory(),
-              ],
+                );
+              },
             ),
           ),
         ),

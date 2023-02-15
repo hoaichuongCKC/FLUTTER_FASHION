@@ -16,7 +16,6 @@ class UserCubit extends Cubit<UserState> {
         super(const UserState.initial());
 
   void handleEvent(UserEvent event) {
-    print("call event");
     switch (event) {
       case UserEvent.fetchUser:
         _fetchUser();
@@ -31,14 +30,8 @@ class UserCubit extends Cubit<UserState> {
     final result = await _userRepositoryImpl.me();
 
     result.fold(
-      (String error) {
-        emit(UserState.failure(error));
-        AppSnackbarMessenger.showMessage(content: error);
-      },
-      (userModel) {
-        print(userModel);
-        emit(UserState.fetchCompleted(userModel));
-      },
+      (String error) => emit(UserState.failure(error)),
+      (userModel) => emit(UserState.fetchCompleted(userModel)),
     );
   }
 }
