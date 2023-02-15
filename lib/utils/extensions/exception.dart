@@ -1,0 +1,1 @@
+extension HandlerException on Exception {}

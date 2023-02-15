@@ -1,6 +1,6 @@
 import 'package:flutter_fashion/app/presentation/introduction/export.dart';
 
-import '../../common/components/aurora/aurora_page.dart';
+import '../../../common/components/aurora/aurora_page.dart';
 
 class IntroductionPage extends StatelessWidget {
   const IntroductionPage({super.key});

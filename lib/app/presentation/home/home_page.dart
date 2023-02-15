@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('Trang chủ')],
+          children: const [Text('Trang chủ')],
         ),
       ),
     );

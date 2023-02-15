@@ -1,67 +1,108 @@
-import 'package:flutter_fashion/app/routes/app_routes.dart';
+import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
+import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
+import 'package:flutter_fashion/utils/snackbar/app_snackbar_mess.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  State<LoginPage> createState() => _LoginPageState();
+}
 
-    return AuroraBackgroundPage(
-      child: SafeArea(
-        child: SizedBox.expand(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const ConstrainedBoxWidget(
-                  minHeight: 100,
-                  maxHeight: 150,
-                  currentHeight: 0.15,
-                ),
-                SvgPicture.asset(
-                  "assets/images/app_logo.svg",
-                  fit: BoxFit.contain,
-                  width: 100,
-                  height: 100,
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: Text(
-                      "KiraStore",
-                      style: PrimaryFont.instance.large(),
-                    ),
+class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final _phoneController = TextEditingController();
+
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<AuthCubit>(),
+      child: AuroraBackgroundPage(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const ConstrainedBoxWidget(
+                minHeight: 100,
+                maxHeight: 150,
+                currentHeight: 0.15,
+              ),
+              SvgPicture.asset(
+                "assets/images/app_logo.svg",
+                fit: BoxFit.contain,
+                width: 100,
+                height: 100,
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  child: Text(
+                    "KiraStore",
+                    style: PrimaryFont.instance.large(),
                   ),
                 ),
-                FormLogin(formKey: formKey),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Đăng kí'),
-                  ),
-                ),
-                ButtonWidget(
-                  boxShadow: [
-                    BoxShadow(
-                      color: primaryColor.withOpacity(0.5),
-                      offset: const Offset(2, 4),
-                      blurRadius: 10,
-                    ),
-                  ],
+              ),
+              FormLogin(
+                formKey: formKey,
+                passwordController: _passwordController,
+                phoneController: _phoneController,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
                   onPressed: () {
-                    AppRoutes.go(Routes.HOME);
-                    if (formKey.currentState!.validate()) {}
+                    AppSnackbarMessenger.showMessage(content: "Hello bà già");
                   },
-                  label: 'Đăng nhập',
+                  child: const Text('Đăng kí'),
                 ),
-                const SizedBox(height: 50.0),
-                const FooterLogin(),
-              ],
-            ),
+              ),
+              BlocBuilder<AuthCubit, AuthState>(
+                buildWhen: (previous, current) =>
+                    current.status == LoginStatus.init,
+                builder: (context, state) {
+                  bool isDisable =
+                      state.phoneNumber.isNotEmpty && state.password.isNotEmpty;
+                  return ButtonWidget(
+                    boxShadow: [
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.5),
+                        offset: const Offset(2, 4),
+                        blurRadius: 10,
+                      ),
+                    ],
+                    btnColor: !isDisable ? disablePrimaryColor : primaryColor,
+                    onPressed: !isDisable
+                        ? null
+                        : () {
+                            if (formKey.currentState!.validate()) {
+                              context.read<AuthCubit>().call(
+                                  AuthEvent.submitLogin,
+                                  context: context);
+                            }
+                          },
+                    animate: true,
+                    label: 'Đăng nhập',
+                  );
+                },
+              ),
+              const SizedBox(height: 50.0),
+              const FooterLogin(),
+              if (MediaQuery.of(context).size.height < 720.0)
+                const SizedBox(height: 50)
+            ],
           ),
         ),
       ),

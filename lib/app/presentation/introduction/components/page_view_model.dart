@@ -1,12 +1,13 @@
-import 'package:flutter_fashion/app/config/font_style.dart';
+import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/app/presentation/introduction/components/dot_page.dart';
 import 'package:flutter_fashion/app/presentation/introduction/export.dart';
 
-final dataIntro = [
+final _dataIntro = [
   IntroViewModel(
     image: SvgPicture.asset(
       "assets/images/introduction/intro_1.svg",
-      fit: BoxFit.cover,
+      key: const ValueKey("intro_1"),
+      fit: BoxFit.contain,
     ),
     title: 'Chào mừng bạn',
     subtitle: 'đến với chúng tôi!!',
@@ -14,7 +15,8 @@ final dataIntro = [
   IntroViewModel(
     image: SvgPicture.asset(
       "assets/images/introduction/intro_2.svg",
-      fit: BoxFit.cover,
+      key: const ValueKey("intro_2"),
+      fit: BoxFit.contain,
     ),
     title: 'Sản phẩm đa dạng',
     subtitle: 'mua sắm thả ga',
@@ -22,6 +24,7 @@ final dataIntro = [
   IntroViewModel(
     image: SvgPicture.asset(
       "assets/images/introduction/intro_3.svg",
+      key: const ValueKey("intro_3"),
       fit: BoxFit.contain,
     ),
     title: 'Thanh toán & giao hàng',
@@ -53,7 +56,7 @@ class _PageViewModelState extends State<PageViewModel> {
         () {
           final double pageControl = _pageController.page!;
 
-          final lastIndex = dataIntro.length - 1;
+          final lastIndex = _dataIntro.length - 1;
 
           isIntroLast = pageControl.round() == lastIndex;
 
@@ -87,9 +90,9 @@ class _PageViewModelState extends State<PageViewModel> {
                   flex: 2,
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: dataIntro.length,
+                    itemCount: _dataIntro.length,
                     itemBuilder: (ctx, index) {
-                      return dataIntro[index].image;
+                      return _dataIntro[index].image;
                     },
                   ),
                 ),
@@ -103,7 +106,7 @@ class _PageViewModelState extends State<PageViewModel> {
                           widthFactor: 0.8,
                           child: FittedBox(
                             child: Text(
-                              dataIntro[currentPage].title,
+                              _dataIntro[currentPage].title,
                               textAlign: TextAlign.center,
                               style: PrimaryFont.instance.copyWith(
                                 fontWeight: FontWeight.w300,
@@ -121,7 +124,7 @@ class _PageViewModelState extends State<PageViewModel> {
                           alignment: Alignment.topCenter,
                           child: FittedBox(
                             child: Text(
-                              dataIntro[currentPage].subtitle,
+                              _dataIntro[currentPage].subtitle,
                               textAlign: TextAlign.center,
                               style: PrimaryFont.instance.copyWith(
                                 fontWeight: FontWeight.w300,
@@ -152,7 +155,7 @@ class _PageViewModelState extends State<PageViewModel> {
                         : TextButton(
                             onPressed: () {
                               _pageController.animateToPage(
-                                  currentPage + dataIntro.length - 1,
+                                  currentPage + _dataIntro.length - 1,
                                   duration: const Duration(milliseconds: 450),
                                   curve: Curves.easeIn);
                             },
@@ -164,7 +167,7 @@ class _PageViewModelState extends State<PageViewModel> {
                     child: Align(
                       child: DotPage(
                         currentDot: currentPage,
-                        length: dataIntro.length,
+                        length: _dataIntro.length,
                       ),
                     ),
                   ),
@@ -172,7 +175,7 @@ class _PageViewModelState extends State<PageViewModel> {
                     flex: 1,
                     child: TextButton(
                       onPressed: () {
-                        if (!(currentPage == dataIntro.length - 1)) {
+                        if (!(currentPage == _dataIntro.length - 1)) {
                           _pageController.animateToPage(currentPage + 1,
                               duration: const Duration(milliseconds: 450),
                               curve: Curves.easeIn);
@@ -180,7 +183,7 @@ class _PageViewModelState extends State<PageViewModel> {
                           AppRoutes.go(Routes.LOGIN);
                         }
                       },
-                      child: (currentPage == dataIntro.length - 1)
+                      child: (currentPage == _dataIntro.length - 1)
                           ? const Text('Xong')
                           : const Text('Tiếp tục'),
                     ),
