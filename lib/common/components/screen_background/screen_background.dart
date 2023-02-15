@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
 import 'package:flutter_fashion/dependency_injection.dart';
 
-class ScreenBackground extends StatelessWidget {
-  const ScreenBackground(
+class ProfileBackgroundPage extends StatelessWidget {
+  const ProfileBackgroundPage(
       {super.key, required this.child, this.appBar, this.floatingActionButton});
   final Widget child;
 

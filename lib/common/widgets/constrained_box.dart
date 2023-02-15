@@ -8,6 +8,7 @@ class ConstrainedBoxWidget extends StatelessWidget {
     this.minHeight = 0.0,
     this.maxHeight = double.infinity,
     required this.currentHeight,
+    this.child,
   }) : assert(currentHeight > 0.0 && currentHeight <= 1.0,
             "current height in range 0.0 to 1.0");
   final double minWidth;
@@ -15,6 +16,7 @@ class ConstrainedBoxWidget extends StatelessWidget {
   final double minHeight;
   final double maxHeight;
   final double currentHeight;
+  final Widget? child;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -28,6 +30,7 @@ class ConstrainedBoxWidget extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: size.height * currentHeight,
+        child: child,
       ),
     );
   }

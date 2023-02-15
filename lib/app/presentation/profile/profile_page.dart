@@ -1,11 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
-import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
-import 'package:flutter_fashion/app/blocs/user/user_event.dart';
-import 'package:flutter_fashion/app/presentation/profile/components/data_body.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
-import 'package:flutter_fashion/dependency_injection.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -23,7 +16,7 @@ class ProfilePage extends StatelessWidget {
               getIt<UserCubit>()..handleEvent(UserEvent.fetchUser),
         ),
       ],
-      child: ScreenBackground(
+      child: ProfileBackgroundPage(
         appBar: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle.dark,
           backgroundColor: Colors.transparent,

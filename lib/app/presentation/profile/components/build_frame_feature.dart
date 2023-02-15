@@ -35,29 +35,32 @@ class BuildFrameFeature extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: listFeatureFirst
                   .map(
-                    (e) => ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minHeight: 60,
-                        minWidth: 60,
-                        maxHeight: 70,
-                        maxWidth: 70,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: ItemFeatureProfile(model: e),
-                          ),
-                          Align(
-                            child: Text(
-                              e.label,
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w300,
+                    (e) => InkWell(
+                      onTap: () {},
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          minHeight: 60,
+                          minWidth: 60,
+                          maxHeight: 70,
+                          maxWidth: 70,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: ItemFeatureProfile(model: e),
+                            ),
+                            Align(
+                              child: Text(
+                                e.label,
+                                style: PrimaryFont.instance.copyWith(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w300,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -69,29 +72,33 @@ class BuildFrameFeature extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: listFeatureSecond
                   .map(
-                    (e) => ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minHeight: 60,
-                        minWidth: 60,
-                        maxHeight: 70,
-                        maxWidth: 70,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: ItemFeatureProfile(model: e),
-                          ),
-                          Align(
-                            child: Text(
-                              e.label,
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w300,
+                    (e) => InkWell(
+                      onTap: () => AppRoutes.push(
+                          listFeatureSecond[listFeatureSecond.indexOf(e)].path),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          minHeight: 60,
+                          minWidth: 60,
+                          maxHeight: 70,
+                          maxWidth: 70,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: ItemFeatureProfile(model: e),
+                            ),
+                            Align(
+                              child: Text(
+                                e.label,
+                                style: PrimaryFont.instance.copyWith(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w300,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   )

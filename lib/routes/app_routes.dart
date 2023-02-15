@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
 import 'package:flutter_fashion/common/components/bottom_navigation_bar.dart';
 import 'package:flutter_fashion/app/presentation/notification/notification_page.dart';
 import 'package:flutter_fashion/app/presentation/profile/profile_page.dart';
@@ -10,17 +11,20 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 abstract class Routes {
   Routes._();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> shellNavigatorKey =
+      GlobalKey<NavigatorState>();
+
   static const INTRODUCTION = _Paths.INTRODUCTION;
   static const HOME = _Paths.HOME;
   static const PROFILE = _Paths.PROFILE;
   static const LOGIN = _Paths.LOGIN;
   static const NOTIFICATION = _Paths.NOTIFICATION;
 
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
-
-  static final GlobalKey<NavigatorState> shellNavigatorKey =
-      GlobalKey<NavigatorState>();
+  //page second
+  static const SETTING = _Paths.SETTING;
 }
 
 abstract class _Paths {
@@ -28,8 +32,11 @@ abstract class _Paths {
   static const INTRODUCTION = '/introduction';
   static const HOME = '/home';
   static const LOGIN = '/login';
-  static const PROFILE = '/profile';
   static const NOTIFICATION = '/notification';
+  static const PROFILE = '/profile';
+
+  //page second
+  static const SETTING = '/setting';
 }
 
 class AppRoutes {
@@ -50,12 +57,19 @@ class AppRoutes {
     },
     routes: [
       GoRoute(
+        parentNavigatorKey: Routes.navigatorKey,
         path: Routes.INTRODUCTION,
         builder: (context, state) => const IntroductionPage(),
       ),
       GoRoute(
         path: Routes.LOGIN,
+        parentNavigatorKey: Routes.navigatorKey,
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: Routes.SETTING,
+        parentNavigatorKey: Routes.navigatorKey,
+        builder: (context, state) => const SettingPage(),
       ),
       ShellRoute(
         navigatorKey: Routes.shellNavigatorKey,
@@ -93,7 +107,7 @@ class AppRoutes {
                 child: ProfilePage(),
               );
             },
-          ),
+          )
         ],
       ),
     ],
@@ -108,6 +122,10 @@ class AppRoutes {
       Routes.navigatorKey.currentContext!.push(path);
 
   static void goShellKey(String path) {
-    Routes.navigatorKey.currentContext!.go(path);
+    Routes.shellNavigatorKey.currentContext!.go(path);
+  }
+
+  static void pushShellKey(String path) {
+    Routes.shellNavigatorKey.currentContext!.push(path);
   }
 }

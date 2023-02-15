@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/core/models/profile_feature.dart';
+import 'package:flutter_fashion/routes/app_routes.dart';
 
 const String appUrlAssets = "assets/icons/profile/";
 
@@ -33,7 +34,7 @@ final List<ProfileFeatureModel> listFeatureSecond = [
   ProfileFeatureModel(
     label: "Cài đặt",
     imageUrl: "${appUrlAssets}setting.svg",
-    path: "",
+    path: Routes.SETTING,
     color: const Color(0xFF8E8EEB),
   ),
   ProfileFeatureModel(
