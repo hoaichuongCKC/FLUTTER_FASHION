@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:flutter_fashion/app/network_provider/auth_provider.dart';
-import 'package:flutter_fashion/app/repositories/base_repository.dart';
+import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

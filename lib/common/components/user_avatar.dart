@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 
@@ -7,9 +8,11 @@ class UserAvatarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: primaryColor, width: 0.7),
+        border:
+            Border.all(color: isLight ? primaryColor : lightColor, width: 0.7),
         shape: BoxShape.circle,
       ),
       child: ConstrainedBox(
@@ -26,7 +29,7 @@ class UserAvatarApp extends StatelessWidget {
             padding: const EdgeInsets.all(7.0),
             child: CircleAvatar(
               radius: 30.0,
-              backgroundImage: AssetImage(imageUrl),
+              backgroundImage: CachedNetworkImageProvider(imageUrl),
             ),
           ),
         ),

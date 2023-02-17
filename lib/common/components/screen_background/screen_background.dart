@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
 import 'package:flutter_fashion/dependency_injection.dart';
 
-class ScreenBackground extends StatelessWidget {
-  const ScreenBackground(
+class ProfileBackgroundPage extends StatelessWidget {
+  const ProfileBackgroundPage(
       {super.key, required this.child, this.appBar, this.floatingActionButton});
   final Widget child;
 
@@ -29,7 +29,7 @@ class ScreenBackground extends StatelessWidget {
               extendBodyBehindAppBar: true,
               appBar: appBar,
               floatingActionButton: floatingActionButton,
-              body: _buildBody(size),
+              body: _buildBody(size, context),
             );
 
           default:
@@ -39,16 +39,18 @@ class ScreenBackground extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(size) => Stack(
+  Widget _buildBody(size, context) => Stack(
         fit: StackFit.expand,
         children: [
-          Positioned(
-            top: -size.height * .1,
-            left: -size.width * .65,
-            child: Image.asset(
-              "assets/images/half_circle.png",
-            ),
-          ),
+          Brightness.dark == Theme.of(context).brightness
+              ? const SizedBox()
+              : Positioned(
+                  top: -size.height * .1,
+                  left: -size.width * .65,
+                  child: Image.asset(
+                    "assets/images/half_circle.png",
+                  ),
+                ),
           child,
         ],
       );

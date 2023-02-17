@@ -26,6 +26,6 @@ class UserProviderImpl extends UserProvider {
       }
     }
 
-    return UserModel.fromJson(jsonDecode(response.body));
+    return UserModel.fromJson(jsonDecode(response.body)["data"]);
   }
 }

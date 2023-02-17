@@ -1,0 +1,109 @@
+{
+  "login": "Log in",
+  "@login": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "homePage": "Home",
+  "@homePage": {
+    "description": "The conventional newborn programmer greeting"
+  },
+
+  "notificationPage": "Notification",
+  "@notificationPage": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "mePage": "User",
+  "@mePage": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "profile": "Profile",
+  "@profile": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "setting": "Setting",
+  "@setting": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "order": "Order",
+  "@order": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "report": "Report",
+  "@report": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "favorite": "Favorites",
+  "@favorite": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "messenger": "Messenger",
+  "@messenger": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "personal": "Personal",
+  "@personal": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "orderHistory": "Order history",
+  "@orderHistory": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "quantity": "Quantity: {number}",
+  "@quantity": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "Bob"
+      }
+    }
+  },
+
+  "processingAnOrder": "Processing an order",
+  "@processingAnOrder": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "language": "Language",
+  "@language": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "theDefaultLanguageIsVietnamese": "(The default language is Vietnamese)",
+  "@theDefaultLanguageIsVietnamese": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "turnOn": "Turn on",
+  "@turnOn": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "turnOff": "Turn off",
+  "@turnOff": {
+    "description": "Không hiểu gì cả"
+  },
+
+
+  "sound": "Sound",
+  "@sound": {
+    "description": "Không hiểu gì cả"
+  }
+}

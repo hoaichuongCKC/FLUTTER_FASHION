@@ -42,9 +42,6 @@ dependencies:
   #file svg
   flutter_svg: ^2.0.0+1
 
-  #animation widget
-  animate_do: ^3.0.2
-
   #state & logic 
   flutter_bloc: ^8.1.1
 
@@ -90,8 +87,16 @@ dependencies:
   #
   json_annotation: ^4.8.0
 
-  #
+  #http
   http:
+
+  #image
+  cached_network_image: ^3.2.3
+  flutter_localizations:
+    sdk: flutter
+  
+  #mutilple language
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -108,7 +113,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -119,6 +124,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/icons/profile/
+    - assets/icons/setting/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

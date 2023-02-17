@@ -21,7 +21,10 @@ class AppSnackbarMessenger {
           contentTextStyle: PrimaryFont.instance.copyWith(
               fontSize: 13.0, color: darkColor, fontWeight: FontWeight.w300),
           actions: [
-            InkWell(onTap: () {}, child: const Icon(Icons.close)),
+            InkWell(
+                onTap: () => scaffoldMessengerKey.currentState!
+                    .removeCurrentMaterialBanner(),
+                child: const Icon(Icons.close)),
           ],
         ),
       );

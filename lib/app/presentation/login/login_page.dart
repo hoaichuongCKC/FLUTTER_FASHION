@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           },
                     animate: true,
-                    label: 'Đăng nhập',
+                    label: AppLocalizations.of(context)!.login,
                   );
                 },
               ),

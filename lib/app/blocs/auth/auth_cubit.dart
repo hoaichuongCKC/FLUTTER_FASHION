@@ -70,6 +70,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (error) {
+        AppRoutes.pop();
         emit(state.copyWith(status: LoginStatus.error));
         errorAlert(context: context, message: error);
       },

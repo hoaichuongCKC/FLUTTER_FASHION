@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/network_provider/user_provider.dart';
-import 'package:flutter_fashion/app/repositories/base_repository.dart';
+import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 
 abstract class UserRepository {
   Future<Either<String, UserModel>> me();
@@ -23,6 +23,7 @@ class UserRepositoryImpl extends BaseRepository implements UserRepository {
     await baseRepo<String, UserModel>(
       excuteFunction: () async {
         final data = await _userProviderImpl.me();
+
         return data;
       },
       errorCallback: (String? error) {

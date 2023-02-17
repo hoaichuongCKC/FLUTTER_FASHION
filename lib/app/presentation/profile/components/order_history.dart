@@ -13,11 +13,8 @@ class OrderHistory extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Lịch sử đơn hàng',
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
+              AppLocalizations.of(context)!.orderHistory,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           const SizedBox(height: 10.0),
@@ -44,8 +41,8 @@ class OrderHistory extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: primaryColor.withOpacity(0.5),
-                      blurRadius: 10.0,
-                      offset: const Offset(2, 4),
+                      offset: const Offset(1, 3),
+                      blurRadius: 7.0,
                     ),
                   ],
                 ),
@@ -67,7 +64,7 @@ class OrderHistory extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Số lượng: 1',
+                          AppLocalizations.of(context)!.quantity(1),
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 12,
                             color: primaryColor,
@@ -77,7 +74,7 @@ class OrderHistory extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      'Đang lên đơn',
+                      AppLocalizations.of(context)!.processingAnOrder,
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
                         color: primaryColor,
