@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
 import 'package:flutter_fashion/common/components/bottom_navigation_bar.dart';
 import 'package:flutter_fashion/app/presentation/notification/notification_page.dart';
 import 'package:flutter_fashion/app/presentation/profile/profile_page.dart';
+import 'package:flutter_fashion/common/transition/right_to_left.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/routes/export.dart';
 import 'package:flutter_fashion/routes/observer.dart';
@@ -25,6 +26,11 @@ abstract class Routes {
 
   //page second
   static const SETTING = _Paths.SETTING;
+  static const PERSONAL = _Paths.PERSONAL;
+  static const REPORT = _Paths.REPORT;
+  static const FAVORITE = _Paths.FAVORITE;
+  static const ORDER = _Paths.ORDER;
+  static const MESSENGER = _Paths.MESSENGER;
 }
 
 abstract class _Paths {
@@ -37,6 +43,11 @@ abstract class _Paths {
 
   //page second
   static const SETTING = '/setting';
+  static const PERSONAL = '/personal';
+  static const REPORT = '/report';
+  static const FAVORITE = '/favorite';
+  static const MESSENGER = '/messenger';
+  static const ORDER = '/order';
 }
 
 class AppRoutes {
@@ -69,7 +80,12 @@ class AppRoutes {
       GoRoute(
         path: Routes.SETTING,
         parentNavigatorKey: Routes.navigatorKey,
-        builder: (context, state) => const SettingPage(),
+        pageBuilder: (context, state) {
+          return SlideTransitionPage<SettingPage>(
+            key: state.pageKey,
+            child: const SettingPage(),
+          );
+        },
       ),
       ShellRoute(
         navigatorKey: Routes.shellNavigatorKey,

@@ -1,18 +1,6 @@
-import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_fashion/config/theme.dart';
-import 'package:flutter_fashion/core/network/network_info.dart';
-import 'package:flutter_fashion/dependency_injection.dart';
-import 'package:flutter_fashion/utils/snackbar/app_snackbar_mess.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
-import 'routes/app_routes.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-
 // ...
+
+import 'export.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,13 +10,24 @@ Future<void> main() async {
   );
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   await init();
-
-  runApp(const MyApp());
+  Bloc.observer = MyBlocObserver();
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => getIt<ThemeCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => getIt<LanguageCubit>(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -38,33 +37,73 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
 
   @override
   void initState() {
+    //listen connect internet
     _subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       getIt<NetworkInfoImpl>().listenChangeNetwork(result);
     });
+
+    //register
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
     _subscription.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (kDebugMode) {
+      switch (state) {
+        case AppLifecycleState.paused:
+          print("background mode");
+
+          break;
+        case AppLifecycleState.resumed:
+          print("foreground mode");
+
+          break;
+        case AppLifecycleState.inactive:
+          print("inactive");
+          break;
+        case AppLifecycleState.detached:
+          print("detached");
+          break;
+        default:
+      }
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: appTheme,
-      scaffoldMessengerKey: AppSnackbarMessenger.scaffoldMessengerKey,
-      routerConfig: AppRoutes.router,
-      debugShowCheckedModeBanner: false,
-      title: 'App Fashion',
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return BlocBuilder<LanguageCubit, LanguageState>(
+          builder: (context, languageState) {
+            return MaterialApp.router(
+              theme: state.isLight ? appThemeLight : appThemeDark,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              scaffoldMessengerKey: AppSnackbarMessenger.scaffoldMessengerKey,
+              routerConfig: AppRoutes.router,
+              debugShowCheckedModeBanner: false,
+              locale: languageState.locale,
+              title: 'App Fashion',
+            );
+          },
+        );
+      },
     );
   }
 }

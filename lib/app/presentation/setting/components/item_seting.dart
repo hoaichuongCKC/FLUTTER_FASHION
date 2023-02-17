@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/font_style.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ItemSetting extends StatefulWidget {
   const ItemSetting(
@@ -12,7 +11,8 @@ class ItemSetting extends StatefulWidget {
       this.subtitle,
       this.trailing,
       required this.icon,
-      required this.color});
+      required this.color,
+      this.isToggled = true});
   final String title;
   final String? titleTrailing;
   final Widget? trailing;
@@ -20,6 +20,7 @@ class ItemSetting extends StatefulWidget {
   final Widget icon;
   final VoidCallback excute;
   final Color color;
+  final bool isToggled;
   @override
   State<ItemSetting> createState() => _ItemSettingState();
 }
@@ -33,6 +34,14 @@ class _ItemSettingState extends State<ItemSetting> {
   String? get _subtitle => widget.subtitle != null ? widget.subtitle! : null;
 
   Widget? get _trailing => widget.trailing != null ? widget.trailing! : null;
+
+  late bool _isToggled;
+
+  @override
+  void initState() {
+    _isToggled = widget.isToggled;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +68,7 @@ class _ItemSettingState extends State<ItemSetting> {
       ),
       title: Text(
         _title,
-        style: PrimaryFont.instance.copyWith(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w400,
-        ),
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -70,11 +76,15 @@ class _ItemSettingState extends State<ItemSetting> {
           !(_titleTrailing == "")
               ? Text(
                   _titleTrailing,
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w300,
-                    color: darkColor.withOpacity(0.6),
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontSize: 14.0,
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .color!
+                            .withOpacity(0.6),
+                        fontWeight: FontWeight.w300,
+                      ),
                 )
               : const SizedBox(),
           !(_titleTrailing == "")
@@ -83,24 +93,38 @@ class _ItemSettingState extends State<ItemSetting> {
           _trailing != null
               ? _trailing!
               : Switch(
-                  value: true,
+                  materialTapTargetSize: MaterialTapTargetSize.padded,
+                  value: !_isToggled,
+                  splashRadius: 5.0,
                   onChanged: (value) {
                     widget.excute();
+                    setState(() {
+                      _isToggled = !_isToggled;
+                    });
                   },
                   activeColor: primaryColor,
                   activeTrackColor: disablePrimaryColor,
-                  inactiveThumbColor: darkColor,
+
+                  // trackColor: MaterialStateProperty.all(disablePrimaryColor),
+                  // thumbIcon:
+                  //     MaterialStateProperty.all(const Icon(Icons.settings)),
+                  inactiveThumbColor: disablePrimaryColor,
+                  inactiveTrackColor: scaffoldBackgroundColor,
                 ),
         ],
       ),
       subtitle: _subtitle != null
           ? Text(
               _subtitle!,
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 12.0,
-                color: darkColor.withOpacity(0.6),
-                fontWeight: FontWeight.w300,
-              ),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 10.0,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .color!
+                        .withOpacity(0.6),
+                    fontWeight: FontWeight.w300,
+                  ),
             )
           : null,
     );

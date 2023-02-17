@@ -1,11 +1,12 @@
-import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
+import 'package:flutter_fashion/app/presentation/profile/profile_data.dart';
 
-class DataBody extends StatelessWidget {
-  const DataBody({super.key, required this.user});
-  final UserModel user;
+class ProfileBody extends StatelessWidget {
+  const ProfileBody({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final user = ProfileData.of(context)!.user;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,6 +27,7 @@ class DataBody extends StatelessWidget {
         ),
         const BuildFrameFeature(),
         const OrderHistory(),
+        const SizedBox(height: 30),
       ],
     );
   }

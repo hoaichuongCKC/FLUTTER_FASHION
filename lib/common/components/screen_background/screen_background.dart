@@ -29,7 +29,7 @@ class ProfileBackgroundPage extends StatelessWidget {
               extendBodyBehindAppBar: true,
               appBar: appBar,
               floatingActionButton: floatingActionButton,
-              body: _buildBody(size),
+              body: _buildBody(size, context),
             );
 
           default:
@@ -39,16 +39,18 @@ class ProfileBackgroundPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(size) => Stack(
+  Widget _buildBody(size, context) => Stack(
         fit: StackFit.expand,
         children: [
-          Positioned(
-            top: -size.height * .1,
-            left: -size.width * .65,
-            child: Image.asset(
-              "assets/images/half_circle.png",
-            ),
-          ),
+          Brightness.dark == Theme.of(context).brightness
+              ? const SizedBox()
+              : Positioned(
+                  top: -size.height * .1,
+                  left: -size.width * .65,
+                  child: Image.asset(
+                    "assets/images/half_circle.png",
+                  ),
+                ),
           child,
         ],
       );

@@ -2,20 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/constant.dart';
 import 'package:flutter_fashion/config/font_style.dart';
-import 'package:flutter_fashion/utils/alert/control.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../routes/app_routes.dart';
-
-errorAlert(
-    {required BuildContext context,
-    String message = "Nani",
-    Function()? whenCompleted}) async {
-  if (AlertControl.instance.isHasAlert) {
-    debugPrint("isHasAlert error: ${AlertControl.instance.isHasAlert}");
-    AppRoutes.pop();
-  }
-  AlertControl.instance.updateShow();
+errorAlert({required BuildContext context, String message = "Nani"}) async {
   await showGeneralDialog(
     context: context,
     barrierDismissible: true,
@@ -79,5 +68,5 @@ errorAlert(
         ),
       );
     },
-  ).whenComplete(() => AlertControl.instance.updateShow());
+  );
 }

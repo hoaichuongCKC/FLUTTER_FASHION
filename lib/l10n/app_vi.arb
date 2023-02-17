@@ -1,0 +1,108 @@
+{
+
+  "login": "Đăng nhập",
+  "@login": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "homePage": "Trang chủ",
+  "@homePage": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "notificationPage": "Thông báo",
+  "@notificationPage": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "mePage": "Tôi",
+  "@mePage": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "profile": "Hồ sơ",
+  "@profile": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "setting": "Cài đặt",
+  "@setting": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "personal": "Cá nhân",
+  "@personal": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "order": "Đơn hàng",
+  "@order": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "report": "Báo cáo",
+  "@report": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "favorite": "Yêu thích",
+  "@favorite": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "messenger": "Tin nhắn",
+  "@messenger": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "orderHistory": "Lịch sử đơn hàng",
+  "@orderHistory": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "quantity": "Số lượng: {number}",
+  "@quantity": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "Bob"
+      }
+    }
+  },
+
+  "processingAnOrder": "Đang lên đơn",
+  "@processingAnOrder": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "language": "Ngôn ngữ",
+  "@language": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "theDefaultLanguageIsVietnamese": "(Mặc định ngôn ngữ là Tiếng Việt)",
+  "@theDefaultLanguageIsVietnamese": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "darkMode": "Chế độ tối",
+  "@darkMode": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "turnOn": "Bật",
+  "@turnOn": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "turnOff": "Tắt",
+  "@turnOff": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "sound": "Âm thanh",
+  "@sound": {
+    "description": "Không hiểu gì cả"
+  }
+}

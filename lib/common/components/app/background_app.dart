@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fashion/app/blocs/theme/theme_cubit.dart';
 import 'package:flutter_fashion/common/widgets/constrained_box.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/constant.dart';
@@ -21,16 +23,24 @@ class BaseAppBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
         body: Stack(
       fit: StackFit.passthrough,
       children: [
-        Positioned(
-          top: -size.height * .1,
-          left: -size.width * .65,
-          child: Image.asset(
-            "assets/images/half_circle.png",
-          ),
+        BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            if (!state.isLight) {
+              return const SizedBox();
+            }
+            return Positioned(
+              top: -size.height * .1,
+              left: -size.width * .65,
+              child: Image.asset(
+                "assets/images/half_circle.png",
+              ),
+            );
+          },
         ),
         SafeArea(
           child: Padding(
@@ -38,7 +48,7 @@ class BaseAppBackground extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildAppBar(),
+                _buildAppBar(context),
                 const SizedBox(height: 5.0),
                 child,
               ],
@@ -49,7 +59,7 @@ class BaseAppBackground extends StatelessWidget {
     ));
   }
 
-  ConstrainedBoxWidget _buildAppBar() {
+  ConstrainedBoxWidget _buildAppBar(context) {
     return ConstrainedBoxWidget(
       currentHeight: 0.1,
       maxHeight: 120,
@@ -66,8 +76,9 @@ class BaseAppBackground extends StatelessWidget {
                     ? leading!
                     : InkWell(
                         onTap: () => AppRoutes.pop(),
-                        child: const Icon(Icons.arrow_back,
-                            size: 30.0, color: darkColor),
+                        child: Icon(Icons.arrow_back,
+                            size: 30.0,
+                            color: Theme.of(context).iconTheme.color),
                       ),
                 if (actions != null)
                   for (int i = 0; i < actions!.length; i++)
@@ -84,11 +95,7 @@ class BaseAppBackground extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               title,
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 24.0,
-                color: darkColor,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.titleSmall,
             ),
           )
         ],

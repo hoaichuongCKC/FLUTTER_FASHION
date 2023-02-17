@@ -1,7 +1,7 @@
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
 
-import '../../core/base/exception/login_exception.dart';
+import '../exception/login_exception.dart';
 
 class BaseRepository {
   final NetworkInfoImpl _networkInfoImpl;

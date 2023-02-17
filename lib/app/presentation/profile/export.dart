@@ -17,3 +17,4 @@ export 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 export 'package:flutter_fashion/app/blocs/user/user_event.dart';
 export 'package:flutter_fashion/app/presentation/profile/components/data_body.dart';
 export 'package:flutter_fashion/dependency_injection.dart';
+export 'package:flutter_fashion/export.dart';

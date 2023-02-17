@@ -8,9 +8,11 @@ class UserAvatarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: primaryColor, width: 0.7),
+        border:
+            Border.all(color: isLight ? primaryColor : lightColor, width: 0.7),
         shape: BoxShape.circle,
       ),
       child: ConstrainedBox(

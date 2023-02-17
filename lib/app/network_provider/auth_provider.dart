@@ -45,7 +45,6 @@ class AuthProviderImpl extends AuthProvider {
     if (response.statusCode != 200) {
       throw ServerException();
     }
-
     _apiService.clearHeader();
 
     return ResponseData.fromJson(jsonDecode(response.body));

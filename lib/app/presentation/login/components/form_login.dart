@@ -50,6 +50,7 @@ class _FormLoginState extends State<FormLogin> {
             key: const ValueKey("phone_form"),
             controller: _phoneController,
             keyboardType: TextInputType.phone,
+            textInputAction: TextInputAction.next,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
             ],
@@ -98,6 +99,9 @@ class _FormLoginState extends State<FormLogin> {
                   obscureText: currentEye,
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.phone,
+                  onFieldSubmitted: (value) => context
+                      .read<AuthCubit>()
+                      .call(AuthEvent.submitLogin, context: context),
                   onChanged: (value) => _authCubit.call(
                       AuthEvent.changedPassword,
                       param: {"password": value}),

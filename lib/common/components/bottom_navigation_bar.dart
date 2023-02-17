@@ -1,21 +1,17 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/core/models/item_bottom_nav.dart';
-import 'package:flutter_fashion/routes/app_routes.dart';
+import 'package:flutter_fashion/utils/extensions/string_x.dart';
 import 'package:flutter_svg/svg.dart';
+import "package:flutter_fashion/export.dart";
 
 final bottomData = [
+  ItemBottomNavModel(path: Routes.HOME, urlIcon: "assets/icons/home.svg"),
   ItemBottomNavModel(
-      path: Routes.HOME, label: 'Trang chủ', urlIcon: "assets/icons/home.svg"),
-  ItemBottomNavModel(
-      path: Routes.NOTIFICATION,
-      label: 'Thông báo',
-      urlIcon: "assets/icons/notification.svg"),
-  ItemBottomNavModel(
-      path: Routes.PROFILE, label: 'Tôi', urlIcon: "assets/icons/user1.svg"),
+      path: Routes.NOTIFICATION, urlIcon: "assets/icons/notification.svg"),
+  ItemBottomNavModel(path: Routes.PROFILE, urlIcon: "assets/icons/user1.svg"),
 ];
 
 class BottomNavigationBarApp extends StatefulWidget {
@@ -58,8 +54,8 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
       height: size.height * 0.1,
       color: lightColor,
       constraints: const BoxConstraints(
-        maxHeight: 70.0,
-        minHeight: 60,
+        maxHeight: 60.0,
+        minHeight: 50,
       ),
       child: Stack(
         fit: StackFit.expand,
@@ -85,7 +81,7 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
                             : darkColor.withOpacity(0.5),
                       ),
                     ),
-                    label: bottomData[index].label,
+                    routes: bottomData[index].path,
                     onPressed: () {
                       currentPage = index;
                       AppRoutes.goShellKey(bottomData[index].path);
@@ -123,12 +119,12 @@ class ItemNavigationBar extends StatelessWidget {
   const ItemNavigationBar({
     super.key,
     required this.icon,
-    required this.label,
+    required this.routes,
     required this.onPressed,
     this.isSelected = false,
   });
   final Widget icon;
-  final String label;
+  final String routes;
   final VoidCallback onPressed;
   final bool isSelected;
   @override
@@ -143,7 +139,7 @@ class ItemNavigationBar extends StatelessWidget {
           const SizedBox(height: 7.0),
           Center(
             child: Text(
-              label,
+              routes.translateLabelBottomNavigationBar(context),
               style: PrimaryFont.instance.copyWith(
                 fontSize: 12.0,
                 color: isSelected ? primaryColor : darkColor.withOpacity(0.5),

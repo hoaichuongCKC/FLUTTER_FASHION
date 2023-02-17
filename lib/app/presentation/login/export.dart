@@ -11,3 +11,4 @@ export '../../../common/components/aurora/aurora_page.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 // export 'package:flutter_fashion/app/blocs/auth/auth_bloc.dart';
 export 'package:flutter_fashion/dependency_injection.dart';
+export 'package:flutter_fashion/export.dart';
