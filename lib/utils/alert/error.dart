@@ -1,13 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/constant.dart';
 import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../routes/app_routes.dart';
+
 errorAlert({required BuildContext context, String message = "Nani"}) async {
+  int counter = 0;
+  const Duration duration = Duration(seconds: 1);
+  Timer.periodic(duration, (timer) {
+    counter++;
+    if (counter == 2) {
+      timer.cancel();
+      AppRoutes.pop();
+    }
+  });
+
   await showGeneralDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: false,
     barrierLabel: "Alert - error",
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       return AnimatedOpacity(

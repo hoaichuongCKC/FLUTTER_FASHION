@@ -5,6 +5,11 @@
     "description": "Không hiểu gì cả"
   },
 
+  "username": "Tên đăng nhập",
+  "@username": {
+    "description": "Không hiểu gì cả"
+  },
+
   "homePage": "Trang chủ",
   "@homePage": {
     "description": "Không hiểu gì cả"
@@ -104,5 +109,118 @@
   "sound": "Âm thanh",
   "@sound": {
     "description": "Không hiểu gì cả"
+  },
+
+  "editInformation": "Chỉnh sửa thông tin",
+  "@editInformation": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "image": "Ảnh",
+  "@image": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "fullname": "Họ tên",
+  "@fullname": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "phoneNumber": "Số điện thoại",
+  "@phoneNumber": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "password": "Mật khẩu",
+  "@password": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "changePassword": "Đổi mật khẩu",
+  "@changePassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "uploadFile": "Tải ảnh lên",
+  "@uploadFile": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "clickOnTheParagraphThatNeedsToBeEdited": "(Nhấn vào đoạn văn cần chỉnh sửa)",
+  "@clickOnTheParagraphThatNeedsToBeEdited": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "gotIt": "Đã hiểu",
+  "@gotIt": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "yourLoginSessionHasExpired_PleaseLogInAgain": "Thời hạn đăng nhập của bạn đã hết. Vui lòng đăng nhập lại",
+  "@yourLoginSessionHasExpired_PleaseLogInAgain": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "continueWithGoogle": "Tiếp tục với Google",
+  "@continueWithGoogle": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "signUp": "Đăng kí",
+  "@signUp": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "or": "Hoặc",
+  "@or": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "theAboveTextHasBeenEdited": "Văn bản trên đã được chỉnh sửa.",
+  "@theAboveTextHasBeenEdited": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "currentPassword": "Mật khẩu hiện tại",
+  "@currentPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "cancel": "Huỷ",
+  "@cancel": {
+    "description": "Không hiểu gì cả"
+  },
+  "ok": "Đồng ý",
+  "@ok": {
+    "description": "Không hiểu gì cả"
+  },
+  "doYouWantToSaveChangedInformation": "Bạn có muốn lưu thông tin đã thay đổi không?",
+  "@doYouWantToSaveChangedInformation": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "newPassword": "Mật khẩu mới",
+  "@newPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "confirmPassword": "Nhập lại mật khẩu",
+  "@confirmPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "updatedInformationSuccessfully": "Cập nhật thông tin thành công!",
+  "@updatedInformationSuccessfully": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "change": "Thay đổi",
+  "@change": {
+    "description": "Không hiểu gì cả"
+  },
+  "theNewPasswordDoesNotMatch": "Mật khẩu mới không trùng khớp",
+  "@theNewPasswordDoesNotMatch": {
+    "description": "Không hiểu gì cả"
   }
+  
 }

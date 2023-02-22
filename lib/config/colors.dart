@@ -16,4 +16,6 @@ const Color successfullyColor = Color(0xFF39DF67);
 
 Color disableDarkColor = darkColor.withOpacity(0.5);
 
-const Color errorColor = Colors.redAccent;
+const Color errorColor = Colors.red;
+
+const Color warningColor = Colors.yellowAccent;

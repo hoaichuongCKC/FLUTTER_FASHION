@@ -72,7 +72,7 @@ dependencies:
   #path
   path_provider: ^2.0.12
 
-  #
+  #Suport use Hive package save data
   hydrated_bloc: ^9.1.0
 
   #equal object
@@ -81,10 +81,10 @@ dependencies:
   #
   encrypt: ^5.0.1
 
-  #
+  #convert json to Model
   freezed_annotation: ^2.2.0
 
-  #
+  #convert json to Model
   json_annotation: ^4.8.0
 
   #http
@@ -92,20 +92,30 @@ dependencies:
 
   #image
   cached_network_image: ^3.2.3
+
+  #translate
   flutter_localizations:
     sdk: flutter
   
   #mutilple language
   intl: any
 
+  #image
+  image_picker: ^0.8.6+2
+  bloc: ^8.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  #CLI freezed
   build_runner: ^2.3.3
 
   flutter_lints: ^2.0.0
+
+  #Convert json to model
   json_serializable: ^6.6.1
+  
+  #Convert json to model
   freezed: ^2.3.2
 
 # For information on the generic Dart part of this file, see the

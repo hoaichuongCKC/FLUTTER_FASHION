@@ -1,18 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'auth_cubit.dart';
 
-enum LoginStatus { init, loading, error, success }
-
 class AuthState extends Equatable {
   final String phoneNumber;
 
   final String password;
 
-  final LoginStatus status;
+  final AppStatus status;
   const AuthState({
     this.phoneNumber = "",
     this.password = " ",
-    this.status = LoginStatus.init,
+    this.status = AppStatus.init,
   });
 
   @override
@@ -22,7 +20,7 @@ class AuthState extends Equatable {
     String? phoneNumber,
     String? password,
     String? messageError,
-    LoginStatus? status,
+    AppStatus? status,
   }) {
     return AuthState(
       phoneNumber: phoneNumber ?? this.phoneNumber,

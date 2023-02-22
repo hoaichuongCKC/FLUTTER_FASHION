@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 
 class ItemSetting extends StatefulWidget {
   const ItemSetting(
@@ -94,7 +93,7 @@ class _ItemSettingState extends State<ItemSetting> {
               ? _trailing!
               : Switch(
                   materialTapTargetSize: MaterialTapTargetSize.padded,
-                  value: !_isToggled,
+                  value: _isToggled,
                   splashRadius: 5.0,
                   onChanged: (value) {
                     widget.excute();

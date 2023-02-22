@@ -87,7 +87,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           width: _width,
           height: _height,
           child: _label == null
-              ? _labelWidget
+              ? Align(child: _labelWidget)
               : Align(
                   child: Text(
                     _label!,

@@ -1,1 +1,1 @@
-enum UserEvent { fetchUser, init }
+enum UserEvent { fetchUser, init, updateUser }

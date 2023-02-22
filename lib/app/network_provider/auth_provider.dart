@@ -24,8 +24,8 @@ class AuthProviderImpl extends AuthProvider {
       "password": password,
     };
 
-    var response =
-        await _apiService.post(ApiEndpoint.login, body, isRequestHeader: false);
+    var response = await _apiService.post(ApiEndpoint.login,
+        body: body, isRequestHeader: false);
 
     if (response.statusCode == 201) {
       throw ParamInputException();
@@ -35,18 +35,20 @@ class AuthProviderImpl extends AuthProvider {
       }
     }
 
-    return ResponseData.fromJson(jsonDecode(response.body));
+    return ResponseData.fromJson(
+        jsonDecode(await response.stream.bytesToString()));
   }
 
   @override
   Future<ResponseData> loggout() async {
-    var response = await _apiService.post(ApiEndpoint.loggout, {});
+    var response = await _apiService.post(ApiEndpoint.loggout);
 
     if (response.statusCode != 200) {
       throw ServerException();
     }
     _apiService.clearHeader();
 
-    return ResponseData.fromJson(jsonDecode(response.body));
+    return ResponseData.fromJson(
+        jsonDecode(await response.stream.bytesToString()));
   }
 }

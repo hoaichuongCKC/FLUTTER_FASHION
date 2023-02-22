@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
+import 'package:flutter_fashion/core/base/api/api.dart';
 
 class UserAvatarApp extends StatelessWidget {
   const UserAvatarApp({super.key, required this.imageUrl});
@@ -29,7 +30,8 @@ class UserAvatarApp extends StatelessWidget {
             padding: const EdgeInsets.all(7.0),
             child: CircleAvatar(
               radius: 30.0,
-              backgroundImage: CachedNetworkImageProvider(imageUrl),
+              backgroundImage:
+                  CachedNetworkImageProvider(ApiService.imageUrl + imageUrl),
             ),
           ),
         ),

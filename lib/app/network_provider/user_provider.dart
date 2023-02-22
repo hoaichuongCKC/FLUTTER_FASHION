@@ -1,12 +1,23 @@
 import 'dart:convert';
 
+import 'package:flutter_fashion/app/blocs/change_password/change_password_cubit.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/models/response_data.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../../config/constant.dart';
+import '../blocs/edit_information/edit_information_cubit.dart';
 
 abstract class UserProvider {
   Future<UserModel> me();
+
+  Future<UserModel> update(
+      {required EditInformationState param, XFile? imageFile});
+
+  Future<ResponseData> changePassword({required ChangePasswordState param});
 }
 
 class UserProviderImpl extends UserProvider {
@@ -16,9 +27,10 @@ class UserProviderImpl extends UserProvider {
 
   @override
   Future<UserModel> me() async {
-    var response = await _apiService.post(ApiEndpoint.me, {});
+    var response = await _apiService.post(ApiEndpoint.me);
 
     if (response.statusCode == 401) {
+      _apiService.clearHeader();
       throw AuthenticatedException();
     } else {
       if (response.statusCode != 200) {
@@ -26,6 +38,51 @@ class UserProviderImpl extends UserProvider {
       }
     }
 
-    return UserModel.fromJson(jsonDecode(response.body)["data"]);
+    return UserModel.fromJson(
+        jsonDecode(await response.stream.bytesToString())["data"]);
+  }
+
+  @override
+  Future<UserModel> update(
+      {required EditInformationState param, XFile? imageFile}) async {
+    var response = await _apiService.post(
+      ApiEndpoint.update,
+      body: param.toJson(),
+      image: imageFile,
+    );
+    final data = await response.stream.bytesToString();
+
+    if (response.statusCode == 401) {
+      _apiService.clearHeader();
+      throw AuthenticatedException();
+    } else if (response.statusCode == 201) {
+      throw Exception("Email already exists");
+    } else {
+      if (response.statusCode != 200) {
+        throw ServerException();
+      }
+    }
+
+    return UserModel.fromJson(jsonDecode(data)["data"]);
+  }
+
+  @override
+  Future<ResponseData> changePassword(
+      {required ChangePasswordState param}) async {
+    var response = await _apiService.post(
+      ApiEndpoint.changePassword,
+      body: param.toJson(),
+    );
+    final data = jsonDecode(await response.stream.bytesToString());
+
+    print(data);
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+    if (data["message"] == messagePasswordIncorrect) {
+      return ResponseData.fromJson(data).copyWith.call(status: false);
+    }
+
+    return ResponseData.fromJson(data);
   }
 }

@@ -1,15 +1,12 @@
-// ignore: depend_on_referenced_packages, unnecessary_import
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
-import 'package:flutter_fashion/routes/app_routes.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_state.dart';
 
@@ -42,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (param != null) {
       if (param["phoneNumber"] != null) {
         emit(state.copyWith(
-            phoneNumber: param["phoneNumber"], status: LoginStatus.init));
+            phoneNumber: param["phoneNumber"], status: AppStatus.init));
       }
     } else {
       throw ParamRequestException();
@@ -53,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (param != null) {
       if (param["password"] != null) {
         emit(state.copyWith(
-            password: param["password"], status: LoginStatus.init));
+            password: param["password"], status: AppStatus.init));
       }
     } else {
       throw ParamRequestException();
@@ -61,23 +58,25 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void _onSubmitLogin(BuildContext context) async {
-    emit(state.copyWith(status: LoginStatus.loading));
+    emit(state.copyWith(status: AppStatus.loading));
     loadingAlert(context: context);
 
     final String phone = state.phoneNumber;
     final String password = state.password;
+
     final result = await _authRepositoryImpl.login(phone, password);
 
     result.fold(
       (error) {
         AppRoutes.pop();
-        emit(state.copyWith(status: LoginStatus.error));
+
+        emit(state.copyWith(status: AppStatus.error));
         errorAlert(context: context, message: error);
       },
       (dataReposonse) {
         if (dataReposonse.status) {
           AppRoutes.go(Routes.HOME);
-          emit(state.copyWith(status: LoginStatus.success));
+          emit(state.copyWith(status: AppStatus.success));
         }
       },
     );
@@ -88,7 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (error) {
-        emit(state.copyWith(status: LoginStatus.error));
+        emit(state.copyWith(status: AppStatus.error));
         errorAlert(context: context, message: error);
       },
       (dataReposonse) {

@@ -22,7 +22,7 @@ class _SettingPageState extends State<SettingPage> {
             builder: (context, state) {
               return ItemSetting(
                 title: AppLocalizations.of(context)!.language,
-                isToggled: state.isVietnamese,
+                isToggled: !state.isVietnamese,
                 titleTrailing: state.isVietnamese ? "Việt Nam" : "English",
                 subtitle: AppLocalizations.of(context)!
                     .theDefaultLanguageIsVietnamese,
@@ -42,16 +42,16 @@ class _SettingPageState extends State<SettingPage> {
           BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return ItemSetting(
-                isToggled: state.isLight,
+                isToggled: state.isDark,
                 title: AppLocalizations.of(context)!.darkMode,
-                titleTrailing: state.isLight
-                    ? AppLocalizations.of(context)!.turnOff
-                    : AppLocalizations.of(context)!.turnOn,
+                titleTrailing: state.isDark
+                    ? AppLocalizations.of(context)!.turnOn
+                    : AppLocalizations.of(context)!.turnOff,
                 excute: () {
-                  if (state.isLight) {
-                    context.read<ThemeCubit>().darkTheme();
-                  } else {
+                  if (state.isDark) {
                     context.read<ThemeCubit>().lightTheme();
+                  } else {
+                    context.read<ThemeCubit>().darkTheme();
                   }
                 },
                 color: primaryColor,

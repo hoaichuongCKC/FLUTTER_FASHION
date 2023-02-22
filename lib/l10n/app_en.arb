@@ -4,6 +4,10 @@
     "description": "Không hiểu gì cả"
   },
 
+  "username": "Username",
+  "@username": {
+    "description": "Không hiểu gì cả"
+  },
   "homePage": "Home",
   "@homePage": {
     "description": "The conventional newborn programmer greeting"
@@ -104,6 +108,118 @@
 
   "sound": "Sound",
   "@sound": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "editInformation": "Edit information",
+  "@editInformation": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "image": "Image",
+  "@image": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "fullname": "Fullname",
+  "@fullname": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "changePassword": "Change password",
+  "@changePassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "uploadFile": "Upload file",
+  "@uploadFile": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "clickOnTheParagraphThatNeedsToBeEdited": "(Click on the paragraph that needs to be edited)",
+  "@clickOnTheParagraphThatNeedsToBeEdited": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "gotIt": "Got it",
+  "@gotIt": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "yourLoginSessionHasExpired_PleaseLogInAgain": "Your login session has expired. Please log in again.",
+  "@yourLoginSessionHasExpired_PleaseLogInAgain": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "continueWithGoogle": "Continue with Google",
+  "@continueWithGoogle": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "or": "Or",
+  "@or": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "theAboveTextHasBeenEdited": "The above text has been edited.",
+  "@theAboveTextHasBeenEdited": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "currentPassword": "Current password",
+  "@currentPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "ok": "Ok",
+  "@ok": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "doYouWantToSaveChangedInformation": "Do you want to save changed information?",
+  "@doYouWantToSaveChangedInformation": {
+    "description": "Không hiểu gì cả"
+  },
+
+
+  "newPassword": "New password",
+  "@newPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "confirmPassword": "Confirm password",
+  "@confirmPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "change": "Change",
+  "@change": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "theNewPasswordDoesNotMatch": "The new password does not match",
+  "@theNewPasswordDoesNotMatch": {
     "description": "Không hiểu gì cả"
   }
 }
