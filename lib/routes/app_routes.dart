@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
 import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
 import 'package:flutter_fashion/common/components/bottom_navigation_bar.dart';
 import 'package:flutter_fashion/app/presentation/notification/notification_page.dart';
@@ -31,6 +32,9 @@ abstract class Routes {
   static const FAVORITE = _Paths.FAVORITE;
   static const ORDER = _Paths.ORDER;
   static const MESSENGER = _Paths.MESSENGER;
+
+  //
+  static const CHANGEPASSWORD = _Paths.CHANGEPASSWORD;
 }
 
 abstract class _Paths {
@@ -41,13 +45,33 @@ abstract class _Paths {
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
 
-  //page second
+  //second
   static const SETTING = '/setting';
   static const PERSONAL = '/personal';
   static const REPORT = '/report';
   static const FAVORITE = '/favorite';
   static const MESSENGER = '/messenger';
   static const ORDER = '/order';
+
+  static const CHANGEPASSWORD = 'change_password';
+}
+
+abstract class Names {
+  Names._();
+  // static const INTRODUCTION = '/introduction';
+  // static const HOME = '/home';
+  // static const LOGIN = '/login';
+  // static const NOTIFICATION = '/notification';
+  // static const PROFILE = '/profile';
+
+  //page second
+  // static const SETTING = '/setting';
+  static const PERSONAL = 'personal';
+  static const CHANGEPASSWORD = 'changePassword';
+  // static const REPORT = '/report';
+  // static const FAVORITE = '/favorite';
+  // static const MESSENGER = '/messenger';
+  // static const ORDER = '/order';
 }
 
 class AppRoutes {
@@ -87,6 +111,17 @@ class AppRoutes {
           );
         },
       ),
+      GoRoute(
+        name: Names.PERSONAL,
+        path: Routes.PERSONAL,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) {
+          return SlideTransitionPage<PersonalInformationPage>(
+            key: state.pageKey,
+            child: const PersonalInformationPage(),
+          );
+        },
+      ),
       ShellRoute(
         navigatorKey: Routes.shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -101,8 +136,9 @@ class AppRoutes {
             parentNavigatorKey: Routes.shellNavigatorKey,
             path: Routes.HOME,
             pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: HomePage(),
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: const HomePage(),
               );
             },
           ),
@@ -110,8 +146,9 @@ class AppRoutes {
             path: Routes.NOTIFICATION,
             parentNavigatorKey: Routes.shellNavigatorKey,
             pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: NotificationPage(),
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: const NotificationPage(),
               );
             },
           ),
@@ -119,8 +156,9 @@ class AppRoutes {
             path: Routes.PROFILE,
             parentNavigatorKey: Routes.shellNavigatorKey,
             pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: ProfilePage(),
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: const ProfilePage(),
               );
             },
           )
@@ -131,11 +169,13 @@ class AppRoutes {
   );
 
   static void go(String path) => Routes.navigatorKey.currentContext!.go(path);
-
+  static void goNamed(String path) =>
+      Routes.navigatorKey.currentContext!.goNamed(path);
   static void pop() => Routes.navigatorKey.currentContext!.pop();
 
-  static void push(String path) =>
-      Routes.navigatorKey.currentContext!.push(path);
+  static void push(String path) {
+    Routes.navigatorKey.currentContext!.push(path);
+  }
 
   static void goShellKey(String path) {
     Routes.shellNavigatorKey.currentContext!.go(path);

@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
@@ -51,6 +50,12 @@ class _FormLoginState extends State<FormLogin> {
             controller: _phoneController,
             keyboardType: TextInputType.phone,
             textInputAction: TextInputAction.next,
+            style: PrimaryFont.instance.copyWith(
+              fontSize: 16.0,
+              color: darkColor,
+              fontWeight: FontWeight.w300,
+              wordSpacing: 5,
+            ),
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
             ],
@@ -59,7 +64,7 @@ class _FormLoginState extends State<FormLogin> {
             decoration: InputDecoration(
               filled: true,
               fillColor: lightColor,
-              hintText: 'Số điện thoại',
+              hintText: AppLocalizations.of(context)!.phoneNumber,
               prefixIconConstraints: const BoxConstraints(
                 minHeight: 20.0,
                 maxHeight: 50.0,
@@ -97,6 +102,12 @@ class _FormLoginState extends State<FormLogin> {
                   key: const ValueKey("password_form"),
                   controller: _passwordController,
                   obscureText: currentEye,
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 16.0,
+                    color: darkColor,
+                    fontWeight: FontWeight.w300,
+                    wordSpacing: 5,
+                  ),
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.phone,
                   onFieldSubmitted: (value) => context
@@ -108,7 +119,7 @@ class _FormLoginState extends State<FormLogin> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: lightColor,
-                    hintText: 'Mật khẩu',
+                    hintText: AppLocalizations.of(context)!.password,
                     isDense: true,
                     suffixIconConstraints: const BoxConstraints(
                       minHeight: 20.0,

@@ -1,7 +1,7 @@
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
-import 'package:flutter_fashion/utils/snackbar/app_snackbar_mess.dart';
+import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -66,12 +66,12 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     AppSnackbarMessenger.showMessage(content: "Hello bà già");
                   },
-                  child: const Text('Đăng kí'),
+                  child: Text(AppLocalizations.of(context)!.signUp),
                 ),
               ),
               BlocBuilder<AuthCubit, AuthState>(
                 buildWhen: (previous, current) =>
-                    current.status == LoginStatus.init,
+                    current.status == AppStatus.init,
                 builder: (context, state) {
                   bool isDisable =
                       state.phoneNumber.isNotEmpty && state.password.isNotEmpty;

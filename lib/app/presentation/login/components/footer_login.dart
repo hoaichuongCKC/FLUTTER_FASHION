@@ -15,7 +15,7 @@ class FooterLogin extends StatelessWidget {
             Expanded(
               child: Align(
                 child: Text(
-                  'hoặc',
+                  AppLocalizations.of(context)!.or,
                   style: PrimaryFont.instance.copyWith(
                     fontSize: 14.0,
                     color: lightColor,
@@ -47,7 +47,7 @@ class FooterLogin extends StatelessWidget {
               ),
               const SizedBox(width: 15.0),
               Text(
-                'Tiếp tục với Google',
+                AppLocalizations.of(context)!.continueWithGoogle,
                 style: PrimaryFont.instance.copyWith(
                   fontSize: 16.0,
                   color: darkColor,

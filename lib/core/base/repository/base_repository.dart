@@ -16,6 +16,7 @@ class BaseRepository {
     try {
       if (_networkInfoImpl.status == NetWorkStatus.successfully) {
         final data = await excuteFunction();
+
         return successCallback(data);
       } else {
         return errorCallback(InternetException.message as R);

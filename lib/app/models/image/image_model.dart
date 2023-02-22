@@ -12,6 +12,6 @@ class Image with _$Image {
     required String url,
     required DateTime created_at,
   }) = _Image;
-
+  factory Image.init() => Image(id: 0, url: "", created_at: DateTime.now());
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 }

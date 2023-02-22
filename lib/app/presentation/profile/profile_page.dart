@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/app/blocs/edit_information/edit_information_cubit.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
 import 'package:flutter_fashion/app/presentation/profile/profile_data.dart';
 
@@ -11,15 +12,18 @@ class ProfilePage extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<AuthCubit>(),
         ),
+        BlocProvider(
+          create: (context) => getIt<EditInformationCubit>(),
+        ),
       ],
-      child: BlocProvider(
-        lazy: false,
-        create: (context) => getIt<UserCubit>()..call(UserEvent.fetchUser),
-        child: WillPopScope(
-          onWillPop: () async {
-            return true;
-          },
-          child: ProfileBackgroundPage(
+      child: WillPopScope(
+        onWillPop: () async {
+          return true;
+        },
+        child: Builder(builder: (context) {
+          BlocProvider.of<UserCubit>(context)
+              .call(UserEvent.fetchUser, context: context);
+          return ProfileBackgroundPage(
             appBar: AppBar(
               systemOverlayStyle: SystemUiOverlayStyle.dark,
               backgroundColor: Colors.transparent,
@@ -81,8 +85,8 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

@@ -1,14 +1,13 @@
-// ignore: depend_on_referenced_packages
-// ignore_for_file: unnecessary_overrides
 
-// ignore: depend_on_referenced_packages
-import 'package:bloc/bloc.dart';
 import 'package:flutter_fashion/app/blocs/user/user_event.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
+import 'package:flutter_fashion/export.dart';
+import 'package:flutter_fashion/utils/alert/error.dart';
+import 'package:flutter_fashion/utils/alert/warning.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-
 part 'user_state.dart';
 part 'user_cubit.freezed.dart';
 
@@ -19,10 +18,14 @@ class UserCubit extends Cubit<UserState> {
       : _userRepositoryImpl = userRepositoryImpl,
         super(const UserState.initial());
 
-  void call(UserEvent event) {
+  Future<void> call(UserEvent event,
+      {BuildContext? context, UserModel? model}) async {
     switch (event) {
       case UserEvent.fetchUser:
-        _fetchUser();
+        _fetchUser(context);
+        break;
+      case UserEvent.updateUser:
+        if (model != null) await _updateUser(model);
         break;
       case UserEvent.init:
         isLoaded = false;
@@ -31,26 +34,54 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  _fetchUser() async {
+  _fetchUser(BuildContext? context) async {
     if (!isLoaded) {
       emit(const UserState.loading());
-
       final result = await _userRepositoryImpl.me();
 
       result.fold(
-        (String error) => emit(UserState.failure(error)),
+        (String error) async => _handleError(context, error),
         (userModel) {
           isLoaded = true;
+
           emit(UserState.fetchCompleted(userModel));
         },
       );
     }
   }
 
-  // ignore: must_call_super
+  void _handleError(BuildContext? context, String error) {
+    {
+      if (context != null) {
+        if (error == AuthenticatedException.message) {
+          warningAlert(
+            message: AppLocalizations.of(context)!
+                .yourLoginSessionHasExpired_PleaseLogInAgain,
+            context: context,
+            onPressed: () async {
+              HydratedBloc.storage.delete(KeyStorage.token);
+              AppRoutes.go(Routes.LOGIN);
+            },
+          );
+        } else {
+          errorAlert(context: context, message: error);
+          emit(UserState.failure(error));
+        }
+      }
+    }
+  }
+
+  Future _updateUser(UserModel user) async {
+    if (isLoaded) {
+      emit(UserState.fetchCompleted(user));
+    }
+  }
+
   @override
   Future<void> close() async {
-    print("close User cubit called");
-    // super.close();
+    if (kDebugMode) {
+      print("close User cubit called");
+    }
+    super.close();
   }
 }

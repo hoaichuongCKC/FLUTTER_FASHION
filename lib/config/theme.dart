@@ -7,6 +7,9 @@ ThemeData appThemeLight = ThemeData(
   primaryColor: primaryColor,
   brightness: Brightness.light,
   useMaterial3: true,
+  buttonTheme: const ButtonThemeData(
+    buttonColor: primaryColor,
+  ),
   textTheme: TextTheme(
     titleSmall: PrimaryFont.instance.copyWith(
       fontSize: 25.0,

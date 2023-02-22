@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -1,5 +1,7 @@
 // ...
 
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+
 import 'export.dart';
 
 Future<void> main() async {
@@ -24,6 +26,9 @@ Future<void> main() async {
       ),
       BlocProvider(
         create: (context) => getIt<LanguageCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => getIt<UserCubit>(),
       ),
     ],
     child: const MyApp(),
@@ -88,11 +93,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
+      key: const ValueKey("theme-cubit"),
       builder: (context, state) {
         return BlocBuilder<LanguageCubit, LanguageState>(
+          key: const ValueKey("language-cubit"),
           builder: (context, languageState) {
             return MaterialApp.router(
-              theme: state.isLight ? appThemeLight : appThemeDark,
+              theme: state.isDark ? appThemeDark : appThemeLight,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               scaffoldMessengerKey: AppSnackbarMessenger.scaffoldMessengerKey,
