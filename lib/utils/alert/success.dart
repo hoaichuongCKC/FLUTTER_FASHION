@@ -7,7 +7,7 @@ import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/routes/app_routes.dart';
 import 'package:flutter_svg/svg.dart';
 
-successAlert({
+Future successAlert({
   required BuildContext context,
   String message = "Nani",
 }) async {

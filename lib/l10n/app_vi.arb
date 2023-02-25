@@ -218,9 +218,50 @@
   "@change": {
     "description": "Không hiểu gì cả"
   },
+
   "theNewPasswordDoesNotMatch": "Mật khẩu mới không trùng khớp",
   "@theNewPasswordDoesNotMatch": {
     "description": "Không hiểu gì cả"
-  }
+  },
+
+
+  "continue_r": "Tiếp tục",
+  "@continue_r": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "enter_otp": "Nhập mã Otp",
+  "@enter_otp": {
+    "description": "Không hiểu gì cả"
+  },
+
   
+
+  "did_not_receive_the_code": "Không nhận được mã?",
+  "@did_not_receive_the_code": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "otp_code_send_to_the_phone": "Mã otp gửi về điện thoại {number}",
+  "@otp_code_send_to_the_phone": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
+  },
+
+  "enter_the": "Nhập {tag}",
+  "@enter_the": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "tag": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
+  }
+
 }

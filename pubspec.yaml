@@ -53,6 +53,7 @@ dependencies:
 
   #firebase 
   firebase_core: ^2.4.1
+  firebase_auth: ^4.2.9
 
   #handle animation logic ui
   rxdart: ^0.27.7
@@ -102,7 +103,14 @@ dependencies:
 
   #image
   image_picker: ^0.8.6+2
+  
+  #bloc
   bloc: ^8.1.1
+  sms_autofill: ^2.3.0
+  firebase_messaging: ^14.2.5
+  
+  #form
+  # pinput: ^2.2.20
 
 dev_dependencies:
   flutter_test:

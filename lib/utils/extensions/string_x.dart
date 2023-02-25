@@ -62,4 +62,27 @@ extension StringX on String {
 
   String toBeginningOfSentenceCase() =>
       this[0].toUpperCase() + substring(1).toLowerCase();
+
+  String toFormattedPhoneNumberVN() {
+    if (length != 10) {
+      return this;
+    }
+    const prefix = '+84';
+    final firstPart = substring(1, 4);
+    final secondPart = substring(4, 7);
+    final thirdPart = substring(7, 10);
+    return '($prefix) $firstPart $secondPart $thirdPart';
+  }
+
+  bool isValidEmail() {
+    // Kiểm tra xem chuỗi có rỗng hay không
+    if (isEmpty) return false;
+
+    // Kiểm tra xem chuỗi có phù hợp với yêu cầu đặc biệt không
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final String emailDomain = split('@').last;
+    return emailRegex.hasMatch(this) &&
+        emailDomain.contains('gmail') &&
+        endsWith('.com');
+  }
 }

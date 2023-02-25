@@ -5,7 +5,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ApiService {
-  static const String hostDomain = "http://10.0.2.2:8000";
+  static const String hostDomain =
+      "https://50b6-2405-4802-a232-c20-c150-1c3f-8c82-cd15.ap.ngrok.io";
 
   static const String imageUrl = "$hostDomain/storage/";
 
@@ -59,15 +60,13 @@ class ApiService {
 
     final uri = Uri.parse("$baseUrl$url");
 
-    http.MultipartRequest request = http.MultipartRequest('POST', uri);
+    http.MultipartRequest request = http.MultipartRequest('POST', uri)
+      ..fields.addAll(body ?? {});
 
     if (isRequestHeader) {
       request.headers.addAll(_headers);
     }
-    if (body != null) {
-      //add field
-      request.fields.addAll(body);
-    }
+
     if (image != null) {
       http.MultipartFile multipartFile =
           await http.MultipartFile.fromPath('image', image.path);

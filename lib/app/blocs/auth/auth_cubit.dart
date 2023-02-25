@@ -3,10 +3,12 @@ import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
+import 'package:flutter_fashion/utils/alert/success.dart';
 
 part 'auth_state.dart';
 
@@ -65,11 +67,10 @@ class AuthCubit extends Cubit<AuthState> {
     final String password = state.password;
 
     final result = await _authRepositoryImpl.login(phone, password);
+    AppRoutes.pop();
 
     result.fold(
       (error) {
-        AppRoutes.pop();
-
         emit(state.copyWith(status: AppStatus.error));
         errorAlert(context: context, message: error);
       },
@@ -93,6 +94,31 @@ class AuthCubit extends Cubit<AuthState> {
       (dataReposonse) {
         if (dataReposonse.status) {
           HydratedBloc.storage.delete(KeyStorage.token);
+          AppRoutes.go(Routes.LOGIN);
+          emit(const AuthState());
+        }
+      },
+    );
+  }
+
+  void accountRegister(RegisterParams param, BuildContext context) async {
+    emit(state.copyWith(status: AppStatus.loading));
+    loadingAlert(context: context);
+
+    final result = await _authRepositoryImpl.register(param);
+
+    AppRoutes.pop();
+    result.fold(
+      (error) {
+        emit(state.copyWith(status: AppStatus.error));
+        errorAlert(context: context, message: error);
+      },
+      (dataReposonse) async {
+        if (dataReposonse.message == "Email or phone are already exists") {
+          emit(state.copyWith(status: AppStatus.error));
+          errorAlert(context: context, message: dataReposonse.message);
+        } else {
+          await successAlert(context: context, message: dataReposonse.message);
           AppRoutes.go(Routes.LOGIN);
           emit(const AuthState());
         }

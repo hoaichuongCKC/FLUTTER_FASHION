@@ -11,7 +11,7 @@ class CameraInfo {
       return;
     }
     if (response.files != null) {
-      for (final XFile file in response.files!) {}
+      // for (final XFile file in response.files!) {}
     } else {}
   }
 

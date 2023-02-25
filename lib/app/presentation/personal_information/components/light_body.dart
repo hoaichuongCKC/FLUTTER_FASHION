@@ -110,7 +110,7 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
             buildWhen: (previous, current) =>
                 previous.username != current.username,
             builder: (context, state) {
-              return TextFiledPICustom(
+              return TextFieldApp(
                 isOnchanged: state.username.isNotEmpty,
                 controller: usernameController,
                 onChanged: (value) => context
@@ -128,7 +128,7 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
               buildWhen: (previous, current) =>
                   previous.fullname != current.fullname,
               builder: (context, state) {
-                return TextFiledPICustom(
+                return TextFieldApp(
                   isOnchanged: state.fullname.isNotEmpty,
                   controller: fullnameController,
                   onChanged: (value) => context
@@ -144,7 +144,7 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
           col: BlocBuilder<EditInformationCubit, EditInformationState>(
               buildWhen: (previous, current) => previous.phone != current.phone,
               builder: (context, state) {
-                return TextFiledPICustom(
+                return TextFieldApp(
                   isOnchanged: state.phone.isNotEmpty,
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
@@ -161,7 +161,7 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
           col: BlocBuilder<EditInformationCubit, EditInformationState>(
               buildWhen: (previous, current) => previous.email != current.email,
               builder: (context, state) {
-                return TextFiledPICustom(
+                return TextFieldApp(
                   isOnchanged: state.email.isNotEmpty,
                   controller: emailController,
                   onChanged: (value) => context

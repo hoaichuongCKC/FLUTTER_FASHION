@@ -1,1 +1,1 @@
-enum AuthEvent { changedPhone, changedPassword, submitLogin, loggout }
+enum AuthEvent { changedPhone, changedPassword, submitLogin, loggout, register }

@@ -63,9 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {
-                    AppSnackbarMessenger.showMessage(content: "Hello bà già");
-                  },
+                  onPressed: () => AppRoutes.push(Routes.SIGNUP),
                   child: Text(AppLocalizations.of(context)!.signUp),
                 ),
               ),

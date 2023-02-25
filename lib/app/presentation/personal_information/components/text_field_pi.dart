@@ -1,23 +1,23 @@
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/export.dart';
 
-class TextFiledPICustom extends StatefulWidget {
-  const TextFiledPICustom(
+class TextFieldApp extends StatefulWidget {
+  const TextFieldApp(
       {super.key,
       required this.controller,
       this.keyboardType,
       required this.onChanged,
-      this.isOnchanged = false});
+      this.isOnchanged = false,
+      this.hintText});
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final Function(String?) onChanged;
   final bool isOnchanged;
+  final String? hintText;
   @override
-  State<TextFiledPICustom> createState() => _TextFiledPICustomState();
+  State<TextFieldApp> createState() => _TextFieldAppState();
 }
 
-class _TextFiledPICustomState extends State<TextFiledPICustom> {
+class _TextFieldAppState extends State<TextFieldApp> {
   TextEditingController get _controller => widget.controller;
 
   @override
@@ -44,7 +44,7 @@ class _TextFiledPICustomState extends State<TextFiledPICustom> {
               .bodyMedium!
               .copyWith(fontWeight: FontWeight.w500),
           decoration: InputDecoration(
-            hintText: '',
+            hintText: widget.hintText ?? "",
             isDense: true,
             filled: false,
             contentPadding: EdgeInsets.zero,

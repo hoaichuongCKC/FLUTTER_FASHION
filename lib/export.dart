@@ -17,3 +17,7 @@ export 'routes/app_routes.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'firebase_options.dart';
 export 'package:flutter_gen/gen_l10n/app_localizations.dart';
+export 'package:flutter_fashion/config/colors.dart';
+export 'package:flutter_fashion/config/font_style.dart';
+export 'package:flutter_fashion/utils/extensions/string_x.dart';
+export 'package:flutter_svg/svg.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Defining the color variables.
-const Color scaffoldBackgroundColor = Color(0xFFFAFAFA);
+const Color scaffoldBackgroundColor = Color(0xFFF9F9F9);
 
 /// Defining the color variable.
 const Color primaryColor = Color(0xFF8E8EEB);

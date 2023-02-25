@@ -4,11 +4,12 @@ import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/base/exception/login_exception.dart';
+import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class AuthProvider {
   Future<ResponseData> login(String phone, String password);
-
+  Future<ResponseData> register(RegisterParams params);
   Future<ResponseData> loggout();
 }
 
@@ -48,6 +49,17 @@ class AuthProviderImpl extends AuthProvider {
     }
     _apiService.clearHeader();
 
+    return ResponseData.fromJson(
+        jsonDecode(await response.stream.bytesToString()));
+  }
+
+  @override
+  Future<ResponseData> register(RegisterParams params) async {
+    var response = await _apiService.post(ApiEndpoint.register,
+        body: params.toJson(), isRequestHeader: false, image: params.image);
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
     return ResponseData.fromJson(
         jsonDecode(await response.stream.bytesToString()));
   }

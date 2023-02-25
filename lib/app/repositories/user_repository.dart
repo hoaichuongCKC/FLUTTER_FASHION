@@ -29,59 +29,29 @@ class UserRepositoryImpl extends BaseRepository implements UserRepository {
 
   @override
   Future<Either<String, UserModel>> me() async {
-    dynamic currentData;
-    await baseRepo<String, UserModel>(
+    final result = await baseRepo<UserModel>(
       excuteFunction: () async => await _userProviderImpl.me(),
-      errorCallback: (String? error) {
-        if (error != null) currentError = error;
-      },
-      successCallback: (UserModel? data) {
-        if (data != null) currentData = data;
-      },
     );
-    if (currentData != null) {
-      return Right(currentData);
-    }
-    return Left(currentError!);
+    return result.fold((error) => Left(error), (r) => Right(r));
   }
 
   @override
   Future<Either<String, UserModel>> update(
       {required EditInformationState param, XFile? imageFile}) async {
-    dynamic currentData;
-    await baseRepo<String, UserModel>(
+    final result = await baseRepo<UserModel>(
       excuteFunction: () async =>
           await _userProviderImpl.update(param: param, imageFile: imageFile),
-      errorCallback: (String? error) {
-        if (error != null) currentError = error;
-      },
-      successCallback: (UserModel? data) {
-        if (data != null) currentData = data;
-      },
     );
-    if (currentData != null) {
-      return Right(currentData);
-    }
-    return Left(currentError!);
+    return result.fold((error) => Left(error), (r) => Right(r));
   }
 
   @override
   Future<Either<String, ResponseData>> changePassword(
       {required ChangePasswordState param}) async {
-    dynamic currentData;
-    await baseRepo<String, ResponseData>(
+    final result = await baseRepo<ResponseData>(
       excuteFunction: () async =>
           await _userProviderImpl.changePassword(param: param),
-      errorCallback: (String? error) {
-        if (error != null) currentError = error;
-      },
-      successCallback: (ResponseData? data) {
-        if (data != null) currentData = data;
-      },
     );
-    if (currentData != null) {
-      return Right(currentData);
-    }
-    return Left(currentError!);
+    return result.fold((error) => Left(error), (r) => Right(r));
   }
 }

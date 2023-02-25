@@ -1,7 +1,5 @@
 import 'package:flutter_fashion/common/widgets/button.dart';
-import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/export.dart';
 
 warningAlert(

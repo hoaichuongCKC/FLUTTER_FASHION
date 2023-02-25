@@ -1,10 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/core/models/item_bottom_nav.dart';
-import 'package:flutter_fashion/utils/extensions/string_x.dart';
-import 'package:flutter_svg/svg.dart';
 import "package:flutter_fashion/export.dart";
 
 final bottomData = [

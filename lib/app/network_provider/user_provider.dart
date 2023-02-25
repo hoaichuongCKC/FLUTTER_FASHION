@@ -75,7 +75,6 @@ class UserProviderImpl extends UserProvider {
     );
     final data = jsonDecode(await response.stream.bytesToString());
 
-    print(data);
     if (response.statusCode != 200) {
       throw ServerException();
     }

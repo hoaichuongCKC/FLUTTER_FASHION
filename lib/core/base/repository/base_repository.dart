@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
 
@@ -9,28 +10,27 @@ class BaseRepository {
   const BaseRepository({required NetworkInfoImpl networkInfoImpl})
       : _networkInfoImpl = networkInfoImpl;
 
-  Future<dynamic> baseRepo<R, T>(
-      {required Future<T> Function() excuteFunction,
-      required void Function(T?) successCallback,
-      required void Function(R?) errorCallback}) async {
+  Future<Either<String, T>> baseRepo<T>({
+    required Future<T> Function() excuteFunction,
+  }) async {
     try {
       if (_networkInfoImpl.status == NetWorkStatus.successfully) {
         final data = await excuteFunction();
 
-        return successCallback(data);
+        return Right(data);
       } else {
-        return errorCallback(InternetException.message as R);
+        return const Left(InternetException.message);
       }
     } on ServerException catch (error) {
-      return errorCallback(error.toString() as R);
+      return Left(error.toString());
     } on ConnectTimeoutHttpException catch (error) {
-      return errorCallback(error.toString() as R);
+      return Left(error.toString());
     } on ParamInputException catch (error) {
-      return errorCallback(error.toString() as R);
+      return Left(error.toString());
     } on AuthenticatedException catch (error) {
-      return errorCallback(error.toString() as R);
+      return Left(error.toString());
     } catch (e) {
-      return errorCallback(e.toString() as R);
+      return Left(e.toString());
     }
   }
 }

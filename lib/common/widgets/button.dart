@@ -8,13 +8,14 @@ class ButtonWidget extends StatefulWidget {
     super.key,
     this.width = double.infinity,
     this.height = 50.0,
-    this.btnColor,
-    this.onPressed,
+    required this.btnColor,
+    required this.onPressed,
     this.label,
     this.labelWidget,
     this.boxShadow,
     this.animate = false,
-  });
+  }) : assert(!(label != null && labelWidget != null),
+            'Địt con mẹ cái gì thế tại sao có hai tham số');
   final double width;
   final double height;
   final Color? btnColor;
