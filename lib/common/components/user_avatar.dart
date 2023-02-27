@@ -1,9 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_fashion/app/presentation/introduction/export.dart';
-import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
+
+import '../../export.dart';
 
 class UserAvatarApp extends StatelessWidget {
   const UserAvatarApp({super.key, required this.imageUrl});
@@ -29,14 +29,33 @@ class UserAvatarApp extends StatelessWidget {
         child: SizedBox(
           width: size.width * 0.3,
           height: size.width * 0.3,
-          child: Padding(
-            padding: const EdgeInsets.all(7.0),
-            child: CircleAvatar(
-              radius: 30.0,
-              backgroundImage:
-                  CachedNetworkImageProvider(ApiService.imageUrl + imageUrl),
-            ),
-          ),
+          child: imageUrl.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: CachedNetworkImageProvider(
+                      ApiService.imageUrl + imageUrl,
+                      headers: getIt<ApiService>().headers,
+                      cacheKey: ApiService.imageUrl + imageUrl,
+                    ),
+                  ),
+                )
+              : Stack(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: Align(
+                          child: SvgPicture.asset(
+                            "assets/icons/user1.svg",
+                            fit: BoxFit.contain,
+                            color: darkColor.withOpacity(0.7),
+                            width: 40,
+                            height: 40,
+                          ),
+                        )),
+                  ],
+                ),
         ),
       ),
     );
@@ -44,9 +63,11 @@ class UserAvatarApp extends StatelessWidget {
 }
 
 class UserAvatarDefault extends StatelessWidget {
-  const UserAvatarDefault({super.key, this.onPressed, this.child});
+  const UserAvatarDefault(
+      {super.key, this.onPressed, this.child, this.isCamera = true});
   final void Function()? onPressed;
   final Widget? child;
+  final bool isCamera;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -79,15 +100,17 @@ class UserAvatarDefault extends StatelessWidget {
                         color: darkColor,
                       ),
                     ),
-                    Positioned(
-                      bottom: 10,
-                      right: 5,
-                      child: SvgPicture.asset(
-                        "assets/icons/camera.svg",
-                        width: 20,
-                        height: 20,
-                      ),
-                    ),
+                    !isCamera
+                        ? const SizedBox()
+                        : Positioned(
+                            bottom: 10,
+                            right: 5,
+                            child: SvgPicture.asset(
+                              "assets/icons/camera.svg",
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
                   ],
                 ),
           ),

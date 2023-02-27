@@ -9,6 +9,7 @@ import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class AuthProvider {
   Future<ResponseData> login(String phone, String password);
+  Future<ResponseData> loginGoogle(String fullname, String email);
   Future<ResponseData> register(RegisterParams params);
   Future<ResponseData> loggout();
 }
@@ -60,6 +61,24 @@ class AuthProviderImpl extends AuthProvider {
     if (response.statusCode != 200) {
       throw ServerException();
     }
+    return ResponseData.fromJson(
+        jsonDecode(await response.stream.bytesToString()));
+  }
+
+  @override
+  Future<ResponseData> loginGoogle(String fullname, String email) async {
+    final body = {
+      "fullname": fullname,
+      "email": email,
+    };
+
+    var response = await _apiService.post(ApiEndpoint.loginGoogle,
+        body: body, isRequestHeader: false);
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+
     return ResponseData.fromJson(
         jsonDecode(await response.stream.bytesToString()));
   }

@@ -85,7 +85,7 @@ abstract class Names {
 
 class AppRoutes {
   static final router = GoRouter(
-    initialLocation: Routes.LOGIN,
+    initialLocation: Routes.HOME,
     navigatorKey: Routes.navigatorKey,
     debugLogDiagnostics: true,
     observers: [GoRouterObserver()],

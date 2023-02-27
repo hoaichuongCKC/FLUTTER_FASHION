@@ -8,6 +8,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 abstract class AuthRepository {
   Future<Either<String, ResponseData>> login(String phone, String password);
+  Future<Either<String, ResponseData>> loginGoogle(
+      String fullname, String email);
   Future<Either<String, ResponseData>> register(RegisterParams params);
   Future<Either<String, ResponseData>> loggout();
 }
@@ -58,6 +60,19 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
         final data = await _authProviderImpl.register(params);
+        return data;
+      },
+    );
+    return result.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  @override
+  Future<Either<String, ResponseData>> loginGoogle(
+      String fullname, String email) async {
+    final result = await baseRepo<ResponseData>(
+      excuteFunction: () async {
+        final data = await _authProviderImpl.loginGoogle(fullname, email);
+        HydratedBloc.storage.write(KeyStorage.token, data.data);
         return data;
       },
     );

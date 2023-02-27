@@ -8,10 +8,9 @@ part 'image_model.g.dart';
 class Image with _$Image {
   @JsonSerializable(explicitToJson: true)
   const factory Image({
-    required int id,
-    required String url,
-    required DateTime created_at,
+    @Default(0) int id,
+    @Default("") String url,
   }) = _Image;
-  factory Image.init() => Image(id: 0, url: "", created_at: DateTime.now());
+  factory Image.init() => const Image();
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 }

@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ApiService {
   static const String hostDomain =
-      "https://50b6-2405-4802-a232-c20-c150-1c3f-8c82-cd15.ap.ngrok.io";
+      "https://e1ec-2405-4802-a232-c20-69ee-9863-d7de-6fa3.ap.ngrok.io";
 
   static const String imageUrl = "$hostDomain/storage/";
 

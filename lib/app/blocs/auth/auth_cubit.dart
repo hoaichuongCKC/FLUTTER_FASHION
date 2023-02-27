@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
+import 'package:flutter_fashion/core/firebase/firebase_service.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
@@ -12,7 +13,7 @@ import 'package:flutter_fashion/utils/alert/success.dart';
 
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
+class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
   final AuthRepositoryImpl _authRepositoryImpl;
   AuthCubit({required AuthRepositoryImpl auth})
       : _authRepositoryImpl = auth,
@@ -124,5 +125,40 @@ class AuthCubit extends Cubit<AuthState> {
         }
       },
     );
+  }
+
+  void authGoogle(BuildContext context) async {
+    loadingAlert(context: context);
+    final result = await signInWithGoogle();
+
+    result.fold(
+      (error) {
+        //remove poup loading
+        AppRoutes.pop();
+        errorAlert(context: context, message: error);
+        emit(state.copyWith(status: AppStatus.error));
+      },
+      (data) async {
+        emit(state.copyWith(status: AppStatus.loading));
+
+        _logoutGoogle();
+        final resultSecond = await _authRepositoryImpl.loginGoogle(
+            data.user!.displayName!, data.user!.email!);
+        //remove poup loading
+        AppRoutes.pop();
+
+        resultSecond.fold((error) {
+          errorAlert(context: context, message: error);
+          emit(state.copyWith(status: AppStatus.error));
+        }, (dataReponse) {
+          AppRoutes.go(Routes.HOME);
+          emit(const AuthState());
+        });
+      },
+    );
+  }
+
+  void _logoutGoogle() async {
+    await signOut();
   }
 }

@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';

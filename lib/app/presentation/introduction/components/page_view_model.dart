@@ -1,5 +1,5 @@
 import 'package:flutter_fashion/config/font_style.dart';
-import 'package:flutter_fashion/app/presentation/introduction/components/dot_page.dart';
+import 'package:flutter_fashion/common/components/dot_page.dart';
 import 'package:flutter_fashion/app/presentation/introduction/export.dart';
 
 final _dataIntro = [

@@ -11,7 +11,9 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       fullName: json['fullName'] as String? ?? "",
       phone: json['phone'] as String? ?? "",
       email: json['email'] as String? ?? "",
-      image: Image.fromJson(json['image'] as Map<String, dynamic>),
+      image: json['image'] == null
+          ? Image.init()
+          : Image.fromJson(json['image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>

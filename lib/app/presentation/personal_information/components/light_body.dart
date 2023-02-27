@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_fashion/app/blocs/edit_information/edit_information_cubit.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/components/show_form_password.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
+import 'package:flutter_fashion/app/presentation/profile/export.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 
 class LightPersonalBody extends StatefulWidget {
@@ -45,17 +46,26 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
                 buildWhen: (previous, current) =>
                     previous.image != current.image,
                 builder: (context, state) {
+                  final imageUrl = widget.user.image.url;
+                  final isImageEmpty = imageUrl.isEmpty;
+
+                  if (isImageEmpty && state.image == null) {
+                    return const UserAvatarDefault(isCamera: false);
+                  }
+
                   if (state.image != null) {
                     final fileWidget = Image.file(
                       File(state.image!.path),
                       fit: BoxFit.cover,
                     );
-                    return ConstrainedBoxWidget(
-                      currentHeight: .2,
-                      maxHeight: 100,
-                      minHeight: 90,
-                      maxWidth: 100,
-                      minWidth: 90,
+
+                    return ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.3,
+                        maxHeight: MediaQuery.of(context).size.height * 0.3,
+                        minWidth: 60,
+                        minHeight: 60,
+                      ).normalize(),
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(
                           Radius.circular(100),
@@ -64,25 +74,26 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
                       ),
                     );
                   }
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: disablePrimaryColor,
-                      image: DecorationImage(
-                        image: CachedNetworkImageProvider(
-                          ApiService.imageUrl + widget.user.image.url,
-                          headers: getIt<ApiService>().headers,
-                          cacheKey: widget.user.image.url,
-                        ),
-                        fit: BoxFit.cover,
+
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.3,
+                      maxHeight: MediaQuery.of(context).size.height * 0.3,
+                      minWidth: 60,
+                      minHeight: 60,
+                    ).normalize(),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(100),
                       ),
-                    ),
-                    child: const ConstrainedBoxWidget(
-                      currentHeight: .2,
-                      maxHeight: 100,
-                      minHeight: 90,
-                      maxWidth: 100,
-                      minWidth: 90,
+                      child: CachedNetworkImage(
+                        imageUrl: ApiService.imageUrl + imageUrl,
+                        httpHeaders: getIt<ApiService>().headers,
+                        cacheKey: imageUrl,
+                        fit: BoxFit.cover,
+                        width: 90,
+                        height: 90,
+                      ),
                     ),
                   );
                 },
@@ -142,17 +153,17 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
           context,
           title: AppLocalizations.of(context)!.phoneNumber,
           col: BlocBuilder<EditInformationCubit, EditInformationState>(
-              buildWhen: (previous, current) => previous.phone != current.phone,
-              builder: (context, state) {
-                return TextFieldApp(
-                  isOnchanged: state.phone.isNotEmpty,
-                  controller: phoneController,
-                  keyboardType: TextInputType.phone,
-                  onChanged: (value) => context
-                      .read<EditInformationCubit>()
-                      .onChangedPhone(value!),
-                );
-              }),
+            buildWhen: (previous, current) => previous.phone != current.phone,
+            builder: (context, state) {
+              return TextFieldApp(
+                isOnchanged: state.phone.isNotEmpty,
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+                onChanged: (value) =>
+                    context.read<EditInformationCubit>().onChangedPhone(value!),
+              );
+            },
+          ),
         ),
         const SizedBox(height: 40),
         _buildItem(

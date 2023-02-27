@@ -7,13 +7,11 @@ part of 'image_model.dart';
 // **************************************************************************
 
 _$_Image _$$_ImageFromJson(Map<String, dynamic> json) => _$_Image(
-      id: json['id'] as int,
-      url: json['url'] as String,
-      created_at: DateTime.parse(json['created_at'] as String),
+      id: json['id'] as int? ?? 0,
+      url: json['url'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$_ImageToJson(_$_Image instance) => <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
-      'created_at': instance.created_at.toIso8601String(),
     };

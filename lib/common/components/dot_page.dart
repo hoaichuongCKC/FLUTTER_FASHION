@@ -21,7 +21,7 @@ class DotPage extends StatelessWidget {
           AnimatedContainer(
             padding: EdgeInsets.only(right: i == length - 1 ? 0 : 7.0),
             duration: const Duration(milliseconds: 400),
-            width: 25,
+            width: 22,
             height: 15,
             decoration: ShapeDecoration(
               shape: currentDot == i

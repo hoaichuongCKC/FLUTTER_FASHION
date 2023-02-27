@@ -22,7 +22,6 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
 mixin _$Image {
   int get id => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +33,7 @@ abstract class $ImageCopyWith<$Res> {
   factory $ImageCopyWith(Image value, $Res Function(Image) then) =
       _$ImageCopyWithImpl<$Res, Image>;
   @useResult
-  $Res call({int id, String url, DateTime created_at});
+  $Res call({int id, String url});
 }
 
 /// @nodoc
@@ -52,7 +51,6 @@ class _$ImageCopyWithImpl<$Res, $Val extends Image>
   $Res call({
     Object? id = null,
     Object? url = null,
-    Object? created_at = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -63,10 +61,6 @@ class _$ImageCopyWithImpl<$Res, $Val extends Image>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -77,7 +71,7 @@ abstract class _$$_ImageCopyWith<$Res> implements $ImageCopyWith<$Res> {
       __$$_ImageCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String url, DateTime created_at});
+  $Res call({int id, String url});
 }
 
 /// @nodoc
@@ -91,7 +85,6 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
   $Res call({
     Object? id = null,
     Object? url = null,
-    Object? created_at = null,
   }) {
     return _then(_$_Image(
       id: null == id
@@ -102,10 +95,6 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -114,22 +103,21 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
 
 @JsonSerializable(explicitToJson: true)
 class _$_Image implements _Image {
-  const _$_Image(
-      {required this.id, required this.url, required this.created_at});
+  const _$_Image({this.id = 0, this.url = ""});
 
   factory _$_Image.fromJson(Map<String, dynamic> json) =>
       _$$_ImageFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
+  @JsonKey()
   final String url;
-  @override
-  final DateTime created_at;
 
   @override
   String toString() {
-    return 'Image(id: $id, url: $url, created_at: $created_at)';
+    return 'Image(id: $id, url: $url)';
   }
 
   @override
@@ -138,14 +126,12 @@ class _$_Image implements _Image {
         (other.runtimeType == runtimeType &&
             other is _$_Image &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.url, url) || other.url == url) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
+            (identical(other.url, url) || other.url == url));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, url, created_at);
+  int get hashCode => Object.hash(runtimeType, id, url);
 
   @JsonKey(ignore: true)
   @override
@@ -162,10 +148,7 @@ class _$_Image implements _Image {
 }
 
 abstract class _Image implements Image {
-  const factory _Image(
-      {required final int id,
-      required final String url,
-      required final DateTime created_at}) = _$_Image;
+  const factory _Image({final int id, final String url}) = _$_Image;
 
   factory _Image.fromJson(Map<String, dynamic> json) = _$_Image.fromJson;
 
@@ -173,8 +156,6 @@ abstract class _Image implements Image {
   int get id;
   @override
   String get url;
-  @override
-  DateTime get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_ImageCopyWith<_$_Image> get copyWith =>

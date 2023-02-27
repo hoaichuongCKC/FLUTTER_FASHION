@@ -14,6 +14,7 @@ class ButtonWidget extends StatefulWidget {
     this.labelWidget,
     this.boxShadow,
     this.animate = false,
+    this.radius = radiusBtn,
   }) : assert(!(label != null && labelWidget != null),
             'Địt con mẹ cái gì thế tại sao có hai tham số');
   final double width;
@@ -24,6 +25,7 @@ class ButtonWidget extends StatefulWidget {
   final Widget? labelWidget;
   final List<BoxShadow>? boxShadow;
   final bool animate;
+  final double? radius;
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
 }
@@ -79,8 +81,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   _buildBody() => DecoratedBox(
         decoration: BoxDecoration(
           color: _btnColor,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(radiusBtn),
+          borderRadius: BorderRadius.all(
+            Radius.circular(widget.radius!),
           ),
           boxShadow: _onPressed == null ? null : _boxShadow,
         ),

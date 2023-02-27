@@ -29,6 +29,8 @@ class UserProviderImpl extends UserProvider {
   Future<UserModel> me() async {
     var response = await _apiService.post(ApiEndpoint.me);
 
+    final data = await response.stream.bytesToString();
+
     if (response.statusCode == 401) {
       _apiService.clearHeader();
       throw AuthenticatedException();
@@ -38,8 +40,7 @@ class UserProviderImpl extends UserProvider {
       }
     }
 
-    return UserModel.fromJson(
-        jsonDecode(await response.stream.bytesToString())["data"]);
+    return UserModel.fromJson(jsonDecode(data)["data"]);
   }
 
   @override
@@ -50,20 +51,21 @@ class UserProviderImpl extends UserProvider {
       body: param.toJson(),
       image: imageFile,
     );
-    final data = await response.stream.bytesToString();
+    final data = jsonDecode(await response.stream.bytesToString());
 
     if (response.statusCode == 401) {
+      //404 status unauthories token expired
       _apiService.clearHeader();
       throw AuthenticatedException();
     } else if (response.statusCode == 201) {
-      throw Exception("Email already exists");
+      throw Exception(data["error"]);
     } else {
       if (response.statusCode != 200) {
         throw ServerException();
       }
     }
 
-    return UserModel.fromJson(jsonDecode(data)["data"]);
+    return UserModel.fromJson(data["data"]);
   }
 
   @override

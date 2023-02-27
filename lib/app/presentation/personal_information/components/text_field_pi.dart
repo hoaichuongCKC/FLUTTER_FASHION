@@ -36,7 +36,7 @@ class _TextFieldAppState extends State<TextFieldApp> {
           controller: _controller,
           maxLines: 2,
           minLines: 1,
-          textInputAction: TextInputAction.done,
+          textInputAction: TextInputAction.none,
           onChanged: (value) => widget.onChanged(value),
           keyboardType: widget.keyboardType,
           style: Theme.of(context)

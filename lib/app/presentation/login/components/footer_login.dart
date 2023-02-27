@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 
 class FooterLogin extends StatelessWidget {
@@ -28,7 +29,8 @@ class FooterLogin extends StatelessWidget {
         ),
         const SizedBox(height: 20.0),
         ButtonWidget(
-          onPressed: () {},
+          animate: true,
+          onPressed: () => context.read<AuthCubit>().authGoogle(context),
           btnColor: lightColor,
           boxShadow: [
             BoxShadow(
