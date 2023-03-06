@@ -14,8 +14,10 @@ const Color lightColor = Color(0xFFFFFFFF);
 
 const Color successfullyColor = Color(0xFF39DF67);
 
-Color disableDarkColor = darkColor.withOpacity(0.5);
+Color disableDarkColor = darkColor.withOpacity(0.3);
 
 const Color errorColor = Colors.red;
 
 const Color warningColor = Colors.yellowAccent;
+
+Color skeletonColor = Colors.grey.shade300;

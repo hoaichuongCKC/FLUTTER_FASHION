@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/presentation/register/components/text_field_register.dart';
 import 'package:flutter_fashion/common/components/user_avatar.dart';
-import 'package:flutter_fashion/common/widgets/button.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/export.dart';

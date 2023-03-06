@@ -30,4 +30,10 @@ class ThemeCubit extends HydratedCubit<ThemeState> {
   Map<String, dynamic>? toJson(ThemeState state) {
     return {"isDark": state.isDark};
   }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
+  }
 }

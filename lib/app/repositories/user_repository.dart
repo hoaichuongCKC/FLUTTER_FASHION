@@ -20,10 +20,10 @@ abstract class UserRepository {
 class UserRepositoryImpl extends BaseRepository implements UserRepository {
   final UserProviderImpl _userProviderImpl;
 
-  UserRepositoryImpl(
-      {required super.networkInfoImpl,
-      required UserProviderImpl userProviderImpl})
-      : _userProviderImpl = userProviderImpl;
+  UserRepositoryImpl({
+    required super.networkInfoImpl,
+    required UserProviderImpl userProviderImpl,
+  }) : _userProviderImpl = userProviderImpl;
 
   String? currentError;
 

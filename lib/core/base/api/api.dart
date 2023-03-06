@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_fashion/core/base/api/endpoint.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:http/http.dart' as http;
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -6,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ApiService {
   static const String hostDomain =
-      "https://e1ec-2405-4802-a232-c20-69ee-9863-d7de-6fa3.ap.ngrok.io";
+      "https://0359-2405-4802-a21f-43c0-f5a9-c324-ea5c-9488.ap.ngrok.io";
 
   static const String imageUrl = "$hostDomain/storage/";
 
@@ -33,7 +35,7 @@ class ApiService {
     }
   }
 
-  void clearHeader() {
+  void _clearHeader() {
     _headers = {};
   }
 
@@ -44,10 +46,12 @@ class ApiService {
     );
   }
 
-  Future<http.StreamedResponse> post(String url,
-      {Map<String, String>? body,
-      bool isRequestHeader = true,
-      XFile? image}) async {
+  Future<http.StreamedResponse> post(
+    String url, {
+    Map<String, String>? body,
+    bool isRequestHeader = true,
+    XFile? image,
+  }) async {
     if (kDebugMode) {
       if (isRequestHeader) {
         if (_headers.isEmpty) {
@@ -69,12 +73,19 @@ class ApiService {
 
     if (image != null) {
       http.MultipartFile multipartFile =
-          await http.MultipartFile.fromPath('image', image.path);
+          await http.MultipartFile.fromPath('image[]', image.path);
       request.files.add(multipartFile);
     }
 
     //send request up to server
     http.StreamedResponse response = await request.send();
+    if (ApiEndpoint.loggout == url) {
+      _clearHeader();
+    }
+    if (response.statusCode == 401 && _headers.isNotEmpty) {
+      _clearHeader();
+      throw AuthenticatedException();
+    }
     return response;
   }
 }

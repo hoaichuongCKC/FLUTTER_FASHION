@@ -1,10 +1,7 @@
-import 'package:flutter_fashion/app/presentation/login/export.dart';
-import 'package:flutter_fashion/config/constant.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 
-import '../../../../export.dart';
-
-class ListPromotion extends StatelessWidget {
-  const ListPromotion({super.key});
+class PromotionList extends StatelessWidget {
+  const PromotionList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,68 +35,69 @@ class ListPromotion extends StatelessWidget {
                   return SizedBox(
                     width: MediaQuery.of(context).size.width * .7,
                     child: Stack(
+                      fit: StackFit.passthrough,
                       children: [
                         SvgPicture.asset(
                           "assets/images/promotion_card.svg",
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           placeholderBuilder: (context) =>
                               const CircularProgressIndicator(),
                         ),
                         Positioned(
-                          top: 8.0,
-                          left: 8.0,
-                          right: 8.0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Discount',
-                                        style: PrimaryFont.instance.copyWith(
-                                          color: lightColor,
-                                          fontSize: 14.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        '10.000 VNĐ',
-                                        style: PrimaryFont.instance.copyWith(
-                                          color: lightColor,
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  ButtonWidget(
-                                    btnColor: lightColor,
-                                    height: 35.0,
-                                    width: 70,
-                                    radius: 3.0,
-                                    onPressed: () {},
-                                    labelWidget: Text(
-                                      "View",
+                          top: 3,
+                          left: 6.0,
+                          right: 6.0,
+                          bottom: 0.0,
+                          child: FractionallySizedBox(
+                            heightFactor: 0.4,
+                            alignment: Alignment.topCenter,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Discount',
                                       style: PrimaryFont.instance.copyWith(
-                                        fontSize: 12,
-                                        color: primaryColor,
+                                        color: lightColor,
+                                        fontSize: 14.0,
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ],
+                                    Text(
+                                      '10.000 VNĐ',
+                                      style: PrimaryFont.instance.copyWith(
+                                        color: lightColor,
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                ButtonWidget(
+                                  btnColor: lightColor,
+                                  height: 35.0,
+                                  width: 70,
+                                  radius: 3.0,
+                                  onPressed: () {},
+                                  labelWidget: Text(
+                                    "View",
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 12,
+                                      color: primaryColor,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Positioned(
                           top: 140 / 2 + 10,
-                          left: 8.0,
-                          right: 8.0,
-                          bottom: 8.0,
+                          left: 6.0,
+                          right: 6.0,
+                          bottom: 3.0,
                           child: Column(
                             children: [
                               Text(

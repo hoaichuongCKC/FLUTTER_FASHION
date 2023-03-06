@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_fashion/app/models/category/category.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 const String urlAsset = "assets/images/test/";
 const List<Map<String, dynamic>> listCategories = [
@@ -28,8 +26,8 @@ const List<Map<String, dynamic>> listCategories = [
 ];
 
 class ProductCategoriesHome extends StatelessWidget {
-  const ProductCategoriesHome({super.key});
-
+  const ProductCategoriesHome({super.key, required this.categoryList});
+  final List<CategoryModel> categoryList;
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
@@ -51,7 +49,7 @@ class ProductCategoriesHome extends StatelessWidget {
               height: 100,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: listCategories.length,
+                itemCount: categoryList.length,
                 itemExtent: 90,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
@@ -59,11 +57,87 @@ class ProductCategoriesHome extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      index != listCategories.length - 1
-                          ? Image.asset(listCategories[index]["imageUrl"])
-                          : SvgPicture.asset(listCategories[index]["imageUrl"]),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: rangeColor[index],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                              ApiService.imageUrl + categoryList[index].photo,
+                              headers: getIt<ApiService>().headers,
+                              cacheKey: categoryList[index].photo,
+                            ),
+                          ),
+                        ),
+                        child: const SizedBox(
+                          width: 60,
+                          height: 60,
+                        ),
+                      ),
                       const SizedBox(height: 8.0),
-                      Text(listCategories[index]["label"]),
+                      Text(
+                        categoryList[index].name,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProductCategoryLoadingHome extends StatelessWidget {
+  const ProductCategoryLoadingHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(vertical: verticalPadding + 1),
+      sliver: SliverToBoxAdapter(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+              child: ColoredBox(
+                color: skeletonColor,
+                child: const SizedBox(width: 160, height: 10),
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: 4,
+                itemExtent: 90,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: skeletonColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const SizedBox(
+                          height: 55,
+                          width: 55,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      ColoredBox(
+                        color: skeletonColor,
+                        child: const SizedBox(width: 45, height: 10),
+                      ),
                     ],
                   );
                 },

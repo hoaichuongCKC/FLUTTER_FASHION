@@ -19,7 +19,7 @@ class ProfileBody extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              UserAvatarApp(imageUrl: user.image.url),
+              UserAvatarApp(imageUrl: user.photo),
               const SizedBox(width: 10.0),
               const UserInformation()
             ],

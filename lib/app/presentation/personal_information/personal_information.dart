@@ -8,7 +8,7 @@ class PersonalInformationPage extends StatelessWidget {
     final isLight = Brightness.light == Theme.of(context).brightness;
     return BlocProvider(
       create: (context) => getIt<EditInformationCubit>(),
-      child: BaseAppBackground(
+      child: AppBackgroundBlur.normal(
         leading: Builder(builder: (context) {
           return InkWell(
             onTap: () => context
@@ -55,13 +55,14 @@ class PersonalInformationPage extends StatelessWidget {
             },
           ),
         ],
-        isScrollScreen: true,
         title: AppLocalizations.of(context)!.editInformation,
         child: isLight
             ? BlocBuilder<UserCubit, UserState>(
                 builder: (context, state) {
                   return state.whenOrNull(
-                    fetchCompleted: (user) => LightPersonalBody(user: user),
+                    fetchCompleted: (user) => SingleChildScrollView(
+                      child: LightPersonalBody(user: user),
+                    ),
                   )!;
                 },
               )

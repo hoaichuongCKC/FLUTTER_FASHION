@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/auth_phone/auth_phone_cubit.dart';
-import 'package:flutter_fashion/common/widgets/button.dart';
 import 'package:flutter_fashion/export.dart';
 import '../../../common/components/aurora/aurora_page.dart';
 

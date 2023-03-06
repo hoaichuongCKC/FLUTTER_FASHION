@@ -73,4 +73,10 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       },
     );
   }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
+  }
 }

@@ -19,7 +19,6 @@ class LanguageCubit extends HydratedCubit<LanguageState> {
   LanguageState? fromJson(Map<String, dynamic> json) {
     return LanguageState(
       isVietnamese: json["isVietnamese"],
-      locale: Locale(json["locale"] as String),
     );
   }
 
@@ -27,7 +26,12 @@ class LanguageCubit extends HydratedCubit<LanguageState> {
   Map<String, dynamic>? toJson(LanguageState state) {
     return {
       "isVietnamese": state.isVietnamese,
-      "locale": state.locale.toString(),
     };
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
   }
 }

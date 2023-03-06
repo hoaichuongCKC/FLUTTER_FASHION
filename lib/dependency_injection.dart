@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_fashion/app/presentation/home/di_injection_home.dart';
 import 'package:flutter_fashion/app/presentation/login/di_login.dart';
 import 'package:flutter_fashion/app/presentation/profile/di_profile.dart';
 import 'package:flutter_fashion/app/presentation/setting/di_setting.dart';
@@ -37,4 +38,6 @@ Future<void> init() async {
   initDIPerosnalInfor();
 
   initDISignUp();
+
+  initDIInjectionHome();
 }

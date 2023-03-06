@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'image_model.dart';
+part of 'slider.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Image _$$_ImageFromJson(Map<String, dynamic> json) => _$_Image(
+_$_SliderModel _$$_SliderModelFromJson(Map<String, dynamic> json) =>
+    _$_SliderModel(
       id: json['id'] as int? ?? 0,
-      url: json['url'] as String? ?? "",
+      photo: json['photo'] as String? ?? "",
     );
 
-Map<String, dynamic> _$$_ImageToJson(_$_Image instance) => <String, dynamic>{
+Map<String, dynamic> _$$_SliderModelToJson(_$_SliderModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'url': instance.url,
+      'photo': instance.photo,
     };

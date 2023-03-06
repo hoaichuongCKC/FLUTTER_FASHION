@@ -24,7 +24,7 @@ mixin _$UserModel {
   String get fullName => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  Image get image => throw _privateConstructorUsedError;
+  String get photo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,9 +42,7 @@ abstract class $UserModelCopyWith<$Res> {
       String fullName,
       String phone,
       String email,
-      Image image});
-
-  $ImageCopyWith<$Res> get image;
+      String photo});
 }
 
 /// @nodoc
@@ -64,7 +62,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? fullName = null,
     Object? phone = null,
     Object? email = null,
-    Object? image = null,
+    Object? photo = null,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -83,19 +81,11 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as Image,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ImageCopyWith<$Res> get image {
-    return $ImageCopyWith<$Res>(_value.image, (value) {
-      return _then(_value.copyWith(image: value) as $Val);
-    });
   }
 }
 
@@ -111,10 +101,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String fullName,
       String phone,
       String email,
-      Image image});
-
-  @override
-  $ImageCopyWith<$Res> get image;
+      String photo});
 }
 
 /// @nodoc
@@ -132,7 +119,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? fullName = null,
     Object? phone = null,
     Object? email = null,
-    Object? image = null,
+    Object? photo = null,
   }) {
     return _then(_$_UserModel(
       username: null == username
@@ -151,10 +138,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as Image,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -168,7 +155,7 @@ class _$_UserModel implements _UserModel {
       this.fullName = "",
       this.phone = "",
       this.email = "",
-      required this.image});
+      this.photo = ""});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
@@ -186,11 +173,12 @@ class _$_UserModel implements _UserModel {
   @JsonKey()
   final String email;
   @override
-  final Image image;
+  @JsonKey()
+  final String photo;
 
   @override
   String toString() {
-    return 'UserModel(username: $username, fullName: $fullName, phone: $phone, email: $email, image: $image)';
+    return 'UserModel(username: $username, fullName: $fullName, phone: $phone, email: $email, photo: $photo)';
   }
 
   @override
@@ -204,13 +192,13 @@ class _$_UserModel implements _UserModel {
                 other.fullName == fullName) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.photo, photo) || other.photo == photo));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, username, fullName, phone, email, image);
+      Object.hash(runtimeType, username, fullName, phone, email, photo);
 
   @JsonKey(ignore: true)
   @override
@@ -232,7 +220,7 @@ abstract class _UserModel implements UserModel {
       final String fullName,
       final String phone,
       final String email,
-      required final Image image}) = _$_UserModel;
+      final String photo}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -246,7 +234,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get email;
   @override
-  Image get image;
+  String get photo;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

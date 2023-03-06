@@ -2,21 +2,18 @@
 part of 'language_cubit.dart';
 
 class LanguageState extends Equatable {
-  final Locale locale;
   final bool isVietnamese;
   const LanguageState({
-    required this.locale,
     required this.isVietnamese,
   });
-  factory LanguageState.initial() =>
-      const LanguageState(isVietnamese: true, locale: Locale('vi', 'VN'));
+  factory LanguageState.initial() => const LanguageState(
+        isVietnamese: true,
+      );
 
-  factory LanguageState.vietNamese() =>
-      const LanguageState(isVietnamese: true, locale: Locale('vi', 'VN'));
+  factory LanguageState.vietNamese() => const LanguageState(isVietnamese: true);
 
-  factory LanguageState.english() =>
-      const LanguageState(isVietnamese: false, locale: Locale('en', 'US'));
+  factory LanguageState.english() => const LanguageState(isVietnamese: false);
 
   @override
-  List<Object?> get props => [locale, isVietnamese];
+  List<Object?> get props => [isVietnamese];
 }

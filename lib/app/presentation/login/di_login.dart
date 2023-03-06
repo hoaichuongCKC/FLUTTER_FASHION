@@ -7,8 +7,10 @@ import 'package:flutter_fashion/dependency_injection.dart';
 Future<void> initDILogin() async {
   getIt.registerFactory(() => AuthCubit(auth: getIt()));
 
-  getIt.registerLazySingleton(() =>
-      AuthRepositoryImpl(networkInfoImpl: getIt(), authProviderImpl: getIt()));
+  getIt.registerLazySingleton(() => AuthRepositoryImpl(
+        networkInfoImpl: getIt(),
+        authProviderImpl: getIt(),
+      ));
 
   getIt.registerLazySingleton(() => AuthProviderImpl(apiService: getIt()));
 }

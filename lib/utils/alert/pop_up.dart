@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/common/widgets/button.dart';
-import 'package:flutter_fashion/config/constant.dart';
 import 'package:flutter_fashion/export.dart';
 
 popupAlert(
@@ -32,7 +30,7 @@ popupAlert(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(14.0),
                         topRight: Radius.circular(14.0)),
-                    color: disablePrimaryColor,
+                    color: primaryColor,
                   ),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * .8,

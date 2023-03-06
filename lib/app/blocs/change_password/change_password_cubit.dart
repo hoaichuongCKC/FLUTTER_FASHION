@@ -51,4 +51,10 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       },
     );
   }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
+  }
 }

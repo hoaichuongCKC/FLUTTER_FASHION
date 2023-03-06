@@ -135,8 +135,10 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
       (error) {
         //remove poup loading
         AppRoutes.pop();
-        errorAlert(context: context, message: error);
-        emit(state.copyWith(status: AppStatus.error));
+        if (error.isNotEmpty) {
+          errorAlert(context: context, message: error);
+          emit(state.copyWith(status: AppStatus.error));
+        }
       },
       (data) async {
         emit(state.copyWith(status: AppStatus.loading));
@@ -160,5 +162,11 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
 
   void _logoutGoogle() async {
     await signOut();
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
   }
 }

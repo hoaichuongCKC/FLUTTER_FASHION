@@ -7,4 +7,9 @@ class ApiEndpoint {
   static const String me = "user/me";
   static const String update = "user/edit-profile";
   static const String changePassword = "user/change-password";
+
+  static const String fetchBanner = "banner/fetch-banner";
+  static const String fetchCategory = "cate/fetch-categories";
+
+  static const String fetchProduct = "product/fetch-product-all";
 }

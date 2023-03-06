@@ -1,18 +1,24 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter_fashion/app/presentation/location_seach/location_search_screen.dart';
+import 'package:flutter_fashion/app/presentation/order/order_page.dart';
 import 'package:flutter_fashion/app/presentation/otp/otp_page.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
 import 'package:flutter_fashion/app/presentation/register/register_page.dart';
+import 'package:flutter_fashion/app/presentation/room_chat/room_chat_page.dart';
 import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/common/components/bottom_navigation_bar.dart';
 import 'package:flutter_fashion/app/presentation/notification/notification_page.dart';
 import 'package:flutter_fashion/app/presentation/profile/profile_page.dart';
+import 'package:flutter_fashion/common/transition/fade.dart';
 import 'package:flutter_fashion/common/transition/right_to_left.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/routes/export.dart';
 import 'package:flutter_fashion/routes/observer.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+import '../app/presentation/cart/cart_page.dart';
 
 abstract class Routes {
   Routes._();
@@ -29,6 +35,9 @@ abstract class Routes {
   static const SIGNUP = _Paths.SIGNUP;
   static const REGISTER = _Paths.REGISTER;
   static const NOTIFICATION = _Paths.NOTIFICATION;
+  static const SEARCH = _Paths.SEARCH;
+  static const CART = _Paths.CART;
+  static const SEARCHLOCATION = _Paths.SEARCHLOCATION;
 
   //page second
   static const SETTING = _Paths.SETTING;
@@ -51,6 +60,9 @@ abstract class _Paths {
   static const SIGNUP = '/sign-up';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
+  static const SEARCH = '/search';
+  static const CART = '/cart';
+  static const SEARCHLOCATION = '/search-location';
 
   //second
   static const SETTING = '/setting';
@@ -85,14 +97,14 @@ abstract class Names {
 
 class AppRoutes {
   static final router = GoRouter(
-    initialLocation: Routes.HOME,
+    initialLocation: Routes.INTRODUCTION,
     navigatorKey: Routes.navigatorKey,
     debugLogDiagnostics: true,
     observers: [GoRouterObserver()],
     redirect: (context, state) {
-      if (state.subloc == Routes.LOGIN) {
+      if (state.subloc == Routes.INTRODUCTION) {
         String? isAuthenticated = HydratedBloc.storage.read(KeyStorage.token);
-
+        print(isAuthenticated);
         if (isAuthenticated != null) {
           return Routes.HOME;
         }
@@ -111,6 +123,16 @@ class AppRoutes {
         builder: (context, state) => LoginPage(
           key: state.pageKey,
         ),
+      ),
+      GoRoute(
+        path: Routes.SEARCHLOCATION,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) {
+          return FadeTransitionPage<SearchLocationPage>(
+            key: state.pageKey,
+            child: const SearchLocationPage(),
+          );
+        },
       ),
       GoRoute(
         path: Routes.SIGNUP,
@@ -149,6 +171,36 @@ class AppRoutes {
           return SlideTransitionPage<SettingPage>(
             key: state.pageKey,
             child: const SettingPage(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.CART,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) {
+          return SlideTransitionPage<CartPage>(
+            key: state.pageKey,
+            child: const CartPage(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.MESSENGER,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) {
+          return SlideTransitionPage<RoomChatMessagePage>(
+            key: state.pageKey,
+            child: const RoomChatMessagePage(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ORDER,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) {
+          return SlideTransitionPage<OrderPage>(
+            key: state.pageKey,
+            child: const OrderPage(),
           );
         },
       ),

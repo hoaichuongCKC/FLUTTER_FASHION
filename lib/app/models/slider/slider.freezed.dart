@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'image_model.dart';
+part of 'slider.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,32 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Image _$ImageFromJson(Map<String, dynamic> json) {
-  return _Image.fromJson(json);
+SliderModel _$SliderModelFromJson(Map<String, dynamic> json) {
+  return _SliderModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Image {
+mixin _$SliderModel {
   int get id => throw _privateConstructorUsedError;
-  String get url => throw _privateConstructorUsedError;
+  String get photo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ImageCopyWith<Image> get copyWith => throw _privateConstructorUsedError;
+  $SliderModelCopyWith<SliderModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ImageCopyWith<$Res> {
-  factory $ImageCopyWith(Image value, $Res Function(Image) then) =
-      _$ImageCopyWithImpl<$Res, Image>;
+abstract class $SliderModelCopyWith<$Res> {
+  factory $SliderModelCopyWith(
+          SliderModel value, $Res Function(SliderModel) then) =
+      _$SliderModelCopyWithImpl<$Res, SliderModel>;
   @useResult
-  $Res call({int id, String url});
+  $Res call({int id, String photo});
 }
 
 /// @nodoc
-class _$ImageCopyWithImpl<$Res, $Val extends Image>
-    implements $ImageCopyWith<$Res> {
-  _$ImageCopyWithImpl(this._value, this._then);
+class _$SliderModelCopyWithImpl<$Res, $Val extends SliderModel>
+    implements $SliderModelCopyWith<$Res> {
+  _$SliderModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -50,50 +52,54 @@ class _$ImageCopyWithImpl<$Res, $Val extends Image>
   @override
   $Res call({
     Object? id = null,
-    Object? url = null,
+    Object? photo = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ImageCopyWith<$Res> implements $ImageCopyWith<$Res> {
-  factory _$$_ImageCopyWith(_$_Image value, $Res Function(_$_Image) then) =
-      __$$_ImageCopyWithImpl<$Res>;
+abstract class _$$_SliderModelCopyWith<$Res>
+    implements $SliderModelCopyWith<$Res> {
+  factory _$$_SliderModelCopyWith(
+          _$_SliderModel value, $Res Function(_$_SliderModel) then) =
+      __$$_SliderModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String url});
+  $Res call({int id, String photo});
 }
 
 /// @nodoc
-class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
-    implements _$$_ImageCopyWith<$Res> {
-  __$$_ImageCopyWithImpl(_$_Image _value, $Res Function(_$_Image) _then)
+class __$$_SliderModelCopyWithImpl<$Res>
+    extends _$SliderModelCopyWithImpl<$Res, _$_SliderModel>
+    implements _$$_SliderModelCopyWith<$Res> {
+  __$$_SliderModelCopyWithImpl(
+      _$_SliderModel _value, $Res Function(_$_SliderModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
-    Object? url = null,
+    Object? photo = null,
   }) {
-    return _then(_$_Image(
+    return _then(_$_SliderModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -102,62 +108,64 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_Image implements _Image {
-  const _$_Image({this.id = 0, this.url = ""});
+class _$_SliderModel implements _SliderModel {
+  const _$_SliderModel({this.id = 0, this.photo = ""});
 
-  factory _$_Image.fromJson(Map<String, dynamic> json) =>
-      _$$_ImageFromJson(json);
+  factory _$_SliderModel.fromJson(Map<String, dynamic> json) =>
+      _$$_SliderModelFromJson(json);
 
   @override
   @JsonKey()
   final int id;
   @override
   @JsonKey()
-  final String url;
+  final String photo;
 
   @override
   String toString() {
-    return 'Image(id: $id, url: $url)';
+    return 'SliderModel(id: $id, photo: $photo)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Image &&
+            other is _$_SliderModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.url, url) || other.url == url));
+            (identical(other.photo, photo) || other.photo == photo));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, url);
+  int get hashCode => Object.hash(runtimeType, id, photo);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ImageCopyWith<_$_Image> get copyWith =>
-      __$$_ImageCopyWithImpl<_$_Image>(this, _$identity);
+  _$$_SliderModelCopyWith<_$_SliderModel> get copyWith =>
+      __$$_SliderModelCopyWithImpl<_$_SliderModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ImageToJson(
+    return _$$_SliderModelToJson(
       this,
     );
   }
 }
 
-abstract class _Image implements Image {
-  const factory _Image({final int id, final String url}) = _$_Image;
+abstract class _SliderModel implements SliderModel {
+  const factory _SliderModel({final int id, final String photo}) =
+      _$_SliderModel;
 
-  factory _Image.fromJson(Map<String, dynamic> json) = _$_Image.fromJson;
+  factory _SliderModel.fromJson(Map<String, dynamic> json) =
+      _$_SliderModel.fromJson;
 
   @override
   int get id;
   @override
-  String get url;
+  String get photo;
   @override
   @JsonKey(ignore: true)
-  _$$_ImageCopyWith<_$_Image> get copyWith =>
+  _$$_SliderModelCopyWith<_$_SliderModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

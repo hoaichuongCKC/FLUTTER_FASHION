@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter_fashion/app/models/image/image_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_model.freezed.dart';
@@ -14,13 +13,11 @@ class UserModel with _$UserModel {
     @Default("") String fullName,
     @Default("") String phone,
     @Default("") String email,
-    required Image image,
+    @Default("") String photo,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
-  factory UserModel.init() => UserModel(
-        image: Image.init(),
-      );
+  factory UserModel.init() => const UserModel();
 }

@@ -1,4 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, unnecessary_import
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/user/user_event.dart';
@@ -37,8 +39,12 @@ class EditInformationCubit extends Cubit<EditInformationState> {
   void onChangedImage() async {
     final file = await cameraInfo.openGallery();
 
-    if (file != null) {
-      emit(state.copyWith(image: file, status: EditStatus.onChangeValue));
+    final fileCompress = await cameraInfo.compressAndGetFile(
+        File(file.path), "upload",
+        size: const Size(150, 150));
+    if (fileCompress != null) {
+      emit(state.copyWith(
+          image: XFile(fileCompress.path), status: EditStatus.onChangeValue));
     }
   }
 
@@ -84,5 +90,11 @@ class EditInformationCubit extends Cubit<EditInformationState> {
         emit(const EditInformationState());
       },
     );
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
   }
 }

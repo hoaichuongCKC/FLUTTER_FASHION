@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class TopHeaderHome extends StatelessWidget {
   const TopHeaderHome({super.key});
@@ -34,7 +30,10 @@ class TopHeaderHome extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SvgPicture.asset("assets/icons/search.svg"),
+                      IconButton(
+                        onPressed: () => AppRoutes.push(Routes.SEARCH),
+                        icon: SvgPicture.asset("assets/icons/search.svg"),
+                      ),
                       const SizedBox(width: 8.0),
                       SvgPicture.asset("assets/icons/cart.svg"),
                     ],
@@ -43,6 +42,7 @@ class TopHeaderHome extends StatelessWidget {
               ),
               ListTile(
                 dense: true,
+                onTap: () => AppRoutes.push(Routes.SEARCHLOCATION),
                 contentPadding: EdgeInsets.zero,
                 horizontalTitleGap: 6.0,
                 leading: SvgPicture.asset("assets/icons/map_address.svg"),

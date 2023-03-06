@@ -17,10 +17,10 @@ abstract class AuthRepository {
 class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
   final AuthProviderImpl _authProviderImpl;
 
-  AuthRepositoryImpl(
-      {required super.networkInfoImpl,
-      required AuthProviderImpl authProviderImpl})
-      : _authProviderImpl = authProviderImpl;
+  AuthRepositoryImpl({
+    required super.networkInfoImpl,
+    required AuthProviderImpl authProviderImpl,
+  }) : _authProviderImpl = authProviderImpl;
 
   @override
   Future<Either<String, ResponseData>> login(

@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
+import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
+import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
-
 import 'export.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -39,6 +41,15 @@ Future<void> main() async {
       BlocProvider(
         create: (context) => getIt<UserCubit>(),
       ),
+      BlocProvider(
+        create: (context) => getIt<CategoryCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => getIt<BannerCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => getIt<ProductCubit>(),
+      ),
     ],
     child: const MyApp(),
   ));
@@ -57,7 +68,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     //listen connect internet
-    _subscription = Connectivity()
+    _subscription = getIt<Connectivity>()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       getIt<NetworkInfoImpl>().listenChangeNetwork(result);
@@ -81,6 +92,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       switch (state) {
         case AppLifecycleState.paused:
           print("background mode");
+          // getIt.isRegistered()<Connectivity>();
+          // getIt.unregister<ImagePicker>();
+          // if (getIt.isRegistered<CameraInfo>()) {
+          //   getIt.unregister<CameraInfo>();
+          // }
 
           break;
         case AppLifecycleState.resumed:
@@ -101,11 +117,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    //get context root
     return BlocBuilder<ThemeCubit, ThemeState>(
-      key: const ValueKey("theme-cubit"),
       builder: (context, state) {
         return BlocBuilder<LanguageCubit, LanguageState>(
-          key: const ValueKey("language-cubit"),
           builder: (context, languageState) {
             return MaterialApp.router(
               theme: state.isDark ? appThemeDark : appThemeLight,
@@ -114,7 +129,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               scaffoldMessengerKey: AppSnackbarMessenger.scaffoldMessengerKey,
               routerConfig: AppRoutes.router,
               debugShowCheckedModeBanner: false,
-              locale: languageState.locale,
+              locale: languageState.isVietnamese
+                  ? const Locale('vi', 'VN')
+                  : const Locale('en', 'US'),
               title: 'App Fashion',
             );
           },

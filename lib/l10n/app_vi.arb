@@ -262,6 +262,17 @@
         "example": "Bob"
       }
     }
+  },
+
+  "enter_the": "Nhập {tag}",
+  "@enter_the": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "tag": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
   }
 
 }

@@ -29,16 +29,11 @@ class UserProviderImpl extends UserProvider {
   Future<UserModel> me() async {
     var response = await _apiService.post(ApiEndpoint.me);
 
-    final data = await response.stream.bytesToString();
-
-    if (response.statusCode == 401) {
-      _apiService.clearHeader();
-      throw AuthenticatedException();
-    } else {
-      if (response.statusCode != 200) {
-        throw ServerException();
-      }
+    if (response.statusCode != 200) {
+      throw ServerException();
     }
+
+    final data = await response.stream.bytesToString();
 
     return UserModel.fromJson(jsonDecode(data)["data"]);
   }
@@ -53,11 +48,7 @@ class UserProviderImpl extends UserProvider {
     );
     final data = jsonDecode(await response.stream.bytesToString());
 
-    if (response.statusCode == 401) {
-      //404 status unauthories token expired
-      _apiService.clearHeader();
-      throw AuthenticatedException();
-    } else if (response.statusCode == 201) {
+    if (response.statusCode == 201) {
       throw Exception(data["error"]);
     } else {
       if (response.statusCode != 200) {
