@@ -41,7 +41,7 @@ class PromotionList extends StatelessWidget {
                           "assets/images/promotion_card.svg",
                           fit: BoxFit.fill,
                           placeholderBuilder: (context) =>
-                              const CircularProgressIndicator(),
+                              ColoredBox(color: skeletonColor),
                         ),
                         Positioned(
                           top: 3,

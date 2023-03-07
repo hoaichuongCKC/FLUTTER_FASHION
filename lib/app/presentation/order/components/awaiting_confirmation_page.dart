@@ -1,5 +1,4 @@
-import 'package:flutter_fashion/app/presentation/login/export.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
+import '../../../../export.dart';
 
 class AwaitingConfirmationPage extends StatelessWidget {
   const AwaitingConfirmationPage({super.key});

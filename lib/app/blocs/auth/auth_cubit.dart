@@ -94,8 +94,8 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
       },
       (dataReposonse) {
         if (dataReposonse.status) {
-          HydratedBloc.storage.delete(KeyStorage.token);
           AppRoutes.go(Routes.LOGIN);
+          HydratedBloc.storage.delete(KeyStorage.token);
           emit(const AuthState());
         }
       },

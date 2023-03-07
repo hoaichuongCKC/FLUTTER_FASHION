@@ -11,7 +11,9 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   CategoryCubit({required ProductRepositoryImpl productRepositoryImpl})
       : _productRepositoryImpl = productRepositoryImpl,
-        super(const CategoryState.initial());
+        super(const CategoryState.initial()) {
+    fetchData();
+  }
   bool _isLoaded = false;
   void fetchData() async {
     if (!isClosed && !_isLoaded) {
@@ -30,6 +32,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   }
 
   void onRefresh() async {
+    emit(const CategoryState.loading());
     final result = await _productRepositoryImpl.fetchCategory();
 
     result.fold(

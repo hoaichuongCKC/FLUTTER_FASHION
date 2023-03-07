@@ -100,3 +100,68 @@ class ItemProduct extends StatelessWidget {
     );
   }
 }
+
+class ItemProductSkeleton extends StatelessWidget {
+  const ItemProductSkeleton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 250.0,
+      width: 150,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+            child: AspectRatio(
+              aspectRatio: 4 / 3,
+              child: ColoredBox(
+                color: skeletonColor,
+                child: const SizedBox(),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            fit: FlexFit.tight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: ColoredBox(
+                    color: skeletonColor,
+                    child: const SizedBox(),
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: ColoredBox(
+                    color: skeletonColor,
+                    child: const SizedBox(),
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: ColoredBox(
+                    color: skeletonColor,
+                    child: const SizedBox(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

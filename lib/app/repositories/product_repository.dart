@@ -7,6 +7,7 @@ import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 abstract class ProductRepository {
   Future<Either<String, List<CategoryModel>>> fetchCategory();
   Future<Either<String, List<ProductModel>>> fetchListProduct(int page);
+  Future<List<ProductModel>> fetchListMoreProduct(int page);
 }
 
 class ProductRepositoryImpl extends BaseRepository
@@ -36,5 +37,10 @@ class ProductRepositoryImpl extends BaseRepository
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<List<ProductModel>> fetchListMoreProduct(int page) async {
+    return await _productProviderImpl.fetchListProduct(page);
   }
 }

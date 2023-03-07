@@ -23,12 +23,16 @@ class PopularSearchHome extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-            child: Text(
-              'Popular Search',
-              style: PrimaryFont.instance.large(),
+            child: ListTile(
+              dense: true,
+              minVerticalPadding: 0,
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                'Tìm kiếm phổ biến',
+                style: PrimaryFont.instance.large(),
+              ),
             ),
           ),
-          const SizedBox(height: 8.0),
           SizedBox(
             height: 110,
             child: GridView.builder(

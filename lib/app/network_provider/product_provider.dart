@@ -40,7 +40,12 @@ class ProductProviderImpl extends ProductProvider {
     if (response.statusCode != 200) {
       throw ServerException();
     }
+    final dataConvert = (jsonDecode(data)["data"]);
 
-    return ProductModel.productModelFromJson((jsonDecode(data)["data"]));
+    if (dataConvert == null) {
+      return [];
+    }
+
+    return ProductModel.productModelFromJson(dataConvert);
   }
 }

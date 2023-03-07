@@ -39,12 +39,33 @@ class ProductCategoriesHome extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-              child: Text(
-                'Product Categories',
-                style: PrimaryFont.instance.large(),
+              child: ListTile(
+                dense: true,
+                minVerticalPadding: 0,
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  'Danh mục sản phẩm',
+                  style: PrimaryFont.instance.large(),
+                ),
+                trailing: InkWell(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Xem tất cả',
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 12.0,
+                          color: primaryColor,
+                        ),
+                      ),
+                      const Icon(Icons.arrow_right,
+                          size: 25.0, color: primaryColor),
+                    ],
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 8.0),
             SizedBox(
               height: 100,
               child: ListView.builder(

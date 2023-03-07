@@ -19,7 +19,7 @@ class TopHeaderHome extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Welcome,\nSherlock Holmes!',
+                      'Chào mừng\nđến Kira Fashion!',
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 22.0,
                         color: darkColor,
@@ -44,14 +44,19 @@ class TopHeaderHome extends StatelessWidget {
                 dense: true,
                 onTap: () => AppRoutes.push(Routes.SEARCHLOCATION),
                 contentPadding: EdgeInsets.zero,
-                horizontalTitleGap: 6.0,
+                horizontalTitleGap: 0.0,
                 leading: SvgPicture.asset("assets/icons/map_address.svg"),
-                title: Text(
-                  'Update your address....',
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 16.0,
-                    color: darkColor.withOpacity(0.6),
-                    fontWeight: FontWeight.w300,
+                title: SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      'Cập nhật địa chỉ của bạn',
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        color: darkColor.withOpacity(0.6),
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
                   ),
                 ),
               )

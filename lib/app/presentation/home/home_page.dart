@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
@@ -8,7 +7,9 @@ import 'package:flutter_fashion/app/presentation/home/components/popular_search.
 import 'package:flutter_fashion/app/presentation/home/components/product_categories.dart';
 import 'package:flutter_fashion/app/presentation/home/components/product_recommend.dart';
 import 'package:flutter_fashion/app/presentation/home/components/top_header.dart';
+import 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
+import 'package:flutter_fashion/common/components/item_product.dart';
 import 'package:flutter_fashion/core/base/error/ui.dart';
 
 import 'components/promotions.dart';
@@ -21,16 +22,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late BannerCubit _bannerCubit;
-  late CategoryCubit _categoryCubit;
-  late ProductCubit _productCubit;
+  late ScrollController _scrollController;
+  late LoadMoreProductBloc _loadMoreProductController;
 
   @override
   void initState() {
+    _loadMoreProductController = LoadMoreProductBloc();
+    _scrollController = ScrollController()
+      ..addListener(() {
+        _loadMoreProductController.handleScrollNotification(_scrollController);
+      });
     super.initState();
-    _bannerCubit = BlocProvider.of<BannerCubit>(context)..fetchData(context);
-    _categoryCubit = BlocProvider.of<CategoryCubit>(context)..fetchData();
-    _productCubit = BlocProvider.of<ProductCubit>(context)..fetchData();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(() =>
+        _loadMoreProductController.handleScrollNotification(_scrollController));
+    _loadMoreProductController.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,11 +49,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: scaffoldBackgroundColor,
       body: RefreshIndicator(
         onRefresh: () async {
-          _bannerCubit.onRefresh();
-          _categoryCubit.onRefresh();
-          _productCubit.onRefresh();
+          context.read<BannerCubit>().onRefresh();
+          context.read<CategoryCubit>().onRefresh();
+          context.read<ProductCubit>().onRefresh();
         },
         child: CustomScrollView(
+          controller: _scrollController,
           slivers: [
             const TopHeaderHome(),
             BlocBuilder<BannerCubit, BannerState>(
@@ -87,14 +98,31 @@ class _HomePageState extends State<HomePage> {
                 return state.when(
                   initial: () => const SliverToBoxAdapter(),
                   loading: () => const SliverToBoxAdapter(
-                      child: CircularProgressIndicator()),
+                    child: ItemProductSkeleton(),
+                  ),
                   error: (String error) =>
                       SliverToBoxAdapter(child: Center(child: Text(error))),
-                  fetchCompleted: (List<ProductModel> list) =>
-                      ProductRecommend(listProduct: list),
+                  fetchCompleted: (List<ProductModel> list) => ProductRecommend(
+                      listProduct: list,
+                      loadMoreProductbloc: _loadMoreProductController),
                 );
               },
             ),
+            const SliverToBoxAdapter(child: SizedBox(height: 15)),
+            StreamBuilder(
+              stream: _loadMoreProductController.isLoading,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const SliverToBoxAdapter();
+                }
+                if (snapshot.data!) {
+                  return const SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()));
+                }
+                return const SliverToBoxAdapter();
+              },
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 15)),
           ],
         ),
       ),

@@ -163,7 +163,7 @@ class BannerErrorHome extends StatelessWidget {
             ButtonWidget(
               height: 40.0,
               width: 100.0,
-              onPressed: () => context.read<BannerCubit>().fetchData(context),
+              onPressed: () => context.read<BannerCubit>().fetchData(),
               btnColor: primaryColor,
               labelWidget: Text(
                 "Try reload",

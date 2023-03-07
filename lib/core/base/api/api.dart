@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ApiService {
   static const String hostDomain =
-      "https://0359-2405-4802-a21f-43c0-f5a9-c324-ea5c-9488.ap.ngrok.io";
+      "https://abd3-2405-4802-a21f-43c0-586d-ae32-cd29-9e8e.ap.ngrok.io";
 
   static const String imageUrl = "$hostDomain/storage/";
 
@@ -55,11 +55,9 @@ class ApiService {
     if (kDebugMode) {
       if (isRequestHeader) {
         if (_headers.isEmpty) {
-          print("đang khởi tạo lại header do header == null");
           _initHeader();
         }
       }
-      print("endpoint: $url,header api: $_headers");
     }
 
     final uri = Uri.parse("$baseUrl$url");

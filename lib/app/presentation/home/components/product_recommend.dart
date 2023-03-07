@@ -1,38 +1,15 @@
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 
-class ProductRecommend extends StatefulWidget {
-  const ProductRecommend({super.key, required this.listProduct});
+class ProductRecommend extends StatelessWidget {
+  const ProductRecommend(
+      {super.key,
+      required this.listProduct,
+      required this.loadMoreProductbloc});
   final List<ProductModel> listProduct;
-  @override
-  State<ProductRecommend> createState() => _ProductRecommendState();
-}
-
-class _ProductRecommendState extends State<ProductRecommend> {
-  late ScrollController _scrollController;
-  final GlobalKey keyAreaProduct = GlobalKey();
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()..addListener(_loadMore);
-  }
-
-  void _loadMore() {
-    final renderbox =
-        keyAreaProduct.currentContext!.findRenderObject() as RenderBox;
-    final offset = renderbox.localToGlobal(Offset.zero);
-    print(offset.dy);
-    // _productCubit.loadMoreProducts(_scrollController);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _scrollController.removeListener(_loadMore);
-    super.dispose();
-  }
-
+  final LoadMoreProductBloc loadMoreProductbloc;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -41,14 +18,35 @@ class _ProductRecommendState extends State<ProductRecommend> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Product Recommend',
-              style: PrimaryFont.instance.large(),
+            ListTile(
+              dense: true,
+              minVerticalPadding: 0,
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                'Product Recommend',
+                style: PrimaryFont.instance.large(),
+              ),
+              trailing: InkWell(
+                onTap: () {},
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Xem tất cả',
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 12.0,
+                        color: primaryColor,
+                      ),
+                    ),
+                    const Icon(Icons.arrow_right,
+                        size: 25.0, color: primaryColor),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 8.0),
             GridView.builder(
-              itemCount: widget.listProduct.length,
-              controller: _scrollController,
+              itemCount: listProduct.length,
+              // controller: _scrollController,
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
@@ -60,7 +58,41 @@ class _ProductRecommendState extends State<ProductRecommend> {
                 mainAxisExtent: 255.0,
               ),
               itemBuilder: (context, index) {
-                return ItemProduct(product: widget.listProduct[index]);
+                return ItemProduct(product: listProduct[index]);
+              },
+            ),
+            StreamBuilder(
+              stream: loadMoreProductbloc.getProductStream,
+              builder: (context, snapshot) {
+                print(snapshot.data);
+                print(snapshot.connectionState);
+                print("has data: ${snapshot.hasData}");
+                if (!snapshot.hasData) {
+                  return const SizedBox();
+                }
+                if (snapshot.connectionState == ConnectionState.active &&
+                    snapshot.hasData &&
+                    snapshot.data!.isNotEmpty) {
+                  return GridView.builder(
+                    itemCount: snapshot.data!.length,
+                    // controller: _scrollController,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 2 / 4,
+                      mainAxisExtent: 255.0,
+                    ),
+                    itemBuilder: (context, index) {
+                      return ItemProduct(product: snapshot.data![index]);
+                    },
+                  );
+                }
+                return const SizedBox();
               },
             ),
           ],

@@ -57,7 +57,7 @@ dependencies:
   firebase_messaging: ^14.2.5
 
   #handle animation logic ui
-  rxdart: ^0.27.7
+  rxdart:
 
   #local_storage
   flutter_secure_storage: ^8.0.0
