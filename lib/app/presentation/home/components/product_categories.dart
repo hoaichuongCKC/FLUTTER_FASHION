@@ -31,7 +31,7 @@ class ProductCategoriesHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(vertical: verticalPadding + 1),
+      padding: const EdgeInsets.symmetric(vertical: 0),
       sliver: SliverToBoxAdapter(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

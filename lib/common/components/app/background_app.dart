@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fashion/app/blocs/theme/theme_cubit.dart';
@@ -16,7 +18,7 @@ class AppBackgroundBlur extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final ScreenType type;
 
-  const AppBackgroundBlur.normal({
+  AppBackgroundBlur.normal({
     super.key,
     this.leading,
     this.actions,
@@ -24,9 +26,12 @@ class AppBackgroundBlur extends StatelessWidget {
     required this.child,
     this.type = ScreenType.normal,
     this.bottomNavigationBar,
-  });
+    Widget? floatingActionButton,
+  }) : _floatingActionButon = floatingActionButton;
 
-  const AppBackgroundBlur.titleCenter({
+  Widget? _floatingActionButon;
+
+  AppBackgroundBlur.titleCenter({
     super.key,
     this.leading,
     this.actions,
@@ -43,6 +48,7 @@ class AppBackgroundBlur extends StatelessWidget {
       return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
+          floatingActionButton: _floatingActionButon,
           bottomNavigationBar: bottomNavigationBar,
           body: Stack(
             fit: StackFit.passthrough,
@@ -68,7 +74,7 @@ class AppBackgroundBlur extends StatelessWidget {
                     children: [
                       _buildAppBar(context),
                       const SizedBox(height: 15.0),
-                      child,
+                      Expanded(child: child),
                     ],
                   ),
                 ),
@@ -81,6 +87,7 @@ class AppBackgroundBlur extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        extendBody: true,
         body: Stack(
           fit: StackFit.passthrough,
           children: [

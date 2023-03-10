@@ -36,8 +36,8 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const ConstrainedBoxWidget(
-                minHeight: 100,
-                maxHeight: 150,
+                minHeight: 60,
+                maxHeight: 80,
                 currentHeight: 0.15,
               ),
               SvgPicture.asset(

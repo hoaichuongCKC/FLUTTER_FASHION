@@ -12,7 +12,7 @@ const Color disablePrimaryColor = Color(0xFFE4EBF5);
 
 const Color lightColor = Color(0xFFFFFFFF);
 
-const Color successfullyColor = Color(0xFF39DF67);
+const Color successfullyColor = Color.fromARGB(255, 40, 179, 79);
 
 Color disableDarkColor = darkColor.withOpacity(0.3);
 

@@ -8,6 +8,7 @@ abstract class ProductRepository {
   Future<Either<String, List<CategoryModel>>> fetchCategory();
   Future<Either<String, List<ProductModel>>> fetchListProduct(int page);
   Future<List<ProductModel>> fetchListMoreProduct(int page);
+  Future<Either<String, List<ProductModel>>> fetchPopularSearch();
 }
 
 class ProductRepositoryImpl extends BaseRepository
@@ -42,5 +43,15 @@ class ProductRepositoryImpl extends BaseRepository
   @override
   Future<List<ProductModel>> fetchListMoreProduct(int page) async {
     return await _productProviderImpl.fetchListProduct(page);
+  }
+
+  @override
+  Future<Either<String, List<ProductModel>>> fetchPopularSearch() async {
+    final result = await baseRepo<List<ProductModel>>(
+      excuteFunction: () async {
+        return await _productProviderImpl.fetchPopularSearch();
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 }

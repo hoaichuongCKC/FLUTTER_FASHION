@@ -18,9 +18,9 @@ final List<ProfileFeatureModel> listFeatureFirst = [
     color: const Color(0xFF39DF67),
   ),
   ProfileFeatureModel(
-    label: "Báo cáo",
-    imageUrl: "${appUrlAssets}report.svg",
-    path: Routes.REPORT,
+    label: "Địa chỉ",
+    imageUrl: "assets/icons/map_address.svg",
+    path: Routes.ADDRESSMANAGEMENT,
     color: const Color(0xFFF23859),
   ),
 ];

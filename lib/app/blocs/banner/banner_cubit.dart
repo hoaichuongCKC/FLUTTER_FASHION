@@ -13,9 +13,7 @@ class BannerCubit extends Cubit<BannerState> {
   final BannerRepositoryImpl _bannerRepositoryImpl;
   BannerCubit({required BannerRepositoryImpl bannerRepositoryImpl})
       : _bannerRepositoryImpl = bannerRepositoryImpl,
-        super(const BannerState.initial()) {
-    fetchData();
-  }
+        super(const BannerState.initial());
   bool _isFirstLoad = false;
   void fetchData() async {
     if (!isClosed && !_isFirstLoad) {

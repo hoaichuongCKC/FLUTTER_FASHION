@@ -1,18 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
+import 'package:flutter_fashion/app/models/product/product.dart';
 
-const List _rangeColor = [
-  disablePrimaryColor,
-  Color(0xFFFFCCCC),
-  Color(0xFFEDEBA8),
-  Color(0xFFE2CDEC),
-];
+import '../../../../core/base/api/api.dart';
+import '../../../../export.dart';
 
 class PopularSearchHome extends StatelessWidget {
-  const PopularSearchHome({super.key});
-
+  const PopularSearchHome({super.key, required this.listProduct});
+  final List<ProductModel> listProduct;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -36,7 +29,7 @@ class PopularSearchHome extends StatelessWidget {
           SizedBox(
             height: 110,
             child: GridView.builder(
-              itemCount: 4,
+              itemCount: listProduct.length,
               shrinkWrap: true,
               padding:
                   const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
@@ -49,46 +42,113 @@ class PopularSearchHome extends StatelessWidget {
                 mainAxisExtent: 50.0,
               ),
               itemBuilder: (context, index) {
-                return Row(
-                  children: [
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: _rangeColor[index],
-                      ),
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Image.asset("assets/images/test/shoes.png"),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Giày Nike',
-                              style: PrimaryFont.instance.small()),
-                          const SizedBox(height: 6.0),
-                          Text(
-                            '200 numbers of searches',
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 9.0,
-                              height: 1.0,
-                              fontWeight: FontWeight.w300,
-                              color: const Color(0xFFFFBF9D),
-                            ),
+                final data = listProduct[index];
+                return InkWell(
+                  onTap: () {},
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: CachedNetworkImage(
+                            imageUrl: ApiService.imageUrl +
+                                data.product_detail[0].photo,
+                            fit: BoxFit.fill,
+                            httpHeaders: getIt<ApiService>().headers,
+                            placeholder: (context, url) {
+                              return ColoredBox(
+                                color: skeletonColor,
+                                child: const SizedBox(),
+                              );
+                            },
                           ),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                data.name,
+                                style: PrimaryFont.instance.small(),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                            const SizedBox(height: 6.0),
+                            Text(
+                              '${data.view} lượt tìm kiếm',
+                              style: PrimaryFont.instance.copyWith(
+                                fontSize: 9.0,
+                                height: 1.0,
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromARGB(255, 240, 157, 113),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               },
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class PopularSearchSkeleton extends StatelessWidget {
+  const PopularSearchSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+          child: ColoredBox(
+            color: skeletonColor,
+            child: const SizedBox(
+              width: 60,
+              height: 15.0,
+            ),
+          ),
+        ),
+        const SizedBox(height: 15.0),
+        SizedBox(
+          height: 110,
+          child: GridView.builder(
+            itemCount: 4,
+            shrinkWrap: true,
+            padding:
+                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 16 / 9,
+              mainAxisExtent: 50.0,
+            ),
+            itemBuilder: (context, index) {
+              return ColoredBox(color: skeletonColor);
+            },
+          ),
+        ),
+      ],
     );
   }
 }

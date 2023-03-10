@@ -8,6 +8,7 @@ import 'package:flutter_fashion/core/base/exception/exception.dart';
 abstract class ProductProvider {
   Future<List<CategoryModel>> fetchCategory();
   Future<List<ProductModel>> fetchListProduct(int page);
+  Future<List<ProductModel>> fetchPopularSearch();
 }
 
 class ProductProviderImpl extends ProductProvider {
@@ -34,6 +35,24 @@ class ProductProviderImpl extends ProductProvider {
   Future<List<ProductModel>> fetchListProduct(int page) async {
     var response =
         await _apiService.post("${ApiEndpoint.fetchProduct}?page=$page");
+
+    final data = await response.stream.bytesToString();
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+    final dataConvert = (jsonDecode(data)["data"]);
+
+    if (dataConvert == null) {
+      return [];
+    }
+
+    return ProductModel.productModelFromJson(dataConvert);
+  }
+
+  @override
+  Future<List<ProductModel>> fetchPopularSearch() async {
+    var response = await _apiService.post(ApiEndpoint.fetchPopularSearch);
 
     final data = await response.stream.bytesToString();
 

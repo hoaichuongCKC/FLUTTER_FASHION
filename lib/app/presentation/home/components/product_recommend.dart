@@ -23,7 +23,7 @@ class ProductRecommend extends StatelessWidget {
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
-                'Product Recommend',
+                'Gợi ý sản phẩm',
                 style: PrimaryFont.instance.large(),
               ),
               trailing: InkWell(
@@ -64,9 +64,6 @@ class ProductRecommend extends StatelessWidget {
             StreamBuilder(
               stream: loadMoreProductbloc.getProductStream,
               builder: (context, snapshot) {
-                print(snapshot.data);
-                print(snapshot.connectionState);
-                print("has data: ${snapshot.hasData}");
                 if (!snapshot.hasData) {
                   return const SizedBox();
                 }

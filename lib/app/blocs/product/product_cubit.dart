@@ -10,9 +10,7 @@ class ProductCubit extends Cubit<ProductState> {
   final ProductRepositoryImpl _productRepositoryImpl;
   ProductCubit({required ProductRepositoryImpl productRepositoryImpl})
       : _productRepositoryImpl = productRepositoryImpl,
-        super(const ProductState.initial()) {
-    fetchData(1);
-  }
+        super(const ProductState.initial());
   bool _isLoaded = false;
 
   Future<void> fetchData([int? page]) async {

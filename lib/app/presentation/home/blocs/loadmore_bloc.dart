@@ -12,6 +12,9 @@ class LoadMoreProductBloc {
   bool _isLoading = false;
 
   bool _hasMoreData = true;
+
+  late List<ProductModel> _listProduct;
+
   //
   late BehaviorSubject<bool> _isLoadingSubject;
 
@@ -27,9 +30,11 @@ class LoadMoreProductBloc {
   }) {
     _isLoadingSubject = BehaviorSubject<bool>.seeded(_isLoading);
     _productSubject = BehaviorSubject<List<ProductModel>>.seeded([]);
+    _listProduct = [];
   }
 
   void dispose() {
+    _productSubject.close();
     _isLoadingSubject.close();
   }
 
@@ -55,7 +60,17 @@ class LoadMoreProductBloc {
       _isLoadingSubject.add(_isLoading);
 
       if (data.isEmpty) return;
-      _productSubject.add(data);
+
+      _listProduct.addAll(data);
+
+      _productSubject.add(_listProduct);
     }
+  }
+
+  onRefresh() {
+    _listProduct.clear();
+    _page = 1;
+    _hasMoreData = true;
+    _productSubject.add(_listProduct);
   }
 }

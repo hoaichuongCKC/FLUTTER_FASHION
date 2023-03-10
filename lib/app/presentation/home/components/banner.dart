@@ -75,7 +75,6 @@ class _BannerHomeState extends State<BannerHome> {
               width: double.maxFinite,
               height: 165.0,
               child: PageView.builder(
-                key: const PageStorageKey("banner-page"),
                 controller: _pageController,
                 itemCount: widget.bannerList.length,
                 itemBuilder: (ctx, index) {
@@ -86,6 +85,8 @@ class _BannerHomeState extends State<BannerHome> {
                       imageUrl:
                           ApiService.imageUrl + widget.bannerList[index].photo,
                       fit: BoxFit.fill,
+                      key: ValueKey(
+                          ApiService.imageUrl + widget.bannerList[index].photo),
                       httpHeaders: getIt<ApiService>().headers,
                     ),
                   );

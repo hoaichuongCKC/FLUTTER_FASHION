@@ -28,7 +28,6 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
         final data = await _authProviderImpl.login(phone, password);
-
         HydratedBloc.storage.write(KeyStorage.token, data.data);
 
         return data;

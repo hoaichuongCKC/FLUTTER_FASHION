@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/edit_information/edit_information_cubit.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
 import 'package:flutter_fashion/app/presentation/profile/profile_data.dart';
@@ -44,24 +45,6 @@ class ProfilePage extends StatelessWidget {
                   );
                 }),
               ],
-            ),
-            floatingActionButton: InkWell(
-              // onTap: () => context
-              //   .read<AuthCubit>()
-              //    .call(AuthEvent.loggout, context: context),
-              borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
-              customBorder: const CircleBorder(),
-              child: SizedBox(
-                width: 65,
-                height: 65,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    SvgPicture.asset("assets/icons/profile/float_btn.svg"),
-                    Align(child: SvgPicture.asset("assets/icons/edit.svg")),
-                  ],
-                ),
-              ),
             ),
             child: SafeArea(
               child: RefreshIndicator(

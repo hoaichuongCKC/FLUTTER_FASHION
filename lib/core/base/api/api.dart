@@ -7,8 +7,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ApiService {
-  static const String hostDomain =
-      "https://abd3-2405-4802-a21f-43c0-586d-ae32-cd29-9e8e.ap.ngrok.io";
+  static const String hostDomain ="http://10.0.2.2:8000";
 
   static const String imageUrl = "$hostDomain/storage/";
 

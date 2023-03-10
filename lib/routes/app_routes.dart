@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter_fashion/app/presentation/location_seach/location_search_screen.dart';
+import 'package:flutter_fashion/app/presentation/location_management/location_management_page.dart';
 import 'package:flutter_fashion/app/presentation/order/order_page.dart';
 import 'package:flutter_fashion/app/presentation/otp/otp_page.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
@@ -19,6 +19,7 @@ import 'package:flutter_fashion/routes/observer.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../app/presentation/cart/cart_page.dart';
+import '../app/presentation/create_address/create_address_page.dart';
 
 abstract class Routes {
   Routes._();
@@ -37,7 +38,7 @@ abstract class Routes {
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const SEARCH = _Paths.SEARCH;
   static const CART = _Paths.CART;
-  static const SEARCHLOCATION = _Paths.SEARCHLOCATION;
+  static const ADDRESSMANAGEMENT = _Paths.LOCATION_MANAGEMENT;
 
   //page second
   static const SETTING = _Paths.SETTING;
@@ -62,7 +63,7 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const SEARCH = '/search';
   static const CART = '/cart';
-  static const SEARCHLOCATION = '/search-location';
+  static const LOCATION_MANAGEMENT = '/location';
 
   //second
   static const SETTING = '/setting';
@@ -125,12 +126,12 @@ class AppRoutes {
         ),
       ),
       GoRoute(
-        path: Routes.SEARCHLOCATION,
+        path: Routes.ADDRESSMANAGEMENT,
         parentNavigatorKey: Routes.navigatorKey,
         pageBuilder: (context, state) {
-          return FadeTransitionPage<SearchLocationPage>(
+          return FadeTransitionPage<LocationManagementPage>(
             key: state.pageKey,
-            child: const SearchLocationPage(),
+            child: const LocationManagementPage(),
           );
         },
       ),

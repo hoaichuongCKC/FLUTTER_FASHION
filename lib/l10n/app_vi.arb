@@ -45,8 +45,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "report": "Báo cáo",
-  "@report": {
+  "address": "Địa chỉ",
+  "@address": {
     "description": "Không hiểu gì cả"
   },
 

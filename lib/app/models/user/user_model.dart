@@ -9,6 +9,7 @@ part 'user_model.g.dart';
 class UserModel with _$UserModel {
   @JsonSerializable(explicitToJson: true)
   const factory UserModel({
+    @Default(0) int id,
     @Default("") String username,
     @Default("") String fullName,
     @Default("") String phone,

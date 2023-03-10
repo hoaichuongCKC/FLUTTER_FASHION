@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/blocs/user/user_event.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -34,12 +35,10 @@ class UserCubit extends Cubit<UserState> {
     if (!isLoaded) {
       emit(const UserState.loading());
       final result = await _userRepositoryImpl.me();
-
       result.fold(
         (String error) async => _handleError(context, error),
         (userModel) {
           isLoaded = true;
-
           emit(UserState.fetchCompleted(userModel));
         },
       );

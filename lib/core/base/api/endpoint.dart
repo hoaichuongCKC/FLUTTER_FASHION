@@ -12,4 +12,5 @@ class ApiEndpoint {
   static const String fetchCategory = "cate/fetch-categories";
 
   static const String fetchProduct = "product/fetch-product-all";
+  static const String fetchPopularSearch = "product/fetch-popular-search";
 }

@@ -49,8 +49,8 @@ extension StringX on String {
         return AppLocalizations.of(context)!.order;
       case Routes.MESSENGER:
         return AppLocalizations.of(context)!.messenger;
-      case Routes.REPORT:
-        return AppLocalizations.of(context)!.report;
+      case Routes.ADDRESSMANAGEMENT:
+        return AppLocalizations.of(context)!.address;
       case Routes.FAVORITE:
         return AppLocalizations.of(context)!.favorite;
       case Routes.SETTING:

@@ -60,9 +60,7 @@ class PersonalInformationPage extends StatelessWidget {
             ? BlocBuilder<UserCubit, UserState>(
                 builder: (context, state) {
                   return state.whenOrNull(
-                    fetchCompleted: (user) => SingleChildScrollView(
-                      child: LightPersonalBody(user: user),
-                    ),
+                    fetchCompleted: (user) => LightPersonalBody(user: user),
                   )!;
                 },
               )

@@ -33,7 +33,7 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,15 +64,18 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
                       return ConstrainedBox(
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.3,
-                          maxHeight: MediaQuery.of(context).size.height * 0.3,
+                          maxHeight: MediaQuery.of(context).size.width * 0.3,
                           minWidth: 60,
                           minHeight: 60,
                         ).normalize(),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(100),
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                            child: fileWidget,
                           ),
-                          child: fileWidget,
                         ),
                       );
                     }
@@ -138,17 +141,18 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
             context,
             title: AppLocalizations.of(context)!.fullname,
             col: BlocBuilder<EditInformationCubit, EditInformationState>(
-                buildWhen: (previous, current) =>
-                    previous.fullname != current.fullname,
-                builder: (context, state) {
-                  return TextFieldApp(
-                    isOnchanged: state.fullname.isNotEmpty,
-                    controller: fullnameController,
-                    onChanged: (value) => context
-                        .read<EditInformationCubit>()
-                        .onChangedFullname(value!),
-                  );
-                }),
+              buildWhen: (previous, current) =>
+                  previous.fullname != current.fullname,
+              builder: (context, state) {
+                return TextFieldApp(
+                  isOnchanged: state.fullname.isNotEmpty,
+                  controller: fullnameController,
+                  onChanged: (value) => context
+                      .read<EditInformationCubit>()
+                      .onChangedFullname(value!),
+                );
+              },
+            ),
           ),
           const SizedBox(height: 40),
           _buildItem(

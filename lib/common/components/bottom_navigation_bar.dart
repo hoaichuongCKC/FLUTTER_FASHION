@@ -50,8 +50,8 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
       height: size.height * 0.1,
       color: lightColor,
       constraints: const BoxConstraints(
-        maxHeight: 60.0,
-        minHeight: 50,
+        maxHeight: 50.0,
+        minHeight: 45,
       ),
       child: Stack(
         fit: StackFit.expand,
@@ -70,8 +70,8 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
                       scale: currentPage == index ? 1.0 : 0.8,
                       child: SvgPicture.asset(
                         bottomData[index].urlIcon,
-                        width: 25,
-                        height: 25,
+                        width: 20,
+                        height: 20,
                         color: currentPage == index
                             ? primaryColor
                             : darkColor.withOpacity(0.5),

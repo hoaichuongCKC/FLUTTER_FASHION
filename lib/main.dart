@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
+import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'export.dart';
@@ -49,6 +51,9 @@ Future<void> main() async {
       ),
       BlocProvider(
         create: (context) => getIt<ProductCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => getIt<PopularSearchCubit>(),
       ),
     ],
     child: const MyApp(),
