@@ -63,7 +63,7 @@ warningAlert(
                           width: 60,
                           animate: false,
                           onPressed: () {
-                            AppRoutes.pop();
+                            AppRoutes.router.pop();
                             onPressed();
                           },
                           btnColor: primaryColor,

@@ -142,8 +142,17 @@ class _HomePageState extends State<HomePage> {
                   return const SliverToBoxAdapter();
                 }
                 if (snapshot.data!) {
-                  return const SliverToBoxAdapter(
-                      child: Center(child: CircularProgressIndicator()));
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text(
+                        'đang tải...',
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 12.0,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                  );
                 }
                 return const SliverToBoxAdapter();
               },

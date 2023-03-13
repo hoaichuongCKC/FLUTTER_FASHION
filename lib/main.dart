@@ -1,10 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
+import 'package:flutter_fashion/app/blocs/search_history/search_history_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/app/presentation/category/blocs/category_bloc.dart';
 import 'export.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -16,11 +17,17 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
@@ -55,6 +62,9 @@ Future<void> main() async {
       BlocProvider(
         create: (context) => getIt<PopularSearchCubit>(),
       ),
+      BlocProvider(
+        create: (context) => getIt<SearchHistoryCubit>(),
+      ),
     ],
     child: const MyApp(),
   ));
@@ -80,44 +90,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
 
     //register
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(AppLifecycleObserver());
     super.initState();
   }
 
   @override
   void dispose() {
     _subscription.cancel();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(AppLifecycleObserver());
     super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (kDebugMode) {
-      switch (state) {
-        case AppLifecycleState.paused:
-          print("background mode");
-          // getIt.isRegistered()<Connectivity>();
-          // getIt.unregister<ImagePicker>();
-          // if (getIt.isRegistered<CameraInfo>()) {
-          //   getIt.unregister<CameraInfo>();
-          // }
-
-          break;
-        case AppLifecycleState.resumed:
-          print("foreground mode");
-
-          break;
-        case AppLifecycleState.inactive:
-          print("inactive");
-          break;
-        case AppLifecycleState.detached:
-          print("detached");
-          break;
-        default:
-      }
-    }
-    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -143,5 +124,38 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         );
       },
     );
+  }
+}
+
+class AppLifecycleObserver extends WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (kDebugMode) {
+      switch (state) {
+        case AppLifecycleState.paused:
+          print("background mode");
+          // getIt.isRegistered()<Connectivity>();
+          // getIt.unregister<ImagePicker>();
+          // if (getIt.isRegistered<CameraInfo>()) {
+          //   getIt.unregister<CameraInfo>();
+          // }
+
+          break;
+        case AppLifecycleState.resumed:
+          print("foreground mode");
+          break;
+        case AppLifecycleState.inactive:
+          print("inactive");
+          break;
+        case AppLifecycleState.detached:
+          print("detached");
+          if (getIt.isRegistered<CategoryPageBloc>()) {
+            getIt<CategoryPageBloc>().dispose();
+          }
+          break;
+        default:
+      }
+    }
   }
 }

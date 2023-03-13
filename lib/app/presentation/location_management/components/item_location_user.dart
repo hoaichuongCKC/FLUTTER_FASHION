@@ -1,8 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/core/models/address.dart';
-
 import '../../../../export.dart';
 
 class ItemLocationUser extends StatelessWidget {

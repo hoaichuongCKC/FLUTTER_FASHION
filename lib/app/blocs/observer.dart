@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
@@ -37,11 +36,9 @@ class MyBlocObserver extends BlocObserver {
 
   @override
   void onClose(BlocBase bloc) {
-    if (bloc is! UserCubit) {
-      if (kDebugMode) {
-        print("on Close: $bloc");
-        super.onClose(bloc);
-      }
+    if (kDebugMode) {
+      print("on Close: $bloc");
+      super.onClose(bloc);
     }
   }
 

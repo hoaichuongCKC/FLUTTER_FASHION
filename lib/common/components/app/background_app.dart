@@ -8,16 +8,18 @@ import 'package:flutter_fashion/config/constant.dart';
 
 import '../../../routes/app_routes.dart';
 
-enum ScreenType { titleCenter, normal }
+enum ScreenType { scroll, normal }
 
 class AppBackgroundBlur extends StatelessWidget {
   final Widget child;
   final Widget? leading;
   final List<Widget>? actions;
+  final List<Widget>? actionsSecond;
   final String title;
   final Widget? bottomNavigationBar;
   final ScreenType type;
-
+  bool? centerTitle;
+  final bool isHasBackground;
   AppBackgroundBlur.normal({
     super.key,
     this.leading,
@@ -27,18 +29,23 @@ class AppBackgroundBlur extends StatelessWidget {
     this.type = ScreenType.normal,
     this.bottomNavigationBar,
     Widget? floatingActionButton,
+    this.actionsSecond,
+    this.isHasBackground = true,
   }) : _floatingActionButon = floatingActionButton;
 
   Widget? _floatingActionButon;
 
-  AppBackgroundBlur.titleCenter({
+  AppBackgroundBlur.scroll({
     super.key,
     this.leading,
     this.actions,
     required this.title,
     required this.child,
+    this.centerTitle = true,
     this.bottomNavigationBar,
-    this.type = ScreenType.titleCenter,
+    this.type = ScreenType.scroll,
+    this.actionsSecond,
+    this.isHasBackground = true,
   });
 
   @override
@@ -53,27 +60,29 @@ class AppBackgroundBlur extends StatelessWidget {
           body: Stack(
             fit: StackFit.passthrough,
             children: [
-              BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
-                  if (state.isDark) {
-                    return const SizedBox();
-                  }
-                  return Positioned(
-                    top: -size.height * .1,
-                    left: -size.width * .65,
-                    child: Image.asset(
-                      "assets/images/half_circle.png",
-                    ),
-                  );
-                },
-              ),
+              isHasBackground
+                  ? BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (context, state) {
+                        if (state.isDark) {
+                          return const SizedBox();
+                        }
+                        return Positioned(
+                          top: -size.height * .1,
+                          left: -size.width * .65,
+                          child: Image.asset(
+                            "assets/images/half_circle.png",
+                          ),
+                        );
+                      },
+                    )
+                  : const SizedBox(),
               SafeArea(
                 child: SizedBox.expand(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildAppBar(context),
-                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 5.0),
                       Expanded(child: child),
                     ],
                   ),
@@ -114,7 +123,6 @@ class AppBackgroundBlur extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildAppBar(context),
-                      const SizedBox(height: 15.0),
                       child,
                     ],
                   ),
@@ -128,13 +136,13 @@ class AppBackgroundBlur extends StatelessWidget {
   }
 
   Widget _buildAppBar(context) {
-    if (type == ScreenType.titleCenter) {
+    if (type == ScreenType.scroll) {
       return ConstrainedBoxWidget(
         currentHeight: 0.1,
         maxHeight: 60,
         minHeight: 50,
         child: Align(
-          alignment: Alignment.centerLeft,
+          alignment: !centerTitle! ? Alignment.centerLeft : Alignment.center,
           child: Text(
             title,
             style: Theme.of(context).textTheme.titleSmall,
@@ -159,7 +167,7 @@ class AppBackgroundBlur extends StatelessWidget {
                   (leading != null)
                       ? leading!
                       : InkWell(
-                          onTap: () => AppRoutes.pop(),
+                          onTap: () => AppRoutes.router.pop(),
                           child: Icon(Icons.arrow_back,
                               size: 30.0,
                               color: Theme.of(context).iconTheme.color),
@@ -175,12 +183,24 @@ class AppBackgroundBlur extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                if (actionsSecond != null)
+                  for (int i = 0; i < actionsSecond!.length; i++)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        actionsSecond![i],
+                      ],
+                    )
+              ],
             )
           ],
         ),

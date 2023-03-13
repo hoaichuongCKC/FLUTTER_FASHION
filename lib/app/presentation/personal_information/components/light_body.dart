@@ -189,27 +189,31 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
                   );
                 }),
           ),
-          const SizedBox(height: 40),
-          _buildItem(
-            context,
-            title: AppLocalizations.of(context)!.password,
-            col: Align(
-              alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: () => showDialog(
-                    context: context,
-                    builder: (context) => const FormChangePassword()),
-                child: Text(
-                  AppLocalizations.of(context)!.changePassword,
-                  style: PrimaryFont.instance.copyWith(
-                    color: primaryColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.0,
+          widget.user.login_provider == "google"
+              ? const SizedBox()
+              : const SizedBox(height: 40),
+          widget.user.login_provider == "google"
+              ? const SizedBox()
+              : _buildItem(
+                  context,
+                  title: AppLocalizations.of(context)!.password,
+                  col: Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => const FormChangePassword()),
+                      child: Text(
+                        AppLocalizations.of(context)!.changePassword,
+                        style: PrimaryFont.instance.copyWith(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
           const SizedBox(height: 10),
           Text(
             "${AppLocalizations.of(context)!.clickOnTheParagraphThatNeedsToBeEdited}.",

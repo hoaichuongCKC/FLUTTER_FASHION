@@ -1,11 +1,13 @@
 // ignore_for_file: constant_identifier_names
-
+import 'package:flutter_fashion/app/presentation/category/category_page.dart';
+import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
 import 'package:flutter_fashion/app/presentation/location_management/location_management_page.dart';
 import 'package:flutter_fashion/app/presentation/order/order_page.dart';
 import 'package:flutter_fashion/app/presentation/otp/otp_page.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
 import 'package:flutter_fashion/app/presentation/register/register_page.dart';
 import 'package:flutter_fashion/app/presentation/room_chat/room_chat_page.dart';
+import 'package:flutter_fashion/app/presentation/search/search_page.dart';
 import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/common/components/bottom_navigation_bar.dart';
@@ -17,9 +19,7 @@ import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/routes/export.dart';
 import 'package:flutter_fashion/routes/observer.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
 import '../app/presentation/cart/cart_page.dart';
-import '../app/presentation/create_address/create_address_page.dart';
 
 abstract class Routes {
   Routes._();
@@ -37,6 +37,7 @@ abstract class Routes {
   static const REGISTER = _Paths.REGISTER;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const SEARCH = _Paths.SEARCH;
+  static const CATEGORY = _Paths.CATEGORY;
   static const CART = _Paths.CART;
   static const ADDRESSMANAGEMENT = _Paths.LOCATION_MANAGEMENT;
 
@@ -47,6 +48,7 @@ abstract class Routes {
   static const FAVORITE = _Paths.FAVORITE;
   static const ORDER = _Paths.ORDER;
   static const MESSENGER = _Paths.MESSENGER;
+  static const FILTER = _Paths.FILTER;
 
   //
 
@@ -61,7 +63,8 @@ abstract class _Paths {
   static const SIGNUP = '/sign-up';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
-  static const SEARCH = '/search';
+  static const SEARCH = 'search';
+  static const CATEGORY = 'category';
   static const CART = '/cart';
   static const LOCATION_MANAGEMENT = '/location';
 
@@ -74,6 +77,7 @@ abstract class _Paths {
   static const ORDER = '/order';
   static const OTP = 'otp';
   static const REGISTER = 'resgister';
+  static const FILTER = 'filter';
 }
 
 abstract class Names {
@@ -82,13 +86,15 @@ abstract class Names {
   // static const HOME = '/home';
   // static const LOGIN = '/login';
   // static const NOTIFICATION = '/notification';
-  // static const PROFILE = '/profile';
+  static const SEARCH = 'search';
+  static const CATEGORY = 'category';
   static const PERSONAL = 'personal';
   //page second
   // static const SETTING = '/setting';
   static const SIGNUP = 'sign-up';
   static const OTP = 'otp';
   static const REGISTER = 'register';
+  static const FILTER = 'filter';
 
   // static const REPORT = '/report';
   // static const FAVORITE = '/favorite';
@@ -235,6 +241,42 @@ class AppRoutes {
                 child: const HomePage(),
               );
             },
+            routes: [
+              GoRoute(
+                name: Names.SEARCH,
+                path: Routes.SEARCH,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) => FadeTransitionPage<SearchPage>(
+                  key: state.pageKey,
+                  child: const SearchPage(),
+                ),
+              ),
+              GoRoute(
+                name: Names.CATEGORY,
+                path: Routes.CATEGORY,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) =>
+                    FadeTransitionPage<CategoryPage>(
+                  key: state.pageKey,
+                  child: CategoryPage(
+                    searchKey: state.queryParams["search_key"]!,
+                    item: state.queryParams["item"]!,
+                  ),
+                ),
+                routes: [
+                  GoRoute(
+                    name: Names.FILTER,
+                    path: Routes.FILTER,
+                    parentNavigatorKey: Routes.navigatorKey,
+                    pageBuilder: (context, state) =>
+                        SlideTransitionPage<CategoryPage>(
+                      key: state.pageKey,
+                      child: const FilterPage(),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
           GoRoute(
             path: Routes.NOTIFICATION,
@@ -261,28 +303,4 @@ class AppRoutes {
     ],
     errorBuilder: (context, state) => const ErrorPage(),
   );
-
-  static void go(String path) => Routes.navigatorKey.currentContext!.go(path);
-  static void goNamed(String path) =>
-      Routes.navigatorKey.currentContext!.goNamed(path);
-  static void pop() => Routes.navigatorKey.currentContext!.pop();
-
-  static void push(String path) {
-    Routes.navigatorKey.currentContext!.push(path);
-  }
-
-  static void pushNamed(String name,
-      {Map<String, String> params = const {},
-      Map<String, String> queryParams = const {}}) {
-    Routes.navigatorKey.currentContext!
-        .pushNamed(name, params: params, queryParams: queryParams);
-  }
-
-  static void goShellKey(String path) {
-    Routes.shellNavigatorKey.currentContext!.go(path);
-  }
-
-  static void pushShellKey(String path) {
-    Routes.shellNavigatorKey.currentContext!.push(path);
-  }
 }

@@ -270,7 +270,7 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
                   children: [
                     ButtonWidget(
                       btnColor: disableDarkColor,
-                      onPressed: () => AppRoutes.pop(),
+                      onPressed: () => AppRoutes.router.pop(),
                       height: 30,
                       radius: 2,
                       width: 55,

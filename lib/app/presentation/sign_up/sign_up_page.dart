@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => AppRoutes.pop(),
+                      onTap: () => AppRoutes.router.pop(),
                       child: const Icon(Icons.arrow_back,
                           size: 30.0, color: darkColor),
                     ),
@@ -99,7 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           // context
                           //     .read<AuthPhoneCubit>()
                           //     .authPhone(_phoneController.text, context);
-                          AppRoutes.pushNamed(Names.REGISTER,
+                          AppRoutes.router.pushNamed(Names.REGISTER,
                               queryParams: {"phone": _phoneController.text});
                           // FirebaseAuth.instance.signOut();
                         }

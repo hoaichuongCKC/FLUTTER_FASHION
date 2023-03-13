@@ -32,12 +32,17 @@ class TopHeaderHome extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      onPressed: () => AppRoutes.push(Routes.SEARCH),
-                      icon: SvgPicture.asset("assets/icons/search.svg"),
+                      onPressed: () =>
+                          AppRoutes.router.pushNamed(Routes.SEARCH),
+                      icon: Hero(
+                        tag: "icon-search",
+                        transitionOnUserGestures: true,
+                        child: SvgPicture.asset("assets/icons/search.svg"),
+                      ),
                     ),
                     const SizedBox(width: 8.0),
                     InkWell(
-                      onTap: () {},
+                      onTap: () => AppRoutes.router.push(Routes.CART),
                       child: SvgPicture.asset("assets/icons/cart.svg"),
                     ),
                   ],

@@ -1,7 +1,6 @@
 import 'package:flutter_fashion/app/models/product/product.dart';
-
-import '../../../../core/base/api/api.dart';
-import '../../../../export.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/utils/extensions/int.dart';
 
 class PopularSearchHome extends StatelessWidget {
   const PopularSearchHome({super.key, required this.listProduct});
@@ -84,7 +83,7 @@ class PopularSearchHome extends StatelessWidget {
                             ),
                             const SizedBox(height: 6.0),
                             Text(
-                              '${data.view} lượt tìm kiếm',
+                              '${data.view!.formatNumber()} lượt tìm kiếm',
                               style: PrimaryFont.instance.copyWith(
                                 fontSize: 9.0,
                                 height: 1.0,

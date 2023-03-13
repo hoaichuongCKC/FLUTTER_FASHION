@@ -9,8 +9,6 @@ class LoadMoreProductBloc {
 
   int _page = 1;
 
-  bool _isLoading = false;
-
   bool _hasMoreData = true;
 
   late List<ProductModel> _listProduct;
@@ -28,7 +26,7 @@ class LoadMoreProductBloc {
   LoadMoreProductBloc({
     this.loadMoreThreshold = 100,
   }) {
-    _isLoadingSubject = BehaviorSubject<bool>.seeded(_isLoading);
+    _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
     _productSubject = BehaviorSubject<List<ProductModel>>.seeded([]);
     _listProduct = [];
   }
@@ -39,15 +37,13 @@ class LoadMoreProductBloc {
   }
 
   void handleScrollNotification(ScrollController scrollController) async {
-    if (_isLoading || !_hasMoreData) return;
+    if (_isLoadingSubject.value || !_hasMoreData) return;
 
     final scrollLimit =
         scrollController.position.maxScrollExtent - loadMoreThreshold;
 
     if (scrollController.offset >= scrollLimit) {
-      _isLoading = true;
-
-      _isLoadingSubject.add(_isLoading);
+      _isLoadingSubject.add(true);
 
       _page++;
 
@@ -55,9 +51,7 @@ class LoadMoreProductBloc {
 
       if (data.isEmpty) _hasMoreData = false;
 
-      _isLoading = false;
-
-      _isLoadingSubject.add(_isLoading);
+      _isLoadingSubject.add(false);
 
       if (data.isEmpty) return;
 

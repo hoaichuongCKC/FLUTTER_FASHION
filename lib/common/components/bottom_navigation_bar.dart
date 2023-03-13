@@ -80,7 +80,7 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
                     routes: bottomData[index].path,
                     onPressed: () {
                       currentPage = index;
-                      AppRoutes.goShellKey(bottomData[index].path);
+                      AppRoutes.router.go(bottomData[index].path);
                       setState(() {});
                     },
                   ),

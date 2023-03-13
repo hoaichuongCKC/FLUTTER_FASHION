@@ -1,30 +1,6 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
-const String urlAsset = "assets/images/test/";
-const List<Map<String, dynamic>> listCategories = [
-  {
-    "imageUrl": "${urlAsset}cate_1.png",
-    "label": "All",
-  },
-  {
-    "imageUrl": "${urlAsset}cate_2.png",
-    "label": "Men",
-  },
-  {
-    "imageUrl": "${urlAsset}cate_3.png",
-    "label": "Woman",
-  },
-  {
-    "imageUrl": "${urlAsset}cate_4.png",
-    "label": "Shoes",
-  },
-  {
-    "imageUrl": "${urlAsset}cate_5.svg",
-    "label": "Kid",
-  },
-];
-
 class ProductCategoriesHome extends StatelessWidget {
   const ProductCategoriesHome({super.key, required this.categoryList});
   final List<CategoryModel> categoryList;
@@ -44,11 +20,17 @@ class ProductCategoriesHome extends StatelessWidget {
                 minVerticalPadding: 0,
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  'Danh mục sản phẩm',
+                  'Danh mục',
                   style: PrimaryFont.instance.large(),
                 ),
                 trailing: InkWell(
-                  onTap: () {},
+                  onTap: () => AppRoutes.router.pushNamed(
+                    Names.CATEGORY,
+                    queryParams: {
+                      "search_key": "",
+                      "item": categoryList[0].id.toString()
+                    },
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -74,33 +56,46 @@ class ProductCategoriesHome extends StatelessWidget {
                 itemExtent: 90,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: rangeColor[index],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              ApiService.imageUrl + categoryList[index].photo,
-                              headers: getIt<ApiService>().headers,
-                              cacheKey: categoryList[index].photo,
+                  return InkWell(
+                    onTap: () => AppRoutes.router.pushNamed(
+                      Names.CATEGORY,
+                      queryParams: {
+                        "search_key": "",
+                        "item": categoryList[index].id.toString()
+                      },
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: rangeColor[index],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: CachedNetworkImageProvider(
+                                ApiService.imageUrl + categoryList[index].photo,
+                                headers: getIt<ApiService>().headers,
+                                cacheKey: categoryList[index].photo,
+                              ),
                             ),
                           ),
+                          child: const SizedBox(
+                            width: 60,
+                            height: 60,
+                          ),
                         ),
-                        child: const SizedBox(
-                          width: 60,
-                          height: 60,
+                        const SizedBox(height: 8.0),
+                        Text(
+                          categoryList[index].name_vi,
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        categoryList[index].name,
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),

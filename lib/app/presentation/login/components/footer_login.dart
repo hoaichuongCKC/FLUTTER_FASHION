@@ -30,6 +30,7 @@ class FooterLogin extends StatelessWidget {
         const SizedBox(height: 20.0),
         ButtonWidget(
           animate: true,
+          height: 40.0,
           onPressed: () => context.read<AuthCubit>().authGoogle(context),
           btnColor: lightColor,
           boxShadow: [
@@ -40,20 +41,26 @@ class FooterLogin extends StatelessWidget {
             ),
           ],
           labelWidget: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                "assets/icons/google.svg",
-                width: 35.0,
-                height: 35.0,
+              FractionallySizedBox(
+                heightFactor: 0.8,
+                child: SvgPicture.asset(
+                  "assets/icons/google.svg",
+                  width: 35.0,
+                  height: 35.0,
+                ),
               ),
               const SizedBox(width: 15.0),
-              Text(
-                AppLocalizations.of(context)!.continueWithGoogle,
-                style: PrimaryFont.instance.copyWith(
-                  fontSize: 16.0,
-                  color: darkColor,
-                  fontWeight: FontWeight.w300,
+              Align(
+                child: Text(
+                  AppLocalizations.of(context)!.continueWithGoogle,
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 16.0,
+                    color: darkColor,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ],

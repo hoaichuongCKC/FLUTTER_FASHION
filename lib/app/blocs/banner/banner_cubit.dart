@@ -25,7 +25,7 @@ class BannerCubit extends Cubit<BannerState> {
         (error) {
           if (error == AuthenticatedException.message) {
             HydratedBloc.storage.delete(KeyStorage.token);
-            AppRoutes.go(Routes.LOGIN);
+            AppRoutes.router.go(Routes.LOGIN);
           }
           emit(BannerState.error(error));
         },

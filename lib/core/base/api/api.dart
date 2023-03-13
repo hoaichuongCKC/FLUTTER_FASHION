@@ -7,7 +7,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ApiService {
-  static const String hostDomain ="http://10.0.2.2:8000";
+  static const String hostDomain = "http://10.0.2.2:8000";
 
   static const String imageUrl = "$hostDomain/storage/";
 

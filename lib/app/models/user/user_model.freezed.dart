@@ -26,6 +26,7 @@ mixin _$UserModel {
   String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get photo => throw _privateConstructorUsedError;
+  String get login_provider => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +45,8 @@ abstract class $UserModelCopyWith<$Res> {
       String fullName,
       String phone,
       String email,
-      String photo});
+      String photo,
+      String login_provider});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? phone = null,
     Object? email = null,
     Object? photo = null,
+    Object? login_provider = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,6 +95,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      login_provider: null == login_provider
+          ? _value.login_provider
+          : login_provider // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String fullName,
       String phone,
       String email,
-      String photo});
+      String photo,
+      String login_provider});
 }
 
 /// @nodoc
@@ -129,6 +137,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? phone = null,
     Object? email = null,
     Object? photo = null,
+    Object? login_provider = null,
   }) {
     return _then(_$_UserModel(
       id: null == id
@@ -155,6 +164,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      login_provider: null == login_provider
+          ? _value.login_provider
+          : login_provider // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -169,7 +182,8 @@ class _$_UserModel implements _UserModel {
       this.fullName = "",
       this.phone = "",
       this.email = "",
-      this.photo = ""});
+      this.photo = "",
+      this.login_provider = ""});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
@@ -192,10 +206,13 @@ class _$_UserModel implements _UserModel {
   @override
   @JsonKey()
   final String photo;
+  @override
+  @JsonKey()
+  final String login_provider;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, fullName: $fullName, phone: $phone, email: $email, photo: $photo)';
+    return 'UserModel(id: $id, username: $username, fullName: $fullName, phone: $phone, email: $email, photo: $photo, login_provider: $login_provider)';
   }
 
   @override
@@ -210,13 +227,15 @@ class _$_UserModel implements _UserModel {
                 other.fullName == fullName) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.photo, photo) || other.photo == photo));
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.login_provider, login_provider) ||
+                other.login_provider == login_provider));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, username, fullName, phone, email, photo);
+  int get hashCode => Object.hash(
+      runtimeType, id, username, fullName, phone, email, photo, login_provider);
 
   @JsonKey(ignore: true)
   @override
@@ -239,7 +258,8 @@ abstract class _UserModel implements UserModel {
       final String fullName,
       final String phone,
       final String email,
-      final String photo}) = _$_UserModel;
+      final String photo,
+      final String login_provider}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -256,6 +276,8 @@ abstract class _UserModel implements UserModel {
   String get email;
   @override
   String get photo;
+  @override
+  String get login_provider;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

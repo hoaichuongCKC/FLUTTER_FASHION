@@ -10,7 +10,7 @@ import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/banner_repository.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
 
-Future<void> initDIInjectionHome() async {
+Future<void> initDIHome() async {
   getIt.registerLazySingleton<BannerCubit>(
     () => BannerCubit(bannerRepositoryImpl: getIt()),
   );

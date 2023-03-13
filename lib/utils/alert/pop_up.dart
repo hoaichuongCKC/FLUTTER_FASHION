@@ -64,8 +64,8 @@ popupAlert(
                             width: 50,
                             animate: false,
                             onPressed: () {
-                              AppRoutes.pop();
-                              AppRoutes.pop();
+                              AppRoutes.router.pop();
+                              AppRoutes.router.pop();
                             },
                             btnColor: disablePrimaryColor,
                             labelWidget: Align(

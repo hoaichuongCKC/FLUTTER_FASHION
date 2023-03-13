@@ -180,7 +180,7 @@ class _PageViewModelState extends State<PageViewModel> {
                               duration: const Duration(milliseconds: 450),
                               curve: Curves.easeIn);
                         } else {
-                          AppRoutes.go(Routes.LOGIN);
+                          AppRoutes.router.go(Routes.LOGIN);
                         }
                       },
                       child: (currentPage == _dataIntro.length - 1)

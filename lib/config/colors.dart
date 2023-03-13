@@ -6,6 +6,8 @@ const Color scaffoldBackgroundColor = Color(0xFFFAFAFA);
 /// Defining the color variable.
 const Color primaryColor = Color(0xFF8E8EEB);
 
+Color? primaryNullColor = const Color(0xFF8E8EEB);
+
 const Color darkColor = Color(0xFF28303F);
 
 const Color disablePrimaryColor = Color(0xFFE4EBF5);

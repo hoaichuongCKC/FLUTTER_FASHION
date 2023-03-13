@@ -55,14 +55,14 @@ class EditInformationCubit extends Cubit<EditInformationState> {
         context: context,
         onPressed: () {
           willPop = true;
-          AppRoutes.pop();
+          AppRoutes.router.pop();
           onSubmit(context);
         },
         message:
             AppLocalizations.of(context)!.doYouWantToSaveChangedInformation,
       );
     } else {
-      AppRoutes.pop();
+      AppRoutes.router.pop();
     }
   }
 
@@ -71,7 +71,7 @@ class EditInformationCubit extends Cubit<EditInformationState> {
     loadingAlert(context: context);
     final result =
         await userRepositoryImpl.update(param: state, imageFile: state.image);
-    AppRoutes.pop();
+    AppRoutes.router.pop();
 
     result.fold(
       (error) => errorAlert(context: context, message: error),
@@ -79,7 +79,7 @@ class EditInformationCubit extends Cubit<EditInformationState> {
         //reset
         context.read<UserCubit>().call(UserEvent.updateUser, model: data);
         if (willPop) {
-          AppRoutes.pop();
+          AppRoutes.router.pop();
         } else {
           successAlert(
             context: context,

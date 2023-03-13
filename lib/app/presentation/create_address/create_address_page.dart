@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/create_address/blocs/address_management.dart';
 import 'package:flutter_fashion/app/presentation/create_address/components/commune_list.dart';
 import 'package:flutter_fashion/app/presentation/create_address/components/desc_address.dart';

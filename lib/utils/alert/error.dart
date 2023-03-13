@@ -15,7 +15,7 @@ errorAlert({required BuildContext context, String message = "Nani"}) async {
     counter++;
     if (counter == 2) {
       timer.cancel();
-      AppRoutes.pop();
+      AppRoutes.router.pop();
     }
   });
 

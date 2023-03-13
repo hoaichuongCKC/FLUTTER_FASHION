@@ -17,7 +17,7 @@ Future successAlert({
     counter++;
     if (counter == 2) {
       timer.cancel();
-      AppRoutes.pop();
+      AppRoutes.router.pop();
     }
   });
   await showGeneralDialog(

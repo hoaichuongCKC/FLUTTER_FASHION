@@ -55,7 +55,7 @@ class ProductRecommend extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 childAspectRatio: 2 / 4,
-                mainAxisExtent: 255.0,
+                mainAxisExtent: 230.0,
               ),
               itemBuilder: (context, index) {
                 return ItemProduct(product: listProduct[index]);
@@ -72,7 +72,6 @@ class ProductRecommend extends StatelessWidget {
                     snapshot.data!.isNotEmpty) {
                   return GridView.builder(
                     itemCount: snapshot.data!.length,
-                    // controller: _scrollController,
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),

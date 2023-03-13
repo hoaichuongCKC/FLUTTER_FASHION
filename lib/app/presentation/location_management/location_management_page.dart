@@ -6,7 +6,6 @@ import 'package:flutter_fashion/common/components/app/background_app.dart';
 import 'package:flutter_fashion/app/presentation/location_management/components/item_location_user.dart';
 import 'package:flutter_fashion/core/models/address.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/routes/export.dart';
 
 class LocationManagementPage extends StatefulWidget {
   const LocationManagementPage({Key? key}) : super(key: key);
@@ -76,12 +75,12 @@ class _LocationManagementPageState extends State<LocationManagementPage> {
                     onDelete: () {
                       context.read<AddressUserCubit>().delete(item);
                       //turn off modal action
-                      AppRoutes.pop();
+                      AppRoutes.router.pop();
                     },
                     onUseDefault: () {
                       context.read<AddressUserCubit>().setUseDefault(item);
                       //turn off modal action
-                      AppRoutes.pop();
+                      AppRoutes.router.pop();
                     },
                   ),
                 );

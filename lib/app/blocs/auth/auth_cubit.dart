@@ -68,7 +68,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     final String password = state.password;
 
     final result = await _authRepositoryImpl.login(phone, password);
-    AppRoutes.pop();
+    AppRoutes.router.pop();
 
     result.fold(
       (error) {
@@ -77,7 +77,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
       },
       (dataReposonse) {
         if (dataReposonse.status) {
-          AppRoutes.go(Routes.HOME);
+          AppRoutes.router.go(Routes.HOME);
           emit(state.copyWith(status: AppStatus.success));
         }
       },
@@ -94,7 +94,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
       },
       (dataReposonse) {
         if (dataReposonse.status) {
-          AppRoutes.go(Routes.LOGIN);
+          AppRoutes.router.go(Routes.LOGIN);
           HydratedBloc.storage.delete(KeyStorage.token);
           emit(const AuthState());
         }
@@ -108,7 +108,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
 
     final result = await _authRepositoryImpl.register(param);
 
-    AppRoutes.pop();
+    AppRoutes.router.pop();
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
@@ -120,7 +120,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
           errorAlert(context: context, message: dataReposonse.message);
         } else {
           await successAlert(context: context, message: dataReposonse.message);
-          AppRoutes.go(Routes.LOGIN);
+          AppRoutes.router.go(Routes.LOGIN);
           emit(const AuthState());
         }
       },
@@ -134,7 +134,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         //remove poup loading
-        AppRoutes.pop();
+        AppRoutes.router.pop();
         if (error.isNotEmpty) {
           errorAlert(context: context, message: error);
           emit(state.copyWith(status: AppStatus.error));
@@ -147,13 +147,13 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         final resultSecond = await _authRepositoryImpl.loginGoogle(
             data.user!.displayName!, data.user!.email!);
         //remove poup loading
-        AppRoutes.pop();
+        AppRoutes.router.pop();
 
         resultSecond.fold((error) {
           errorAlert(context: context, message: error);
           emit(state.copyWith(status: AppStatus.error));
         }, (dataReponse) {
-          AppRoutes.go(Routes.HOME);
+          AppRoutes.router.go(Routes.HOME);
           emit(const AuthState());
         });
       },

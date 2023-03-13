@@ -34,7 +34,7 @@ class _OtpPageState extends State<OtpPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InkWell(
-                  onTap: () => AppRoutes.pop(),
+                  onTap: () => AppRoutes.router.pop(),
                   child: const Icon(Icons.arrow_back,
                       size: 30.0, color: darkColor),
                 ),

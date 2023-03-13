@@ -21,4 +21,6 @@ const List<Color> rangeColor = [
   Color(0xFFF78FB3),
   Color(0xFFD96161),
   Color(0xFFF3AE4E),
+  Color.fromARGB(255, 46, 126, 190),
+  Color.fromARGB(255, 171, 196, 32),
 ];

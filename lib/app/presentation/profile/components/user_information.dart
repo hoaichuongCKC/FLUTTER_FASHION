@@ -26,7 +26,7 @@ class UserInformation extends StatelessWidget {
                           const BorderRadius.all(Radius.circular(5.0)),
                     ),
                     child: InkWell(
-                      onTap: () => AppRoutes.push(Routes.PERSONAL),
+                      onTap: () => AppRoutes.router.push(Routes.PERSONAL),
                       child: SizedBox(
                         height: 30,
                         child: Padding(

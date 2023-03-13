@@ -1,7 +1,6 @@
 import 'package:flutter_fashion/app/blocs/user/user_event.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
-import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

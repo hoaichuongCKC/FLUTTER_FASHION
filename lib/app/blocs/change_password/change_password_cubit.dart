@@ -31,7 +31,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     final result = await userRepositoryImpl.changePassword(param: state);
 
     //dispose loading overlay
-    AppRoutes.pop();
+    AppRoutes.router.pop();
 
     result.fold(
       (error) {
@@ -41,7 +41,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       (data) {
         if (data.status) {
           //dispose dialog showform Password
-          AppRoutes.pop();
+          AppRoutes.router.pop();
           emit(state.copyWith(status: AppStatus.success));
           successAlert(context: context, message: data.message);
         } else {

@@ -20,36 +20,37 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
     loadingAlert(context: context);
 
     await verifyPhoneNumber(
-        phoneNumber: "+84$phoneNumber",
-        verificationCompleted: (user) {
-          AppRoutes.pushNamed(
-            Names.OTP,
-            queryParams: {
-              "phone": phoneNumber,
-              "verificationId": _verificationId,
-            },
-          );
-        },
-        verificationFailed: (FirebaseAuthException exception) {
-          // remove loading popup
-          AppRoutes.pop();
+      phoneNumber: "+84$phoneNumber",
+      verificationCompleted: (user) {
+        AppRoutes.router.pushNamed(
+          Names.OTP,
+          queryParams: {
+            "phone": phoneNumber,
+            "verificationId": _verificationId,
+          },
+        );
+      },
+      verificationFailed: (FirebaseAuthException exception) {
+        // remove loading popup
+        AppRoutes.router.pop();
 
-          errorAlert(context: context, message: exception.message!);
-          emit(const AuthPhoneState.error());
-        },
-        codeSent: (verificationId, resendToken) {
-          _verificationId = verificationId;
+        errorAlert(context: context, message: exception.message!);
+        emit(const AuthPhoneState.error());
+      },
+      codeSent: (verificationId, resendToken) {
+        _verificationId = verificationId;
 
-          AppRoutes.pop();
-          emit(const AuthPhoneState.authPhoneSuccess());
+        AppRoutes.router.pop();
+        emit(const AuthPhoneState.authPhoneSuccess());
+      },
+      codeAutoRetrievalTimeout: (verificationId) => AppRoutes.router.pushNamed(
+        Names.OTP,
+        queryParams: {
+          "phone": phoneNumber,
+          "verificationId": verificationId,
         },
-        codeAutoRetrievalTimeout: (verificationId) => AppRoutes.pushNamed(
-              Names.OTP,
-              queryParams: {
-                "phone": phoneNumber,
-                "verificationId": verificationId,
-              },
-            ));
+      ),
+    );
   }
 
   void verifyOtp(String phoneNumber, String smsCode, String verificationId,
@@ -60,7 +61,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
     final result = await signInWithPhoneNumber(verificationId, smsCode);
 
     //dispose popup loading
-    AppRoutes.pop();
+    AppRoutes.router.pop();
 
     result.fold(
       (errorFirebase) {
@@ -69,7 +70,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       },
       (userCredential) {
         emit(const AuthPhoneState.verifyOtpSuccess());
-        AppRoutes.push(Routes.REGISTER);
+        AppRoutes.router.push(Routes.REGISTER);
       },
     );
   }

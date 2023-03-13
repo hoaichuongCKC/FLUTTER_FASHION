@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
 import '../../../../export.dart';
 
@@ -62,7 +64,7 @@ class _ItemCartState extends State<ItemCart> {
                           children: [
                             Expanded(
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Expanded(
                                     child: Text(
@@ -74,11 +76,12 @@ class _ItemCartState extends State<ItemCart> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.clear,
-                                      size: 20,
+                                  FractionallySizedBox(
+                                    alignment: Alignment.topCenter,
+                                    heightFactor: 0.4,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/trash.svg",
+                                      color: primaryColor,
                                     ),
                                   ),
                                 ],

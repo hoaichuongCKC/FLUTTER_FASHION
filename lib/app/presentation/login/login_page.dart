@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () => AppRoutes.push(Routes.SIGNUP),
+                  onPressed: () => AppRoutes.router.push(Routes.SIGNUP),
                   child: Text(AppLocalizations.of(context)!.signUp),
                 ),
               ),

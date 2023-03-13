@@ -52,9 +52,10 @@ class BottomNavigationBarCart extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 8.0),
+              const SizedBox(width: 10.0),
               Expanded(
                 child: ButtonWidget(
+                  height: 40.0,
                   btnColor: primaryColor,
                   label: "Đặt hàng",
                   onPressed: () {},
