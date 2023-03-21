@@ -118,7 +118,7 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
               ],
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           _buildItem(
             context,
             title: AppLocalizations.of(context)!.username,

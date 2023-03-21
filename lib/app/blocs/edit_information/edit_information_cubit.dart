@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/user/user_event.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
@@ -77,7 +76,7 @@ class EditInformationCubit extends Cubit<EditInformationState> {
       (error) => errorAlert(context: context, message: error),
       (data) async {
         //reset
-        context.read<UserCubit>().call(UserEvent.updateUser, model: data);
+        context.read<UserCubit>().updateUser(data);
         if (willPop) {
           AppRoutes.router.pop();
         } else {

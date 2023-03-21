@@ -19,6 +19,12 @@ class AddressUserState extends Equatable {
     return jsonEncode(storageList);
   }
 
+  List<ItemAddress> get usingAddress {
+    final list = storageList.where((element) => element.isSelected).toList();
+    if (list.isEmpty) return [];
+    return list;
+  }
+
   AddressUserState copyWith({
     List<ItemAddress>? storageList,
   }) {

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/app/models/reviews/review.dart';
 import 'package:flutter_fashion/app/network_provider/product_provider.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 
@@ -10,6 +11,8 @@ abstract class ProductRepository {
   Future<List<ProductModel>> fetchListMoreProduct(int page,
       {int idCagegory = 1});
   Future<Either<String, List<ProductModel>>> fetchPopularSearch();
+  Future<Either<String, List<ReviewModel>>> fetchReviewProduct(
+      int page, int idProduct);
 }
 
 class ProductRepositoryImpl extends BaseRepository
@@ -53,6 +56,17 @@ class ProductRepositoryImpl extends BaseRepository
     final result = await baseRepo<List<ProductModel>>(
       excuteFunction: () async {
         return await _productProviderImpl.fetchPopularSearch();
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, List<ReviewModel>>> fetchReviewProduct(
+      int page, int idProduct) async {
+    final result = await baseRepo<List<ReviewModel>>(
+      excuteFunction: () async {
+        return await _productProviderImpl.fetchReviewProduct(page, idProduct);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

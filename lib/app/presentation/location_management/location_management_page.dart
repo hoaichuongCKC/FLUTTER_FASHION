@@ -17,77 +17,76 @@ class LocationManagementPage extends StatefulWidget {
 class _LocationManagementPageState extends State<LocationManagementPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<AddressUserCubit>(),
-      child: AppBackgroundBlur.normal(
-        title: "Quản lý địa chỉ",
-        floatingActionButton: Builder(builder: (context) {
-          return InkWell(
-            onTap: () async {
-              final result = await Navigator.of(context).push<ItemAddress?>(
-                MaterialPageRoute(
-                  builder: (context) => const CreateAddressPage(),
-                ),
-              );
-              context.read<AddressUserCubit>().createNew(result!);
-            },
-            borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
-            customBorder: const CircleBorder(),
-            child: SizedBox(
-              width: 65,
-              height: 65,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  SvgPicture.asset("assets/icons/profile/float_btn.svg"),
-                  const Align(child: Icon(Icons.add_card, color: lightColor)),
-                ],
+    return AppBackgroundBlur.normal(
+      title: "Quản lý địa chỉ",
+      floatingActionButton: Builder(builder: (context) {
+        return InkWell(
+          onTap: () async {
+            final result = await Navigator.of(context).push<ItemAddress?>(
+              MaterialPageRoute(
+                builder: (context) => const CreateAddressPage(),
               ),
-            ),
-          );
-        }),
-        child: BlocBuilder<AddressUserCubit, AddressUserState>(
-          builder: (context, state) {
-            if (state.storageList.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPadding - 4),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Text('Hiện tại bạn chưa cập nhật địa chỉ'),
-                  ],
-                ),
-              );
+            );
+            if (result != null) {
+              context.read<AddressUserCubit>().createNew(result);
             }
-            return ListView.builder(
+          },
+          borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
+          customBorder: const CircleBorder(),
+          child: SizedBox(
+            width: 65,
+            height: 65,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                SvgPicture.asset("assets/icons/profile/float_btn.svg"),
+                const Align(child: Icon(Icons.add_card, color: lightColor)),
+              ],
+            ),
+          ),
+        );
+      }),
+      child: BlocBuilder<AddressUserCubit, AddressUserState>(
+        builder: (context, state) {
+          if (state.storageList.isEmpty) {
+            return Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-              itemCount: state.storageList.length,
-              itemBuilder: (context, index) {
-                final item = state.storageList[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: ItemLocationUser(
-                    key: ValueKey(index),
-                    item: item,
-                    onDelete: () {
-                      context.read<AddressUserCubit>().delete(item);
-                      //turn off modal action
-                      AppRoutes.router.pop();
-                    },
-                    onUseDefault: () {
-                      context.read<AddressUserCubit>().setUseDefault(item);
-                      //turn off modal action
-                      AppRoutes.router.pop();
-                    },
-                  ),
-                );
-              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text('Hiện tại bạn chưa cập nhật địa chỉ'),
+                ],
+              ),
             );
-          },
-        ),
+          }
+          return ListView.builder(
+            padding:
+                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+            itemCount: state.storageList.length,
+            itemBuilder: (context, index) {
+              final item = state.storageList[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: ItemLocationUser(
+                  key: ValueKey(index),
+                  item: item,
+                  onDelete: () {
+                    context.read<AddressUserCubit>().delete(item);
+                    //turn off modal action
+                    AppRoutes.router.pop();
+                  },
+                  onUseDefault: () {
+                    context.read<AddressUserCubit>().setUseDefault(item);
+                    //turn off modal action
+                    AppRoutes.router.pop();
+                  },
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

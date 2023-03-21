@@ -15,15 +15,17 @@ _$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       regular_price: json['regular_price'] as int,
       discount: (json['discount'] as num?)?.toDouble(),
-      sale_price: json['sale_price'] as int?,
+      sale_price: json['sale_price'] as int? ?? 0,
       properties:
           Properties.fromJson(json['properties'] as Map<String, dynamic>),
       desc: json['desc'] as String,
       view: json['view'] as int?,
+      star: (json['star'] as num?)?.toDouble(),
       sold: json['sold'] as int,
+      is_popular: json['is_popular'] as bool?,
       category: Category.fromJson(json['category'] as Map<String, dynamic>),
       product_detail: (json['product_detail'] as List<dynamic>)
-          .map((e) => ProductDetail.fromJson(e as Map<String, dynamic>))
+          .map((e) => PhotoModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -35,12 +37,14 @@ Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
       'regular_price': instance.regular_price,
       'discount': instance.discount,
       'sale_price': instance.sale_price,
-      'properties': instance.properties,
+      'properties': instance.properties.toJson(),
       'desc': instance.desc,
       'view': instance.view,
+      'star': instance.star,
       'sold': instance.sold,
-      'category': instance.category,
-      'product_detail': instance.product_detail,
+      'is_popular': instance.is_popular,
+      'category': instance.category.toJson(),
+      'product_detail': instance.product_detail.map((e) => e.toJson()).toList(),
     };
 
 _$_Category _$$_CategoryFromJson(Map<String, dynamic> json) => _$_Category(
@@ -55,18 +59,6 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
       'id': instance.id,
       'name': instance.name,
       'name_vi': instance.name_vi,
-      'photo': instance.photo,
-    };
-
-_$_ProductDetail _$$_ProductDetailFromJson(Map<String, dynamic> json) =>
-    _$_ProductDetail(
-      id: json['id'] as int,
-      photo: json['photo'] as String,
-    );
-
-Map<String, dynamic> _$$_ProductDetailToJson(_$_ProductDetail instance) =>
-    <String, dynamic>{
-      'id': instance.id,
       'photo': instance.photo,
     };
 

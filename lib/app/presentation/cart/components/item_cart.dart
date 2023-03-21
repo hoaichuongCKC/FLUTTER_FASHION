@@ -1,17 +1,23 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
+
+import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
+import 'package:flutter_fashion/core/base/api/api.dart';
+import 'package:flutter_fashion/utils/extensions/double.dart';
 import '../../../../export.dart';
 
-class ItemCart extends StatefulWidget {
-  const ItemCart({super.key, required this.index});
+class ItemCart extends StatelessWidget {
+  const ItemCart(
+      {super.key,
+      required this.index,
+      required this.item,
+      this.isItemCart = true});
   final int index;
-
-  @override
-  State<ItemCart> createState() => _ItemCartState();
-}
-
-class _ItemCartState extends State<ItemCart> {
+  final CartModel item;
+  final bool isItemCart;
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
@@ -44,8 +50,8 @@ class _ItemCartState extends State<ItemCart> {
                         child: AspectRatio(
                           aspectRatio: 1.0,
                           child: CachedNetworkImage(
-                            imageUrl:
-                                'https://fashionminhthu.com.vn/wp-content/uploads/2018/11/short-sleeve-crew-neck-t-shirt-broadcast-print-1991-2-600x840.jpg',
+                            imageUrl: ApiService.imageUrl +
+                                item.product.product_detail[0].photo,
                             fit: BoxFit.fitWidth,
                             placeholder: (context, url) {
                               return ColoredBox(
@@ -68,7 +74,7 @@ class _ItemCartState extends State<ItemCart> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Nam Len Đen Áo Khoác Ngoài da nữ xinh việt nam sssssssss',
+                                      item.product.name,
                                       style: PrimaryFont.instance.copyWith(
                                         fontSize: 14.0,
                                       ),
@@ -76,14 +82,22 @@ class _ItemCartState extends State<ItemCart> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  FractionallySizedBox(
-                                    alignment: Alignment.topCenter,
-                                    heightFactor: 0.4,
-                                    child: SvgPicture.asset(
-                                      "assets/icons/trash.svg",
-                                      color: primaryColor,
-                                    ),
-                                  ),
+                                  isItemCart
+                                      ? InkWell(
+                                          onTap: () => context
+                                              .read<CartCubit>()
+                                              .removeFromCart(index),
+                                          child: FractionallySizedBox(
+                                            alignment: const Alignment(0, -0.8),
+                                            heightFactor: 0.35,
+                                            child: SvgPicture.asset(
+                                              "assets/icons/trash.svg",
+                                              color: primaryColor,
+                                              fit: BoxFit.scaleDown,
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox()
                                 ],
                               ),
                             ),
@@ -92,30 +106,55 @@ class _ItemCartState extends State<ItemCart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '190.000 VNĐ',
+                                  item.product.regular_price
+                                      .toDouble()
+                                      .toVndCurrency(),
                                   style: PrimaryFont.instance.copyWith(
                                     fontSize: 12.0,
                                     color: const Color(0xFFFF7262),
                                     fontWeight: FontWeight.w300,
                                   ),
                                 ),
-                                const CounterCart(),
+                                isItemCart
+                                    ? CounterCart(
+                                        value: item.quantity,
+                                        ins: () => context
+                                            .read<CartCubit>()
+                                            .ins(index),
+                                        des: () => context
+                                            .read<CartCubit>()
+                                            .des(index),
+                                        onChanged: (p0) {
+                                          log("counter $p0",
+                                              name: "Counter-cart");
+                                        },
+                                      )
+                                    : Text(
+                                        'x${item.quantity}',
+                                        style: PrimaryFont.instance.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: darkColor.withOpacity(0.5),
+                                        ),
+                                      )
                               ],
                             ),
-                            ColoredBox(
-                              color: errorColor.withOpacity(0.2),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 1.0),
-                                child: Text(
-                                  '-10.000VNĐ',
-                                  style: PrimaryFont.instance.copyWith(
-                                    fontSize: 7.0,
-                                    color: errorColor,
-                                  ),
-                                ),
-                              ),
-                            )
+                            item.product.sale_price == 0
+                                ? const SizedBox()
+                                : ColoredBox(
+                                    color: errorColor.withOpacity(0.2),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      child: Text(
+                                        "-${item.product.sale_price.toDouble().toVndCurrency()}",
+                                        style: PrimaryFont.instance.copyWith(
+                                          fontSize: 7.0,
+                                          color: errorColor,
+                                        ),
+                                      ),
+                                    ),
+                                  )
                           ],
                         ),
                       ),
@@ -127,7 +166,7 @@ class _ItemCartState extends State<ItemCart> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: "Phân loại: ",
+                        text: "Chi tiết: ",
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
                           color: disableDarkColor,
@@ -136,7 +175,7 @@ class _ItemCartState extends State<ItemCart> {
                       ),
                       const WidgetSpan(child: SizedBox(width: 5.0)),
                       TextSpan(
-                        text: "S (40-58kg),",
+                        text: item.size,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
                           color: disableDarkColor,
@@ -150,7 +189,7 @@ class _ItemCartState extends State<ItemCart> {
                             color: primaryColor,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: primaryColor,
+                              color: Color(int.parse("0xFF${item.color}")),
                             ),
                           ),
                           child: const SizedBox(

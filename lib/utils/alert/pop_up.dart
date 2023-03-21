@@ -1,12 +1,25 @@
 import 'package:flutter_fashion/export.dart';
 
-popupAlert(
-    {required BuildContext context,
-    String message = "Come on bro",
-    Function()? onPressed}) async {
+popupAlert({
+  required BuildContext context,
+  String message = "Come on bro",
+  Function()? onPressed,
+  Function()? onCancel,
+  bool hasTimer = false,
+  int counter = 2,
+}) async {
+  if (hasTimer) {
+    const Duration duration = Duration(seconds: 1);
+    Timer.periodic(duration, (timer) {
+      if (timer.tick == counter) {
+        timer.cancel();
+        AppRoutes.router.pop();
+      }
+    });
+  }
   await showGeneralDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: false,
     barrierLabel: "popup - Alert",
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       return AnimatedOpacity(
@@ -55,48 +68,59 @@ popupAlert(
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      const SizedBox(height: 15.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ButtonWidget(
-                            height: 30,
-                            width: 50,
-                            animate: false,
-                            onPressed: () {
-                              AppRoutes.router.pop();
-                              AppRoutes.router.pop();
-                            },
-                            btnColor: disablePrimaryColor,
-                            labelWidget: Align(
-                              child: Text(
-                                AppLocalizations.of(context)!.cancel,
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 12.0,
-                                  color: lightColor,
+                      hasTimer
+                          ? const SizedBox()
+                          : const SizedBox(height: 15.0),
+                      hasTimer
+                          ? const SizedBox()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ButtonWidget(
+                                  height: 30,
+                                  width: 60,
+                                  animate: false,
+                                  onPressed: onCancel ??
+                                      () {
+                                        AppRoutes.router.pop();
+                                        AppRoutes.router.pop();
+                                      },
+                                  btnColor: disablePrimaryColor,
+                                  labelWidget: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Align(
+                                      child: Text(
+                                        AppLocalizations.of(context)!.cancel,
+                                        style: PrimaryFont.instance.copyWith(
+                                          fontSize: 12.0,
+                                          color: lightColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 15.0),
-                          ButtonWidget(
-                            height: 30,
-                            width: 50,
-                            animate: false,
-                            onPressed: onPressed,
-                            btnColor: primaryColor,
-                            labelWidget: Align(
-                              child: Text(
-                                AppLocalizations.of(context)!.ok,
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 12.0,
-                                  color: lightColor,
+                                const SizedBox(width: 15.0),
+                                ButtonWidget(
+                                  height: 30,
+                                  width: 60,
+                                  animate: false,
+                                  onPressed: onPressed,
+                                  btnColor: primaryColor,
+                                  labelWidget: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Align(
+                                      child: Text(
+                                        AppLocalizations.of(context)!.ok,
+                                        style: PrimaryFont.instance.copyWith(
+                                          fontSize: 12.0,
+                                          color: lightColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
+                              ],
+                            )
                     ],
                   ),
                 ),

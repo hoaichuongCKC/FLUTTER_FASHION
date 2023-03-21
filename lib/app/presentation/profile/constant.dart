@@ -14,13 +14,13 @@ final List<ProfileFeatureModel> listFeatureFirst = [
   ProfileFeatureModel(
     label: "Đơn hàng",
     imageUrl: "${appUrlAssets}order.svg",
-    path: Routes.ORDER,
+    path: Routes.MY_ORDER,
     color: const Color(0xFF39DF67),
   ),
   ProfileFeatureModel(
     label: "Địa chỉ",
     imageUrl: "assets/icons/map_address.svg",
-    path: Routes.ADDRESSMANAGEMENT,
+    path: Routes.ADDRESS_MANAGEMENT,
     color: const Color(0xFFF23859),
   ),
 ];

@@ -1,30 +1,31 @@
-// To parse this JSON data, do
-//
-//     final productModel = productModelFromJson(jsonString);
-
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
+
+import '../photo/photo.dart';
 
 part 'product.freezed.dart';
 part 'product.g.dart';
 
 @freezed
 class ProductModel with _$ProductModel {
+  @JsonSerializable(explicitToJson: true)
   const factory ProductModel({
     required int id,
     required String code,
     required String name,
     required int regular_price,
     required double? discount,
-    required int? sale_price,
+    @Default(0) int sale_price,
     required Properties properties,
     required String desc,
     required int? view,
+    required double? star,
     required int sold,
+    required bool? is_popular,
     required Category category,
-    required List<ProductDetail> product_detail,
+    required List<PhotoModel> product_detail,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -48,17 +49,6 @@ class Category with _$Category {
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
-}
-
-@freezed
-class ProductDetail with _$ProductDetail {
-  const factory ProductDetail({
-    required int id,
-    required String photo,
-  }) = _ProductDetail;
-
-  factory ProductDetail.fromJson(Map<String, dynamic> json) =>
-      _$ProductDetailFromJson(json);
 }
 
 @freezed

@@ -1,16 +1,19 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
-import 'package:flutter_fashion/app/presentation/login/export.dart';
+import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+import 'package:flutter_fashion/app/blocs/payment/payment.dart';
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
+import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
-import 'package:flutter_fashion/core/storage/key.dart';
+import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
-
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
@@ -92,11 +95,32 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         emit(state.copyWith(status: AppStatus.error));
         errorAlert(context: context, message: error);
       },
-      (dataReposonse) {
+      (dataReposonse) async {
         if (dataReposonse.status) {
+          //setup init location
+          AppRoutes.initLocation = Routes.LOGIN;
           AppRoutes.router.go(Routes.LOGIN);
-          HydratedBloc.storage.delete(KeyStorage.token);
-          emit(const AuthState());
+          //dispose register dependency injection
+          getIt.unregister<UserCubit>();
+          if (getIt.isRegistered<CartCubit>()) {
+            getIt.unregister<CartCubit>();
+          }
+          if (getIt.isRegistered<AddressUserCubit>()) {
+            getIt.unregister<AddressUserCubit>();
+          }
+          if (getIt.isRegistered<OrderCubit>()) {
+            getIt.unregister<OrderCubit>();
+          }
+          //register DI again
+          getIt.registerLazySingleton(
+              () => UserCubit(userRepositoryImpl: getIt()));
+          getIt.registerLazySingleton(() => CartCubit());
+          getIt.registerLazySingleton(() => AddressUserCubit());
+          getIt.registerLazySingleton(
+              () => OrderCubit(orderRepositoryImpl: getIt()));
+          //restart app run materialAPp
+          // ignore: use_build_context_synchronously
+          Phoenix.rebirth(context);
         }
       },
     );

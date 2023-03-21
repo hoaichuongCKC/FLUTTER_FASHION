@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
@@ -58,7 +60,15 @@ class ProductRecommend extends StatelessWidget {
                 mainAxisExtent: 230.0,
               ),
               itemBuilder: (context, index) {
-                return ItemProduct(product: listProduct[index]);
+                return ItemProduct(
+                  product: listProduct[index],
+                  onTap: () => AppRoutes.router.pushNamed(
+                    Names.PRODUCT_DETAIL,
+                    params: {
+                      "data": jsonEncode(listProduct[index].toJson()),
+                    },
+                  ),
+                );
               },
             ),
             StreamBuilder(
@@ -84,7 +94,15 @@ class ProductRecommend extends StatelessWidget {
                       mainAxisExtent: 255.0,
                     ),
                     itemBuilder: (context, index) {
-                      return ItemProduct(product: snapshot.data![index]);
+                      return ItemProduct(
+                        product: snapshot.data![index],
+                        onTap: () => AppRoutes.router.pushNamed(
+                          Names.PRODUCT_DETAIL,
+                          params: {
+                            "data": jsonEncode(snapshot.data![index].toJson()),
+                          },
+                        ),
+                      );
                     },
                   );
                 }

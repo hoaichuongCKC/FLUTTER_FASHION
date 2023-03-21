@@ -12,13 +12,13 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit({required ProductRepositoryImpl productRepositoryImpl})
       : _productRepositoryImpl = productRepositoryImpl,
         super(const CategoryState.initial());
+
   bool _isLoaded = false;
+
   void fetchData() async {
     if (!isClosed && !_isLoaded) {
       emit(const CategoryState.loading());
-
       final result = await _productRepositoryImpl.fetchCategory();
-
       result.fold(
         (error) => emit(CategoryState.error(error)),
         (list) {

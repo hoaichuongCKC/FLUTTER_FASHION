@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/category/blocs/category_bloc.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
@@ -49,10 +51,10 @@ class _ProductListState extends State<ProductList> {
               );
             }
 
-            if (!snapshot.hasData ||
-                snapshot.data == null ||
-                snapshot.data!.isEmpty) {
-              return const SizedBox();
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
             final list = snapshot.data;
             return Expanded(
@@ -66,10 +68,18 @@ class _ProductListState extends State<ProductList> {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   childAspectRatio: 2 / 4,
-                  mainAxisExtent: 210.0,
+                  mainAxisExtent: 230.0,
                 ),
                 itemBuilder: (context, index) {
-                  return ItemProduct(product: list[index]);
+                  return ItemProduct(
+                    product: list[index],
+                    onTap: () => AppRoutes.router.pushNamed(
+                      Names.PRODUCT_DETAIL,
+                      params: {
+                        "data": jsonEncode(list[index].toJson()),
+                      },
+                    ),
+                  );
                 },
               ),
             );

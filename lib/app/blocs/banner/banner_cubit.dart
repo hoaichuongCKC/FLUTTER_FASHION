@@ -1,7 +1,5 @@
 import 'package:flutter_fashion/app/models/slider/slider.dart';
 import 'package:flutter_fashion/app/repositories/banner_repository.dart';
-import 'package:flutter_fashion/core/base/exception/exception.dart';
-import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../export.dart';
@@ -23,10 +21,6 @@ class BannerCubit extends Cubit<BannerState> {
 
       result.fold(
         (error) {
-          if (error == AuthenticatedException.message) {
-            HydratedBloc.storage.delete(KeyStorage.token);
-            AppRoutes.router.go(Routes.LOGIN);
-          }
           emit(BannerState.error(error));
         },
         (list) {

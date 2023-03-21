@@ -1,7 +1,9 @@
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
+import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/components/banner.dart';
 import 'package:flutter_fashion/app/presentation/home/components/popular_search.dart';
@@ -12,7 +14,6 @@ import 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 import 'package:flutter_fashion/core/base/error/ui.dart';
-
 import 'components/promotions.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,8 +25,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late ScrollController _scrollController;
+
+  late UserCubit _userCubit;
   @override
   void initState() {
+    _userCubit = BlocProvider.of<UserCubit>(context);
     _scrollController = ScrollController()
       ..addListener(() {
         getIt<LoadMoreProductBloc>()
@@ -37,6 +41,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _userCubit.fetchUser(context);
+    _userCubit.stream.listen((event) {
+      event.whenOrNull(fetchCompleted: (user) => CartCubit());
+    });
     context.read<BannerCubit>().fetchData();
     context.read<CategoryCubit>().fetchData();
     context.read<ProductCubit>().fetchData();

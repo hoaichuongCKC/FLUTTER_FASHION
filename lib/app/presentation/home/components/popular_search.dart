@@ -20,7 +20,7 @@ class PopularSearchHome extends StatelessWidget {
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
-                'Tìm kiếm phổ biến',
+                'Sản phẩm phổ biến',
                 style: PrimaryFont.instance.large(),
               ),
             ),

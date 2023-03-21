@@ -1,12 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
-import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../routes/app_routes.dart';
+
 class ApiService {
+  ApiService() {
+    _initHeader();
+  }
   static const String hostDomain = "http://10.0.2.2:8000";
 
   static const String imageUrl = "$hostDomain/storage/";
@@ -16,10 +23,6 @@ class ApiService {
   Map<String, String> _headers = {};
 
   Map<String, String> get headers => _headers;
-
-  ApiService() {
-    _initHeader();
-  }
 
   //call when app started
   Future _initHeader() async {
@@ -51,11 +54,9 @@ class ApiService {
     bool isRequestHeader = true,
     XFile? image,
   }) async {
-    if (kDebugMode) {
-      if (isRequestHeader) {
-        if (_headers.isEmpty) {
-          _initHeader();
-        }
+    if (isRequestHeader) {
+      if (_headers.isEmpty) {
+        _initHeader();
       }
     }
 
@@ -81,8 +82,27 @@ class ApiService {
     }
     if (response.statusCode == 401 && _headers.isNotEmpty) {
       _clearHeader();
-      throw AuthenticatedException();
+      HydratedBloc.storage.delete(KeyStorage.token);
+      AppRoutes.router.go(Routes.LOGIN);
     }
     return response;
+  }
+
+  Future postWithBodyJson(String url, Object? body) async {
+    if (_headers.isEmpty) {
+      _initHeader();
+    }
+    final uri = Uri.parse("$baseUrl$url");
+
+    try {
+      final response = await http.post(
+        uri,
+        body: body,
+        headers: _headers,
+      );
+      return response;
+    } catch (e) {
+      log("error catch: $e");
+    }
   }
 }

@@ -15,10 +15,7 @@ class AddressUserCubit extends HydratedCubit<AddressUserState> {
 
   @override
   String get storageToken =>
-      KeyStorage.userAdress +
-      getIt<UserCubit>().state.whenOrNull(
-            fetchCompleted: (user) => user.id.toString(),
-          )!;
+      KeyStorage.userAdress + getIt<UserCubit>().user.id.toString();
 
   void createNew(ItemAddress data) {
     final state = this.state;
@@ -38,9 +35,8 @@ class AddressUserCubit extends HydratedCubit<AddressUserState> {
   void setUseDefault(ItemAddress item) {
     final state = this.state;
 
-    final storageList = state.storageList;
-
     if (!(item.isSelected)) {
+      final storageList = state.storageList;
       final updatedStorageList = List<ItemAddress>.from(storageList).map(
         (e) {
           if (e.name == item.name) {

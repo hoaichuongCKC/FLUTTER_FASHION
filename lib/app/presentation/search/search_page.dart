@@ -8,15 +8,22 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBackgroundBlur.normal(
-      title: "Tìm kiếm",
+    return AppBackgroundBlur.withAppBar(
+      actions: [
+        Expanded(
+          child: FractionallySizedBox(
+            heightFactor: 0.7,
+            child: FormSearch(
+              onChanged: (value) {},
+            ),
+          ),
+        ),
+      ],
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FormSearch(onChanged: (value) {}),
-            const SizedBox(height: 15.0),
-            const SearchHistory(),
+          children: const [
+            SearchHistory(),
           ],
         ),
       ),

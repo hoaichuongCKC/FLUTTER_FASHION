@@ -11,8 +11,10 @@ Future<void> initDIProfile() async {
 
   getIt.registerLazySingleton(() => UserProviderImpl(apiService: getIt()));
 
-  getIt.registerLazySingleton(() => UserRepositoryImpl(
-        networkInfoImpl: getIt(),
-        userProviderImpl: getIt(),
-      ));
+  getIt.registerLazySingleton(
+    () => UserRepositoryImpl(
+      networkInfoImpl: getIt(),
+      userProviderImpl: getIt(),
+    ),
+  );
 }

@@ -52,7 +52,8 @@ class CreateAddressPage extends StatelessWidget {
                     btnColor: lightColor,
                     animate: true,
                     height: 45.0,
-                    onPressed: () {},
+                    onPressed: () => getIt<AddressManagementBloc>()
+                        .getCurrentLocation(context),
                     boxShadow: [
                       BoxShadow(
                           color: primaryColor.withOpacity(0.2),

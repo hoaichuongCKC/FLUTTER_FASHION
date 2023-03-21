@@ -4,7 +4,7 @@ import 'package:flutter_fashion/app/presentation/filter/blocs/filter_bloc.dart';
 import '../../../export.dart';
 
 Future<void> initDICategory() async {
-  getIt.registerFactory<FilterBloc>(
+  getIt.registerLazySingleton<FilterBloc>(
     () => FilterBloc(),
   );
   getIt.registerLazySingleton<CategoryPageBloc>(

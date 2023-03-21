@@ -1,6 +1,4 @@
 import 'dart:collection';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
@@ -37,9 +35,8 @@ class CategoryPageBloc {
     if (idCategory == _categorySelectedSubject.value) {
       return;
     }
-    _categorySelectedSubject.add(idCategory);
-
     _fetchData(idCategory);
+    _categorySelectedSubject.add(idCategory);
   }
 
   void _fetchData(int id) async {
@@ -104,6 +101,7 @@ class CategoryPageBloc {
       _hashMap.containsKey(id) ? _hashMap[id]!["has_load_more"] : false;
 
   void dispose() {
+    _hashMap.clear();
     _categorySelectedSubject.close();
   }
 }

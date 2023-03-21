@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/user/user_event.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/export.dart';
@@ -10,27 +9,13 @@ part 'user_cubit.freezed.dart';
 class UserCubit extends Cubit<UserState> {
   final UserRepositoryImpl _userRepositoryImpl;
   bool isLoaded = false;
+  UserModel? _user;
+
   UserCubit({required UserRepositoryImpl userRepositoryImpl})
       : _userRepositoryImpl = userRepositoryImpl,
         super(const UserState.initial());
 
-  Future<void> call(UserEvent event,
-      {BuildContext? context, UserModel? model}) async {
-    switch (event) {
-      case UserEvent.fetchUser:
-        _fetchUser(context);
-        break;
-      case UserEvent.updateUser:
-        if (model != null) await _updateUser(model);
-        break;
-      case UserEvent.init:
-        isLoaded = false;
-        break;
-      default:
-    }
-  }
-
-  _fetchUser(BuildContext? context) async {
+  Future fetchUser(BuildContext? context) async {
     if (!isLoaded) {
       emit(const UserState.loading());
       final result = await _userRepositoryImpl.me();
@@ -38,11 +23,15 @@ class UserCubit extends Cubit<UserState> {
         (String error) async => _handleError(context, error),
         (userModel) {
           isLoaded = true;
+          _user = userModel;
+
           emit(UserState.fetchCompleted(userModel));
         },
       );
     }
   }
+
+  UserModel get user => _user != null ? _user! : UserModel.init();
 
   void _handleError(BuildContext? context, String error) {
     {
@@ -53,10 +42,15 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future _updateUser(UserModel user) async {
+  void updateUser(UserModel user) {
     if (isLoaded) {
       emit(UserState.fetchCompleted(user));
     }
+  }
+
+  void reset() {
+    isLoaded = false;
+    emit(const UserState.initial());
   }
 
   @override

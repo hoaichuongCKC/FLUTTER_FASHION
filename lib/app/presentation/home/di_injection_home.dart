@@ -31,7 +31,7 @@ Future<void> initDIHome() async {
     () => ProductCubit(productRepositoryImpl: getIt()),
   );
 
-  getIt.registerFactory<AddressUserCubit>(
+  getIt.registerLazySingleton<AddressUserCubit>(
     () => AddressUserCubit(),
   );
 

@@ -5,7 +5,9 @@ class KeyStorage {
 
   static const String token = "authenticated-token";
 
-  static const String userAdress = "userr-address-";
+  static const String userAdress = "user-address-";
+
+  static const String userCart = "user-cart-";
 
   static String get getToken => HydratedBloc.storage.read(token);
 }

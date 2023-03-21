@@ -1,19 +1,23 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+// ignore_for_file: library_private_types_in_public_api
+import 'dart:developer';
+import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
+import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
+import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search_history/search_history_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
-import 'package:flutter_fashion/app/presentation/category/blocs/category_bloc.dart';
+import 'package:flutter_fashion/app_lifecycle.dart';
 import 'export.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // If you're going to use other Firebase services in the background, such as Firestore,
+//   // make sure you call `initializeApp` before using other Firebase services.
 
-  debugPrint("Handling a background message: ${message.messageId}");
-}
+//   debugPrint("Handling a background message: ${message.messageId}");
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +37,8 @@ Future<void> main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
+  //HydratedBloc.storage.clear();
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
   await init();
@@ -46,9 +52,6 @@ Future<void> main() async {
       ),
       BlocProvider(
         create: (context) => getIt<LanguageCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<UserCubit>(),
       ),
       BlocProvider(
         create: (context) => getIt<CategoryCubit>(),
@@ -66,7 +69,7 @@ Future<void> main() async {
         create: (context) => getIt<SearchHistoryCubit>(),
       ),
     ],
-    child: const MyApp(),
+    child: const Phoenix(child: MyApp()),
   ));
 }
 
@@ -103,59 +106,42 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    //get context root
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
-        return BlocBuilder<LanguageCubit, LanguageState>(
-          builder: (context, languageState) {
-            return MaterialApp.router(
-              theme: state.isDark ? appThemeDark : appThemeLight,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              scaffoldMessengerKey: AppSnackbarMessenger.scaffoldMessengerKey,
-              routerConfig: AppRoutes.router,
-              debugShowCheckedModeBanner: false,
-              locale: languageState.isVietnamese
-                  ? const Locale('vi', 'VN')
-                  : const Locale('en', 'US'),
-              title: 'App Fashion',
-            );
-          },
-        );
-      },
+    log("File main build", name: 'Main');
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<UserCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<CartCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<AddressUserCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<OrderCubit>(),
+        ),
+      ],
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return BlocBuilder<LanguageCubit, LanguageState>(
+            builder: (context, languageState) {
+              return MaterialApp.router(
+                theme: state.isDark ? appThemeDark : appThemeLight,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                scaffoldMessengerKey: AppSnackbarMessenger.scaffoldMessengerKey,
+                routerConfig: AppRoutes.router,
+                debugShowCheckedModeBanner: false,
+                locale: languageState.isVietnamese
+                    ? const Locale('vi', 'VN')
+                    : const Locale('en', 'US'),
+                title: 'App Fashion',
+              );
+            },
+          );
+        },
+      ),
     );
-  }
-}
-
-class AppLifecycleObserver extends WidgetsBindingObserver {
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (kDebugMode) {
-      switch (state) {
-        case AppLifecycleState.paused:
-          print("background mode");
-          // getIt.isRegistered()<Connectivity>();
-          // getIt.unregister<ImagePicker>();
-          // if (getIt.isRegistered<CameraInfo>()) {
-          //   getIt.unregister<CameraInfo>();
-          // }
-
-          break;
-        case AppLifecycleState.resumed:
-          print("foreground mode");
-          break;
-        case AppLifecycleState.inactive:
-          print("inactive");
-          break;
-        case AppLifecycleState.detached:
-          print("detached");
-          if (getIt.isRegistered<CategoryPageBloc>()) {
-            getIt<CategoryPageBloc>().dispose();
-          }
-          break;
-        default:
-      }
-    }
   }
 }
