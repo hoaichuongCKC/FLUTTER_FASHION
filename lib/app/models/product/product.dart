@@ -12,20 +12,20 @@ part 'product.g.dart';
 class ProductModel with _$ProductModel {
   @JsonSerializable(explicitToJson: true)
   const factory ProductModel({
-    required int id,
-    required String code,
-    required String name,
-    required int regular_price,
-    required double? discount,
-    @Default(0) int sale_price,
-    required Properties properties,
-    required String desc,
-    required int? view,
-    required double? star,
-    required int sold,
-    required bool? is_popular,
-    required Category category,
-    required List<PhotoModel> product_detail,
+    int? id,
+    String? code,
+    String? name,
+    int? regular_price,
+    double? discount,
+    int? sale_price,
+    Properties? properties,
+    String? desc,
+    int? view,
+    double? star,
+    int? sold,
+    bool? is_popular,
+    Category? category,
+    List<PhotoModel>? product_detail,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

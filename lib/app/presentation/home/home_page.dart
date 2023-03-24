@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
@@ -33,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     _scrollController = ScrollController()
       ..addListener(() {
         getIt<LoadMoreProductBloc>()
-            .handleScrollNotification(_scrollController);
+            .handleScrollNotification(_scrollController, context);
       });
     super.initState();
   }
@@ -42,9 +41,6 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _userCubit.fetchUser(context);
-    _userCubit.stream.listen((event) {
-      event.whenOrNull(fetchCompleted: (user) => CartCubit());
-    });
     context.read<BannerCubit>().fetchData();
     context.read<CategoryCubit>().fetchData();
     context.read<ProductCubit>().fetchData();
@@ -54,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _scrollController.removeListener(() => getIt<LoadMoreProductBloc>()
-        .handleScrollNotification(_scrollController));
+        .handleScrollNotification(_scrollController, context));
     super.dispose();
   }
 
@@ -137,8 +133,8 @@ class _HomePageState extends State<HomePage> {
                   error: (String error) =>
                       SliverToBoxAdapter(child: Center(child: Text(error))),
                   fetchCompleted: (List<ProductModel> list) => ProductRecommend(
-                      listProduct: list,
-                      loadMoreProductbloc: getIt<LoadMoreProductBloc>()),
+                    listProduct: list,
+                  ),
                 );
               },
             ),

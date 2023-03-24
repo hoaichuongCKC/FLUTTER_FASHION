@@ -37,7 +37,7 @@ class BuildFrameFeature extends StatelessWidget {
               children: listFeatureFirst
                   .map(
                     (e) => InkWell(
-                      onTap: () => AppRoutes.router.push(
+                      onTap: () => AppRoutes.router.pushNamed(
                           listFeatureFirst[listFeatureFirst.indexOf(e)].path),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
@@ -75,7 +75,7 @@ class BuildFrameFeature extends StatelessWidget {
               children: listFeatureSecond
                   .map(
                     (e) => InkWell(
-                      onTap: () => AppRoutes.router.push(
+                      onTap: () => AppRoutes.router.pushNamed(
                           listFeatureSecond[listFeatureSecond.indexOf(e)].path),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(

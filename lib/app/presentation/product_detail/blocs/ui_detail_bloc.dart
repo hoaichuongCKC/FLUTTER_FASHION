@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/export.dart';
+import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../models/product/product.dart';
@@ -39,15 +40,38 @@ class UiDetailShowBloc {
   void selectImage(int index) => _selectImageSuject.add(index);
 
   void addToCart(BuildContext context, ProductModel product) {
-    CartModel cartItem = CartModel(
-      color: _selectColorSubject.value,
-      quantity: _counterQuantity,
-      product: product,
-      size: _selectSizeSubject.value,
-    );
-    context.read<CartCubit>().addToCart(cartItem);
+    List? listSize = product.properties!.sizes;
+    bool isCheckEmptySize = false;
+    if (listSize!.isEmpty) {
+      //nếu danh sách listSize là rỗng thì không cần check size
+      isCheckEmptySize = true;
+    }
 
-    AppRoutes.router.go(Routes.CART);
+    bool isCheckColor = _selectColorSubject.value.isEmpty;
+
+    bool isCheckSize =
+        isCheckEmptySize ? false : _selectSizeSubject.value.isEmpty;
+
+    if (isCheckColor || isCheckSize) {
+      _notiAlert(context);
+    } else {
+      CartModel cartItem = CartModel(
+        color: _selectColorSubject.value,
+        quantity: _counterQuantity,
+        product: product,
+        size: _selectSizeSubject.value,
+      );
+      context.read<CartCubit>().addToCart(cartItem);
+
+      AppRoutes.router.go(Routes.CART);
+    }
+  }
+
+  _notiAlert(BuildContext context) {
+    popupAlert(
+        hasTimer: true,
+        context: context,
+        message: "Vui lòng chọn màu sắc và kich thước");
   }
 
   void dispose() {

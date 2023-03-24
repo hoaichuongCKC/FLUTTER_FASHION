@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/blocs/review_bloc.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/export_detail.dart';
 
@@ -5,8 +6,8 @@ import '../../../export.dart';
 import 'components/botom_navigation_bar_detail.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({super.key, required this.product});
-  final ProductModel product;
+  const ProductDetailPage({super.key, required this.productIndex});
+  final String productIndex;
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -14,7 +15,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   late UiDetailShowBloc _uiDetailBloc;
-
+  late ProductModel _product;
   @override
   void initState() {
     super.initState();
@@ -22,8 +23,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
     _uiDetailBloc.init();
 
-    if (widget.product.star != null) {
-      getIt<ReviewBLoc>().fetchData(widget.product.id);
+    _product = getIt.get<ProductCubit>().state.whenOrNull(
+          fetchCompleted: (list) => list[int.parse(widget.productIndex)],
+        )!;
+    if (_product.star != null) {
+      getIt<ReviewBLoc>().fetchData(_product.id!);
     }
   }
 
@@ -37,9 +41,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     return ProductDetailInherited(
-      productModel: widget.product,
+      productModel: _product,
       bloc: _uiDetailBloc,
       child: Scaffold(
+        extendBody: false,
         bottomNavigationBar: const BottomNavigationbarDetail(),
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),
@@ -58,7 +63,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.product.name,
+                            _product.name!,
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 18.0,
                             ),
@@ -69,7 +74,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                widget.product.regular_price
+                                _product.regular_price!
                                     .toDouble()
                                     .toVndCurrency(),
                                 style: PrimaryFont.instance.copyWith(
@@ -102,7 +107,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: widget.product.sold.toString(),
+                                    text: _product.sold.toString(),
                                     style: PrimaryFont.instance.copyWith(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
@@ -112,12 +117,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                             ],
                           ),
-                          widget.product.star != null
+                          _product.star != null
                               ? Text.rich(
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: widget.product.star.toString(),
+                                        text: _product.star.toString(),
                                         style: PrimaryFont.instance.copyWith(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w300,

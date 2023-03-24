@@ -21,7 +21,7 @@ class DescDetail extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Text(
-            "- Xuất xứ: ${product.properties.origin!}",
+            "- Xuất xứ: ${product.properties!.origin!}",
             style: PrimaryFont.instance.copyWith(
               fontSize: 14.0,
               color: disableDarkColor.withOpacity(0.5),

@@ -6,14 +6,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
-class OrderState extends Equatable {
+class PaymentState extends Equatable {
   final String phone;
   final String fullname;
   final String note;
   final String address;
   final bool isRead;
   final AppStatus status;
-  const OrderState({
+  const PaymentState({
     this.phone = "",
     this.fullname = "",
     this.address = "",
@@ -33,7 +33,7 @@ class OrderState extends Equatable {
     ];
   }
 
-  OrderState copyWith({
+  PaymentState copyWith({
     String? phone,
     String? fullname,
     String? note,
@@ -41,7 +41,7 @@ class OrderState extends Equatable {
     bool? isRead,
     AppStatus? status,
   }) {
-    return OrderState(
+    return PaymentState(
       phone: phone ?? this.phone,
       fullname: fullname ?? this.fullname,
       note: note ?? this.note,

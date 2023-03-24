@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter_fashion/app/models/category/category.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

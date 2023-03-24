@@ -1,6 +1,4 @@
-import 'dart:collection';
 import 'dart:developer';
-
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
@@ -10,12 +8,12 @@ import 'package:flutter_fashion/app/repositories/order_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/pop_up.dart';
 
-class OrderCubit extends Cubit<OrderState> {
+class PaymentCubit extends Cubit<PaymentState> {
   final OrderRepositoryImpl _orderRepositoryImpl;
 
-  OrderCubit({required OrderRepositoryImpl orderRepositoryImpl})
+  PaymentCubit({required OrderRepositoryImpl orderRepositoryImpl})
       : _orderRepositoryImpl = orderRepositoryImpl,
-        super(const OrderState());
+        super(const PaymentState());
 
   void changedPhone(String phone) => emit(state.copyWith(phone: phone));
 
@@ -26,7 +24,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   void readRule(bool isCheck) => emit(state.copyWith(isRead: isCheck));
 
-  void removeAll() => emit(const OrderState());
+  void removeAll() => emit(const PaymentState());
 
   _createOrder(context) async {
     final state = this.state;
@@ -47,12 +45,10 @@ class OrderCubit extends Cubit<OrderState> {
     log("result: $result");
     result.fold(
       (error) => emit(state.copyWith(status: AppStatus.error)),
-      (statusCode) {
+      (statusCode) async {
         emit(state.copyWith(status: AppStatus.success));
-        Future.delayed(
-          const Duration(seconds: 2),
-          () => AppRoutes.router.go(Routes.MY_ORDER),
-        );
+        await Future.delayed(const Duration(seconds: 2));
+        AppRoutes.router.go(Routes.MY_ORDER);
       },
     );
   }

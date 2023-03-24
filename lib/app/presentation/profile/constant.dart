@@ -8,13 +8,13 @@ final List<ProfileFeatureModel> listFeatureFirst = [
   ProfileFeatureModel(
     label: "Cá nhân",
     imageUrl: "${appUrlAssets}personal_information.svg",
-    path: Routes.PERSONAL,
+    path: Names.PERSONAL,
     color: const Color(0xFFC6B415),
   ),
   ProfileFeatureModel(
     label: "Đơn hàng",
     imageUrl: "${appUrlAssets}order.svg",
-    path: Routes.MY_ORDER,
+    path: Names.ORDER,
     color: const Color(0xFF39DF67),
   ),
   ProfileFeatureModel(
@@ -28,13 +28,13 @@ final List<ProfileFeatureModel> listFeatureSecond = [
   ProfileFeatureModel(
     label: "Yêu thích",
     imageUrl: "assets/icons/favorite.svg",
-    path: Routes.FAVORITE,
+    path: Names.FAVORITE,
     color: const Color(0xFFFF70F1),
   ),
   ProfileFeatureModel(
     label: "Cài đặt",
     imageUrl: "${appUrlAssets}setting.svg",
-    path: Routes.SETTING,
+    path: Names.SETTING,
     color: const Color(0xFF8E8EEB),
   ),
   ProfileFeatureModel(

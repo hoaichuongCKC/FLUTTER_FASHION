@@ -20,20 +20,20 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  int get id => throw _privateConstructorUsedError;
-  String get code => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  int get regular_price => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  int? get regular_price => throw _privateConstructorUsedError;
   double? get discount => throw _privateConstructorUsedError;
-  int get sale_price => throw _privateConstructorUsedError;
-  Properties get properties => throw _privateConstructorUsedError;
-  String get desc => throw _privateConstructorUsedError;
+  int? get sale_price => throw _privateConstructorUsedError;
+  Properties? get properties => throw _privateConstructorUsedError;
+  String? get desc => throw _privateConstructorUsedError;
   int? get view => throw _privateConstructorUsedError;
   double? get star => throw _privateConstructorUsedError;
-  int get sold => throw _privateConstructorUsedError;
+  int? get sold => throw _privateConstructorUsedError;
   bool? get is_popular => throw _privateConstructorUsedError;
-  Category get category => throw _privateConstructorUsedError;
-  List<PhotoModel> get product_detail => throw _privateConstructorUsedError;
+  Category? get category => throw _privateConstructorUsedError;
+  List<PhotoModel>? get product_detail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,23 +48,23 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res, ProductModel>;
   @useResult
   $Res call(
-      {int id,
-      String code,
-      String name,
-      int regular_price,
+      {int? id,
+      String? code,
+      String? name,
+      int? regular_price,
       double? discount,
-      int sale_price,
-      Properties properties,
-      String desc,
+      int? sale_price,
+      Properties? properties,
+      String? desc,
       int? view,
       double? star,
-      int sold,
+      int? sold,
       bool? is_popular,
-      Category category,
-      List<PhotoModel> product_detail});
+      Category? category,
+      List<PhotoModel>? product_detail});
 
-  $PropertiesCopyWith<$Res> get properties;
-  $CategoryCopyWith<$Res> get category;
+  $PropertiesCopyWith<$Res>? get properties;
+  $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -80,54 +80,54 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? code = null,
-    Object? name = null,
-    Object? regular_price = null,
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? name = freezed,
+    Object? regular_price = freezed,
     Object? discount = freezed,
-    Object? sale_price = null,
-    Object? properties = null,
-    Object? desc = null,
+    Object? sale_price = freezed,
+    Object? properties = freezed,
+    Object? desc = freezed,
     Object? view = freezed,
     Object? star = freezed,
-    Object? sold = null,
+    Object? sold = freezed,
     Object? is_popular = freezed,
-    Object? category = null,
-    Object? product_detail = null,
+    Object? category = freezed,
+    Object? product_detail = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      code: null == code
+              as int?,
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      regular_price: null == regular_price
+              as String?,
+      regular_price: freezed == regular_price
           ? _value.regular_price
           : regular_price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sale_price: null == sale_price
+      sale_price: freezed == sale_price
           ? _value.sale_price
           : sale_price // ignore: cast_nullable_to_non_nullable
-              as int,
-      properties: null == properties
+              as int?,
+      properties: freezed == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as Properties,
-      desc: null == desc
+              as Properties?,
+      desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       view: freezed == view
           ? _value.view
           : view // ignore: cast_nullable_to_non_nullable
@@ -136,37 +136,45 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.star
           : star // ignore: cast_nullable_to_non_nullable
               as double?,
-      sold: null == sold
+      sold: freezed == sold
           ? _value.sold
           : sold // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       is_popular: freezed == is_popular
           ? _value.is_popular
           : is_popular // ignore: cast_nullable_to_non_nullable
               as bool?,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
-      product_detail: null == product_detail
+              as Category?,
+      product_detail: freezed == product_detail
           ? _value.product_detail
           : product_detail // ignore: cast_nullable_to_non_nullable
-              as List<PhotoModel>,
+              as List<PhotoModel>?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $PropertiesCopyWith<$Res> get properties {
-    return $PropertiesCopyWith<$Res>(_value.properties, (value) {
+  $PropertiesCopyWith<$Res>? get properties {
+    if (_value.properties == null) {
+      return null;
+    }
+
+    return $PropertiesCopyWith<$Res>(_value.properties!, (value) {
       return _then(_value.copyWith(properties: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
+  $CategoryCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.category!, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
@@ -181,25 +189,25 @@ abstract class _$$_ProductModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      String code,
-      String name,
-      int regular_price,
+      {int? id,
+      String? code,
+      String? name,
+      int? regular_price,
       double? discount,
-      int sale_price,
-      Properties properties,
-      String desc,
+      int? sale_price,
+      Properties? properties,
+      String? desc,
       int? view,
       double? star,
-      int sold,
+      int? sold,
       bool? is_popular,
-      Category category,
-      List<PhotoModel> product_detail});
+      Category? category,
+      List<PhotoModel>? product_detail});
 
   @override
-  $PropertiesCopyWith<$Res> get properties;
+  $PropertiesCopyWith<$Res>? get properties;
   @override
-  $CategoryCopyWith<$Res> get category;
+  $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -213,54 +221,54 @@ class __$$_ProductModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? code = null,
-    Object? name = null,
-    Object? regular_price = null,
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? name = freezed,
+    Object? regular_price = freezed,
     Object? discount = freezed,
-    Object? sale_price = null,
-    Object? properties = null,
-    Object? desc = null,
+    Object? sale_price = freezed,
+    Object? properties = freezed,
+    Object? desc = freezed,
     Object? view = freezed,
     Object? star = freezed,
-    Object? sold = null,
+    Object? sold = freezed,
     Object? is_popular = freezed,
-    Object? category = null,
-    Object? product_detail = null,
+    Object? category = freezed,
+    Object? product_detail = freezed,
   }) {
     return _then(_$_ProductModel(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      code: null == code
+              as int?,
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      regular_price: null == regular_price
+              as String?,
+      regular_price: freezed == regular_price
           ? _value.regular_price
           : regular_price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sale_price: null == sale_price
+      sale_price: freezed == sale_price
           ? _value.sale_price
           : sale_price // ignore: cast_nullable_to_non_nullable
-              as int,
-      properties: null == properties
+              as int?,
+      properties: freezed == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as Properties,
-      desc: null == desc
+              as Properties?,
+      desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       view: freezed == view
           ? _value.view
           : view // ignore: cast_nullable_to_non_nullable
@@ -269,22 +277,22 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.star
           : star // ignore: cast_nullable_to_non_nullable
               as double?,
-      sold: null == sold
+      sold: freezed == sold
           ? _value.sold
           : sold // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       is_popular: freezed == is_popular
           ? _value.is_popular
           : is_popular // ignore: cast_nullable_to_non_nullable
               as bool?,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
-      product_detail: null == product_detail
+              as Category?,
+      product_detail: freezed == product_detail
           ? _value._product_detail
           : product_detail // ignore: cast_nullable_to_non_nullable
-              as List<PhotoModel>,
+              as List<PhotoModel>?,
     ));
   }
 }
@@ -294,58 +302,59 @@ class __$$_ProductModelCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$_ProductModel implements _ProductModel {
   const _$_ProductModel(
-      {required this.id,
-      required this.code,
-      required this.name,
-      required this.regular_price,
-      required this.discount,
-      this.sale_price = 0,
-      required this.properties,
-      required this.desc,
-      required this.view,
-      required this.star,
-      required this.sold,
-      required this.is_popular,
-      required this.category,
-      required final List<PhotoModel> product_detail})
+      {this.id,
+      this.code,
+      this.name,
+      this.regular_price,
+      this.discount,
+      this.sale_price,
+      this.properties,
+      this.desc,
+      this.view,
+      this.star,
+      this.sold,
+      this.is_popular,
+      this.category,
+      final List<PhotoModel>? product_detail})
       : _product_detail = product_detail;
 
   factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProductModelFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
-  final String code;
+  final String? code;
   @override
-  final String name;
+  final String? name;
   @override
-  final int regular_price;
+  final int? regular_price;
   @override
   final double? discount;
   @override
-  @JsonKey()
-  final int sale_price;
+  final int? sale_price;
   @override
-  final Properties properties;
+  final Properties? properties;
   @override
-  final String desc;
+  final String? desc;
   @override
   final int? view;
   @override
   final double? star;
   @override
-  final int sold;
+  final int? sold;
   @override
   final bool? is_popular;
   @override
-  final Category category;
-  final List<PhotoModel> _product_detail;
+  final Category? category;
+  final List<PhotoModel>? _product_detail;
   @override
-  List<PhotoModel> get product_detail {
+  List<PhotoModel>? get product_detail {
+    final value = _product_detail;
+    if (value == null) return null;
     if (_product_detail is EqualUnmodifiableListView) return _product_detail;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_product_detail);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -416,52 +425,52 @@ class _$_ProductModel implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
-      {required final int id,
-      required final String code,
-      required final String name,
-      required final int regular_price,
-      required final double? discount,
-      final int sale_price,
-      required final Properties properties,
-      required final String desc,
-      required final int? view,
-      required final double? star,
-      required final int sold,
-      required final bool? is_popular,
-      required final Category category,
-      required final List<PhotoModel> product_detail}) = _$_ProductModel;
+      {final int? id,
+      final String? code,
+      final String? name,
+      final int? regular_price,
+      final double? discount,
+      final int? sale_price,
+      final Properties? properties,
+      final String? desc,
+      final int? view,
+      final double? star,
+      final int? sold,
+      final bool? is_popular,
+      final Category? category,
+      final List<PhotoModel>? product_detail}) = _$_ProductModel;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
-  String get code;
+  String? get code;
   @override
-  String get name;
+  String? get name;
   @override
-  int get regular_price;
+  int? get regular_price;
   @override
   double? get discount;
   @override
-  int get sale_price;
+  int? get sale_price;
   @override
-  Properties get properties;
+  Properties? get properties;
   @override
-  String get desc;
+  String? get desc;
   @override
   int? get view;
   @override
   double? get star;
   @override
-  int get sold;
+  int? get sold;
   @override
   bool? get is_popular;
   @override
-  Category get category;
+  Category? get category;
   @override
-  List<PhotoModel> get product_detail;
+  List<PhotoModel>? get product_detail;
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>

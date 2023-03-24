@@ -1,7 +1,6 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
-import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/address_view.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/detail_order_view.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/infor_user_order_view.dart';
@@ -20,11 +19,11 @@ class PaymentPage extends StatelessWidget {
     return AppBackgroundBlur.withAppBar(
       isHasBackground: false,
       title: "Đơn hàng",
-      child: BlocListener<OrderCubit, OrderState>(
+      child: BlocListener<PaymentCubit, PaymentState>(
         listener: (context, state) {
           if (state.status == AppStatus.success) {
             context.read<CartCubit>().removeAll();
-            context.read<OrderCubit>().removeAll();
+            context.read<PaymentCubit>().removeAll();
           }
         },
         child: SingleChildScrollView(

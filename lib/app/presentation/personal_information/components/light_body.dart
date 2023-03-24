@@ -165,6 +165,9 @@ class _LightPersonalBodyState extends State<LightPersonalBody> {
                   isOnchanged: state.phone.isNotEmpty,
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
+                  hintText: widget.user.phone.isEmpty
+                      ? "Vui lòng cập nhật số điện thoại"
+                      : "",
                   onChanged: (value) => context
                       .read<EditInformationCubit>()
                       .onChangedPhone(value!),

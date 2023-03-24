@@ -11,29 +11,26 @@ class BottomNavigationbarDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final inheritedDetail = ProductDetailInherited.of(context);
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: lightColor,
-        boxShadow: [
-          BoxShadow(
-            color: disableDarkColor.withOpacity(0.5),
-            blurRadius: 7.0,
-          )
-        ],
-      ),
-      child: ConstrainedBoxWidget(
-        currentHeight: 0.15,
-        maxHeight: 65.0,
-        minHeight: 60.0,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: lightColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+        ),
+        child: ConstrainedBoxWidget(
+          currentHeight: 0.1,
+          maxHeight: 45.0,
+          minHeight: 40.0,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(
                 flex: 1,
                 child: FractionallySizedBox(
-                  heightFactor: 0.8,
+                  heightFactor: 1.0,
                   child: ButtonWidget(
                     height: 40.0,
                     animate: true,
@@ -101,7 +98,7 @@ void showModalOption(
                   onChanged: (p0) => bloc.counter(p0),
                 ),
               ),
-              product.properties.colors!.isEmpty
+              product.properties!.colors!.isEmpty
                   ? const SizedBox()
                   : ListTile(
                       dense: true,
@@ -115,7 +112,7 @@ void showModalOption(
                       ),
                       title: Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: product.properties.colors!
+                        children: product.properties!.colors!
                             .map(
                               (e) => StreamBuilder<String>(
                                 stream: bloc.colorStream,
@@ -157,7 +154,7 @@ void showModalOption(
                             .toList(),
                       ),
                     ),
-              product.properties.sizes!.isEmpty
+              product.properties!.sizes!.isEmpty
                   ? const SizedBox()
                   : ListTile(
                       dense: true,
@@ -172,7 +169,7 @@ void showModalOption(
                       title: Wrap(
                         runSpacing: 10.0,
                         spacing: 10.0,
-                        children: product.properties.sizes!
+                        children: product.properties!.sizes!
                             .map(
                               (e) => StreamBuilder<String>(
                                 stream: bloc.sizeStream,
@@ -221,7 +218,7 @@ void showModalOption(
                         btnColor: primaryColor,
                         onPressed: () => bloc.addToCart(context, product),
                         labelWidget: const Icon(
-                          Icons.add_shopping_cart,
+                          Icons.shopping_bag,
                           color: lightColor,
                         ),
                       ),

@@ -2,7 +2,6 @@ import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:lottie/lottie.dart';
 
 class RulesAppView extends StatelessWidget {
@@ -19,7 +18,7 @@ class RulesAppView extends StatelessWidget {
             TextSpan(
               children: [
                 WidgetSpan(
-                  child: BlocBuilder<OrderCubit, OrderState>(
+                  child: BlocBuilder<PaymentCubit, PaymentState>(
                     buildWhen: (previous, current) =>
                         previous.isRead != current.isRead,
                     builder: (context, state) {
@@ -38,7 +37,7 @@ class RulesAppView extends StatelessWidget {
                                 ),
                                 child: InkWell(
                                   onTap: () => context
-                                      .read<OrderCubit>()
+                                      .read<PaymentCubit>()
                                       .readRule(false),
                                   child: const SizedBox(
                                     width: 18.0,
@@ -63,8 +62,9 @@ class RulesAppView extends StatelessWidget {
                                   ),
                                 ),
                                 child: InkWell(
-                                  onTap: () =>
-                                      context.read<OrderCubit>().readRule(true),
+                                  onTap: () => context
+                                      .read<PaymentCubit>()
+                                      .readRule(true),
                                   child:
                                       const SizedBox(width: 18.0, height: 18.0),
                                 ),
@@ -103,7 +103,7 @@ class RulesAppView extends StatelessWidget {
             btnColor: primaryColor,
             animate: true,
             onPressed: () {
-              context.read<OrderCubit>().order(context);
+              context.read<PaymentCubit>().order(context);
             },
             height: 45.0,
             label: "Thanh toán",
@@ -163,7 +163,7 @@ class _DialogOrderState extends State<DialogOrder>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BlocBuilder<OrderCubit, OrderState>(
+            BlocBuilder<PaymentCubit, PaymentState>(
               buildWhen: (previous, current) =>
                   previous.status != current.status,
               builder: (context, state) {
@@ -187,7 +187,7 @@ class _DialogOrderState extends State<DialogOrder>
                 );
               },
             ),
-            BlocBuilder<OrderCubit, OrderState>(
+            BlocBuilder<PaymentCubit, PaymentState>(
               buildWhen: (previous, current) =>
                   previous.status != current.status,
               builder: (context, state) {

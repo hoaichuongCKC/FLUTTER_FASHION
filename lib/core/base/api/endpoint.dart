@@ -17,4 +17,5 @@ class ApiEndpoint {
   static const String fetchReview = "review/fetch-review";
 
   static const String createOrder = "order/create";
+  static const String fetchOrder = "order/fetch-order";
 }

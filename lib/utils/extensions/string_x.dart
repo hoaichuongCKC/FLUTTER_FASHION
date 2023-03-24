@@ -42,17 +42,17 @@ extension StringX on String {
 
   String translateLabelFeatureProfile(BuildContext context) {
     switch (this) {
-      case Routes.PERSONAL:
+      case Names.PERSONAL:
         return AppLocalizations.of(context)!.personal;
-      case Routes.MY_ORDER:
+      case Names.ORDER:
         return AppLocalizations.of(context)!.order;
-      case Routes.MESSENGER:
+      case Names.MESSENGER:
         return AppLocalizations.of(context)!.messenger;
-      case Routes.ADDRESS_MANAGEMENT:
+      case Names.ADDRESS_MANAGEMENT:
         return AppLocalizations.of(context)!.address;
-      case Routes.FAVORITE:
+      case Names.FAVORITE:
         return AppLocalizations.of(context)!.favorite;
-      case Routes.SETTING:
+      case Names.SETTING:
         return AppLocalizations.of(context)!.setting;
       default:
     }

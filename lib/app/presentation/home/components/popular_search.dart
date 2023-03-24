@@ -54,7 +54,7 @@ class PopularSearchHome extends StatelessWidget {
                           aspectRatio: 1.0,
                           child: CachedNetworkImage(
                             imageUrl: ApiService.imageUrl +
-                                data.product_detail[0].photo,
+                                data.product_detail![0].photo,
                             fit: BoxFit.fill,
                             httpHeaders: getIt<ApiService>().headers,
                             placeholder: (context, url) {
@@ -75,7 +75,7 @@ class PopularSearchHome extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                data.name,
+                                data.name!,
                                 style: PrimaryFont.instance.small(),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,

@@ -27,27 +27,42 @@ class ChoiceChipCustom extends Equatable {
         ChoiceChipCustom(
           id: 1,
           label: "Chờ xác nhận",
-          prefixIcon: Icon(Icons.hourglass_empty_outlined),
+          prefixIcon: Icon(
+            Icons.hourglass_empty_outlined,
+            size: 18.0,
+          ),
         ),
         ChoiceChipCustom(
           id: 2,
           label: "Đang lên đơn",
-          prefixIcon: Icon(Icons.shopping_cart_outlined),
+          prefixIcon: Icon(
+            Icons.shopping_cart_outlined,
+            size: 18.0,
+          ),
         ),
         ChoiceChipCustom(
           id: 3,
           label: "Đang giao",
-          prefixIcon: Icon(Icons.local_shipping_outlined),
+          prefixIcon: Icon(
+            Icons.local_shipping_outlined,
+            size: 18.0,
+          ),
         ),
         ChoiceChipCustom(
           id: 4,
           label: "Đã giao",
-          prefixIcon: Icon(Icons.check_circle_outlined),
+          prefixIcon: Icon(
+            Icons.check_circle_outlined,
+            size: 18.0,
+          ),
         ),
         ChoiceChipCustom(
           id: 5,
           label: "Đã huỷ",
-          prefixIcon: Icon(Icons.cancel_outlined),
+          prefixIcon: Icon(
+            Icons.cancel_outlined,
+            size: 18.0,
+          ),
         ),
       ];
 }

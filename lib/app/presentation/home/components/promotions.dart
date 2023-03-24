@@ -113,7 +113,10 @@ class PromotionList extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                      "assets/icons/stopwatch-minus.svg"),
+                                    "assets/icons/calendar.svg",
+                                    width: 18.0,
+                                    height: 18.0,
+                                  ),
                                   Text(
                                     'Expiring: 1 day left',
                                     style: PrimaryFont.instance.copyWith(

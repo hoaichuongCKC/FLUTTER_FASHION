@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/di_injection_home.dart';
 import 'package:flutter_fashion/app/presentation/login/di_login.dart';
 import 'package:flutter_fashion/app/presentation/payment/dependency_injection.dart';
@@ -14,6 +15,10 @@ import 'package:flutter_fashion/core/network/network_info.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'app/blocs/address_user/address_user_cubit.dart';
+import 'app/blocs/cart/cart_cubit.dart';
+import 'app/blocs/favorite/favorite_cubit.dart';
+import 'app/blocs/payment/payment.dart';
 import 'app/presentation/category/di_category.dart';
 import 'app/presentation/personal_information/di_personal_info.dart';
 
@@ -52,4 +57,26 @@ Future<void> init() async {
   initProductDetail();
 
   initDIOrder();
+}
+
+void dispose() {
+  getIt.unregister<UserCubit>();
+  if (getIt.isRegistered<CartCubit>()) {
+    getIt.unregister<CartCubit>();
+  }
+  if (getIt.isRegistered<AddressUserCubit>()) {
+    getIt.unregister<AddressUserCubit>();
+  }
+  if (getIt.isRegistered<PaymentCubit>()) {
+    getIt.unregister<PaymentCubit>();
+  }
+  if (getIt.isRegistered<FavoriteCubit>()) {
+    getIt.unregister<FavoriteCubit>();
+  }
+  //register DI again
+  getIt.registerLazySingleton(() => UserCubit(userRepositoryImpl: getIt()));
+  getIt.registerLazySingleton(() => FavoriteCubit());
+  getIt.registerLazySingleton(() => CartCubit());
+  getIt.registerLazySingleton(() => AddressUserCubit());
+  getIt.registerLazySingleton(() => PaymentCubit(orderRepositoryImpl: getIt()));
 }

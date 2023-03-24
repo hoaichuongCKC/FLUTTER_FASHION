@@ -1,10 +1,7 @@
 import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 

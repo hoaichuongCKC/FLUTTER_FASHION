@@ -45,6 +45,11 @@ class _TextFieldAppState extends State<TextFieldApp> {
               .copyWith(fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: widget.hintText ?? "",
+            hintStyle: PrimaryFont.instance.copyWith(
+              fontSize: 14.0,
+              color: errorColor,
+              fontWeight: FontWeight.w300,
+            ),
             isDense: true,
             filled: false,
             contentPadding: EdgeInsets.zero,

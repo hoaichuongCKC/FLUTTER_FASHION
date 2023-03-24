@@ -51,7 +51,7 @@ class ItemCart extends StatelessWidget {
                           aspectRatio: 1.0,
                           child: CachedNetworkImage(
                             imageUrl: ApiService.imageUrl +
-                                item.product.product_detail[0].photo,
+                                item.product.product_detail![0].photo,
                             fit: BoxFit.fitWidth,
                             placeholder: (context, url) {
                               return ColoredBox(
@@ -74,7 +74,7 @@ class ItemCart extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      item.product.name,
+                                      item.product.name!,
                                       style: PrimaryFont.instance.copyWith(
                                         fontSize: 14.0,
                                       ),
@@ -106,7 +106,7 @@ class ItemCart extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  item.product.regular_price
+                                  item.product.regular_price!
                                       .toDouble()
                                       .toVndCurrency(),
                                   style: PrimaryFont.instance.copyWith(
@@ -139,7 +139,7 @@ class ItemCart extends StatelessWidget {
                                       )
                               ],
                             ),
-                            item.product.sale_price == 0
+                            item.product.sale_price == null
                                 ? const SizedBox()
                                 : ColoredBox(
                                     color: errorColor.withOpacity(0.2),
@@ -147,7 +147,7 @@ class ItemCart extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 1.0),
                                       child: Text(
-                                        "-${item.product.sale_price.toDouble().toVndCurrency()}",
+                                        "-${item.product.sale_price!.toDouble().toVndCurrency()}",
                                         style: PrimaryFont.instance.copyWith(
                                           fontSize: 7.0,
                                           color: errorColor,
@@ -186,11 +186,8 @@ class ItemCart extends StatelessWidget {
                       WidgetSpan(
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: Color(int.parse("0xFF${item.color}")),
                             shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Color(int.parse("0xFF${item.color}")),
-                            ),
                           ),
                           child: const SizedBox(
                             width: 20,

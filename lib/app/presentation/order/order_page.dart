@@ -1,4 +1,8 @@
 import 'package:flutter_fashion/app/presentation/login/export.dart';
+import 'package:flutter_fashion/app/presentation/order/components/awaiting_confirmation_page.dart';
+import 'package:flutter_fashion/app/presentation/order/components/delivered_page.dart';
+import 'package:flutter_fashion/app/presentation/order/components/order_processing_page.dart';
+import 'package:flutter_fashion/app/presentation/order/components/shipping_page.dart';
 import 'package:flutter_fashion/app/presentation/order/constant.dart';
 
 import '../../../common/components/app/background_app.dart';
@@ -10,79 +14,75 @@ class OrderPage extends StatefulWidget {
   State<OrderPage> createState() => _OrderPageState();
 }
 
-class _OrderPageState extends State<OrderPage> {
-  int _index = 0;
-  late ScrollController _scrollController;
+class _OrderPageState extends State<OrderPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabBarController;
 
   @override
   void initState() {
-    _scrollController = ScrollController();
+    _tabBarController =
+        TabController(length: ChoiceChipCustom.listData.length, vsync: this);
     super.initState();
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _tabBarController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AppBackgroundBlur.normal(
-      title: 'Đơn hàng của tôi',
-      leading: InkWell(
-        onTap: () => AppRoutes.router.go(Routes.PROFILE),
-        child: const Icon(Icons.arrow_back, size: 20.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SingleChildScrollView(
-            controller: _scrollController,
-            key: const PageStorageKey("tab-order"),
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: ChoiceChipCustom.listData.map(
-                    (e) {
-                      final index = ChoiceChipCustom.listData.indexOf(e);
-                      // final globalKey = GlobalKey();
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: ChoiceChip(
-                          key: ValueKey("$index"),
-                          onSelected: (value) {
-                            _index = index;
-                            setState(() {});
-                          },
-                          materialTapTargetSize: MaterialTapTargetSize.padded,
-                          side: BorderSide.none,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(14.0),
-                            ),
-                            side: BorderSide.none,
-                          ),
-                          label: Text(
-                            e.label,
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          selected: _index == index,
-                          elevation: 0.0,
-                          selectedColor: primaryColor.withOpacity(0.3),
-                          disabledColor: disableDarkColor.withOpacity(0.1),
-                        ),
-                      );
-                    },
-                  ).toList()),
+    return DefaultTabController(
+      length: ChoiceChipCustom.listData.length,
+      child: AppBackgroundBlur.normal(
+        isHasBackground: false,
+        title: 'Đơn hàng của tôi',
+        leading: InkWell(
+          onTap: () => AppRoutes.router.go(Routes.PROFILE),
+          child: const Icon(Icons.arrow_back, size: 20.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TabBar(
+              splashBorderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              unselectedLabelColor: darkColor.withOpacity(0.5),
+              indicatorSize: TabBarIndicatorSize.label,
+              labelStyle: PrimaryFont.instance.copyWith(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w300,
+              ),
+              controller: _tabBarController,
+              isScrollable: true,
+              tabs: ChoiceChipCustom.listData
+                  .map(
+                    (e) => Tab(
+                      child: Row(
+                        children: [
+                          e.prefixIcon,
+                          const SizedBox(width: 3.0),
+                          Text(e.label),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
-          ),
-        ],
+            Expanded(
+              child: TabBarView(
+                controller: _tabBarController,
+                children: const [
+                  AwaitingConfirmationPage(),
+                  OrderProcessingPage(),
+                  ShippingPage(),
+                  DeliveredPage(),
+                  DeliveredPage(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

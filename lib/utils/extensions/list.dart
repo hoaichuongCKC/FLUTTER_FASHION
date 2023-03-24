@@ -7,8 +7,8 @@ extension ListX on List<CartModel> {
       (previousValue, element) =>
           previousValue +
           (element.quantity *
-              (element.product.regular_price -
-                  element.product.sale_price.toInt())),
+              (element.product.regular_price! -
+                  element.product.sale_price!.toInt())),
     );
   }
 }

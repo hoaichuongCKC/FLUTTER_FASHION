@@ -65,7 +65,7 @@ class ReviewDetail extends StatelessWidget {
             );
           },
         ),
-        const SizedBox(height: 15.0),
+        const SizedBox(height: 45.0),
       ],
     );
   }

@@ -1,7 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import '../../../../export.dart';
 import '../../../blocs/cart/cart_cubit.dart';
 
 class DetailOrderView extends StatelessWidget {
@@ -20,7 +18,7 @@ class DetailOrderView extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             minLeadingWidth: 0.0,
             leading: SvgPicture.asset(
-              "assets/icons/bookmark.svg",
+              "assets/icons/receipt.svg",
               color: primaryColor,
             ),
             title: Text(

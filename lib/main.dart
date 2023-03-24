@@ -4,6 +4,8 @@ import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
+import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
@@ -37,40 +39,40 @@ Future<void> main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
-  //HydratedBloc.storage.clear();
-
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
   await init();
 
   Bloc.observer = MyBlocObserver();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => getIt<ThemeCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<LanguageCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<CategoryCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<BannerCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<ProductCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<PopularSearchCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => getIt<SearchHistoryCubit>(),
-      ),
-    ],
-    child: const Phoenix(child: MyApp()),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<ThemeCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<LanguageCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<CategoryCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<BannerCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ProductCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<PopularSearchCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<SearchHistoryCubit>(),
+        ),
+      ],
+      child: const Phoenix(child: MyApp()),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -106,7 +108,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    log("File main build", name: 'Main');
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -119,7 +120,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           create: (context) => getIt<AddressUserCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<OrderCubit>(),
+          create: (context) => getIt<PaymentCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<OrderCubit>()..fetchOrder(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<FavoriteCubit>(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

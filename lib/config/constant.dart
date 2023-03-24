@@ -24,3 +24,11 @@ const List<Color> rangeColor = [
   Color.fromARGB(255, 46, 126, 190),
   Color.fromARGB(255, 171, 196, 32),
 ];
+
+const int awaitingStatus = 1;
+
+const int processingStatus = 2;
+
+const int shippingStatus = 3;
+
+const int deliveredStatus = -1;

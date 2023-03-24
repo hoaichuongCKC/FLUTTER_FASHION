@@ -29,6 +29,12 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
+  void addProduct(List<ProductModel> data) {
+    final state = this.state;
+    final listState = state.whenOrNull(fetchCompleted: (list) => list)!;
+    emit(ProductState.fetchCompleted([...listState, ...data]));
+  }
+
   void onRefresh() async {
     fetchData(1);
   }

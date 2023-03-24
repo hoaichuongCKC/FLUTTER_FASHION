@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
 
 import '../../models/cart/cart.dart';
@@ -11,7 +12,8 @@ class CartCubit extends HydratedCubit<CartState> {
   CartCubit() : super(const CartState());
 
   @override
-  String get storageToken => getIt.get<UserCubit>().user.id.toString();
+  String get storageToken =>
+      KeyStorage.userCart + getIt.get<UserCubit>().user.id.toString();
 
   void addToCart(CartModel product) {
     final state = this.state;
@@ -61,7 +63,7 @@ class CartCubit extends HydratedCubit<CartState> {
 
   @override
   CartState fromJson(Map<String, dynamic> json) {
-    return CartState.fromJson(json);
+    return json["items"] == null ? const CartState() : CartState.fromJson(json);
   }
 
   @override

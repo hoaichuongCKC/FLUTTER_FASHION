@@ -9,6 +9,8 @@ class KeyStorage {
 
   static const String userCart = "user-cart-";
 
+  static const String userFavorite = "user-favorite-";
+
   static String get getToken => HydratedBloc.storage.read(token);
 }
 

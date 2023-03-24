@@ -1,9 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/payment/payment.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
@@ -95,31 +91,13 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         emit(state.copyWith(status: AppStatus.error));
         errorAlert(context: context, message: error);
       },
-      (dataReposonse) async {
+      (dataReposonse) {
         if (dataReposonse.status) {
           //setup init location
-          AppRoutes.initLocation = Routes.LOGIN;
           AppRoutes.router.go(Routes.LOGIN);
           //dispose register dependency injection
-          getIt.unregister<UserCubit>();
-          if (getIt.isRegistered<CartCubit>()) {
-            getIt.unregister<CartCubit>();
-          }
-          if (getIt.isRegistered<AddressUserCubit>()) {
-            getIt.unregister<AddressUserCubit>();
-          }
-          if (getIt.isRegistered<OrderCubit>()) {
-            getIt.unregister<OrderCubit>();
-          }
-          //register DI again
-          getIt.registerLazySingleton(
-              () => UserCubit(userRepositoryImpl: getIt()));
-          getIt.registerLazySingleton(() => CartCubit());
-          getIt.registerLazySingleton(() => AddressUserCubit());
-          getIt.registerLazySingleton(
-              () => OrderCubit(orderRepositoryImpl: getIt()));
+          dispose();
           //restart app run materialAPp
-          // ignore: use_build_context_synchronously
           Phoenix.rebirth(context);
         }
       },

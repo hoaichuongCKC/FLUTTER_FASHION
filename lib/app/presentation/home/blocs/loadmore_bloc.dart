@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
-import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -11,32 +10,24 @@ class LoadMoreProductBloc {
 
   bool _hasMoreData = true;
 
-  late List<ProductModel> _listProduct;
-
   //
   late BehaviorSubject<bool> _isLoadingSubject;
 
-  late BehaviorSubject<List<ProductModel>> _productSubject;
-
   //view UI widget loading
   BehaviorSubject<bool> get isLoading => _isLoadingSubject;
-
-  BehaviorSubject<List<ProductModel>> get getProductStream => _productSubject;
 
   LoadMoreProductBloc({
     this.loadMoreThreshold = 100,
   }) {
     _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
-    _productSubject = BehaviorSubject<List<ProductModel>>.seeded([]);
-    _listProduct = [];
   }
 
   void dispose() {
-    _productSubject.close();
     _isLoadingSubject.close();
   }
 
-  void handleScrollNotification(ScrollController scrollController) async {
+  void handleScrollNotification(
+      ScrollController scrollController, BuildContext context) async {
     if (_isLoadingSubject.value || !_hasMoreData) return;
 
     final scrollLimit =
@@ -55,16 +46,13 @@ class LoadMoreProductBloc {
 
       if (data.isEmpty) return;
 
-      _listProduct.addAll(data);
-
-      _productSubject.add(_listProduct);
+      // ignore: use_build_context_synchronously
+      context.read<ProductCubit>().addProduct(data);
     }
   }
 
   onRefresh() {
-    _listProduct.clear();
     _page = 1;
     _hasMoreData = true;
-    _productSubject.add(_listProduct);
   }
 }

@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
-
 import '../../../../export.dart';
 
 class BottomNavigationBarCart extends StatelessWidget {

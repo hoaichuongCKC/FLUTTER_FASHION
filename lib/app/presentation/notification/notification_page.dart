@@ -117,9 +117,9 @@ class NotificationPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SvgPicture.asset(
-                                    "assets/icons/stopwatch-minus.svg",
-                                    // ignore: deprecated_member_use
-                                    color: darkColor.withOpacity(0.6),
+                                    "assets/icons/calendar.svg",
+                                    width: 18.0,
+                                    height: 18.0,
                                   ),
                                   Text(
                                     '10:30 20-01-2023',

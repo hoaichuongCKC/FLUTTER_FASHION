@@ -1,3 +1,5 @@
+import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
+import 'package:flutter_fashion/app/presentation/favorites/favorite_page.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import '../../../../export.dart';
@@ -40,7 +42,28 @@ class SliverHeaderProduct extends StatelessWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 10.0),
-          child: SvgPicture.asset("assets/icons/favorite.svg"),
+          child: BlocSelector<FavoriteCubit, FavoriteState, bool>(
+            selector: (state) {
+              return state.listProduct.contains(detailInherited.productModel);
+            },
+            builder: (context, check) {
+              if (check) {
+                return SvgPicture.asset("assets/icons/favorite.svg");
+              }
+              return InkWell(
+                onTap: () => context
+                    .read<FavoriteCubit>()
+                    .addFavorite(detailInherited.productModel),
+                child: SvgPicture.asset(
+                  "assets/icons/favorite.svg",
+                  colorFilter: ColorFilter.mode(
+                    disableDarkColor.withOpacity(0.3),
+                    BlendMode.srcIn,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ],
       pinned: false,
@@ -63,11 +86,12 @@ class SliverHeaderProduct extends StatelessWidget {
               aspectRatio: 16 / 12,
               child: CachedNetworkImage(
                 key: ValueKey(
-                    detailInherited.productModel.product_detail[id].photo),
+                    detailInherited.productModel.product_detail![id].photo),
                 imageUrl: ApiService.imageUrl +
-                    detailInherited.productModel.product_detail[id].photo,
+                    detailInherited.productModel.product_detail![id].photo,
                 fit: BoxFit.cover,
-                cacheKey: detailInherited.productModel.product_detail[id].photo,
+                cacheKey:
+                    detailInherited.productModel.product_detail![id].photo,
               ),
             );
           },
@@ -84,7 +108,7 @@ class SliverSubImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = ProductDetailInherited.of(context).productModel;
     final bloc = ProductDetailInherited.of(context).bloc;
-    if (product.product_detail.length == 1) {
+    if (product.product_detail!.length == 1) {
       return const SliverToBoxAdapter();
     }
     return SliverPadding(
@@ -92,13 +116,13 @@ class SliverSubImage extends StatelessWidget {
       sliver: SliverToBoxAdapter(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: product.product_detail.map(
+          children: product.product_detail!.map(
             (item) {
-              final index = product.product_detail.indexOf(item);
+              final index = product.product_detail!.indexOf(item);
               return Padding(
                 padding: EdgeInsets.only(
                     right:
-                        index == product.product_detail.length - 1 ? 0 : 8.0),
+                        index == product.product_detail!.length - 1 ? 0 : 8.0),
                 child: InkWell(
                   onTap: () => bloc.selectImage(index),
                   child: StreamBuilder<int>(

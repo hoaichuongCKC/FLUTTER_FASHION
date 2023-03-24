@@ -16,13 +16,12 @@ class CartState extends Equatable {
       };
 
   int totalCart() {
-    return items.fold<int>(
-        0,
-        (previousValue, element) =>
-            previousValue +
-            (element.quantity *
-                (element.product.regular_price -
-                    element.product.sale_price.toInt())));
+    return items.fold<int>(0, (previousValue, element) {
+      final regularPrice = element.product.regular_price ?? 0;
+      final salePrice = element.product.sale_price ?? 0;
+      return previousValue +
+          (element.quantity * (regularPrice - salePrice.toInt()));
+    });
   }
 
   CartState copyWith({

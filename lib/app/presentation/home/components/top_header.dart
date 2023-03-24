@@ -21,12 +21,25 @@ class TopHeaderHome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text(
-                    'Chào mừng\nđến Kira Fashion!',
-                    style: PrimaryFont.instance.copyWith(
-                      fontSize: 22.0,
-                      color: darkColor,
-                    ),
+                  child: BlocBuilder<UserCubit, UserState>(
+                    builder: (context, state) {
+                      return state.whenOrNull(
+                        initial: () => const SizedBox(),
+                        loading: () => ColoredBox(
+                          color: disableDarkColor.withOpacity(0.2),
+                          child: const SizedBox(
+                            height: 60.0,
+                          ),
+                        ),
+                        fetchCompleted: (user) => Text(
+                          'Chào mừng bạn\n${user.fullName}!',
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 22.0,
+                            color: darkColor,
+                          ),
+                        ),
+                      )!;
+                    },
                   ),
                 ),
                 Row(
@@ -49,7 +62,7 @@ class TopHeaderHome extends StatelessWidget {
                           return state.whenOrNull(
                             initial: () => const SizedBox(),
                             loading: () => ColoredBox(
-                              color: disableDarkColor.withOpacity(0.5),
+                              color: disableDarkColor.withOpacity(0.2),
                               child: const SizedBox(
                                 width: 24.0,
                                 height: 24.0,

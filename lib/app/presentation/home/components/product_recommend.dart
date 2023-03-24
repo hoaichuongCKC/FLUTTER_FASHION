@@ -1,17 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter_fashion/app/models/product/product.dart';
-import 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 
 class ProductRecommend extends StatelessWidget {
-  const ProductRecommend(
-      {super.key,
-      required this.listProduct,
-      required this.loadMoreProductbloc});
+  const ProductRecommend({super.key, required this.listProduct});
   final List<ProductModel> listProduct;
-  final LoadMoreProductBloc loadMoreProductbloc;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -64,49 +57,11 @@ class ProductRecommend extends StatelessWidget {
                   product: listProduct[index],
                   onTap: () => AppRoutes.router.pushNamed(
                     Names.PRODUCT_DETAIL,
-                    params: {
-                      "data": jsonEncode(listProduct[index].toJson()),
+                    queryParams: {
+                      "index": index.toString(),
                     },
                   ),
                 );
-              },
-            ),
-            StreamBuilder(
-              stream: loadMoreProductbloc.getProductStream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const SizedBox();
-                }
-                if (snapshot.connectionState == ConnectionState.active &&
-                    snapshot.hasData &&
-                    snapshot.data!.isNotEmpty) {
-                  return GridView.builder(
-                    itemCount: snapshot.data!.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 2 / 4,
-                      mainAxisExtent: 255.0,
-                    ),
-                    itemBuilder: (context, index) {
-                      return ItemProduct(
-                        product: snapshot.data![index],
-                        onTap: () => AppRoutes.router.pushNamed(
-                          Names.PRODUCT_DETAIL,
-                          params: {
-                            "data": jsonEncode(snapshot.data![index].toJson()),
-                          },
-                        ),
-                      );
-                    },
-                  );
-                }
-                return const SizedBox();
               },
             ),
           ],

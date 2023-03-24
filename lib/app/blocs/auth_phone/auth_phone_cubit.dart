@@ -17,6 +17,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
   void authPhone(String phoneNumber, BuildContext context,
       {bool isResend = false}) async {
     emit(const AuthPhoneState.loading());
+
     loadingAlert(context: context);
 
     await verifyPhoneNumber(

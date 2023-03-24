@@ -1,3 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+import 'package:flutter_fashion/app/presentation/order/components/item_order.dart';
+import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
 
 class AwaitingConfirmationPage extends StatelessWidget {
@@ -5,196 +10,39 @@ class AwaitingConfirmationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 2,
-      itemExtent: 190,
-      padding:
-          const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
-      itemBuilder: (context, index) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: lightColor,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                      color: primaryColor.withOpacity(0.5), blurRadius: 8.0)
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: AspectRatio(
-                              aspectRatio: 1.0,
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    'https://fashionminhthu.com.vn/wp-content/uploads/2018/11/short-sleeve-crew-neck-t-shirt-broadcast-print-1991-2-600x840.jpg',
-                                fit: BoxFit.fitWidth,
-                                placeholder: (context, url) {
-                                  return ColoredBox(
-                                    color: skeletonColor,
-                                    child: const SizedBox(),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8.0),
-                          Expanded(
-                            flex: 3,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    'Nam Len Đen Áo Khoác Ngoài da nữ xinh việt nam sssssssss',
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 14.0,
-                                    ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '190.000 VNĐ',
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 12.0,
-                                        color: const Color(0xFFFF7262),
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                    Text(
-                                      'x2',
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 10.0,
-                                        color: disableDarkColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Phân loại: ",
-                                        style: PrimaryFont.instance.copyWith(
-                                          fontSize: 12.0,
-                                          color: darkColor,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                      const WidgetSpan(
-                                          child: SizedBox(width: 5.0)),
-                                      TextSpan(
-                                        text: "S (40-58kg),",
-                                        style: PrimaryFont.instance.copyWith(
-                                          fontSize: 12.0,
-                                          color: darkColor,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                      const WidgetSpan(
-                                          child: SizedBox(width: 5.0)),
-                                      WidgetSpan(
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: primaryColor,
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color: primaryColor,
-                                            ),
-                                          ),
-                                          child: const SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      const WidgetSpan(
-                                          child: SizedBox(width: 5.0)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Trạng thái:',
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 12.0,
-                                color: darkColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            const SizedBox(width: 8.0),
-                            ColoredBox(
-                              color: errorColor.withOpacity(0.2),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 1.0),
-                                child: Text(
-                                  'awaiting_confirmation',
-                                  style: PrimaryFont.instance.copyWith(
-                                    fontSize: 9.0,
-                                    color: errorColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8.0),
-                        ButtonWidget(
-                          onPressed: () {
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) => const ShowDialogTimer(),
-                            );
-                          },
-                          height: 40,
-                          radius: 5,
-                          btnColor: primaryColor,
-                          animate: true,
-                          label: "Huỷ đơn hàng",
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+    return BlocBuilder<OrderCubit, OrderState>(
+      buildWhen: (previous, current) =>
+          previous.status != current.status ||
+          previous.awaitingList != current.awaitingList,
+      builder: (context, state) {
+        if (state.status == AppStatus.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state.status == AppStatus.error) {
+          return const Center(
+            child: Text('Server Error'),
+          );
+        }
+        if (state.status == AppStatus.success && state.awaitingList.isEmpty) {
+          return const Center(
+            child: Text("Hiện bạn chưa có đơn hàng nào"),
+          );
+        }
+        return ListView.builder(
+          itemCount: state.awaitingList.length,
+          padding:
+              const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
+          itemBuilder: (context, index) => InkWell(
+            onTap: () => AppRoutes.router.pushNamed(Names.ORDER_DETAIL,
+                queryParams: {"index": index.toString()}),
+            child: ItemOrder(
+              order: state.awaitingList[index],
             ),
           ),
-          const SizedBox(height: 15.0),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -270,7 +118,10 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
                   children: [
                     ButtonWidget(
                       btnColor: disableDarkColor,
-                      onPressed: () => AppRoutes.router.pop(),
+                      onPressed: () {
+                        timer.cancel();
+                        AppRoutes.router.pop();
+                      },
                       height: 30,
                       radius: 2,
                       width: 55,

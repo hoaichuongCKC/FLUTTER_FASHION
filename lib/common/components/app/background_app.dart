@@ -95,6 +95,7 @@ class AppBackgroundBlur extends StatelessWidget {
         floatingActionButton: _floatingActionButon,
         bottomNavigationBar: bottomNavigationBar,
         extendBody: true,
+        extendBodyBehindAppBar: true,
         body: Stack(
           fit: StackFit.passthrough,
           children: [
@@ -196,8 +197,11 @@ class AppBackgroundBlur extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () => AppRoutes.router.pop(),
-                child: Icon(Icons.arrow_back,
-                    size: 24.0, color: Theme.of(context).iconTheme.color),
+                child: Icon(
+                  Icons.arrow_back,
+                  size: 24.0,
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
               title!.isEmpty
                   ? const SizedBox(width: 10.0)

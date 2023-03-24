@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 import 'dart:convert';
-
-import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/category/category_page.dart';
 import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
@@ -28,6 +26,9 @@ import 'package:flutter_fashion/routes/observer.dart';
 import '../app/presentation/cart/cart_page.dart';
 import 'dart:developer';
 
+import '../app/presentation/favorites/favorite_page.dart';
+import '../app/presentation/order_detail/order_detail_page.dart';
+
 abstract class Routes {
   Routes._();
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -46,7 +47,7 @@ abstract class Routes {
   static const SEARCH = _Paths.SEARCH;
   static const CATEGORY = _Paths.CATEGORY;
   static const CART = _Paths.CART;
-  static const ADDRESS_MANAGEMENT = _Paths.LOCATION_MANAGEMENT;
+  static const ADDRESS_MANAGEMENT = _Paths.ADDRESS_MANAGEMENT;
   static const PRODUCT_DETAIL = _Paths.PRODUCT_DETAIL;
 
   //page second
@@ -58,6 +59,7 @@ abstract class Routes {
   static const MESSENGER = _Paths.MESSENGER;
   static const FILTER = _Paths.FILTER;
   static const PAYMENT = _Paths.PAYMENT;
+  static const ORDER_DETAIL = _Paths.ORDER_DETAIL;
 
   //
 
@@ -75,16 +77,17 @@ abstract class _Paths {
   static const SEARCH = 'search';
   static const CATEGORY = 'category';
   static const CART = '/cart';
-  static const PRODUCT_DETAIL = 'product_detail:data';
-  static const LOCATION_MANAGEMENT = '/location';
+  static const PRODUCT_DETAIL = 'product_detail';
+  static const ADDRESS_MANAGEMENT = 'address_management';
 
   //second
-  static const SETTING = '/setting';
+  static const ORDER_DETAIL = 'order_detail';
+  static const SETTING = 'setting';
   static const PERSONAL = '/personal';
   static const REPORT = '/report';
-  static const FAVORITE = '/favorite';
-  static const MESSENGER = '/messenger';
-  static const ORDER = '/order';
+  static const FAVORITE = 'favorite';
+  static const MESSENGER = 'messenger';
+  static const ORDER = 'order';
   static const OTP = 'otp';
   static const REGISTER = 'resgister';
   static const FILTER = 'filter';
@@ -109,10 +112,12 @@ abstract class Names {
   static const REGISTER = 'register';
   static const FILTER = 'filter';
 
-  // static const REPORT = '/report';
-  // static const FAVORITE = '/favorite';
-  // static const MESSENGER = '/messenger';
-  // static const ORDER = '/order';
+  static const SETTING = 'setting';
+  static const ORDER = 'order';
+  static const ORDER_DETAIL = 'order_detail';
+  static const FAVORITE = 'favorite';
+  static const MESSENGER = 'messenger';
+  static const ADDRESS_MANAGEMENT = 'address_management';
 }
 
 class AppRoutes {
@@ -124,7 +129,7 @@ class AppRoutes {
     debugLogDiagnostics: true,
     observers: [GoRouterObserver()],
     redirect: (context, state) {
-      log("Redirect: $state", name: "Redirect");
+      log("Redirect: ${state.location}", name: "Redirect");
 
       if (state.subloc == Routes.INTRODUCTION) {
         String? isAuthenticated = HydratedBloc.storage.read(KeyStorage.token);
@@ -151,16 +156,6 @@ class AppRoutes {
         builder: (context, state) => LoginPage(
           key: state.pageKey,
         ),
-      ),
-      GoRoute(
-        path: Routes.ADDRESS_MANAGEMENT,
-        parentNavigatorKey: Routes.navigatorKey,
-        pageBuilder: (context, state) {
-          return FadeTransitionPage<LocationManagementPage>(
-            key: state.pageKey,
-            child: const LocationManagementPage(),
-          );
-        },
       ),
       GoRoute(
         path: Routes.SIGNUP,
@@ -191,36 +186,6 @@ class AppRoutes {
             ),
           ),
         ],
-      ),
-      GoRoute(
-        path: Routes.SETTING,
-        parentNavigatorKey: Routes.navigatorKey,
-        pageBuilder: (context, state) {
-          return SlideTransitionPage<SettingPage>(
-            key: state.pageKey,
-            child: const SettingPage(),
-          );
-        },
-      ),
-      GoRoute(
-        path: Routes.MESSENGER,
-        parentNavigatorKey: Routes.navigatorKey,
-        pageBuilder: (context, state) {
-          return SlideTransitionPage<RoomChatMessagePage>(
-            key: state.pageKey,
-            child: const RoomChatMessagePage(),
-          );
-        },
-      ),
-      GoRoute(
-        path: Routes.MY_ORDER,
-        parentNavigatorKey: Routes.navigatorKey,
-        pageBuilder: (context, state) {
-          return SlideTransitionPage<OrderPage>(
-            key: state.pageKey,
-            child: const OrderPage(),
-          );
-        },
       ),
       GoRoute(
         name: Names.PERSONAL,
@@ -316,8 +281,7 @@ class AppRoutes {
                     FadeTransitionPage<ProductDetailPage>(
                   key: state.pageKey,
                   child: ProductDetailPage(
-                    product: ProductModel.fromJson(
-                        jsonDecode(state.params["data"]!)),
+                    productIndex: state.queryParams["index"]!,
                   ),
                 ),
               ),
@@ -342,6 +306,77 @@ class AppRoutes {
                 child: const ProfilePage(),
               );
             },
+            routes: [
+              GoRoute(
+                path: Routes.SETTING,
+                name: Names.SETTING,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) {
+                  return SlideTransitionPage<SettingPage>(
+                    key: state.pageKey,
+                    child: const SettingPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                  path: Routes.MY_ORDER,
+                  name: Names.ORDER,
+                  parentNavigatorKey: Routes.navigatorKey,
+                  pageBuilder: (context, state) {
+                    return SlideTransitionPage<OrderPage>(
+                      key: state.pageKey,
+                      child: const OrderPage(),
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      path: Routes.ORDER_DETAIL,
+                      name: Names.ORDER_DETAIL,
+                      parentNavigatorKey: Routes.navigatorKey,
+                      pageBuilder: (context, state) {
+                        return SlideTransitionPage<OrderDetailPage>(
+                          key: state.pageKey,
+                          child: OrderDetailPage(
+                            orderIndex: state.queryParams["index"]!,
+                          ),
+                        );
+                      },
+                    ),
+                  ]),
+              GoRoute(
+                path: Routes.FAVORITE,
+                name: Names.FAVORITE,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) {
+                  return SlideTransitionPage<FavoritePage>(
+                    key: state.pageKey,
+                    child: const FavoritePage(),
+                  );
+                },
+              ),
+              GoRoute(
+                path: Routes.ADDRESS_MANAGEMENT,
+                name: Names.ADDRESS_MANAGEMENT,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) {
+                  return FadeTransitionPage<LocationManagementPage>(
+                    key: state.pageKey,
+                    child: const LocationManagementPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                path: Routes.MESSENGER,
+                name: Names.MESSENGER,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) {
+                  return SlideTransitionPage<RoomChatMessagePage>(
+                    key: state.pageKey,
+                    child: const RoomChatMessagePage(),
+                  );
+                },
+              ),
+            ],
           )
         ],
       ),
