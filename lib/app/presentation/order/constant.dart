@@ -1,14 +1,20 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
+import '../../../export.dart';
 
 enum OrderStatus {
-  awaiting,
-  processing,
-  shipping,
-  delivered,
-  cancelled,
+  toPay,
+  toShip,
+  toReceive,
+  completed,
+  canceled,
 }
+
+const String toPay = "ToPay";
+const String toShip = "ToShip";
+const String toReceive = "ToReceive";
+const String completed = "completed";
+const String canceled = "canceled";
 
 class ChoiceChipCustom extends Equatable {
   final int id;
@@ -23,45 +29,45 @@ class ChoiceChipCustom extends Equatable {
   @override
   List<Object?> get props => [id, label, prefixIcon];
 
-  static List<ChoiceChipCustom> get listData => const [
+  static List<ChoiceChipCustom> get listData => [
         ChoiceChipCustom(
           id: 1,
-          label: "Chờ xác nhận",
-          prefixIcon: Icon(
-            Icons.hourglass_empty_outlined,
-            size: 18.0,
+          label: toPay,
+          prefixIcon: SvgPicture.asset(
+            "assets/icons/wallet.svg",
           ),
         ),
         ChoiceChipCustom(
           id: 2,
-          label: "Đang lên đơn",
-          prefixIcon: Icon(
-            Icons.shopping_cart_outlined,
-            size: 18.0,
+          label: toShip,
+          prefixIcon: SvgPicture.asset(
+            "assets/icons/order_box.svg",
           ),
         ),
-        ChoiceChipCustom(
+        const ChoiceChipCustom(
           id: 3,
-          label: "Đang giao",
+          label: toReceive,
           prefixIcon: Icon(
-            Icons.local_shipping_outlined,
-            size: 18.0,
+            Icons.local_shipping,
+            size: 22.0,
+            color: primaryColor,
           ),
         ),
-        ChoiceChipCustom(
+        const ChoiceChipCustom(
           id: 4,
-          label: "Đã giao",
+          label: completed,
           prefixIcon: Icon(
-            Icons.check_circle_outlined,
-            size: 18.0,
+            Icons.check_circle,
+            color: primaryColor,
           ),
         ),
-        ChoiceChipCustom(
+        const ChoiceChipCustom(
           id: 5,
-          label: "Đã huỷ",
+          label: canceled,
           prefixIcon: Icon(
-            Icons.cancel_outlined,
-            size: 18.0,
+            Icons.cancel,
+            size: 22.0,
+            color: primaryColor,
           ),
         ),
       ];

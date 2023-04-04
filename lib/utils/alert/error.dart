@@ -8,7 +8,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../routes/app_routes.dart';
 
-errorAlert({required BuildContext context, String message = "Nani"}) async {
+void errorAlert(
+    {required BuildContext context, String message = "Nani"}) async {
   const Duration duration = Duration(seconds: 1);
   Timer.periodic(duration, (timer) {
     if (timer.tick == 2) {

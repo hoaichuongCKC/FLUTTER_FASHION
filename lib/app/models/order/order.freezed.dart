@@ -31,6 +31,7 @@ mixin _$OrderModel {
   int? get status => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
   List<CartModel>? get order_detail => throw _privateConstructorUsedError;
+  bool? get evaluated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +56,8 @@ abstract class $OrderModelCopyWith<$Res> {
       String? notes,
       int? status,
       DateTime? created_at,
-      List<CartModel>? order_detail});
+      List<CartModel>? order_detail,
+      bool? evaluated});
 }
 
 /// @nodoc
@@ -82,6 +84,7 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? status = freezed,
     Object? created_at = freezed,
     Object? order_detail = freezed,
+    Object? evaluated = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -128,6 +131,10 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.order_detail
           : order_detail // ignore: cast_nullable_to_non_nullable
               as List<CartModel>?,
+      evaluated: freezed == evaluated
+          ? _value.evaluated
+          : evaluated // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -151,7 +158,8 @@ abstract class _$$_OrderModelCopyWith<$Res>
       String? notes,
       int? status,
       DateTime? created_at,
-      List<CartModel>? order_detail});
+      List<CartModel>? order_detail,
+      bool? evaluated});
 }
 
 /// @nodoc
@@ -176,6 +184,7 @@ class __$$_OrderModelCopyWithImpl<$Res>
     Object? status = freezed,
     Object? created_at = freezed,
     Object? order_detail = freezed,
+    Object? evaluated = freezed,
   }) {
     return _then(_$_OrderModel(
       id: freezed == id
@@ -222,6 +231,10 @@ class __$$_OrderModelCopyWithImpl<$Res>
           ? _value._order_detail
           : order_detail // ignore: cast_nullable_to_non_nullable
               as List<CartModel>?,
+      evaluated: freezed == evaluated
+          ? _value.evaluated
+          : evaluated // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -241,7 +254,8 @@ class _$_OrderModel implements _OrderModel {
       this.notes,
       this.status,
       this.created_at,
-      final List<CartModel>? order_detail})
+      final List<CartModel>? order_detail,
+      this.evaluated})
       : _order_detail = order_detail;
 
   factory _$_OrderModel.fromJson(Map<String, dynamic> json) =>
@@ -278,8 +292,11 @@ class _$_OrderModel implements _OrderModel {
   }
 
   @override
+  final bool? evaluated;
+
+  @override
   String toString() {
-    return 'OrderModel(id: $id, code: $code, shipping_fullname: $shipping_fullname, shipping_phone: $shipping_phone, shipping_address: $shipping_address, order_payment: $order_payment, total_price: $total_price, notes: $notes, status: $status, created_at: $created_at, order_detail: $order_detail)';
+    return 'OrderModel(id: $id, code: $code, shipping_fullname: $shipping_fullname, shipping_phone: $shipping_phone, shipping_address: $shipping_address, order_payment: $order_payment, total_price: $total_price, notes: $notes, status: $status, created_at: $created_at, order_detail: $order_detail, evaluated: $evaluated)';
   }
 
   @override
@@ -304,7 +321,9 @@ class _$_OrderModel implements _OrderModel {
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
             const DeepCollectionEquality()
-                .equals(other._order_detail, _order_detail));
+                .equals(other._order_detail, _order_detail) &&
+            (identical(other.evaluated, evaluated) ||
+                other.evaluated == evaluated));
   }
 
   @JsonKey(ignore: true)
@@ -321,7 +340,8 @@ class _$_OrderModel implements _OrderModel {
       notes,
       status,
       created_at,
-      const DeepCollectionEquality().hash(_order_detail));
+      const DeepCollectionEquality().hash(_order_detail),
+      evaluated);
 
   @JsonKey(ignore: true)
   @override
@@ -349,7 +369,8 @@ abstract class _OrderModel implements OrderModel {
       final String? notes,
       final int? status,
       final DateTime? created_at,
-      final List<CartModel>? order_detail}) = _$_OrderModel;
+      final List<CartModel>? order_detail,
+      final bool? evaluated}) = _$_OrderModel;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
       _$_OrderModel.fromJson;
@@ -376,6 +397,8 @@ abstract class _OrderModel implements OrderModel {
   DateTime? get created_at;
   @override
   List<CartModel>? get order_detail;
+  @override
+  bool? get evaluated;
   @override
   @JsonKey(ignore: true)
   _$$_OrderModelCopyWith<_$_OrderModel> get copyWith =>

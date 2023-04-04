@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fashion/config/constant.dart';
+
+import '../../config/colors.dart';
 
 loadingAlert({required BuildContext context}) async {
-  showGeneralDialog(
+  showDialog(
     context: context,
     barrierDismissible: false,
-    pageBuilder: (newCtx, a1, a2) {
-      return const Center(
-        child: Material(
-          color: Colors.transparent,
-          child: CircularProgressIndicator(),
+    builder: (context) {
+      return const Dialog(
+        surfaceTintColor: lightColor,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(radiusBtn))),
+        child: SizedBox(
+          height: 150.0,
+          child: Center(child: CircularProgressIndicator()),
         ),
       );
     },

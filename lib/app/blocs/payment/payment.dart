@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/rules_app_view.dart';
@@ -26,7 +27,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   void removeAll() => emit(const PaymentState());
 
-  _createOrder(context) async {
+  _createOrder(BuildContext context) async {
     final state = this.state;
 
     emit(state.copyWith(status: AppStatus.loading));
@@ -42,13 +43,15 @@ class PaymentCubit extends Cubit<PaymentState> {
       total: cartCubit.totalCart(),
     );
     final result = await _orderRepositoryImpl.create(params);
-    log("result: $result");
+
     result.fold(
       (error) => emit(state.copyWith(status: AppStatus.error)),
-      (statusCode) async {
+      (order) async {
+        context.read<OrderCubit>().addOrder(order);
         emit(state.copyWith(status: AppStatus.success));
         await Future.delayed(const Duration(seconds: 2));
-        AppRoutes.router.go(Routes.MY_ORDER);
+        AppRoutes.router.go(Routes.PROFILE);
+        AppRoutes.router.pushNamed(Names.ORDER);
       },
     );
   }

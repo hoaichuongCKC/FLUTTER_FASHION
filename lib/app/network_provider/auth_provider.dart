@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
@@ -56,7 +56,9 @@ class AuthProviderImpl extends AuthProvider {
   @override
   Future<ResponseData> register(RegisterParams params) async {
     var response = await _apiService.post(ApiEndpoint.register,
-        body: params.toJson(), isRequestHeader: false, image: params.image);
+        body: params.toJson(),
+        isRequestHeader: false,
+        images: [File(params.image.path)]);
     if (response.statusCode != 200) {
       throw ServerException();
     }

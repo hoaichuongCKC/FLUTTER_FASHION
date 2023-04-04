@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "711258753711",
-    "project_id": "fashion-3838d",
-    "storage_bucket": "fashion-3838d.appspot.com"
+    "project_number": "49856644644",
+    "project_id": "fasion-4cb5c",
+    "storage_bucket": "fasion-4cb5c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:711258753711:android:a9f92b6c6455374708625a",
+        "mobilesdk_app_id": "1:49856644644:android:33099082a3fa8dc2a57ab1",
         "android_client_info": {
           "package_name": "com.example.flutter_fashion"
         }
       },
       "oauth_client": [
         {
-          "client_id": "711258753711-sq27eekn3joaf30j2feb7100h1ol7go3.apps.googleusercontent.com",
+          "client_id": "49856644644-26jkkuae6js770epnbu7jhfmjprnojib.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCR9nkhNthqrRjQdHuC8HuTnxZRiOZhc0Q"
+          "current_key": "AIzaSyAsVBqqIRR0uX_d6Q1snMSUsjlTUWE7dak"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "711258753711-r7sqdn317r0g0m79ardsv2qv061ih5po.apps.googleusercontent.com",
+              "client_id": "49856644644-26jkkuae6js770epnbu7jhfmjprnojib.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "711258753711-ns8lbdgc3scbm2ird392vtsg2pvtd7b8.apps.googleusercontent.com",
+              "client_id": "49856644644-o5h80qocbs6r5gbmdq20hpigg5ojsr0g.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.flutterFashion"

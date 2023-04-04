@@ -215,7 +215,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
               context.read<AuthCubit>().accountRegister(param, context);
             },
-            label: "Tạo mới",
+            label: AppLocalizations.of(context)!.completed,
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.07),
         ],

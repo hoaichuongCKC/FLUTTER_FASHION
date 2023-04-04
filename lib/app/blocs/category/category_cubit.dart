@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category_state.dart';
@@ -20,7 +21,11 @@ class CategoryCubit extends Cubit<CategoryState> {
       emit(const CategoryState.loading());
       final result = await _productRepositoryImpl.fetchCategory();
       result.fold(
-        (error) => emit(CategoryState.error(error)),
+        (error) {
+          if (error != AuthenticatedException.message) {
+            emit(CategoryState.error(error));
+          }
+        },
         (list) {
           _isLoaded = true;
           emit(CategoryState.fetchCompleted(list));
@@ -41,6 +46,9 @@ class CategoryCubit extends Cubit<CategoryState> {
       },
     );
   }
+
+  int get getLength =>
+      state.mapOrNull(fetchCompleted: (value) => value.list.length)!;
 
   @override
   String toString() {

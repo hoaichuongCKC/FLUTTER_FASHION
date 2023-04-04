@@ -34,26 +34,17 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const ConstrainedBoxWidget(
                 minHeight: 60,
                 maxHeight: 80,
                 currentHeight: 0.15,
               ),
-              SvgPicture.asset(
-                "assets/images/app_logo.svg",
-                fit: BoxFit.contain,
-                width: 100,
-                height: 100,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
-                  child: Text(
-                    "KiraStore",
-                    style: PrimaryFont.instance.large(),
-                  ),
-                ),
+              Image.asset(
+                "assets/images/logo.png",
+                width: 200.0,
+                height: 200.0,
               ),
               FormLogin(
                 formKey: formKey,

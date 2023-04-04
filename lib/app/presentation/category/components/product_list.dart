@@ -52,8 +52,16 @@ class _ProductListState extends State<ProductList> {
             }
 
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(AppLocalizations.of(context)!
+                          .the_product_is_currently_out_of_stock),
+                    ],
+                  ),
+                ),
               );
             }
             final list = snapshot.data;
@@ -76,7 +84,7 @@ class _ProductListState extends State<ProductList> {
                     onTap: () => AppRoutes.router.pushNamed(
                       Names.PRODUCT_DETAIL,
                       params: {
-                        "data": jsonEncode(list[index].toJson()),
+                        "product": jsonEncode(list[index].toJson()),
                       },
                     ),
                   );

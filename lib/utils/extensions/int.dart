@@ -12,16 +12,16 @@ extension IntX on int {
     return '${num.round()}k';
   }
 
-  String getOrderStatus() {
+  String getOrderStatus(BuildContext context) {
     switch (this) {
       case processingStatus:
-        return "Đang chuẩn bị";
+        return AppLocalizations.of(context)!.to_ship;
       case shippingStatus:
-        return "Đang giao";
+        return AppLocalizations.of(context)!.to_receive;
       case deliveredStatus:
-        return "Đã giao";
+        return AppLocalizations.of(context)!.completed;
       default:
-        return "Chờ xác nhận";
+        return AppLocalizations.of(context)!.to_pay;
     }
   }
 }

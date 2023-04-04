@@ -37,7 +37,7 @@ class _OrderPageState extends State<OrderPage>
       length: ChoiceChipCustom.listData.length,
       child: AppBackgroundBlur.normal(
         isHasBackground: false,
-        title: 'Đơn hàng của tôi',
+        title: AppLocalizations.of(context)!.my_order,
         leading: InkWell(
           onTap: () => AppRoutes.router.go(Routes.PROFILE),
           child: const Icon(Icons.arrow_back, size: 20.0),
@@ -62,7 +62,7 @@ class _OrderPageState extends State<OrderPage>
                         children: [
                           e.prefixIcon,
                           const SizedBox(width: 3.0),
-                          Text(e.label),
+                          Text(e.label.translateTabOrder(context)),
                         ],
                       ),
                     ),

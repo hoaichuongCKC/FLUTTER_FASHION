@@ -30,14 +30,15 @@ class FooterLogin extends StatelessWidget {
         const SizedBox(height: 20.0),
         ButtonWidget(
           animate: true,
-          height: 40.0,
+          height: 45.0,
           onPressed: () => context.read<AuthCubit>().authGoogle(context),
           btnColor: lightColor,
+          radius: radiusBtn,
           boxShadow: [
             BoxShadow(
               color: darkColor.withOpacity(0.3),
               offset: const Offset(2, 4),
-              blurRadius: 10,
+              blurRadius: 8,
             ),
           ],
           labelWidget: Row(

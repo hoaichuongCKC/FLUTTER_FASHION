@@ -38,9 +38,14 @@ class EditInformationCubit extends Cubit<EditInformationState> {
   void onChangedImage() async {
     final file = await cameraInfo.openGallery();
 
+    if (file == null) return;
+
     final fileCompress = await cameraInfo.compressAndGetFile(
-        File(file.path), "upload",
-        size: const Size(150, 150));
+      File(file.path),
+      "upload",
+      size: const Size(150, 150),
+    );
+
     if (fileCompress != null) {
       emit(state.copyWith(
           image: XFile(fileCompress.path), status: EditStatus.onChangeValue));
@@ -83,7 +88,7 @@ class EditInformationCubit extends Cubit<EditInformationState> {
           successAlert(
             context: context,
             message:
-                AppLocalizations.of(context)!.updatedInformationSuccessfully,
+                AppLocalizations.of(context)!.updated_information_successfully,
           );
         }
         emit(const EditInformationState());

@@ -1,7 +1,10 @@
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
+import 'package:flutter_fashion/app_lifecycle.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
+import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_state.dart';
 part 'user_cubit.freezed.dart';
@@ -34,9 +37,22 @@ class UserCubit extends Cubit<UserState> {
   UserModel get user => _user != null ? _user! : UserModel.init();
 
   void _handleError(BuildContext? context, String error) {
-    {
-      if (context != null) {
-        errorAlert(context: context, message: error);
+    if (context != null) {
+      if (error == AuthenticatedException.message) {
+        popupAlert(
+          context: context,
+          noButtonCancle: true,
+          message: "Phiên đăng nhập của bạn đã hết hạn",
+          onPressed: () {
+            HydratedBloc.storage.delete(KeyStorage.token);
+            AppRoutes.router.pop();
+            AppRoutes.router.go(Routes.LOGIN);
+            dispose();
+            //restart app run materialAPp
+            Phoenix.rebirth(context);
+          },
+        );
+      } else {
         emit(UserState.failure(error));
       }
     }

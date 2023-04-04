@@ -8,7 +8,7 @@ class CategoryPageBloc {
   final ProductRepositoryImpl productRepository;
 
   CategoryPageBloc({required this.productRepository}) {
-    _categorySelectedSubject = BehaviorSubject<int>.seeded(0);
+    _cateSelectedSubject = BehaviorSubject<int>.seeded(0);
     _listProductSubject = BehaviorSubject.seeded([]);
     _isLoadingSubject = BehaviorSubject.seeded(false);
     _hashMap = HashMap();
@@ -18,13 +18,13 @@ class CategoryPageBloc {
 
   late Map<int, Map<String, dynamic>> _hashMap;
 
-  late BehaviorSubject<int> _categorySelectedSubject;
+  late BehaviorSubject<int> _cateSelectedSubject;
 
   late BehaviorSubject<bool> _isLoadingSubject;
 
   late BehaviorSubject<List<ProductModel>> _listProductSubject;
 
-  BehaviorSubject<int> get categoryStream => _categorySelectedSubject;
+  BehaviorSubject<int> get categoryStream => _cateSelectedSubject;
 
   BehaviorSubject<bool> get isLoading => _isLoadingSubject;
 
@@ -32,11 +32,11 @@ class CategoryPageBloc {
       _listProductSubject;
 
   void selectIdCate(int idCategory) {
-    if (idCategory == _categorySelectedSubject.value) {
+    if (idCategory == _cateSelectedSubject.value) {
       return;
     }
     _fetchData(idCategory);
-    _categorySelectedSubject.add(idCategory);
+    _cateSelectedSubject.add(idCategory);
   }
 
   void _fetchData(int id) async {
@@ -63,7 +63,7 @@ class CategoryPageBloc {
   }
 
   loadMore(ScrollController scrollController) async {
-    final idCate = _categorySelectedSubject.value;
+    final idCate = _cateSelectedSubject.value;
 
     final hasLoadMore = _getHasLoadMore(idCate);
 
@@ -102,6 +102,6 @@ class CategoryPageBloc {
 
   void dispose() {
     _hashMap.clear();
-    _categorySelectedSubject.close();
+    _cateSelectedSubject.close();
   }
 }

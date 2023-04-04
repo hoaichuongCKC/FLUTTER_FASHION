@@ -109,7 +109,7 @@ class ItemReview extends StatelessWidget {
           subtitle: Text(review.created_at!.formatDateTime()),
           leading: CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(
-              review.user.photo,
+              ApiService.imageUrl + review.user.photo,
               cacheKey: review.user.photo,
               headers: getIt<ApiService>().headers,
             ),

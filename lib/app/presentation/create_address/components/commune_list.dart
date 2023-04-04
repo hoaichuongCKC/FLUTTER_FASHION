@@ -12,7 +12,7 @@ class CommuneList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Phường xã',
+          AppLocalizations.of(context)!.commune,
           style: PrimaryFont.instance.small(),
         ),
         Expanded(

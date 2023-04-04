@@ -1,4 +1,9 @@
 {
+  "wellcome": "Welcome",
+  "@wellcome": {
+    "description": "Không hiểu gì cả"
+  },
+
   "login": "Log in",
   "@login": {
     "description": "Không hiểu gì cả"
@@ -48,7 +53,7 @@
     "description": "Không hiểu gì cả"
   },
 
-  "messenger": "Messenger",
+  "messenger": "Chat",
   "@messenger": {
     "description": "Không hiểu gì cả"
   },
@@ -187,11 +192,6 @@
     "description": "Không hiểu gì cả"
   },
 
-  "cancel": "Cancel",
-  "@cancel": {
-    "description": "Không hiểu gì cả"
-  },
-
   "ok": "Ok",
   "@ok": {
     "description": "Không hiểu gì cả"
@@ -210,6 +210,11 @@
 
   "confirmPassword": "Confirm password",
   "@confirmPassword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "updated_information_successfully": "Updated information successfully!",
+  "@updated_information_successfully": {
     "description": "Không hiểu gì cả"
   },
 
@@ -260,6 +265,167 @@
         "example": "Bob"
       }
     }
+  },
+
+  "product_rating": "Rating product",
+  "@product_rating": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "write_something": "Write something",
+  "@write_something": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "logout": "Logout",
+  "@logout": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "my_order": "My order",
+  "@my_order": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "you_currently_have_no_orders": "You currently have no orders",
+  "@you_currently_have_no_orders": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "to_pay": "To pay",
+  "@to_pay": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "to_ship": "To ship",
+  "@to_ship": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "to_receive": "To Receive",
+  "@to_receive": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "completed": "Completed",
+  "@completed": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "canceled": "Canceled",
+  "@canceled": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "you_currently_have_no_product_favorite": "You currently have no product favorite",
+  "@you_currently_have_no_product_favorite": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "categories": "Categories",
+  "@categories": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "view_all": "View all",
+  "@view_all": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "popular_product": "Popular product",
+  "@popular_product": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "recommed_product": "Recommed product",
+  "@recommed_product": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "sold": "Sold",
+  "@sold": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "click_here_to_choose_a_photo": "Click here to choose a photo",
+  "@click_here_to_choose_a_photo": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "are_you_sure_to_log_out": "Are you sure to log out?",
+  "@are_you_sure_to_log_out": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "address_management": "Address management",
+  "@address_management": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "you_have_not_updated_your_address_yet": "You have not updated your address yet",
+  "@you_have_not_updated_your_address_yet": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "create_new_address": "Create new address",
+  "@create_new_address": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "get_current_location": "Get current location",
+  "@get_current_location": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "province_city": "Province",
+  "@province_city": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "district": "District",
+  "@district": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "commune": "Commune",
+  "@commune": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "seleted_address": "Seleted address",
+  "@seleted_address": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "rate_now": "Rate now",
+  "@rate_now": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "rated": "Rated",
+  "@rated": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "the_product_is_currently_out_of_stock": "The product is currently out of stock",
+  "@the_product_is_currently_out_of_stock": {
+    "description": "Không hiểu gì cả"
+  },
+ 
+  "daily": "Daily",
+  "@daily": {
+    "description": "Không hiểu gì cả"
   }
 
+  
 }

@@ -5,8 +5,9 @@ import 'package:flutter_fashion/app/network_provider/order_provider.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 
 abstract class OrderRepository {
-  Future<Either<String, int>> create(OrderParams params);
+  Future<Either<String, OrderModel>> create(OrderParams params);
   Future<Either<String, List<OrderModel>>> fetchOrder();
+  Future<Either<String, int>> delete(int orderId);
 }
 
 class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
@@ -17,8 +18,8 @@ class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
     required super.networkInfoImpl,
   }) : _orderProviderImpl = orderProviderImpl;
   @override
-  Future<Either<String, int>> create(OrderParams params) async {
-    final result = await baseRepo<int>(
+  Future<Either<String, OrderModel>> create(OrderParams params) async {
+    final result = await baseRepo<OrderModel>(
       excuteFunction: () async {
         return await _orderProviderImpl.create(params);
       },
@@ -31,6 +32,16 @@ class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
     final result = await baseRepo<List<OrderModel>>(
       excuteFunction: () async {
         return await _orderProviderImpl.fetchOrder();
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, int>> delete(int orderId) async {
+    final result = await baseRepo<int>(
+      excuteFunction: () async {
+        return await _orderProviderImpl.delete(orderId);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

@@ -1,9 +1,29 @@
+import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
+
 import '../../../../export.dart';
 
-class TaskbarChatMessage extends StatelessWidget {
+class TaskbarChatMessage extends StatefulWidget {
   const TaskbarChatMessage({
     super.key,
   });
+
+  @override
+  State<TaskbarChatMessage> createState() => _TaskbarChatMessageState();
+}
+
+class _TaskbarChatMessageState extends State<TaskbarChatMessage> {
+  late TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +42,7 @@ class TaskbarChatMessage extends StatelessWidget {
         width: double.maxFinite,
         height: 60.0,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -35,9 +55,9 @@ class TaskbarChatMessage extends StatelessWidget {
                     ),
                   ),
                   child: TextFormField(
+                    controller: _controller,
                     style: PrimaryFont.instance.copyWith(
                       fontSize: 14.0,
-                      color: darkColor.withOpacity(0.5),
                       fontWeight: FontWeight.w300,
                     ),
                     decoration: InputDecoration(
@@ -46,7 +66,6 @@ class TaskbarChatMessage extends StatelessWidget {
                       filled: false,
                       hintStyle: PrimaryFont.instance.copyWith(
                         fontSize: 12.0,
-                        color: darkColor.withOpacity(0.5),
                         fontWeight: FontWeight.w300,
                       ),
                     ),
@@ -54,7 +73,15 @@ class TaskbarChatMessage extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  // final scrollController = widget.scroll;
+                  // final maxHeightScroll =
+                  //     scrollController.position.maxScrollExtent;
+                  // scrollController.jumpTo(0);
+                  FocusScope.of(context).unfocus();
+                  context.read<ChatCubit>().createChat(_controller.text);
+                  _controller.text = "";
+                },
                 icon: SvgPicture.asset("assets/icons/sent-fast.svg"),
               )
             ],

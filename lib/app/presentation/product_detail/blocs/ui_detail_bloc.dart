@@ -41,13 +41,17 @@ class UiDetailShowBloc {
 
   void addToCart(BuildContext context, ProductModel product) {
     List? listSize = product.properties!.sizes;
+    List? listColor = product.properties!.colors;
     bool isCheckEmptySize = false;
-    if (listSize!.isEmpty) {
+    bool isCheckEmptyColor = false;
+    if (listSize!.isEmpty || listColor!.isEmpty) {
       //nếu danh sách listSize là rỗng thì không cần check size
       isCheckEmptySize = true;
+      isCheckEmptyColor = true;
     }
 
-    bool isCheckColor = _selectColorSubject.value.isEmpty;
+    bool isCheckColor =
+        isCheckEmptyColor ? false : _selectColorSubject.value.isEmpty;
 
     bool isCheckSize =
         isCheckEmptySize ? false : _selectSizeSubject.value.isEmpty;

@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
@@ -10,7 +8,8 @@ import '../../core/base/api/endpoint.dart';
 
 abstract class OrderProvider {
   Future<List<OrderModel>> fetchOrder();
-  Future<int> create(OrderParams params);
+  Future<OrderModel> create(OrderParams params);
+  Future<int> delete(int orderId);
 }
 
 class OrderProviderImpl implements OrderProvider {
@@ -20,7 +19,7 @@ class OrderProviderImpl implements OrderProvider {
       : _apiService = apiService;
 
   @override
-  Future<int> create(OrderParams params) async {
+  Future<OrderModel> create(OrderParams params) async {
     var response = await _apiService.post(
       ApiEndpoint.createOrder,
       body: params.toMap(),
@@ -29,8 +28,11 @@ class OrderProviderImpl implements OrderProvider {
     if (response.statusCode != 200) {
       throw ServerException();
     }
+    final data = await response.stream.bytesToString();
 
-    return response.statusCode;
+    final convert = jsonDecode(data)["data"] as Map<String, dynamic>;
+
+    return OrderModel.fromJson(convert);
   }
 
   @override
@@ -48,7 +50,19 @@ class OrderProviderImpl implements OrderProvider {
     if (convert.isEmpty) {
       return [];
     }
-    print(convert);
+
     return OrderModel.orderModelFromJson(convert);
+  }
+
+  @override
+  Future<int> delete(int orderId) async {
+    var response =
+        await _apiService.post("${ApiEndpoint.deleteOrder}?order_id=$orderId");
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+
+    return response.statusCode;
   }
 }

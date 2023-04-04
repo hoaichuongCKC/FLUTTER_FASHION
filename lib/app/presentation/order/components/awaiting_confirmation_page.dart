@@ -26,20 +26,39 @@ class AwaitingConfirmationPage extends StatelessWidget {
           );
         }
         if (state.status == AppStatus.success && state.awaitingList.isEmpty) {
-          return const Center(
-            child: Text("Hiện bạn chưa có đơn hàng nào"),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  "assets/icons/empty_list.svg",
+                  width: 100.0,
+                  height: 100.0,
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                    AppLocalizations.of(context)!.you_currently_have_no_orders),
+              ],
+            ),
           );
         }
-        return ListView.builder(
+        return ListView.separated(
+          separatorBuilder: (context, index) => const SizedBox(height: 15.0),
           itemCount: state.awaitingList.length,
           padding:
               const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () => AppRoutes.router.pushNamed(Names.ORDER_DETAIL,
-                queryParams: {"index": index.toString()}),
-            child: ItemOrder(
-              order: state.awaitingList[index],
-            ),
+          itemBuilder: (context, index) => ItemOrder(
+            order: state.awaitingList[index],
+            onPressed: () {
+              AppRoutes.router.pushNamed(
+                Names.ORDER_DETAIL,
+                queryParams: {
+                  "index": index.toString(),
+                  "status": awaitingStatus.toString()
+                },
+              );
+            },
           ),
         );
       },
@@ -48,8 +67,8 @@ class AwaitingConfirmationPage extends StatelessWidget {
 }
 
 class ShowDialogTimer extends StatefulWidget {
-  const ShowDialogTimer({super.key});
-
+  const ShowDialogTimer({super.key, required this.orderId});
+  final int orderId;
   @override
   State<ShowDialogTimer> createState() => _ShowDialogTimerState();
 }
@@ -130,7 +149,11 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
                     const SizedBox(width: 8.0),
                     ButtonWidget(
                       btnColor: primaryColor,
-                      onPressed: _counter == 0 ? () {} : null,
+                      onPressed: _counter == 0
+                          ? () => context
+                              .read<OrderCubit>()
+                              .delete(widget.orderId, context)
+                          : null,
                       height: 30,
                       radius: 2,
                       width: 55,

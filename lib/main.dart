@@ -1,25 +1,29 @@
-// ignore_for_file: library_private_types_in_public_api
 import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
-import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
+import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
+import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search_history/search_history_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app_lifecycle.dart';
-import 'export.dart';
+import 'package:flutter_fashion/core/pusher/beams.dart';
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   // If you're going to use other Firebase services in the background, such as Firestore,
-//   // make sure you call `initializeApp` before using other Firebase services.
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
 
-//   debugPrint("Handling a background message: ${message.messageId}");
-// }
+  log("Handling a background message: ${message.notification!.body}",
+      name: "Firebase Messagesing Background");
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,11 +37,13 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
+
+  await PusherBeamsApp.instance.getStarted();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
@@ -69,6 +75,9 @@ Future<void> main() async {
         BlocProvider(
           create: (context) => getIt<SearchHistoryCubit>(),
         ),
+        BlocProvider(
+          create: (context) => getIt<NotificationCubit>()..fetch(),
+        ),
       ],
       child: const Phoenix(child: MyApp()),
     ),
@@ -87,22 +96,40 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    super.initState();
     //listen connect internet
-    _subscription = getIt<Connectivity>()
+    _subscription = getIt
+        .get<Connectivity>()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
-      getIt<NetworkInfoImpl>().listenChangeNetwork(result);
+      getIt.get<NetworkInfoImpl>().listenChangeNetwork(result);
     });
 
     //register
     WidgetsBinding.instance.addObserver(AppLifecycleObserver());
-    super.initState();
+
+    PusherBeamsApp.instance.onMessageReceivedInTheForeground();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    getIt<UserCubit>().stream.listen((event) {
+      event.when(
+          initial: () {},
+          loading: () {},
+          fetchCompleted: (user) => PusherBeamsApp.instance.initToUser(user.id),
+          failure: (e) {});
+    });
   }
 
   @override
   void dispose() {
     _subscription.cancel();
     WidgetsBinding.instance.removeObserver(AppLifecycleObserver());
+
+    PusherBeamsApp.instance.dispose();
     super.dispose();
   }
 
@@ -127,6 +154,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         BlocProvider(
           create: (context) => getIt<FavoriteCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ChatCubit>()..fetchChats(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

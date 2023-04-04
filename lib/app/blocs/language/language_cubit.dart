@@ -4,7 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+import '../../../dependency_injection.dart';
 
 part 'language_state.dart';
 
@@ -19,6 +23,7 @@ class LanguageCubit extends HydratedCubit<LanguageState> {
   LanguageState? fromJson(Map<String, dynamic> json) {
     return LanguageState(
       isVietnamese: json["isVietnamese"],
+      locale: json["locale"],
     );
   }
 
@@ -26,6 +31,7 @@ class LanguageCubit extends HydratedCubit<LanguageState> {
   Map<String, dynamic>? toJson(LanguageState state) {
     return {
       "isVietnamese": state.isVietnamese,
+      "locale": state.locale,
     };
   }
 

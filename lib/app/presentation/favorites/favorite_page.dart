@@ -9,14 +9,60 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
-      title: "Yêu thích",
+      title: AppLocalizations.of(context)!.favorite,
       isHasBackground: false,
+      floatingActionButton: BlocSelector<FavoriteCubit, FavoriteState, bool>(
+        selector: (state) {
+          return state.listProduct.isEmpty;
+        },
+        builder: (context, state) {
+          if (state) {
+            return const SizedBox();
+          }
+          return ButtonWidget(
+            btnColor: primaryColor,
+            width: 120.0,
+            height: 40.0,
+            animate: true,
+            onPressed: () => context.read<FavoriteCubit>().removeAll(),
+            radius: radiusBtn,
+            labelWidget: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Align(
+                  child: SvgPicture.asset(
+                    "assets/icons/trash.svg",
+                    placeholderBuilder: (context) => ColoredBox(
+                      color: disableDarkColor.withOpacity(0.5),
+                    ),
+                    fit: BoxFit.contain,
+                    width: 20.0,
+                    height: 20.0,
+                  ),
+                ),
+                const SizedBox(width: 5.0),
+                Align(
+                  child: Text(
+                    "Xoá tất cả",
+                    style: PrimaryFont.instance.copyWith(
+                      fontSize: 14.0,
+                      color: lightColor,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
       child: BlocBuilder<FavoriteCubit, FavoriteState>(
         builder: (context, state) {
           final listProduct = state.listProduct;
           if (listProduct.isEmpty) {
-            return const Center(
-              child: Text("Hiện bạn chưa có sản phẩm nào"),
+            return Center(
+              child: Text(AppLocalizations.of(context)!
+                  .you_currently_have_no_product_favorite),
             );
           }
           return GridView.builder(

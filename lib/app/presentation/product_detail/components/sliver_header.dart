@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
-import 'package:flutter_fashion/app/presentation/favorites/favorite_page.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import '../../../../export.dart';
@@ -48,7 +47,25 @@ class SliverHeaderProduct extends StatelessWidget {
             },
             builder: (context, check) {
               if (check) {
-                return SvgPicture.asset("assets/icons/favorite.svg");
+                return InkWell(
+                  onTap: () => context
+                      .read<FavoriteCubit>()
+                      .removeFavorite(detailInherited.productModel),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: disableDarkColor.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          "assets/icons/favorite.svg",
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               }
               return InkWell(
                 onTap: () => context
@@ -57,7 +74,7 @@ class SliverHeaderProduct extends StatelessWidget {
                 child: SvgPicture.asset(
                   "assets/icons/favorite.svg",
                   colorFilter: ColorFilter.mode(
-                    disableDarkColor.withOpacity(0.3),
+                    disableDarkColor.withOpacity(0.9),
                     BlendMode.srcIn,
                   ),
                 ),
@@ -85,8 +102,6 @@ class SliverHeaderProduct extends StatelessWidget {
             return AspectRatio(
               aspectRatio: 16 / 12,
               child: CachedNetworkImage(
-                key: ValueKey(
-                    detailInherited.productModel.product_detail![id].photo),
                 imageUrl: ApiService.imageUrl +
                     detailInherited.productModel.product_detail![id].photo,
                 fit: BoxFit.cover,
@@ -152,7 +167,6 @@ class SliverSubImage extends StatelessWidget {
                             width: 45.0,
                             height: 50,
                             child: CachedNetworkImage(
-                              key: ValueKey(item.photo),
                               imageUrl: ApiService.imageUrl + item.photo,
                               fit: BoxFit.cover,
                               cacheKey: item.photo,

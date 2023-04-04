@@ -38,7 +38,7 @@ class CreateAddressPage extends StatelessWidget {
           },
         ),
       ),
-      title: "Tạo địa chỉ mới",
+      title: AppLocalizations.of(context)!.create_new_address,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
         child: Column(
@@ -67,7 +67,8 @@ class CreateAddressPage extends StatelessWidget {
                           color: primaryColor,
                         ),
                         const SizedBox(width: 8.0),
-                        const Text('Sử dụng vị trí hiện tại'),
+                        Text(
+                            AppLocalizations.of(context)!.get_current_location),
                       ],
                     ),
                   );
@@ -76,7 +77,7 @@ class CreateAddressPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Địa chỉ đã chọn',
+                      AppLocalizations.of(context)!.seleted_address,
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w400,
@@ -85,7 +86,7 @@ class CreateAddressPage extends StatelessWidget {
                     InkWell(
                       onTap: () => getIt<AddressManagementBloc>().reset(),
                       child: Text(
-                        'Xoá',
+                        AppLocalizations.of(context)!.delete,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
                           color: primaryColor,

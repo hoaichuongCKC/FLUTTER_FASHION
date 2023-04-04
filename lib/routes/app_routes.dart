@@ -2,9 +2,11 @@
 import 'dart:convert';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/category/category_page.dart';
+import 'package:flutter_fashion/app/presentation/create_review/create_review_page.dart';
 import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/location_management/location_management_page.dart';
+import 'package:flutter_fashion/app/presentation/notification_detail/notification_detail_page.dart';
 import 'package:flutter_fashion/app/presentation/order/order_page.dart';
 import 'package:flutter_fashion/app/presentation/otp/otp_page.dart';
 import 'package:flutter_fashion/app/presentation/payment/payment_page.dart';
@@ -60,6 +62,8 @@ abstract class Routes {
   static const FILTER = _Paths.FILTER;
   static const PAYMENT = _Paths.PAYMENT;
   static const ORDER_DETAIL = _Paths.ORDER_DETAIL;
+  static const RATING_PRODUCT = _Paths.RATING_PRODUCT;
+  static const NOTIFICATION_DETAIL = _Paths.NOTIFICATION_DETAIL;
 
   //
 
@@ -77,7 +81,7 @@ abstract class _Paths {
   static const SEARCH = 'search';
   static const CATEGORY = 'category';
   static const CART = '/cart';
-  static const PRODUCT_DETAIL = 'product_detail';
+  static const PRODUCT_DETAIL = 'product_detail:product';
   static const ADDRESS_MANAGEMENT = 'address_management';
 
   //second
@@ -92,6 +96,8 @@ abstract class _Paths {
   static const REGISTER = 'resgister';
   static const FILTER = 'filter';
   static const PAYMENT = '/payment';
+  static const RATING_PRODUCT = 'rating_product';
+  static const NOTIFICATION_DETAIL = 'notification_detail';
 }
 
 abstract class Names {
@@ -118,6 +124,8 @@ abstract class Names {
   static const FAVORITE = 'favorite';
   static const MESSENGER = 'messenger';
   static const ADDRESS_MANAGEMENT = 'address_management';
+  static const RATING_PRODUCT = 'rating_product';
+  static const NOTIFICATION_DETAIL = 'notification_detail';
 }
 
 class AppRoutes {
@@ -258,6 +266,7 @@ class AppRoutes {
                   child: CategoryPage(
                     searchKey: state.queryParams["search_key"]!,
                     item: state.queryParams["item"]!,
+                    index: int.parse(state.queryParams["index"]!),
                   ),
                 ),
                 routes: [
@@ -281,7 +290,8 @@ class AppRoutes {
                     FadeTransitionPage<ProductDetailPage>(
                   key: state.pageKey,
                   child: ProductDetailPage(
-                    productIndex: state.queryParams["index"]!,
+                    product: ProductModel.fromJson(
+                        jsonDecode(state.params["product"]!)),
                   ),
                 ),
               ),
@@ -296,6 +306,20 @@ class AppRoutes {
                 child: const NotificationPage(),
               );
             },
+            routes: [
+              GoRoute(
+                path: Routes.NOTIFICATION_DETAIL,
+                name: Names.NOTIFICATION_DETAIL,
+                parentNavigatorKey: Routes.shellNavigatorKey,
+                pageBuilder: (context, state) {
+                  final name = state.queryParams["name"] ??= "";
+                  return SlideTransitionPage<NotificationDetailPage>(
+                    key: state.pageKey,
+                    child: NotificationDetailPage(name: name),
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: Routes.PROFILE,
@@ -338,6 +362,20 @@ class AppRoutes {
                           key: state.pageKey,
                           child: OrderDetailPage(
                             orderIndex: state.queryParams["index"]!,
+                            status: state.queryParams["status"]!,
+                          ),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: Routes.RATING_PRODUCT,
+                      name: Names.RATING_PRODUCT,
+                      parentNavigatorKey: Routes.navigatorKey,
+                      pageBuilder: (context, state) {
+                        return SlideTransitionPage<CreateReviewPage>(
+                          key: state.pageKey,
+                          child: CreateReviewPage(
+                            orderId: state.queryParams["order_id"]!,
                           ),
                         );
                       },

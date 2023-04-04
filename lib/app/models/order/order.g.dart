@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: non_constant_identifier_names
+
 part of 'order.dart';
 
 // **************************************************************************
@@ -23,6 +25,7 @@ _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
       order_detail: (json['order_detail'] as List<dynamic>?)
           ?.map((e) => CartModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      evaluated: json['evaluated'] as bool?,
     );
 
 Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
@@ -38,4 +41,5 @@ Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
       'status': instance.status,
       'created_at': instance.created_at?.toIso8601String(),
       'order_detail': instance.order_detail?.map((e) => e.toJson()).toList(),
+      'evaluated': instance.evaluated,
     };

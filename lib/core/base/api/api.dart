@@ -1,21 +1,22 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:http/http.dart' as http;
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-
-import '../../../routes/app_routes.dart';
 
 class ApiService {
   ApiService() {
     _initHeader();
   }
-  static const String hostDomain = "http://10.0.2.2:8000";
+  static const String hostDomain =
+      "https://69bd-2405-4802-a219-a8d0-cd61-9907-6121-caa5.ap.ngrok.io";
 
-  static const String imageUrl = "$hostDomain/storage/";
+  static const String hostDomainLocal = "http://10.0.2.2:8000";
 
-  static const String baseUrl = "$hostDomain/api/v2.0/";
+  static const String imageUrl = "$hostDomainLocal/storage/";
+
+  static const String baseUrl = "$hostDomainLocal/api/v2.0/";
 
   Map<String, String> _headers = {};
 
@@ -26,12 +27,11 @@ class ApiService {
     final token = HydratedBloc.storage.read(KeyStorage.token);
     //get token
 
-    if (token != null) {
-      _headers = {
-        "Accept": "application/json",
-        "Authorization": "Bearer $token",
-      };
-    }
+    _headers = {
+      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Authorization": token != null ? "Bearer $token" : "",
+    };
   }
 
   void _clearHeader() {
@@ -49,10 +49,12 @@ class ApiService {
     String url, {
     Map<String, String>? body,
     bool isRequestHeader = true,
-    XFile? image,
+    List<File>? images,
   }) async {
     if (isRequestHeader) {
-      if (_headers.isEmpty) {
+      if (_headers["Authorization"] == null ||
+          _headers["Authorization"]!.isEmpty) {
+        log("authortization null");
         _initHeader();
       }
     }
@@ -60,16 +62,16 @@ class ApiService {
     final uri = Uri.parse("$baseUrl$url");
 
     http.MultipartRequest request = http.MultipartRequest('POST', uri)
-      ..fields.addAll(body ?? {});
+      ..fields.addAll(body ?? {})
+      ..headers.addAll(isRequestHeader ? _headers : {});
 
-    if (isRequestHeader) {
-      request.headers.addAll(_headers);
-    }
-
-    if (image != null) {
-      http.MultipartFile multipartFile =
-          await http.MultipartFile.fromPath('image[]', image.path);
-      request.files.add(multipartFile);
+    if (images != null) {
+      for (File file in images) {
+        http.MultipartFile multipartFile =
+            await http.MultipartFile.fromPath('image[]', file.path);
+        //add filed file
+        request.files.add(multipartFile);
+      }
     }
 
     //send request up to server
@@ -77,29 +79,7 @@ class ApiService {
     if (ApiEndpoint.loggout == url) {
       _clearHeader();
     }
-    if (response.statusCode == 401 && _headers.isNotEmpty) {
-      _clearHeader();
-      HydratedBloc.storage.delete(KeyStorage.token);
-      AppRoutes.router.go(Routes.LOGIN);
-    }
+
     return response;
-  }
-
-  Future postWithBodyJson(String url, Object? body) async {
-    if (_headers.isEmpty) {
-      _initHeader();
-    }
-    final uri = Uri.parse("$baseUrl$url");
-
-    try {
-      final response = await http.post(
-        uri,
-        body: body,
-        headers: _headers,
-      );
-      return response;
-    } catch (e) {
-      log("error catch: $e");
-    }
   }
 }

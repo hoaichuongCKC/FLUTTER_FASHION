@@ -12,7 +12,7 @@ class DistrictList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Quận huyện',
+          AppLocalizations.of(context)!.district,
           style: PrimaryFont.instance.small(),
         ),
         Expanded(

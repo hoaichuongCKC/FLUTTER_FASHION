@@ -8,24 +8,24 @@ class AppSnackbarMessenger {
   static GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  static void showMessage({required String content}) {
+  static void showMessage(
+      {required String content, Color? background, Color? textColor}) {
     scaffoldMessengerKey.currentState!
-      ..removeCurrentMaterialBanner()
-      ..showMaterialBanner(
-        MaterialBanner(
-          overflowAlignment: OverflowBarAlignment.end,
-          backgroundColor: disablePrimaryColor,
-          content: Text(content),
-          leading:
-              Image.asset("assets/images/admin.png", width: 32, height: 32),
-          contentTextStyle: PrimaryFont.instance.copyWith(
-              fontSize: 13.0, color: darkColor, fontWeight: FontWeight.w300),
-          actions: [
-            InkWell(
-                onTap: () => scaffoldMessengerKey.currentState!
-                    .removeCurrentMaterialBanner(),
-                child: const Icon(Icons.close)),
-          ],
+      ..removeCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          backgroundColor: background ?? darkColor,
+          content: Text(
+            content,
+            style: PrimaryFont.instance.copyWith(
+              fontSize: 12.0,
+              color: textColor ?? lightColor,
+            ),
+          ),
+          showCloseIcon: true,
+          closeIconColor: background == lightColor ? darkColor : lightColor,
         ),
       );
   }

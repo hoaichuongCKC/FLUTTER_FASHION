@@ -9,12 +9,13 @@ class ButtonWidget extends StatefulWidget {
     this.width = double.infinity,
     this.height = 50.0,
     required this.btnColor,
-    required this.onPressed,
+     this.onPressed,
     this.label,
     this.labelWidget,
     this.boxShadow,
     this.animate = false,
     this.radius = radiusBtn,
+    this.outlineButton = false,
   }) : assert(!(label != null && labelWidget != null),
             'Địt con mẹ cái gì thế tại sao có hai tham số');
   final double width;
@@ -25,6 +26,7 @@ class ButtonWidget extends StatefulWidget {
   final Widget? labelWidget;
   final List<BoxShadow>? boxShadow;
   final bool animate;
+  final bool? outlineButton;
   final double? radius;
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
@@ -80,10 +82,12 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
   _buildBody() => DecoratedBox(
         decoration: BoxDecoration(
-          color: _btnColor,
+          color: widget.outlineButton! ? lightColor : _btnColor,
           borderRadius: BorderRadius.all(
             Radius.circular(widget.radius!),
           ),
+          border:
+              widget.outlineButton! ? Border.all(color: primaryColor) : null,
           boxShadow: _onPressed == null ? null : _boxShadow,
         ),
         child: SizedBox(
@@ -95,7 +99,11 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                   child: Text(
                     _label!,
                     style: PrimaryFont.instance.copyWith(
-                      color: _onPressed == null ? darkColor : lightColor,
+                      color: widget.outlineButton!
+                          ? darkColor
+                          : _onPressed == null
+                              ? darkColor
+                              : lightColor,
                       fontWeight: FontWeight.w400,
                       fontSize: 16.0,
                     ),

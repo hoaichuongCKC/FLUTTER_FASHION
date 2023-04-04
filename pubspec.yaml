@@ -112,6 +112,17 @@ dependencies:
 
   lottie: ^2.3.0
 
+  #pusher
+  pusher_channels_flutter: ^2.1.2
+
+  pusher_beams: ^1.1.1
+
+  #notification
+  flutter_local_notifications: ^8.2.0
+  timezone: ^0.8.0
+  flutter_launcher_icons: ^0.12.0
+  grouped_list: ^5.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -128,7 +139,12 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21
+  icon_size: 48
 # The following section is specific to Flutter packages.
 flutter:
   generate: true

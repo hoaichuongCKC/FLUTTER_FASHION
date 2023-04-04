@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fashion/app/presentation/order/constant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
 
@@ -14,18 +15,22 @@ extension StringX on String {
   //   return encryptService.decrypt(encryptedData, iv: initVector);
   // }
 
-  // ///Encrypts the given plainText using the key. Returns encrypted data
-  // ecp.Encrypted encryptWithAES(String key, String plainText) {
-  //   final cipherKey = ecp.Key.fromUtf8(key);
-  //   final encryptService =
-  //       ecp.Encrypter(ecp.AES(cipherKey, mode: ecp.AESMode.cbc));
-  //   final initVector = ecp.IV.fromUtf8(key.substring(0,
-  //       16)); //Here the IV is generated from key. This is for example only. Use some other text or random data as IV for better security.
-
-  //   ecp.Encrypted encryptedData =
-  //       encryptService.encrypt(plainText, iv: initVector);
-  //   return encryptedData;
-  // }
+  String translateTabOrder(BuildContext context) {
+    switch (this) {
+      case toPay:
+        return AppLocalizations.of(context)!.to_pay;
+      case toShip:
+        return AppLocalizations.of(context)!.to_ship;
+      case toReceive:
+        return AppLocalizations.of(context)!.to_receive;
+      case completed:
+        return AppLocalizations.of(context)!.completed;
+      case canceled:
+        return AppLocalizations.of(context)!.canceled;
+      default:
+    }
+    return "";
+  }
 
   String translateLabelBottomNavigationBar(BuildContext context) {
     switch (this) {

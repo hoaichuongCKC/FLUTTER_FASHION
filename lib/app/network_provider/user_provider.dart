@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter_fashion/app/blocs/change_password/change_password_cubit.dart';
+import 'package:flutter_fashion/app/models/chat/chat.dart';
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
@@ -18,6 +19,11 @@ abstract class UserProvider {
       {required EditInformationState param, XFile? imageFile});
 
   Future<ResponseData> changePassword({required ChangePasswordState param});
+
+  Future<List<ChatModel>> fetchChats();
+
+  // ignore: non_constant_identifier_names
+  Future<int> createChat({required int? room_chat_id, required String message});
 }
 
 class UserProviderImpl extends UserProvider {
@@ -29,7 +35,9 @@ class UserProviderImpl extends UserProvider {
   Future<UserModel> me() async {
     var response = await _apiService.post(ApiEndpoint.me);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401) {
+      throw AuthenticatedException();
+    } else if (response.statusCode != 200) {
       throw ServerException();
     }
 
@@ -44,7 +52,7 @@ class UserProviderImpl extends UserProvider {
     var response = await _apiService.post(
       ApiEndpoint.update,
       body: param.toJson(),
-      image: imageFile,
+      images: imageFile == null ? null : [File(imageFile.path)],
     );
     final data = jsonDecode(await response.stream.bytesToString());
 
@@ -76,5 +84,42 @@ class UserProviderImpl extends UserProvider {
     }
 
     return ResponseData.fromJson(data);
+  }
+
+  @override
+  Future<List<ChatModel>> fetchChats() async {
+    var response = await _apiService.post(ApiEndpoint.fetchChats);
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+
+    final data = await response.stream.bytesToString();
+
+    final convert = jsonDecode(data)["data"] as List;
+
+    if (convert.isEmpty) {
+      return [];
+    }
+
+    return ChatModel.chatModelFromJson(convert);
+  }
+
+  @override
+  Future<int> createChat(
+      // ignore: non_constant_identifier_names
+      {required int? room_chat_id,
+      required String message}) async {
+    var response = await _apiService.post(
+      ApiEndpoint.createChat,
+      body: {
+        "room_chat_id": room_chat_id!.toString(),
+        "message": message.toString(),
+      },
+    );
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+    return response.statusCode;
   }
 }

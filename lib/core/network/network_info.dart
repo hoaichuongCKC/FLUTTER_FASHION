@@ -1,4 +1,5 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:developer';
+import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:rxdart/rxdart.dart';
 
 enum NetWorkStatus {
@@ -33,7 +34,6 @@ class NetworkInfoImpl implements NetworkInfo {
     } else {
       _status = NetWorkStatus.successfully;
     }
-    networkSubject.add(_status);
   }
 
   @override
@@ -41,10 +41,12 @@ class NetworkInfoImpl implements NetworkInfo {
 
   @override
   void listenChangeNetwork(ConnectivityResult result) {
+    log("$result", name: "Connectivity");
     if (result != ConnectivityResult.none) {
       _status = NetWorkStatus.successfully;
     } else {
       _status = NetWorkStatus.noInternet;
+      AppSnackbarMessenger.showMessage(content: "No Internet!!!");
     }
     networkSubject.sink.add(_status);
   }

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'popular_search_state.dart';
@@ -18,12 +19,18 @@ class PopularSearchCubit extends Cubit<PopularSearchState> {
 
       final result = await _productRepositoryImpl.fetchPopularSearch();
 
-      result.fold((error) => emit(PopularSearchState.error(error)),
-          (listPopularSearch) {
-        _isFirstLoaded = true;
+      result.fold(
+        (error) {
+          if (error != AuthenticatedException.message) {
+            emit(PopularSearchState.error(error));
+          }
+        },
+        (listPopularSearch) {
+          _isFirstLoaded = true;
 
-        emit(PopularSearchState.fetchCompleted(listPopularSearch));
-      });
+          emit(PopularSearchState.fetchCompleted(listPopularSearch));
+        },
+      );
     }
   }
 
@@ -37,5 +44,11 @@ class PopularSearchCubit extends Cubit<PopularSearchState> {
 
       emit(PopularSearchState.fetchCompleted(listPopularSearch));
     });
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
   }
 }

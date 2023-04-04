@@ -33,7 +33,9 @@ class CartPage extends StatelessWidget {
                           Names.CATEGORY,
                           queryParams: {
                             "search_key": "",
-                            "item": getIt<CategoryCubit>()
+                            "index": 0.toString(),
+                            "item": getIt
+                                .get<CategoryCubit>()
                                 .state
                                 .whenOrNull(
                                   fetchCompleted: (data) => data[0].id,

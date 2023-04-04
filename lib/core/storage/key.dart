@@ -11,6 +11,8 @@ class KeyStorage {
 
   static const String userFavorite = "user-favorite-";
 
+  static const String userLanguage = "user-language-";
+
   static String get getToken => HydratedBloc.storage.read(token);
 }
 

@@ -11,8 +11,8 @@ class BuildFrameFeature extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: verticalPadding - 7),
       margin: const EdgeInsets.only(top: verticalPadding - 4),
       constraints: const BoxConstraints(
-        maxHeight: 190.0,
-        minHeight: 160,
+        maxHeight: 180.0,
+        minHeight: 160.0,
       ),
       height: size.height * 0.3,
       decoration: BoxDecoration(

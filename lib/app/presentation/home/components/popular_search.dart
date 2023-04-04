@@ -12,6 +12,7 @@ class PopularSearchHome extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
@@ -20,7 +21,7 @@ class PopularSearchHome extends StatelessWidget {
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
-                'Sản phẩm phổ biến',
+                AppLocalizations.of(context)!.popular_product,
                 style: PrimaryFont.instance.large(),
               ),
             ),

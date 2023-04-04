@@ -96,7 +96,7 @@ class ItemProduct extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          'Đã bán: ${product.sold!.formatNumber()}',
+                          '${AppLocalizations.of(context)!.sold}: ${product.sold!.formatNumber()}',
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 10.0,
                             fontWeight: FontWeight.w300,

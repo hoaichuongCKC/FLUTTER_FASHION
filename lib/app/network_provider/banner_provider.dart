@@ -18,7 +18,9 @@ class BannerProviderImpl extends BannerProvider {
   Future<List<SliderModel>> fetchBanner() async {
     var response = await _apiService.post(ApiEndpoint.fetchBanner);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401) {
+      throw AuthenticatedException();
+    } else if (response.statusCode != 200) {
       throw ServerException();
     }
 

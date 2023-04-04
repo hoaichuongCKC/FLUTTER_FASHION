@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product_state.dart';
@@ -20,7 +21,11 @@ class ProductCubit extends Cubit<ProductState> {
       final result = await _productRepositoryImpl.fetchListProduct(1);
 
       result.fold(
-        (error) => emit(ProductState.error(error)),
+        (error) {
+          if (error != AuthenticatedException.message) {
+            emit(ProductState.error(error));
+          }
+        },
         (data) {
           _isLoaded = true;
           emit(ProductState.fetchCompleted(data));

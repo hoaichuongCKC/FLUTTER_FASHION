@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                   return SliverToBoxAdapter(
                     child: Center(
                       child: Text(
-                        'đang tải...',
+                        AppLocalizations.of(context)!.loading,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 12.0,
                           color: primaryColor,

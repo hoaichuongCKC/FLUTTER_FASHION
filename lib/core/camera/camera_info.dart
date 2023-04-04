@@ -21,7 +21,7 @@ class CameraInfo {
 
   Future openGallery() async {
     final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+        await _imagePicker.pickImage(source: ImageSource.camera);
 
     if (image == null) return;
 
@@ -33,6 +33,14 @@ class CameraInfo {
         await _imagePicker.pickImage(source: ImageSource.camera);
 
     if (image == null) return;
+
+    return image;
+  }
+
+  Future<List<XFile>?> openMultiImage() async {
+    final List<XFile> image = await _imagePicker.pickMultiImage();
+
+    if (image.isEmpty) return [];
 
     return image;
   }
@@ -54,5 +62,30 @@ class CameraInfo {
     );
 
     return result;
+  }
+
+  Future<List<File>?> compressAndGetListFile(
+      List<File> files, String targetPath,
+      {Size size = const Size(1920, 1080)}) async {
+    List<File>? list = [];
+    for (File file in files) {
+      final filePath = file.absolute.path;
+
+      final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
+
+      final splitted = filePath.substring(0, (lastIndex));
+
+      final outPath =
+          "${splitted}_${targetPath}_out${filePath.substring(lastIndex)}";
+
+      var result = await FlutterImageCompress.compressAndGetFile(
+        filePath,
+        outPath,
+      );
+
+      if (result != null) list.add(result);
+    }
+
+    return list;
   }
 }

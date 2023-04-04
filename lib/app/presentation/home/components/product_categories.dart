@@ -20,7 +20,7 @@ class ProductCategoriesHome extends StatelessWidget {
                 minVerticalPadding: 0,
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  'Danh mục',
+                  AppLocalizations.of(context)!.categories,
                   style: PrimaryFont.instance.large(),
                 ),
                 trailing: InkWell(
@@ -28,14 +28,15 @@ class ProductCategoriesHome extends StatelessWidget {
                     Names.CATEGORY,
                     queryParams: {
                       "search_key": "",
-                      "item": categoryList[0].id.toString()
+                      "item": categoryList[0].id.toString(),
+                      "index": 0.toString(),
                     },
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Xem tất cả',
+                        AppLocalizations.of(context)!.view_all,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 12.0,
                           color: primaryColor,
@@ -61,7 +62,8 @@ class ProductCategoriesHome extends StatelessWidget {
                       Names.CATEGORY,
                       queryParams: {
                         "search_key": "",
-                        "item": categoryList[index].id.toString()
+                        "item": categoryList[index].id.toString(),
+                        "index": index.toString(),
                       },
                     ),
                     child: Column(

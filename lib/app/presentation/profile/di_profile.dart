@@ -1,3 +1,5 @@
+import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
+import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/network_provider/user_provider.dart';
@@ -17,6 +19,11 @@ Future<void> initDIProfile() async {
   getIt.registerLazySingleton(() => OrderCubit(orderRepositoryImpl: getIt()));
 
   getIt.registerLazySingleton(() => FavoriteCubit());
+
+  getIt.registerLazySingleton(() => ChatCubit(userRepo: getIt()));
+
+  getIt.registerFactory(() =>
+      CreateReviewCubit(productRepositoryImpl: getIt(), cameraInfo: getIt()));
 
   getIt.registerLazySingleton(
     () => UserRepositoryImpl(

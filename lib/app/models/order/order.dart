@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter_fashion/app/models/cart/cart.dart';
-import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'order.freezed.dart';
 part 'order.g.dart';
@@ -21,6 +20,7 @@ class OrderModel with _$OrderModel {
     int? status,
     DateTime? created_at,
     List<CartModel>? order_detail,
+    bool? evaluated,
   }) = _OrderModel;
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>

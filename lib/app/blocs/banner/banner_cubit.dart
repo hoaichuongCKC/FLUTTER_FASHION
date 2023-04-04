@@ -1,5 +1,6 @@
 import 'package:flutter_fashion/app/models/slider/slider.dart';
 import 'package:flutter_fashion/app/repositories/banner_repository.dart';
+import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../export.dart';
@@ -21,7 +22,9 @@ class BannerCubit extends Cubit<BannerState> {
 
       result.fold(
         (error) {
-          emit(BannerState.error(error));
+          if (error != AuthenticatedException.message) {
+            emit(BannerState.error(error));
+          }
         },
         (list) {
           emit(BannerState.fetchCompleted(list));

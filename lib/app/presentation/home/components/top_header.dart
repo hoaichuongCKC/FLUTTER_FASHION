@@ -23,7 +23,8 @@ class TopHeaderHome extends StatelessWidget {
                 Expanded(
                   child: BlocBuilder<UserCubit, UserState>(
                     builder: (context, state) {
-                      return state.whenOrNull(
+                      return state.when(
+                        failure: (error) => const SizedBox(),
                         initial: () => const SizedBox(),
                         loading: () => ColoredBox(
                           color: disableDarkColor.withOpacity(0.2),
@@ -32,7 +33,7 @@ class TopHeaderHome extends StatelessWidget {
                           ),
                         ),
                         fetchCompleted: (user) => Text(
-                          'Chào mừng bạn\n${user.fullName}!',
+                          '${AppLocalizations.of(context)!.wellcome}\n${user.fullName}!',
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 22.0,
                             color: darkColor,

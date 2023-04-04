@@ -59,8 +59,8 @@ class _AddressPaymentViewState extends State<AddressPaymentView> {
             ),
             trailing: state.usingAddress.isEmpty
                 ? InkWell(
-                    onTap: () =>
-                        AppRoutes.router.push(Routes.ADDRESS_MANAGEMENT),
+                    onTap: () => AppRoutes.router
+                        .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
                     child: const Icon(
                       Icons.add_circle_outline,
                       color: primaryColor,
@@ -68,8 +68,8 @@ class _AddressPaymentViewState extends State<AddressPaymentView> {
                     ),
                   )
                 : InkWell(
-                    onTap: () =>
-                        AppRoutes.router.push(Routes.ADDRESS_MANAGEMENT),
+                    onTap: () => AppRoutes.router
+                        .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
                     child: SvgPicture.asset(
                       "assets/icons/edit.svg",
                       color: primaryColor,

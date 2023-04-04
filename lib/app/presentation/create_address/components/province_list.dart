@@ -12,7 +12,7 @@ class ProvinceList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Tỉnh/ thành phố',
+          AppLocalizations.of(context)!.province_city,
           style: PrimaryFont.instance.small(),
         ),
         Expanded(

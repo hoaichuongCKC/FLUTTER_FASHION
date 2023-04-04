@@ -5,6 +5,7 @@ popupAlert({
   String message = "Come on bro",
   Function()? onPressed,
   Function()? onCancel,
+  bool noButtonCancle = false,
   bool hasTimer = false,
   int counter = 2,
 }) async {
@@ -76,30 +77,36 @@ popupAlert({
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                ButtonWidget(
-                                  height: 30,
-                                  width: 60,
-                                  animate: false,
-                                  onPressed: onCancel ??
-                                      () {
-                                        AppRoutes.router.pop();
-                                        AppRoutes.router.pop();
-                                      },
-                                  btnColor: disablePrimaryColor,
-                                  labelWidget: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Align(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.cancel,
-                                        style: PrimaryFont.instance.copyWith(
-                                          fontSize: 12.0,
-                                          color: lightColor,
+                                noButtonCancle
+                                    ? const SizedBox()
+                                    : ButtonWidget(
+                                        height: 30,
+                                        width: 60,
+                                        animate: false,
+                                        onPressed: onCancel ??
+                                            () {
+                                              AppRoutes.router.pop();
+                                              AppRoutes.router.pop();
+                                            },
+                                        btnColor: disablePrimaryColor,
+                                        labelWidget: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Align(
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .canceled,
+                                              style:
+                                                  PrimaryFont.instance.copyWith(
+                                                fontSize: 12.0,
+                                                color: lightColor,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 15.0),
+                                noButtonCancle
+                                    ? const SizedBox()
+                                    : const SizedBox(width: 15.0),
                                 ButtonWidget(
                                   height: 30,
                                   width: 60,

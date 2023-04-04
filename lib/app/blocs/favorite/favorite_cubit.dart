@@ -1,4 +1,4 @@
-import 'dart:developer';
+// ignore_for_file: invalid_override_of_non_virtual_member
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
@@ -20,9 +20,19 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
     emit(state.copyWith(listProduct: updatedList));
   }
 
+  void removeFavorite(ProductModel product) {
+    final state = this.state;
+    final list = state.listProduct;
+    emit(state.copyWith(
+        listProduct: List<ProductModel>.from(list)..remove(product)));
+  }
+
+  void removeAll() {
+    emit(state.copyWith(listProduct: []));
+  }
+
   @override
   FavoriteState? fromJson(Map<String, dynamic> json) {
-    log("json: ${json["data"]}", name: "Favorite Json");
     return json["data"] == null
         ? const FavoriteState()
         : FavoriteState.fromJson(json);
@@ -30,7 +40,6 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
 
   @override
   Map<String, dynamic>? toJson(FavoriteState state) {
-    log("state: ${state.listProduct}");
     return state.toJson();
   }
 }

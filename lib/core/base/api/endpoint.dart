@@ -1,4 +1,6 @@
 class ApiEndpoint {
+  static const String authBeams = "pusher/beams-auth";
+
   static const String login = "auth/login";
   static const String loginGoogle = "auth/login-google";
   static const String register = "auth/register";
@@ -7,15 +9,21 @@ class ApiEndpoint {
   static const String me = "user/me";
   static const String update = "user/edit-profile";
   static const String changePassword = "user/change-password";
+  static const String fetchChats = "user/fetch-chat";
+  static const String createChat = "user/create-chat";
 
   static const String fetchBanner = "banner/fetch-banner";
   static const String fetchCategory = "cate/fetch-categories";
 
   static const String fetchProduct = "product/fetch-product-all";
-  static const String fetchPopularSearch = "product/fetch-popular-search";
+  static const String fetchPopularSearch = "product/fetch-popular";
 
   static const String fetchReview = "review/fetch-review";
+  static const String create = "review/create-review";
 
   static const String createOrder = "order/create";
   static const String fetchOrder = "order/fetch-order";
+  static const String deleteOrder = "order/delete-order";
+
+  static const String fetchNotification = "noti/fetch";
 }

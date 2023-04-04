@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,20 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCR9nkhNthqrRjQdHuC8HuTnxZRiOZhc0Q',
-    appId: '1:711258753711:android:a9f92b6c6455374708625a',
-    messagingSenderId: '711258753711',
-    projectId: 'fashion-3838d',
-    storageBucket: 'fashion-3838d.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDSSr9ZRyns9Ll630H4LjGYR8y0otfbVgM',
-    appId: '1:711258753711:ios:5afd97cd199eed7c08625a',
-    messagingSenderId: '711258753711',
-    projectId: 'fashion-3838d',
-    storageBucket: 'fashion-3838d.appspot.com',
-    iosClientId: '711258753711-ns8lbdgc3scbm2ird392vtsg2pvtd7b8.apps.googleusercontent.com',
-    iosBundleId: 'com.example.flutterFashion',
+    apiKey: 'AIzaSyAsVBqqIRR0uX_d6Q1snMSUsjlTUWE7dak',
+    appId: '1:49856644644:android:33099082a3fa8dc2a57ab1',
+    messagingSenderId: '49856644644',
+    projectId: 'fasion-4cb5c',
+    storageBucket: 'fasion-4cb5c.appspot.com',
   );
 }

@@ -1,15 +1,8 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter_fashion/app/presentation/setting/export.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
 
-  @override
-  State<SettingPage> createState() => _SettingPageState();
-}
-
-class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
@@ -68,6 +61,7 @@ class _SettingPageState extends State<SettingPage> {
               excute: () {},
               color: const Color(0xFFFF7043),
               icon: SvgPicture.asset("assets/icons/notification.svg",
+                  // ignore: deprecated_member_use
                   color: const Color(0xFFFF7043)),
             ),
           ],

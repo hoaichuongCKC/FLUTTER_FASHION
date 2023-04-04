@@ -32,7 +32,7 @@ class ProfileBody extends StatelessWidget {
         ButtonWidget(
           btnColor: primaryColor,
           onPressed: () => showDialogNotiLogout(context),
-          label: "Đăng xuất",
+          label: AppLocalizations.of(context)!.logout,
         ),
         const SizedBox(height: 30),
       ],
@@ -43,7 +43,7 @@ class ProfileBody extends StatelessWidget {
 showDialogNotiLogout(BuildContext context) {
   popupAlert(
     context: context,
-    message: "Bạn có chắc muốn đăng xuất không?",
+    message: AppLocalizations.of(context)!.are_you_sure_to_log_out,
     onCancel: () => AppRoutes.router.pop(),
     onPressed: () {
       AppRoutes.router.pop();

@@ -1,4 +1,8 @@
 {
+  "wellcome": "Chào mừng bạn",
+  "@wellcome": {
+    "description": "Không hiểu gì cả"
+  },
 
   "login": "Đăng nhập",
   "@login": {
@@ -186,10 +190,6 @@
     "description": "Không hiểu gì cả"
   },
 
-  "cancel": "Huỷ",
-  "@cancel": {
-    "description": "Không hiểu gì cả"
-  },
   "ok": "Đồng ý",
   "@ok": {
     "description": "Không hiểu gì cả"
@@ -209,8 +209,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "updatedInformationSuccessfully": "Cập nhật thông tin thành công!",
-  "@updatedInformationSuccessfully": {
+  "updated_information_successfully": "Cập nhật thông tin thành công!",
+  "@updated_information_successfully": {
     "description": "Không hiểu gì cả"
   },
 
@@ -264,15 +264,165 @@
     }
   },
 
-  "enter_the": "Nhập {tag}",
-  "@enter_the": {
-    "description": "Không hiểu gì cả",
-    "placeholders": {
-      "tag": {
-        "type": "String",
-        "example": "Bob"
-      }
-    }
+  "product_rating": "Đánh giá sản phẩm",
+  "@product_rating": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "write_something": "Viết gì đó ở đây",
+  "@write_something": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "logout": "Đăng xuất",
+  "@logout": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "my_order": "Đơn hàng của tôi",
+  "@my_order": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "you_currently_have_no_orders": "Hiện bạn chưa có đơn hàng nào",
+  "@you_currently_have_no_orders": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "to_pay": "Chờ xác nhận",
+  "@to_pay": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "to_ship": "Chờ lấy hàng",
+  "@to_ship": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "to_receive": "Đang giao",
+  "@to_receive": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "completed": "Hoàn thành",
+  "@completed": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "canceled": "Đã huỷ",
+  "@canceled": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "you_currently_have_no_product_favorite": "Hiện tại bạn chưa có sản phẩm yêu thích",
+  "@you_currently_have_no_product_favorite": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "loading": "Đang tải...",
+  "@loading": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "categories": "Danh mục",
+  "@categories": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "view_all": "Xem tất cả",
+  "@view_all": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "popular_product": "Sản phẩm phổ biến",
+  "@popular_product": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "recommed_product": "Gợi ý sản phẩm",
+  "@recommed_product": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "sold": "Đã bán",
+  "@sold": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "click_here_to_choose_a_photo": "Nhấn vào đây để chọn ảnh",
+  "@click_here_to_choose_a_photo": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "are_you_sure_to_log_out": "Bạn có chắc đăng xuất không?",
+  "@are_you_sure_to_log_out": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "address_management": "Quản lý địa chỉ",
+  "@address_management": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "you_have_not_updated_your_address_yet": "Hiện tại bạn chưa cập nhật địa chỉ",
+  "@you_have_not_updated_your_address_yet": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "create_new_address": "Tạo địa chỉ mới",
+  "@create_new_address": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "get_current_location": "Lấy vị trí hiện tại",
+  "@get_current_location": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "province_city": "Tỉnh thành phố",
+  "@province_city": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "district": "Quận huyện",
+  "@district": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "commune": "Phường xã",
+  "@commune": {
+    "description": "Không hiểu gì cả"
+  },
+  
+  "seleted_address": "Địa chỉ đã chọn",
+  "@seleted_address": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "delete": "Xoá",
+  "@delete": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "rate_now": "Đánh giá ngay",
+  "@rate_now": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "rated": "Đã đánh giá",
+  "@rated": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "the_product_is_currently_out_of_stock": "Sản phẩm hiện đang hết hàng",
+  "@the_product_is_currently_out_of_stock": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "daily": "Hằng ngày",
+  "@daily": {
+    "description": "Không hiểu gì cả"
   }
 
 }

@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/blocs/review_bloc.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/export_detail.dart';
 
@@ -6,8 +5,8 @@ import '../../../export.dart';
 import 'components/botom_navigation_bar_detail.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({super.key, required this.productIndex});
-  final String productIndex;
+  const ProductDetailPage({super.key, required this.product});
+  final ProductModel product;
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -15,7 +14,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   late UiDetailShowBloc _uiDetailBloc;
-  late ProductModel _product;
+
   @override
   void initState() {
     super.initState();
@@ -23,11 +22,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
     _uiDetailBloc.init();
 
-    _product = getIt.get<ProductCubit>().state.whenOrNull(
-          fetchCompleted: (list) => list[int.parse(widget.productIndex)],
-        )!;
-    if (_product.star != null) {
-      getIt<ReviewBLoc>().fetchData(_product.id!);
+    if (widget.product.star != null) {
+      getIt<ReviewBLoc>().fetchData(widget.product.id!);
     }
   }
 
@@ -41,7 +37,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     return ProductDetailInherited(
-      productModel: _product,
+      productModel: widget.product,
       bloc: _uiDetailBloc,
       child: Scaffold(
         extendBody: false,
@@ -63,7 +59,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _product.name!,
+                            widget.product.name!,
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 18.0,
                             ),
@@ -74,7 +70,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                _product.regular_price!
+                                widget.product.regular_price!
                                     .toDouble()
                                     .toVndCurrency(),
                                 style: PrimaryFont.instance.copyWith(
@@ -107,7 +103,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: _product.sold.toString(),
+                                    text: widget.product.sold.toString(),
                                     style: PrimaryFont.instance.copyWith(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
@@ -117,12 +113,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                             ],
                           ),
-                          _product.star != null
+                          widget.product.star != null
                               ? Text.rich(
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: _product.star.toString(),
+                                        text: widget.product.star.toString(),
                                         style: PrimaryFont.instance.copyWith(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w300,

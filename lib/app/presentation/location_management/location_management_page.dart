@@ -18,7 +18,7 @@ class _LocationManagementPageState extends State<LocationManagementPage> {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
-      title: "Quản lý địa chỉ",
+      title: AppLocalizations.of(context)!.address_management,
       floatingActionButton: Builder(builder: (context) {
         return InkWell(
           onTap: () async {
@@ -52,12 +52,9 @@ class _LocationManagementPageState extends State<LocationManagementPage> {
             return Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Text('Hiện tại bạn chưa cập nhật địa chỉ'),
-                ],
+              child: Center(
+                child: Text(AppLocalizations.of(context)!
+                    .you_have_not_updated_your_address_yet),
               ),
             );
           }

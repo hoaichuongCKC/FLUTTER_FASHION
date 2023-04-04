@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
@@ -18,25 +20,8 @@ class ProductRecommend extends StatelessWidget {
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
-                'Gợi ý sản phẩm',
+                AppLocalizations.of(context)!.recommed_product,
                 style: PrimaryFont.instance.large(),
-              ),
-              trailing: InkWell(
-                onTap: () {},
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Xem tất cả',
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 12.0,
-                        color: primaryColor,
-                      ),
-                    ),
-                    const Icon(Icons.arrow_right,
-                        size: 25.0, color: primaryColor),
-                  ],
-                ),
               ),
             ),
             GridView.builder(
@@ -57,8 +42,8 @@ class ProductRecommend extends StatelessWidget {
                   product: listProduct[index],
                   onTap: () => AppRoutes.router.pushNamed(
                     Names.PRODUCT_DETAIL,
-                    queryParams: {
-                      "index": index.toString(),
+                    params: {
+                      "product": jsonEncode(listProduct[index].toJson()),
                     },
                   ),
                 );
