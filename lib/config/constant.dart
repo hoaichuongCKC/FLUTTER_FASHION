@@ -25,7 +25,7 @@ const List<Color> rangeColor = [
   Color.fromARGB(255, 171, 196, 32),
 ];
 
-const int awaitingStatus = 1;
+const int toPayStatus = 1;
 
 const int processingStatus = 2;
 

@@ -1,5 +1,9 @@
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
+import 'package:flutter_fashion/app/presentation/notification/components/item_noti_chat.dart';
+import 'package:flutter_fashion/app/presentation/notification/components/item_noti_normal.dart';
+import 'package:flutter_fashion/app/presentation/notification/components/item_noti_order.dart';
+import 'package:flutter_fashion/config/notification.dart';
 import 'package:flutter_fashion/export.dart';
 
 import '../../../common/components/app/background_app.dart';
@@ -10,17 +14,52 @@ class NotificationDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late List<NotificationModel> notifications;
-    if (name == "chat") {
-      notifications =
-          context.watch<NotificationCubit>().state.notificationsChat;
-    } else if (name == "order") {
-      notifications =
-          context.watch<NotificationCubit>().state.notificationsChat;
+    late int lengthNotiDoNotRead;
+    final state = context.watch<NotificationCubit>().state;
+    if (name == typeChat) {
+      notifications = state.notificationsChat;
+      lengthNotiDoNotRead = state.chatDonotRead.length;
+    } else if (name == typeOrder) {
+      lengthNotiDoNotRead = state.orderDonotRead.length;
+      notifications = state.notificationsOrder;
+    } else {
+      lengthNotiDoNotRead = state.dailyDonotRead.length;
+      notifications = state.notificationsDaily;
     }
-    notifications = context.watch<NotificationCubit>().state.notificationsChat;
+
     return AppBackgroundBlur.normal(
-      child: Column(
-        children: [],
+      title: AppLocalizations.of(context)!.notificationPage,
+      actionsSecond: lengthNotiDoNotRead == 0
+          ? null
+          : [
+              TextButton(
+                onPressed: () =>
+                    context.read<NotificationCubit>().readAll(name, context),
+                child: Text(
+                  AppLocalizations.of(context)!.read_all(lengthNotiDoNotRead),
+                ),
+              ),
+            ],
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+        itemCount: notifications.length,
+        itemBuilder: (context, index) {
+          final notification = notifications[index];
+
+          if (name == typeChat) {
+            return ItemNotiChat(notification: notification);
+          }
+
+          if (name == typeOrder) {
+            return ItemNotiOrder(notification: notification);
+          }
+
+          if (name == typeDaily) {
+            return ItemNotiNormal(notification: notification);
+          }
+          return const SizedBox();
+        },
       ),
     );
   }

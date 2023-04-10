@@ -5,16 +5,19 @@ class SkeletonNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        5,
-        (index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: ColoredBox(
-            color: skeletonColor,
-            child: const SizedBox(
-              width: double.infinity,
-              height: 130.0,
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+      child: Column(
+        children: List.generate(
+          5,
+          (index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: ColoredBox(
+              color: skeletonColor,
+              child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * .15,
+              ),
             ),
           ),
         ),

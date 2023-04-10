@@ -21,7 +21,7 @@ class PusherBeamsApp {
         userId.toString(),
         BeamsAuthProvider()
           ..authUrl = ApiService.baseUrl + ApiEndpoint.authBeams
-          ..headers = getIt<ApiService>().headers
+          ..headers = getIt.get<ApiService>().headers
           ..queryParams = {}
           ..credentials = 'omit',
         (value) {
@@ -47,7 +47,12 @@ class PusherBeamsApp {
 
   _handleSendNoti(Map<dynamic, dynamic> data) {
     final type = data["data"]["type"];
-    if (type == PusherConfig.inNotification) _handleNotificationPage(data);
+
+    if (type == PusherConfig.inNotification) {
+      final isNoti = AppRoutes.router.location == Routes.NOTIFICATION;
+
+      if (isNoti) _handleNotificationPage(data);
+    }
   }
 
   _handleNotificationPage(Map<dynamic, dynamic> data) =>

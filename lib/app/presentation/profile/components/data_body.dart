@@ -30,6 +30,7 @@ class ProfileBody extends StatelessWidget {
         const BuildFrameFeature(),
         const SizedBox(height: 30),
         ButtonWidget(
+          height: MediaQuery.of(context).size.height * .06,
           btnColor: primaryColor,
           onPressed: () => showDialogNotiLogout(context),
           label: AppLocalizations.of(context)!.logout,

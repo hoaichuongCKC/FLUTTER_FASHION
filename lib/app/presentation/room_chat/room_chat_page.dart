@@ -13,9 +13,26 @@ class RoomChatMessagePage extends StatelessWidget {
     return AppBackgroundBlur.normal(
       title: AppLocalizations.of(context)!.messenger,
       child: Column(
-        children: const [
-          ChatList(),
-          TaskbarChatMessage(),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/admin.png"),
+                const SizedBox(height: 5.0),
+                Text(
+                  "Chúng tôi trực page 24/7",
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const ChatList(),
+          const TaskbarChatMessage(),
         ],
       ),
     );

@@ -26,6 +26,6 @@ class OrderModel with _$OrderModel {
   factory OrderModel.fromJson(Map<String, dynamic> json) =>
       _$OrderModelFromJson(json);
 
-  static List<OrderModel> orderModelFromJson(List str) =>
+  static List<OrderModel> orderListFromJson(List str) =>
       List<OrderModel>.from(str.map((x) => OrderModel.fromJson(x)));
 }

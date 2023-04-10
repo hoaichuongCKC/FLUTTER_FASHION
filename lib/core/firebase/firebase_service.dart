@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,20 +11,16 @@ mixin FirebaseMixin {
 
   Future<void> verifyPhoneNumber(
       {required String phoneNumber,
-      required Function(UserCredential user) verificationCompleted,
+      required Function(PhoneAuthCredential user) verificationCompleted,
       required Function(FirebaseAuthException p1) verificationFailed,
       required Function(String verificationId, int? resendToken) codeSent,
       required Function(String verificationId) codeAutoRetrievalTimeout,
       int? forceResendingToken,
-      Duration timeoutDuration = const Duration(seconds: 30)}) async {
+      Duration timeoutDuration = const Duration(seconds: 2 * 60)}) async {
     await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) async =>
-            await _auth.signInWithCredential(credential).then(
-              (value) {
-                verificationCompleted(value);
-              },
-            ),
+        verificationCompleted: (PhoneAuthCredential credential) =>
+            verificationCompleted(credential),
         verificationFailed: verificationFailed,
         codeSent: codeSent,
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
@@ -36,6 +34,7 @@ mixin FirebaseMixin {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: smsCode);
       final data = await _auth.signInWithCredential(credential);
+
       if (data.user != null) {
         return Right(data);
       } else {

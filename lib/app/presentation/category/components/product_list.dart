@@ -1,7 +1,5 @@
 import 'dart:convert';
-
-import 'package:flutter_fashion/app/models/product/product.dart';
-import 'package:flutter_fashion/app/presentation/category/blocs/category_bloc.dart';
+import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 
 import '../../../../export.dart';
@@ -14,27 +12,18 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
-  late CategoryPageBloc _bloc;
-
-  late ScrollController _scrollController;
+  late CategoryTabCubit _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = getIt<CategoryPageBloc>();
-    _scrollController = ScrollController()
-      ..addListener(() {
-        _bloc.loadMore(_scrollController);
-      });
+    _bloc.initScroll();
   }
 
   @override
   void dispose() {
+    _bloc.dispose();
     super.dispose();
-    _scrollController.dispose();
-    _scrollController.removeListener(() {
-      _bloc.loadMore(_scrollController);
-    });
   }
 
   @override
@@ -42,16 +31,12 @@ class _ProductListState extends State<ProductList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        StreamBuilder<List<ProductModel>>(
-          stream: _bloc.listProductStream,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+        BlocBuilder<CategoryTabCubit, CategoryTabState>(
+          // buildWhen: (previous, current) => previous.data != current.data,
+          builder: (context, state) {
+            final data = state.data[state.currentId]["products"];
 
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            if (data.isEmpty) {
               return Expanded(
                 child: Center(
                   child: Column(
@@ -64,11 +49,11 @@ class _ProductListState extends State<ProductList> {
                 ),
               );
             }
-            final list = snapshot.data;
+
             return Expanded(
               child: GridView.builder(
-                controller: _scrollController,
-                itemCount: list!.length,
+                controller: _bloc.controller,
+                itemCount: data.length,
                 padding: const EdgeInsets.symmetric(
                     horizontal: horizontalPadding - 4, vertical: 10.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -80,37 +65,17 @@ class _ProductListState extends State<ProductList> {
                 ),
                 itemBuilder: (context, index) {
                   return ItemProduct(
-                    product: list[index],
+                    product: data[index],
                     onTap: () => AppRoutes.router.pushNamed(
                       Names.PRODUCT_DETAIL,
                       params: {
-                        "product": jsonEncode(list[index].toJson()),
+                        "product": jsonEncode(data[index].toJson()),
                       },
                     ),
                   );
                 },
               ),
             );
-          },
-        ),
-        StreamBuilder(
-          stream: _bloc.isLoading,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const SizedBox();
-            }
-            if (snapshot.data!) {
-              return Center(
-                child: Text(
-                  'đang tải...',
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 12.0,
-                    color: primaryColor,
-                  ),
-                ),
-              );
-            }
-            return const SizedBox();
           },
         ),
       ],

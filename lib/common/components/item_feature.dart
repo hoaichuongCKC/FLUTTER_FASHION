@@ -35,13 +35,13 @@ class ItemFeatureProfile extends StatelessWidget {
           model.path == Names.ORDER
               ? BlocSelector<OrderCubit, OrderState, bool>(
                   selector: (state) {
-                    if (state.awaitingList.isNotEmpty) {
+                    if (state.toPayList.isNotEmpty) {
                       return true;
                     }
-                    if (state.processingList.isNotEmpty) {
+                    if (state.toShipList.isNotEmpty) {
                       return true;
                     }
-                    if (state.shippingList.isNotEmpty) {
+                    if (state.toReceiveList.isNotEmpty) {
                       return true;
                     }
                     return false;
@@ -50,15 +50,15 @@ class ItemFeatureProfile extends StatelessWidget {
                     if (!hasData) {
                       return const SizedBox();
                     }
-                    return const Align(
-                      alignment: Alignment(0.6, -0.9),
+                    return Align(
+                      alignment: const Alignment(0.8, -0.9),
                       child: FractionallySizedBox(
-                        heightFactor: 0.25,
-                        widthFactor: 0.25,
+                        heightFactor: 0.15,
+                        widthFactor: 0.15,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: errorColor,
+                            color: errorColor.withOpacity(0.8),
                           ),
                         ),
                       ),

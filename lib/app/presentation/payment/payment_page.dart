@@ -16,8 +16,9 @@ class PaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBackgroundBlur.withAppBar(
+    return AppBackgroundBlur.scroll(
       isHasBackground: false,
+      centerTitle: false,
       title: "Đơn hàng",
       child: BlocListener<PaymentCubit, PaymentState>(
         listener: (context, state) {
@@ -26,20 +27,17 @@ class PaymentPage extends StatelessWidget {
             context.read<PaymentCubit>().removeAll();
           }
         },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              AddressPaymentView(),
-              ListOrderView(),
-              InfoUserOrderView(),
-              MethodPaymentView(),
-              ListVoucherView(),
-              DetailOrderView(),
-              RulesAppView(),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            AddressPaymentView(),
+            ListOrderView(),
+            InfoUserOrderView(),
+            MethodPaymentView(),
+            ListVoucherView(),
+            DetailOrderView(),
+            RulesAppView(),
+          ],
         ),
       ),
     );

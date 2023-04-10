@@ -13,9 +13,12 @@ import '../blocs/edit_information/edit_information_cubit.dart';
 
 abstract class UserRepository {
   Future<Either<String, UserModel>> me();
+
   Future<Either<String, UserModel>> update(
       {required EditInformationState param, XFile? imageFile});
+
   Future<Either<String, List<ChatModel>>> fetchChats();
+
   Future<Either<String, int>> createChat(
       {required int? room_chat_id, required String message});
 

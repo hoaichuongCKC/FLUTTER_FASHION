@@ -5,15 +5,15 @@ import 'package:flutter_fashion/app/presentation/order/components/item_order.dar
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
 
-class AwaitingConfirmationPage extends StatelessWidget {
-  const AwaitingConfirmationPage({super.key});
+class ToPay extends StatelessWidget {
+  const ToPay({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
       buildWhen: (previous, current) =>
           previous.status != current.status ||
-          previous.awaitingList != current.awaitingList,
+          previous.toPayList != current.toPayList,
       builder: (context, state) {
         if (state.status == AppStatus.loading) {
           return const Center(
@@ -25,7 +25,7 @@ class AwaitingConfirmationPage extends StatelessWidget {
             child: Text('Server Error'),
           );
         }
-        if (state.status == AppStatus.success && state.awaitingList.isEmpty) {
+        if (state.status == AppStatus.success && state.toPayList.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -45,17 +45,17 @@ class AwaitingConfirmationPage extends StatelessWidget {
         }
         return ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(height: 15.0),
-          itemCount: state.awaitingList.length,
+          itemCount: state.toPayList.length,
           padding:
               const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
           itemBuilder: (context, index) => ItemOrder(
-            order: state.awaitingList[index],
+            order: state.toPayList[index],
             onPressed: () {
               AppRoutes.router.pushNamed(
                 Names.ORDER_DETAIL,
                 queryParams: {
                   "index": index.toString(),
-                  "status": awaitingStatus.toString()
+                  "status": toPayStatus.toString()
                 },
               );
             },

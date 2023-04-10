@@ -50,13 +50,20 @@ class ProductCategoriesHome extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 90,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: categoryList.length,
                 itemExtent: 90,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  final item = categoryList[index];
+
+                  final isVietnamese =
+                      context.watch<LanguageCubit>().state.isVietnamese;
+
+                  final subtitle = isVietnamese ? item.name_vi : item.name;
+
                   return InkWell(
                     onTap: () => AppRoutes.router.pushNamed(
                       Names.CATEGORY,
@@ -90,7 +97,7 @@ class ProductCategoriesHome extends StatelessWidget {
                         ),
                         const SizedBox(height: 8.0),
                         Text(
-                          categoryList[index].name_vi,
+                          subtitle,
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w300,

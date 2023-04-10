@@ -423,6 +423,84 @@
   "daily": "Hằng ngày",
   "@daily": {
     "description": "Không hiểu gì cả"
-  }
+  },
 
+  "my_shopping_cart": "Giỏ hàng",
+  "@my_shopping_cart": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "my_shopping_cart_is_currently_empty": "Giỏ hàng của bạn hiện tại đang trống",
+  "@my_shopping_cart_is_currently_empty": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "read_all": "Đọc tất cả ({number})",
+  "@read_all": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+
+  "a_new_message": "Một tin nhắn mới: ({message})",
+  "@a_new_message": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+
+   
+  "login_session_has_expired": "Phiên đăng nhập đã hết hạn!",
+  "@login_session_has_expired": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "order_detail": "Chi tiết đơn hàng",
+  "@order_detail": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "status": "Trạng thái",
+  "@status": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "total": "Tổng",
+  "@total": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "cancel": "Tổng {data}",
+  "@cancel": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "data": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+
+  "search": "Tìm kiếm",
+  "@search": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "registerd_phone_number_in_the_system":  "Số điện thoại đã đăng ký trong hệ thống",
+  "@registerd_phone_number_in_the_system": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "skip": "Bỏ qua",
+  "@skip": {
+    "description": "Không hiểu gì cả"
+  }
 }

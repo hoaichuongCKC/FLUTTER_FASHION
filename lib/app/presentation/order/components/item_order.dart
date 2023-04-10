@@ -34,130 +34,123 @@ class ItemOrder extends StatelessWidget {
           children: [
             InkWell(
               onTap: onPressed,
-              child: Material(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Kira_Store',
-                          style: PrimaryFont.instance.copyWith(fontSize: 18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Kira_Store',
+                        style: PrimaryFont.instance.copyWith(fontSize: 18.0),
+                      ),
+                      ColoredBox(
+                        color: primaryColor.withOpacity(0.5),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                          child: Text(
+                            order.status!.getOrderStatus(context),
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 9.0,
+                              color: lightColor,
+                            ),
+                          ),
                         ),
-                        ColoredBox(
-                          color: primaryColor.withOpacity(0.5),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 3.0),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Hero(
+                          tag: "location${order.id}",
+                          child: SvgPicture.asset(
+                            "assets/icons/location.svg",
+                            colorFilter: const ColorFilter.mode(
+                                primaryColor, BlendMode.srcIn),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Hero(
+                            tag: "${order.id}${order.shipping_address!}",
                             child: Text(
-                              order.status!.getOrderStatus(context),
+                              order.shipping_address!,
                               style: PrimaryFont.instance.copyWith(
-                                fontSize: 9.0,
-                                color: lightColor,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w300,
+                                color: darkColor.withOpacity(0.5),
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Hero(
-                            tag: "location${order.id}",
-                            child: SvgPicture.asset(
-                              "assets/icons/location.svg",
-                              colorFilter: const ColorFilter.mode(
-                                  primaryColor, BlendMode.srcIn),
-                            ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                        child: Hero(
+                          tag: "calendar${order.id}",
+                          child: SvgPicture.asset(
+                            "assets/icons/calendar.svg",
+                            colorFilter: const ColorFilter.mode(
+                                primaryColor, BlendMode.srcIn),
                           ),
-                          const SizedBox(width: 8.0),
-                          Expanded(
-                            child: Material(
-                              child: Hero(
-                                tag: "${order.id}${order.shipping_address!}",
-                                child: Text(
-                                  order.shipping_address!,
-                                  style: PrimaryFont.instance.copyWith(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w300,
-                                    color: darkColor.withOpacity(0.5),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      const SizedBox(width: 8.0),
+                      Hero(
+                        tag: "${order.id}${order.created_at!.formatDateTime()}",
+                        child: Text(
+                          order.created_at!.formatDateTime(),
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w300,
+                            color: darkColor.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           child: Hero(
-                            tag: "calendar${order.id}",
+                            tag: "wallet${order.id}",
                             child: SvgPicture.asset(
-                              "assets/icons/calendar.svg",
+                              "assets/icons/wallet.svg",
                               colorFilter: const ColorFilter.mode(
                                   primaryColor, BlendMode.srcIn),
+                              width: 18.0,
+                              height: 19.0,
                             ),
                           ),
                         ),
                         const SizedBox(width: 8.0),
                         Hero(
                           tag:
-                              "${order.id}${order.created_at!.formatDateTime()}",
+                              "${order.id}${order.total_price!.toDouble().toVndCurrency()}",
                           child: Text(
-                            order.created_at!.formatDateTime(),
+                            order.total_price!.toDouble().toVndCurrency(),
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w300,
-                              color: darkColor.withOpacity(0.5),
+                              color: errorColor.withOpacity(0.5),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 3.0),
-                            child: Hero(
-                              tag: "wallet${order.id}",
-                              child: SvgPicture.asset(
-                                "assets/icons/wallet.svg",
-                                colorFilter: const ColorFilter.mode(
-                                    primaryColor, BlendMode.srcIn),
-                                width: 18.0,
-                                height: 19.0,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8.0),
-                          Hero(
-                            tag:
-                                "${order.id}${order.total_price!.toDouble().toVndCurrency()}",
-                            child: Text(
-                              order.total_price!.toDouble().toVndCurrency(),
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w300,
-                                color: errorColor.withOpacity(0.5),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             order.status == deliveredStatus

@@ -72,10 +72,8 @@ extension StringX on String {
       return this;
     }
     const prefix = '+84';
-    final firstPart = substring(1, 4);
-    final secondPart = substring(4, 7);
     final thirdPart = substring(7, 10);
-    return '($prefix) $firstPart $secondPart $thirdPart';
+    return '($prefix) *** *** $thirdPart';
   }
 
   bool isValidEmail() {

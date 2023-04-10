@@ -73,7 +73,7 @@ class _OrderPageState extends State<OrderPage>
               child: TabBarView(
                 controller: _tabBarController,
                 children: const [
-                  AwaitingConfirmationPage(),
+                  ToPay(),
                   OrderProcessingPage(),
                   ShippingPage(),
                   DeliveredPage(),

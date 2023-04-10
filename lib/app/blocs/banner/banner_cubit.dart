@@ -1,6 +1,9 @@
 import 'package:flutter_fashion/app/models/slider/slider.dart';
 import 'package:flutter_fashion/app/repositories/banner_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/pusher/beams.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
+import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../export.dart';
@@ -14,7 +17,7 @@ class BannerCubit extends Cubit<BannerState> {
       : _bannerRepositoryImpl = bannerRepositoryImpl,
         super(const BannerState.initial());
   bool _isFirstLoad = false;
-  void fetchData() async {
+  void fetchData(BuildContext context) async {
     if (!isClosed && !_isFirstLoad) {
       emit(const BannerState.loading());
 
@@ -24,6 +27,18 @@ class BannerCubit extends Cubit<BannerState> {
         (error) {
           if (error != AuthenticatedException.message) {
             emit(BannerState.error(error));
+          } else {
+            popupAlert(
+              context: context,
+              noButtonCancle: true,
+              message: AppLocalizations.of(context)!.login_session_has_expired,
+              onPressed: () {
+                PusherBeamsApp.instance.dispose();
+                HydratedBloc.storage.delete(KeyStorage.token);
+                AppRoutes.router.pop();
+                AppRoutes.router.go(Routes.LOGIN);
+              },
+            );
           }
         },
         (list) {

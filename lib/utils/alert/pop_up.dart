@@ -139,3 +139,53 @@ popupAlert({
     },
   );
 }
+
+popupTextAlert({
+  required BuildContext context,
+  String message = "Come on bro",
+  bool hasTimer = true,
+  int counter = 2,
+}) async {
+  if (hasTimer) {
+    const Duration duration = Duration(seconds: 1);
+    Timer.periodic(duration, (timer) {
+      if (timer.tick == counter) {
+        timer.cancel();
+        AppRoutes.router.pop();
+      }
+    });
+  }
+  await showGeneralDialog(
+    context: context,
+    barrierDismissible: false,
+    barrierColor: Colors.transparent,
+    barrierLabel: "popup - Alert",
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return AnimatedOpacity(
+          opacity: animation.value,
+          duration: const Duration(milliseconds: 450),
+          curve: Curves.easeIn,
+          child: child);
+    },
+    pageBuilder: (newCtx, a1, a2) {
+      return Center(
+        child: Material(
+          color: const Color(0x80000000),
+          surfaceTintColor: const Color(0x80000000),
+          borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              message,
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 14.0,
+                color: lightColor,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}

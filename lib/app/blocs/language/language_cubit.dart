@@ -15,6 +15,8 @@ part 'language_state.dart';
 class LanguageCubit extends HydratedCubit<LanguageState> {
   LanguageCubit() : super(LanguageState.initial());
 
+  bool get isVietnamese => state.isVietnamese;
+
   void changedVietnamese() => emit(LanguageState.vietNamese());
 
   void changedEnglish() => emit(LanguageState.english());

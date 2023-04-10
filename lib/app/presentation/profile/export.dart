@@ -4,7 +4,6 @@ export 'package:flutter_fashion/common/components/user_avatar.dart';
 export 'package:flutter_fashion/config/colors.dart';
 export 'package:flutter_fashion/config/constant.dart';
 export 'package:flutter_fashion/config/font_style.dart';
-export 'package:flutter_fashion/app/presentation/introduction/export.dart';
 export 'package:flutter_fashion/app/presentation/profile/components/user_information.dart';
 export 'package:flutter_fashion/app/presentation/profile/constant.dart';
 export 'package:flutter_fashion/common/components/screen_background/screen_background.dart';

@@ -6,7 +6,7 @@ import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 
 abstract class OrderRepository {
   Future<Either<String, OrderModel>> create(OrderParams params);
-  Future<Either<String, List<OrderModel>>> fetchOrder();
+  Future<Either<String, Map<String, dynamic>>> fetchOrder();
   Future<Either<String, int>> delete(int orderId);
 }
 
@@ -28,8 +28,8 @@ class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
   }
 
   @override
-  Future<Either<String, List<OrderModel>>> fetchOrder() async {
-    final result = await baseRepo<List<OrderModel>>(
+  Future<Either<String, Map<String, dynamic>>> fetchOrder() async {
+    final result = await baseRepo<Map<String, dynamic>>(
       excuteFunction: () async {
         return await _orderProviderImpl.fetchOrder();
       },

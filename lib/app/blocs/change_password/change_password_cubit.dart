@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/presentation/introduction/export.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../routes/app_routes.dart';
 
 part 'change_password_state.dart';
 

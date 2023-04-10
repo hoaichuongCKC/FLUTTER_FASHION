@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
@@ -13,9 +12,11 @@ import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.da
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search_history/search_history_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
+import 'package:flutter_fashion/core/pusher/chat.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -76,7 +77,7 @@ Future<void> main() async {
           create: (context) => getIt<SearchHistoryCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<NotificationCubit>()..fetch(),
+          create: (context) => getIt<CategoryTabCubit>(),
         ),
       ],
       child: const Phoenix(child: MyApp()),
@@ -93,6 +94,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
+
+  final PusherChatApp _pusherChatApp = getIt<PusherChatApp>();
 
   @override
   void initState() {
@@ -115,20 +118,34 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    getIt<UserCubit>().stream.listen((event) {
-      event.when(
-          initial: () {},
-          loading: () {},
-          fetchCompleted: (user) => PusherBeamsApp.instance.initToUser(user.id),
-          failure: (e) {});
-    });
+    getIt<UserCubit>().stream.listen(
+      (event) {
+        event.when(
+            initial: () {},
+            loading: () {},
+            fetchCompleted: (user) {
+              //register notfication with authentication userId
+              PusherBeamsApp.instance.initToUser(user.id);
+
+              //register real-time chat app
+              _pusherChatApp.initialize(
+                onEvent: (event) {
+                  log("$event", name: "Pusher-chat-app");
+                },
+              );
+            },
+            failure: (e) {});
+      },
+    );
   }
 
   @override
   void dispose() {
     _subscription.cancel();
     WidgetsBinding.instance.removeObserver(AppLifecycleObserver());
-
+    if (getIt.isRegistered<PusherChatApp>()) {
+      _pusherChatApp.dispose();
+    }
     PusherBeamsApp.instance.dispose();
     super.dispose();
   }
@@ -157,6 +174,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         BlocProvider(
           create: (context) => getIt<ChatCubit>()..fetchChats(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<NotificationCubit>()..fetch(null),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

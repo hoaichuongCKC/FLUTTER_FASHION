@@ -5,8 +5,8 @@ import 'package:flutter_fashion/app/presentation/order_detail/inherited.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 
-class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
-  const OrderAwaitingProcessingShippingDetail({super.key});
+class ToPayShipReceiveDetail extends StatelessWidget {
+  const ToPayShipReceiveDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,8 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
       child: Material(
+        surfaceTintColor: scaffoldBackgroundColor,
+        color: scaffoldBackgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,25 +62,19 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Hero(
-                    tag: "location${order.id}",
-                    child: SvgPicture.asset(
-                      "assets/icons/location.svg",
-                      colorFilter:
-                          const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                    ),
+                  SvgPicture.asset(
+                    "assets/icons/location.svg",
+                    colorFilter:
+                        const ColorFilter.mode(primaryColor, BlendMode.srcIn),
                   ),
                   const SizedBox(width: 8.0),
                   Expanded(
-                    child: Hero(
-                      tag: "${order.id}${order.shipping_address!}",
-                      child: Text(
-                        order.shipping_address!,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300,
-                          color: darkColor.withOpacity(0.5),
-                        ),
+                    child: Text(
+                      order.shipping_address!,
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w300,
+                        color: darkColor.withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -88,25 +84,19 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Hero(
-                  tag: "calendar${order.id}",
-                  child: SvgPicture.asset(
-                    "assets/icons/calendar.svg",
-                    colorFilter:
-                        const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                  ),
+                SvgPicture.asset(
+                  "assets/icons/calendar.svg",
+                  colorFilter:
+                      const ColorFilter.mode(primaryColor, BlendMode.srcIn),
                 ),
                 const SizedBox(width: 8.0),
                 Expanded(
-                  child: Hero(
-                    tag: "${order.id}${order.created_at!.formatDateTime()}",
-                    child: Text(
-                      order.created_at!.formatDateTime(),
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w300,
-                        color: darkColor.withOpacity(0.5),
-                      ),
+                  child: Text(
+                    order.created_at!.formatDateTime(),
+                    style: PrimaryFont.instance.copyWith(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w300,
+                      color: darkColor.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -123,7 +113,7 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
                   horizontalTitleGap: 8.0,
                   leading: SvgPicture.asset("assets/icons/order_box.svg"),
                   title: Text(
-                    'Đơn hàng đã đặt',
+                    AppLocalizations.of(context)!.my_order,
                     style: PrimaryFont.instance.copyWith(
                       fontSize: 18.0,
                     ),
@@ -150,7 +140,7 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: "Trạng thái: ",
+                      text: "${AppLocalizations.of(context)!.status}: ",
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,
@@ -183,23 +173,19 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: "Tổng đơn: ",
+                      text: "${AppLocalizations.of(context)!.total}: ",
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
                     WidgetSpan(
-                      child: Hero(
-                        tag:
-                            "${order.id}${order.total_price!.toDouble().toVndCurrency()}",
-                        child: Text(
-                          order.total_price!.toDouble().toVndCurrency(),
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            color: errorColor,
-                            fontWeight: FontWeight.w400,
-                          ),
+                      child: Text(
+                        order.total_price!.toDouble().toVndCurrency(),
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 14.0,
+                          color: errorColor,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     )
@@ -223,7 +209,8 @@ class OrderAwaitingProcessingShippingDetail extends StatelessWidget {
                       radius: 5,
                       btnColor: primaryColor,
                       animate: true,
-                      label: "Huỷ đơn hàng",
+                      label: AppLocalizations.of(context)!
+                          .cancel(AppLocalizations.of(context)!.order),
                     ),
                   )
                 : const SizedBox()

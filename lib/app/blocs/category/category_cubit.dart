@@ -47,7 +47,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     );
   }
 
-  int get getLength =>
+  int get length =>
       state.mapOrNull(fetchCompleted: (value) => value.list.length)!;
 
   @override

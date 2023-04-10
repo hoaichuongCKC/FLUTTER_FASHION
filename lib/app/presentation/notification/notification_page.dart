@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/notification/components/skeleton_noti.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
+import 'package:flutter_fashion/config/notification.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import '../../../export.dart';
 
@@ -75,8 +76,15 @@ class NotificationPage extends StatelessWidget {
         ),
       ],
       child: BlocBuilder<NotificationCubit, NotificationState>(
+        buildWhen: (previous, current) {
+          if (previous.isLoading != current.isLoading) {
+            return false;
+          }
+          return true;
+        },
         builder: (context, state) {
           final status = state.status;
+
           if (status == AppStatus.loading) {
             return const SkeletonNotification();
           }
@@ -87,9 +95,10 @@ class NotificationPage extends StatelessWidget {
             );
           }
 
-          final notifications = state.notificationsChat;
-
-          return Padding(
+          final notificationChat = state.notificationsChat;
+          final notificationDaily = state.notificationsDaily;
+          final notificationOrder = state.notificationsOrder;
+          return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -97,10 +106,10 @@ class NotificationPage extends StatelessWidget {
                 ColoredBox(
                   color: lightColor,
                   child: ListTile(
-                    onTap: () => AppRoutes.router.pushNamed(
-                      Names.NOTIFICATION_DETAIL,
-                      queryParams: {
-                        "name": "chat",
+                    onTap: () => AppRoutes.router.push(
+                      "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
+                      extra: {
+                        "name": typeChat,
                       },
                     ),
                     leading: SvgPicture.asset(
@@ -117,9 +126,44 @@ class NotificationPage extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    trailing: SvgPicture.asset("assets/icons/arrow_right.svg"),
+                    subtitle: notificationChat.isEmpty
+                        ? null
+                        : Text(
+                            AppLocalizations.of(context)!
+                                .a_new_message(notificationChat[0].subtitle),
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 14.0,
+                              color: disableDarkColor,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        state.chatDonotRead.isEmpty
+                            ? const SizedBox()
+                            : DecoratedBox(
+                                decoration: const BoxDecoration(
+                                    color: errorColor, shape: BoxShape.circle),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    state.chatDonotRead.length.toString(),
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 12.0,
+                                      color: lightColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        state.chatDonotRead.isEmpty
+                            ? const SizedBox()
+                            : const SizedBox(width: 3.0),
+                        SvgPicture.asset("assets/icons/arrow_right.svg"),
+                      ],
+                    ),
                     dense: true,
-                    horizontalTitleGap: 0.0,
+                    horizontalTitleGap: 6.0,
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: horizontalPadding - 4),
                   ),
@@ -134,10 +178,10 @@ class NotificationPage extends StatelessWidget {
                 ColoredBox(
                   color: lightColor,
                   child: ListTile(
-                    onTap: () => AppRoutes.router.pushNamed(
-                      Names.NOTIFICATION_DETAIL,
-                      queryParams: {
-                        "name": "order",
+                    onTap: () => AppRoutes.router.push(
+                      "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
+                      extra: {
+                        "name": typeOrder,
                       },
                     ),
                     leading: SvgPicture.asset(
@@ -154,9 +198,44 @@ class NotificationPage extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    trailing: SvgPicture.asset("assets/icons/arrow_right.svg"),
+                    subtitle: notificationOrder.isEmpty
+                        ? null
+                        : Text(
+                            AppLocalizations.of(context)!
+                                .a_new_message(notificationOrder[0].subtitle),
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 14.0,
+                              color: disableDarkColor,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        state.orderDonotRead.isEmpty
+                            ? const SizedBox()
+                            : DecoratedBox(
+                                decoration: const BoxDecoration(
+                                    color: errorColor, shape: BoxShape.circle),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    state.orderDonotRead.length.toString(),
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 12.0,
+                                      color: lightColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        state.orderDonotRead.isEmpty
+                            ? const SizedBox()
+                            : const SizedBox(width: 3.0),
+                        SvgPicture.asset("assets/icons/arrow_right.svg"),
+                      ],
+                    ),
                     dense: true,
-                    horizontalTitleGap: 0.0,
+                    horizontalTitleGap: 6.0,
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: horizontalPadding - 4),
                   ),
@@ -171,10 +250,10 @@ class NotificationPage extends StatelessWidget {
                 ColoredBox(
                   color: lightColor,
                   child: ListTile(
-                    onTap: () => AppRoutes.router.pushNamed(
-                      Names.NOTIFICATION_DETAIL,
-                      queryParams: {
-                        "name": "daily",
+                    onTap: () => AppRoutes.router.push(
+                      "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
+                      extra: {
+                        "name": typeDaily,
                       },
                     ),
                     leading: SvgPicture.asset(
@@ -191,30 +270,48 @@ class NotificationPage extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    trailing: SvgPicture.asset("assets/icons/arrow_right.svg"),
+                    subtitle: notificationDaily.isEmpty
+                        ? null
+                        : Text(
+                            AppLocalizations.of(context)!
+                                .a_new_message(notificationDaily[0].subtitle),
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 14.0,
+                              color: disableDarkColor,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        state.dailyDonotRead.isEmpty
+                            ? const SizedBox()
+                            : DecoratedBox(
+                                decoration: const BoxDecoration(
+                                    color: errorColor, shape: BoxShape.circle),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    state.dailyDonotRead.length.toString(),
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 12.0,
+                                      color: lightColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        state.dailyDonotRead.isEmpty
+                            ? const SizedBox()
+                            : const SizedBox(width: 3.0),
+                        SvgPicture.asset("assets/icons/arrow_right.svg"),
+                      ],
+                    ),
                     dense: true,
-                    horizontalTitleGap: 0.0,
+                    horizontalTitleGap: 6.0,
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: horizontalPadding - 4),
                   ),
                 ),
-                // ListView.separated(
-                //   separatorBuilder: (context, index) =>
-                //       const SizedBox(height: 10.0),
-                //   itemCount: notifications.length,
-                //   shrinkWrap: true,
-                //   cacheExtent: 120.0,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   itemBuilder: (context, index) {
-                //     final notification = notifications[index];
-
-                //     if (notification.order_id == null) {
-                //       return ItemNotiNormal(notification: notification);
-                //     }
-
-                //     return ItemNotiOrder(notification: notification);
-                //   },
-                // ),
               ],
             ),
           );

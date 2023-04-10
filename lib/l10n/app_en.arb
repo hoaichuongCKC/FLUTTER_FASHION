@@ -425,7 +425,83 @@
   "daily": "Daily",
   "@daily": {
     "description": "Không hiểu gì cả"
-  }
+  },
 
-  
+  "my_shopping_cart": "My shopping cart",
+  "@my_shopping_cart": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "my_shopping_cart_is_currently_empty": "My shopping cart is currently empty",
+  "@my_shopping_cart_is_currently_empty": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "read_all": "Read all ({number})",
+  "@read_all": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+
+  "a_new_message": "A new message: ({message})",
+  "@a_new_message": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+
+  "login_session_has_expired": "Login session has expired",
+  "@login_session_has_expired": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "order_detail": "Order detail",
+  "@order_detail": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "status": "Status",
+  "@status": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "total": "Total",
+  "@total": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "cancel": "Cancel {data}",
+  "@cancel": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "data": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+
+  "search": "Search",
+  "@search": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "registerd_phone_number_in_the_system": "Registerd phone number in the system",
+  "@registerd_phone_number_in_the_system": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "skip": "Skip",
+  "@skip": {
+    "description": "Không hiểu gì cả"
+  }
 }

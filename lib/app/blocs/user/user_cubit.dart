@@ -18,12 +18,12 @@ class UserCubit extends Cubit<UserState> {
       : _userRepositoryImpl = userRepositoryImpl,
         super(const UserState.initial());
 
-  Future fetchUser(BuildContext? context) async {
+  Future fetchUser() async {
     if (!isLoaded) {
       emit(const UserState.loading());
       final result = await _userRepositoryImpl.me();
       result.fold(
-        (String error) async => _handleError(context, error),
+        (String error) {},
         (userModel) {
           isLoaded = true;
           _user = userModel;
@@ -36,37 +36,10 @@ class UserCubit extends Cubit<UserState> {
 
   UserModel get user => _user != null ? _user! : UserModel.init();
 
-  void _handleError(BuildContext? context, String error) {
-    if (context != null) {
-      if (error == AuthenticatedException.message) {
-        popupAlert(
-          context: context,
-          noButtonCancle: true,
-          message: "Phiên đăng nhập của bạn đã hết hạn",
-          onPressed: () {
-            HydratedBloc.storage.delete(KeyStorage.token);
-            AppRoutes.router.pop();
-            AppRoutes.router.go(Routes.LOGIN);
-            dispose();
-            //restart app run materialAPp
-            Phoenix.rebirth(context);
-          },
-        );
-      } else {
-        emit(UserState.failure(error));
-      }
-    }
-  }
-
   void updateUser(UserModel user) {
     if (isLoaded) {
       emit(UserState.fetchCompleted(user));
     }
-  }
-
-  void reset() {
-    isLoaded = false;
-    emit(const UserState.initial());
   }
 
   @override

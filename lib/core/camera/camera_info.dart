@@ -21,7 +21,7 @@ class CameraInfo {
 
   Future openGallery() async {
     final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.camera);
+        await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (image == null) return;
 

@@ -1,16 +1,20 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
+import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
-
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'auth_phone_state.dart';
 part 'auth_phone_cubit.freezed.dart';
 
 class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
-  AuthPhoneCubit() : super(const AuthPhoneState.initial());
+  final AuthRepositoryImpl _auth;
+  AuthPhoneCubit({required AuthRepositoryImpl auth})
+      : _auth = auth,
+        super(const AuthPhoneState.initial());
 
   String _verificationId = "";
 
@@ -18,39 +22,72 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       {bool isResend = false}) async {
     emit(const AuthPhoneState.loading());
 
-    loadingAlert(context: context);
+    if (!isResend) loadingAlert(context: context);
 
+    final result = await _auth.checkPhone(phoneNumber);
+
+    result.fold(
+      (l) => emit(const AuthPhoneState.error()),
+      (response) async {
+        final statusCode = response.data[0];
+        if (statusCode == 200) {
+          await _handleAuthPhoneFirebase(phoneNumber, isResend, context);
+        } else {
+          AppRoutes.router.pop();
+          errorAlert(
+            context: context,
+            message: AppLocalizations.of(context)!
+                .registerd_phone_number_in_the_system,
+          );
+        }
+      },
+    );
+  }
+
+  _handleAuthPhoneFirebase(
+      String phoneNumber, bool isResend, BuildContext context) async {
     await verifyPhoneNumber(
       phoneNumber: "+84$phoneNumber",
       verificationCompleted: (user) {
-        AppRoutes.router.pushNamed(
-          Names.OTP,
-          queryParams: {
-            "phone": phoneNumber,
-            "verificationId": _verificationId,
-          },
-        );
+        if (isResend) return;
       },
       verificationFailed: (FirebaseAuthException exception) {
         // remove loading popup
-        AppRoutes.router.pop();
+        if (!isResend) AppRoutes.router.pop();
 
         errorAlert(context: context, message: exception.message!);
         emit(const AuthPhoneState.error());
       },
       codeSent: (verificationId, resendToken) {
+        log("verification nhận được: $verificationId");
         _verificationId = verificationId;
 
-        AppRoutes.router.pop();
         emit(const AuthPhoneState.authPhoneSuccess());
+
+        if (!isResend) {
+          AppRoutes.router.pop();
+
+          AppRoutes.router.pushNamed(
+            Names.OTP,
+            queryParams: {
+              "phone": phoneNumber,
+              "verificationId": _verificationId,
+            },
+          );
+        }
       },
-      codeAutoRetrievalTimeout: (verificationId) => AppRoutes.router.pushNamed(
-        Names.OTP,
-        queryParams: {
-          "phone": phoneNumber,
-          "verificationId": verificationId,
-        },
-      ),
+      codeAutoRetrievalTimeout: (verificationId) {
+        log("codeAutoRetrievalTimeout verification nhận được: $verificationId");
+        isResend
+            ? _verificationId = verificationId
+            : AppRoutes.router.pushNamed(
+                Names.OTP,
+                queryParams: {
+                  "phone": phoneNumber,
+                  "verificationId": verificationId,
+                },
+              );
+      },
     );
   }
 
@@ -70,8 +107,16 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
         errorAlert(context: context, message: errorFirebase);
       },
       (userCredential) {
+        AppRoutes.router.pushNamed(
+          Names.REGISTER,
+          queryParams: {
+            "phone": phoneNumber,
+          },
+        );
+
         emit(const AuthPhoneState.verifyOtpSuccess());
-        AppRoutes.router.push(Routes.REGISTER);
+
+        signOut();
       },
     );
   }

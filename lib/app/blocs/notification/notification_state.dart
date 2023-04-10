@@ -50,4 +50,16 @@ class NotificationState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+  List<NotificationModel> get chatDonotRead =>
+      notificationsChat.where((element) => element.is_read == 0).toList();
+
+  List<NotificationModel> get orderDonotRead =>
+      notificationsOrder.where((element) => element.is_read == 0).toList();
+
+  List<NotificationModel> get dailyDonotRead => notificationsDaily.where(
+        (element) {
+          return element.detail == null;
+        },
+      ).toList();
 }

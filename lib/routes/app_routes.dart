@@ -310,12 +310,12 @@ class AppRoutes {
               GoRoute(
                 path: Routes.NOTIFICATION_DETAIL,
                 name: Names.NOTIFICATION_DETAIL,
-                parentNavigatorKey: Routes.shellNavigatorKey,
+                parentNavigatorKey: Routes.navigatorKey,
                 pageBuilder: (context, state) {
-                  final name = state.queryParams["name"] ??= "";
+                  final map = state.extra as Map;
                   return SlideTransitionPage<NotificationDetailPage>(
                     key: state.pageKey,
-                    child: NotificationDetailPage(name: name),
+                    child: NotificationDetailPage(name: map["name"]),
                   );
                 },
               ),

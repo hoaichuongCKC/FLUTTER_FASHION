@@ -18,17 +18,17 @@ class OrderDetailPage extends StatelessWidget {
     late OrderModel order;
 
     switch (intStatus) {
-      case awaitingStatus:
-        order = getIt.get<OrderCubit>().state.awaitingList[intIndex];
+      case toPayStatus:
+        order = getIt.get<OrderCubit>().state.toPayList[intIndex];
         break;
       case processingStatus:
-        order = getIt.get<OrderCubit>().state.processingList[intIndex];
+        order = getIt.get<OrderCubit>().state.toShipList[intIndex];
         break;
       case shippingStatus:
-        order = getIt.get<OrderCubit>().state.shippingList[intIndex];
+        order = getIt.get<OrderCubit>().state.toReceiveList[intIndex];
         break;
       case deliveredStatus:
-        order = getIt.get<OrderCubit>().state.deliveredList[intIndex];
+        order = getIt.get<OrderCubit>().state.completedList[intIndex];
         break;
       default:
     }
@@ -37,11 +37,11 @@ class OrderDetailPage extends StatelessWidget {
       order: order,
       status: intStatus,
       child: AppBackgroundBlur.normal(
-        title: "Chi tiết đơn hàng",
+        title: AppLocalizations.of(context)!.order_detail,
         isHasBackground: false,
         child: intStatus == deliveredStatus
             ? const OrderDeliveredStatus()
-            : const OrderAwaitingProcessingShippingDetail(),
+            : const ToPayShipReceiveDetail(),
       ),
     );
   }

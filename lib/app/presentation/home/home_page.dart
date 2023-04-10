@@ -25,23 +25,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late ScrollController _scrollController;
 
-  late UserCubit _userCubit;
   @override
   void initState() {
-    _userCubit = BlocProvider.of<UserCubit>(context);
     _scrollController = ScrollController()
       ..addListener(() {
         getIt<LoadMoreProductBloc>()
             .handleScrollNotification(_scrollController, context);
       });
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _userCubit.fetchUser(context);
-    context.read<BannerCubit>().fetchData();
+    context.read<UserCubit>().fetchUser();
+    context.read<BannerCubit>().fetchData(context);
     context.read<CategoryCubit>().fetchData();
     context.read<ProductCubit>().fetchData();
     context.read<PopularSearchCubit>().fetchData();
@@ -115,8 +108,7 @@ class _HomePageState extends State<HomePage> {
                     child: Center(
                         child: SizedBox(height: 200, child: Text(error))),
                   ),
-                  fetchCompleted: (List<ProductModel> list) =>
-                      PopularSearchHome(
+                  fetchCompleted: (List<ProductModel> list) => PopularHome(
                     listProduct: list,
                   ),
                 );
@@ -139,7 +131,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 15)),
-            StreamBuilder(
+            StreamBuilder<bool>(
               stream: getIt<LoadMoreProductBloc>().isLoading,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {

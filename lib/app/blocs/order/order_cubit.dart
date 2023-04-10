@@ -20,8 +20,8 @@ class OrderCubit extends Cubit<OrderState> {
   void addOrder(OrderModel order) {
     if (getIt.isRegistered<OrderCubit>()) {
       final state = this.state;
-      final updateList = [...state.awaitingList, order];
-      emit(state.copyWith(awaitingList: updateList));
+      final updateList = [...state.toPayList, order];
+      emit(state.copyWith(toPayList: updateList));
     } else {
       fetchOrder();
     }
@@ -31,7 +31,7 @@ class OrderCubit extends Cubit<OrderState> {
     final state = this.state;
 
     final updatedList = [
-      ...List<OrderModel>.from(state.deliveredList).map(
+      ...List<OrderModel>.from(state.completedList).map(
         (item) {
           if (item.id == orderId) {
             return item.copyWith(evaluated: true);
@@ -41,7 +41,7 @@ class OrderCubit extends Cubit<OrderState> {
       ).toList()
     ];
 
-    emit(state.copyWith(deliveredList: updatedList));
+    emit(state.copyWith(completedList: updatedList));
   }
 
   void delete(int orderId, BuildContext context) async {
@@ -59,7 +59,7 @@ class OrderCubit extends Cubit<OrderState> {
         AppRoutes.router.pop();
         AppRoutes.router.pop();
         emit(state.copyWith(
-            awaitingList: List<OrderModel>.from(state.awaitingList)
+            toPayList: List<OrderModel>.from(state.toPayList)
               ..removeWhere((e) => e.id == orderId)));
         AppSnackbarMessenger.showMessage(content: "Xoá đơn hàng thành công");
       },
@@ -73,83 +73,65 @@ class OrderCubit extends Cubit<OrderState> {
 
     result.fold(
       (error) => emit(state.copyWith(status: AppStatus.error)),
-      (dataList) {
-        final queue = Queue();
-        queue.addLast(_handleDataAwait(dataList));
-        queue.addLast(_handleDataProcessing(dataList));
-        queue.addLast(_handleDataShipping(dataList));
-        queue.addLast(_handleDataDelivered(dataList));
+      (dataMap) {
+        final queue = Queue<void>();
+        queue.addLast(_handleToPay(dataMap));
+        queue.addLast(_handleToShip(dataMap));
+        queue.addLast(_handleToReceive(dataMap));
+        queue.addLast(_handleDataDelivered(dataMap));
         queue.removeFirst();
         queue.clear();
       },
     );
   }
 
-  _handleDataAwait(List<OrderModel> data) {
+  void _handleToPay(Map<String, dynamic> data) {
     emit(state.copyWith(status: AppStatus.success));
-    if (data.isNotEmpty) {
+
+    final listMap = data["to_pay"];
+
+    if (listMap.isNotEmpty) {
       final state = this.state;
-      emit(
-        state.copyWith(
-          status: AppStatus.success,
-          awaitingList: List<OrderModel>.from(data)
-              .where((element) => element.status == awaitingStatus)
-              .toList(),
-        ),
-      );
+
+      final list = OrderModel.orderListFromJson(listMap);
+
+      emit(state.copyWith(toPayList: list));
     }
   }
 
-  _handleDataProcessing(List<OrderModel> data) {
-    final state = this.state;
-    //check list awaiting if not null then remove data, else Don't remove data have status is awaitingStatus
-    if (state.awaitingList.isNotEmpty) {
-      //remove list data awating
-      data.removeWhere((element) => element.status == awaitingStatus);
+  void _handleToShip(Map<String, dynamic> data) {
+    final listMap = data["to_ship"];
+
+    if (listMap.isNotEmpty) {
+      final state = this.state;
+
+      final list = OrderModel.orderListFromJson(listMap);
+
+      emit(state.copyWith(toShipList: list));
     }
-    emit(
-      state.copyWith(
-        processingList: List<OrderModel>.from(data)
-            .where((element) => element.status == processingStatus)
-            .toList(),
-      ),
-    );
   }
 
-  _handleDataShipping(List<OrderModel> data) {
-    final state = this.state;
-    //check list processing if not null then remove data, else Don't remove data have status is processingStatus
-    if (state.processingList.isNotEmpty) {
-      //remove list data awating
-      data.removeWhere((element) => element.status == processingStatus);
-    }
+  void _handleToReceive(Map<String, dynamic> data) {
+    final listMap = data["to_receive"];
 
-    emit(
-      state.copyWith(
-        shippingList: List<OrderModel>.from(data)
-            .where((element) => element.status == shippingStatus)
-            .toList(),
-      ),
-    );
+    if (listMap.isNotEmpty) {
+      final state = this.state;
+
+      final list = OrderModel.orderListFromJson(listMap);
+
+      emit(state.copyWith(toReceiveList: list));
+    }
   }
 
-  _handleDataDelivered(List<OrderModel> data) {
-    final state = this.state;
-    //check list delivered if not null then remove data, else Don't remove data have status is deliveredStatus
-    if (state.shippingList.isNotEmpty) {
-      //remove list data awating
-      data.removeWhere((element) => element.status == shippingStatus);
-    }
+  void _handleDataDelivered(Map<String, dynamic> data) {
+    final listMap = data["completed"];
 
-    emit(
-      state.copyWith(
-        deliveredList: List<OrderModel>.from(data)
-            .where((element) => element.status == deliveredStatus)
-            .toList(),
-      ),
-    );
-    if (state.deliveredList.isNotEmpty) {
-      data.removeWhere((element) => element.status == deliveredStatus);
+    if (listMap.isNotEmpty) {
+      final state = this.state;
+
+      final list = OrderModel.orderListFromJson(listMap);
+
+      emit(state.copyWith(completedList: list));
     }
   }
 }

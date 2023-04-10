@@ -184,7 +184,7 @@ class AppBackgroundBlur extends StatelessWidget {
         maxHeight: 55,
         minHeight: 50,
         child: ColoredBox(
-          color: backgroundAppbar ??= lightColor,
+          color: backgroundAppbar ??= Colors.transparent,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
@@ -201,7 +201,7 @@ class AppBackgroundBlur extends StatelessWidget {
                           color: Theme.of(context).iconTheme.color,
                         ),
                       ),
-                const SizedBox(width: 15.0),
+                title!.isEmpty ? const SizedBox() : const SizedBox(width: 10.0),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -228,8 +228,8 @@ class AppBackgroundBlur extends StatelessWidget {
     }
     return ConstrainedBoxWidget(
       currentHeight: 0.1,
-      maxHeight: 90,
-      minHeight: 80,
+      maxHeight: 85,
+      minHeight: 75,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
         child: Column(

@@ -12,7 +12,8 @@ class ReviewDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = ProductDetailInherited.of(context);
     final reviewBloc = getIt<ReviewBLoc>();
-    if (product.productModel.star == null) {
+
+    if (product.productModel.star == null || product.productModel.star == 0.0) {
       return Text(
         "Hiện chưa có đánh giá nào cho sản phẩm này",
         style: PrimaryFont.instance.large(),

@@ -12,7 +12,7 @@ class DeliveredPage extends StatelessWidget {
     return BlocBuilder<OrderCubit, OrderState>(
       buildWhen: (previous, current) =>
           previous.status != current.status ||
-          previous.deliveredList != current.deliveredList,
+          previous.completedList != current.completedList,
       builder: (context, state) {
         if (state.status == AppStatus.loading) {
           return const Center(
@@ -24,7 +24,7 @@ class DeliveredPage extends StatelessWidget {
             child: Text('Server Error'),
           );
         }
-        if (state.status == AppStatus.success && state.deliveredList.isEmpty) {
+        if (state.status == AppStatus.success && state.completedList.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +43,7 @@ class DeliveredPage extends StatelessWidget {
           );
         }
         return ListView.builder(
-          itemCount: state.deliveredList.length,
+          itemCount: state.completedList.length,
           padding:
               const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
           itemBuilder: (context, index) => ItemOrder(
@@ -57,7 +57,7 @@ class DeliveredPage extends StatelessWidget {
                 },
               );
             },
-            order: state.deliveredList[index],
+            order: state.completedList[index],
           ),
         );
       },

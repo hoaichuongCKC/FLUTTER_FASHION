@@ -9,10 +9,8 @@ class ApiService {
   ApiService() {
     _initHeader();
   }
-  static const String hostDomain =
-      "https://69bd-2405-4802-a219-a8d0-cd61-9907-6121-caa5.ap.ngrok.io";
 
-  static const String hostDomainLocal = "http://10.0.2.2:8000";
+  static const String hostDomainLocal = "http://localhost:8000";
 
   static const String imageUrl = "$hostDomainLocal/storage/";
 
@@ -23,7 +21,7 @@ class ApiService {
   Map<String, String> get headers => _headers;
 
   //call when app started
-  Future _initHeader() async {
+  void _initHeader() {
     final token = HydratedBloc.storage.read(KeyStorage.token);
     //get token
 
@@ -35,7 +33,11 @@ class ApiService {
   }
 
   void _clearHeader() {
-    _headers = {};
+    _headers = {
+      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Authorization": "",
+    };
   }
 
   Future<http.Response> get(String url) async {
@@ -76,7 +78,7 @@ class ApiService {
 
     //send request up to server
     http.StreamedResponse response = await request.send();
-    if (ApiEndpoint.loggout == url) {
+    if (ApiEndpoint.loggout == url || response.statusCode == 401) {
       _clearHeader();
     }
 

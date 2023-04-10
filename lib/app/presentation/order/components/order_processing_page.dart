@@ -12,7 +12,7 @@ class OrderProcessingPage extends StatelessWidget {
     return BlocBuilder<OrderCubit, OrderState>(
       buildWhen: (previous, current) =>
           previous.status != current.status ||
-          previous.processingList != current.processingList,
+          previous.toShipList != current.toShipList,
       builder: (context, state) {
         if (state.status == AppStatus.loading) {
           return const Center(
@@ -24,7 +24,7 @@ class OrderProcessingPage extends StatelessWidget {
             child: Text('Server Error'),
           );
         }
-        if (state.status == AppStatus.success && state.processingList.isEmpty) {
+        if (state.status == AppStatus.success && state.toShipList.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +43,7 @@ class OrderProcessingPage extends StatelessWidget {
           );
         }
         return ListView.builder(
-          itemCount: state.processingList.length,
+          itemCount: state.toShipList.length,
           padding:
               const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
           itemBuilder: (context, index) => ItemOrder(
@@ -52,11 +52,11 @@ class OrderProcessingPage extends StatelessWidget {
                 Names.ORDER_DETAIL,
                 queryParams: {
                   "index": index.toString(),
-                  "status": awaitingStatus.toString()
+                  "status": toPayStatus.toString()
                 },
               );
             },
-            order: state.processingList[index],
+            order: state.toShipList[index],
           ),
         );
       },

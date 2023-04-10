@@ -33,10 +33,9 @@ class _BannerHomeState extends State<BannerHome> {
 
   @override
   void dispose() {
-    super.dispose();
-
     _pageController.removeListener(_listenChangePage);
     _timer.cancel();
+    super.dispose();
   }
 
   void _handleAutoSlide(timer) {
@@ -81,13 +80,18 @@ class _BannerHomeState extends State<BannerHome> {
                   return AnimatedOpacity(
                     opacity: _currentPage == index ? 1.0 : 0.3,
                     duration: slideDuration,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          ApiService.imageUrl + widget.bannerList[index].photo,
-                      fit: BoxFit.fill,
-                      key: ValueKey(
-                          ApiService.imageUrl + widget.bannerList[index].photo),
-                      httpHeaders: getIt<ApiService>().headers,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(radiusBtn),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: ApiService.imageUrl +
+                            widget.bannerList[index].photo,
+                        fit: BoxFit.fill,
+                        key: ValueKey(ApiService.imageUrl +
+                            widget.bannerList[index].photo),
+                        httpHeaders: getIt<ApiService>().headers,
+                      ),
                     ),
                   );
                 },
@@ -164,7 +168,7 @@ class BannerErrorHome extends StatelessWidget {
             ButtonWidget(
               height: 40.0,
               width: 100.0,
-              onPressed: () => context.read<BannerCubit>().fetchData(),
+              onPressed: () => context.read<BannerCubit>().fetchData(context),
               btnColor: primaryColor,
               labelWidget: Text(
                 "Try reload",

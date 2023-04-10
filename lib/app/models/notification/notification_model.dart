@@ -12,7 +12,8 @@ class NotificationModel with _$NotificationModel {
     int? order_id,
     required String title,
     required String subtitle,
-    required int is_read,
+    int? is_read,
+    NotificationDetailModel? detail,
     required DateTime created_at,
   }) = _NotificationModel;
 
@@ -22,4 +23,16 @@ class NotificationModel with _$NotificationModel {
   static List<NotificationModel> notiModelFromJson(List str) =>
       List<NotificationModel>.from(
           str.map((x) => NotificationModel.fromJson(x)));
+}
+
+@freezed
+class NotificationDetailModel with _$NotificationDetailModel {
+  @JsonSerializable(explicitToJson: true)
+  const factory NotificationDetailModel({
+    required int id,
+    required int is_read,
+  }) = _NotificationDetailModel;
+
+  factory NotificationDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$NotificationDetailModelFromJson(json);
 }

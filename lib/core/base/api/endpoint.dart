@@ -5,6 +5,7 @@ class ApiEndpoint {
   static const String loginGoogle = "auth/login-google";
   static const String register = "auth/register";
   static const String loggout = "auth/logout";
+  static const String checkPhone = "auth/check-phone";
 
   static const String me = "user/me";
   static const String update = "user/edit-profile";
@@ -26,4 +27,5 @@ class ApiEndpoint {
   static const String deleteOrder = "order/delete-order";
 
   static const String fetchNotification = "noti/fetch";
+  static const String updateRead = "noti/update-read-noti";
 }

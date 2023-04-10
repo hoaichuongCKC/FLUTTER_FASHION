@@ -113,7 +113,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                             ],
                           ),
-                          widget.product.star != null
+                          widget.product.star != null &&
+                                  widget.product.star != 0.0
                               ? Text.rich(
                                   TextSpan(
                                     children: [

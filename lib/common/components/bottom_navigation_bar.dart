@@ -10,24 +10,14 @@ final bottomData = [
   ItemBottomNavModel(path: Routes.PROFILE, urlIcon: "assets/icons/user1.svg"),
 ];
 
-class BottomNavigationBarApp extends StatefulWidget {
+class BottomNavigationBarApp extends StatelessWidget {
   const BottomNavigationBarApp({super.key, required this.pagePath});
   final String pagePath;
-  @override
-  State<BottomNavigationBarApp> createState() => _BottomNavigationBarAppState();
-}
-
-class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
-  late int currentPage;
 
   @override
-  void initState() {
-    super.initState();
-    _initCurrentPage();
-  }
-
-  void _initCurrentPage() {
-    switch (widget.pagePath) {
+  Widget build(BuildContext context) {
+    late int currentPage;
+    switch (pagePath) {
       case Routes.HOME:
         currentPage = 0;
         break;
@@ -39,10 +29,7 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
         break;
       default:
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return Container(
@@ -81,7 +68,6 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
                     onPressed: () {
                       currentPage = index;
                       AppRoutes.router.go(bottomData[index].path);
-                      setState(() {});
                     },
                   ),
                 );
@@ -132,7 +118,7 @@ class ItemNavigationBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Center(child: icon),
-          const SizedBox(height: 7.0),
+          const SizedBox(height: 4.0),
           Center(
             child: Text(
               routes.translateLabelBottomNavigationBar(context),

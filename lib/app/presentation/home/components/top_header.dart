@@ -9,13 +9,13 @@ class TopHeaderHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(
-          horizontal: horizontalPadding - 4, vertical: 15.0),
+          horizontal: horizontalPadding - 4, vertical: 10.0),
       sliver: SliverToBoxAdapter(
         child: SafeArea(
           child: ConstrainedBoxWidget(
-            currentHeight: 0.2,
-            maxHeight: 70,
-            minHeight: 60,
+            currentHeight: 0.15,
+            maxHeight: 60,
+            minHeight: 55,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -37,6 +37,7 @@ class TopHeaderHome extends StatelessWidget {
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 22.0,
                             color: darkColor,
+                            height: 1.3,
                           ),
                         ),
                       )!;

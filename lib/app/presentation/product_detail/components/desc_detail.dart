@@ -20,20 +20,42 @@ class DescDetail extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
-          Text(
-            "- Xuất xứ: ${product.properties!.origin!}",
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 14.0,
-              color: disableDarkColor.withOpacity(0.5),
-              fontWeight: FontWeight.w300,
+          Text.rich(
+            TextSpan(
+              text: "- Xuất xứ:",
+              children: [
+                TextSpan(
+                  text: " ${product.properties!.origin}",
+                  style: PrimaryFont.instance.copyWith(
+                    color: darkColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 14.0,
+                color: darkColor,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
-          Text(
-            "- Chi tiết: ${product.desc}",
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 14.0,
-              color: disableDarkColor.withOpacity(0.5),
-              fontWeight: FontWeight.w300,
+          Text.rich(
+            TextSpan(
+              text: "- Chi tiết:",
+              children: [
+                TextSpan(
+                  text: " ${product.desc}",
+                  style: PrimaryFont.instance.copyWith(
+                    color: darkColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 14.0,
+                color: darkColor,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ],

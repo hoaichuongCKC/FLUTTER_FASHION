@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
+import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/di_injection_home.dart';
@@ -35,6 +36,8 @@ Future<void> init() async {
 
   //internal app
   getIt.registerLazySingleton(() => NetworkInfoImpl(getIt()));
+
+  getIt.registerLazySingleton(() => PusherChatApp(apiService: getIt()));
 
   getIt.registerLazySingleton(() => BaseRepository(networkInfoImpl: getIt()));
 
@@ -84,6 +87,9 @@ void dispose() {
   if (getIt.isRegistered<ChatCubit>()) {
     getIt.unregister<ChatCubit>();
   }
+  if (getIt.isRegistered<NotificationCubit>()) {
+    getIt.unregister<NotificationCubit>();
+  }
   //register DI again
   getIt.registerLazySingleton(() => UserCubit(userRepositoryImpl: getIt()));
   getIt.registerLazySingleton(() => FavoriteCubit());
@@ -93,4 +99,5 @@ void dispose() {
   getIt.registerLazySingleton(() => PaymentCubit(orderRepositoryImpl: getIt()));
   getIt.registerLazySingleton(() => PusherChatApp(apiService: getIt()));
   getIt.registerLazySingleton(() => ChatCubit(userRepo: getIt()));
+  getIt.registerLazySingleton(() => NotificationCubit(noti: getIt()));
 }

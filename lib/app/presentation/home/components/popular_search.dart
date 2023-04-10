@@ -1,10 +1,42 @@
+import 'dart:math';
+
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/utils/extensions/int.dart';
+import 'package:flutter_fashion/common/components/star_popular.dart';
+import 'package:rxdart/rxdart.dart';
 
-class PopularSearchHome extends StatelessWidget {
-  const PopularSearchHome({super.key, required this.listProduct});
+class PopularHome extends StatefulWidget {
+  const PopularHome({super.key, required this.listProduct});
   final List<ProductModel> listProduct;
+
+  @override
+  State<PopularHome> createState() => _PopularHomeState();
+}
+
+class _PopularHomeState extends State<PopularHome> {
+  late PageController _pageController;
+
+  double viewPort = 0.85;
+
+  late BehaviorSubject<double> _streamController;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamController = BehaviorSubject.seeded(0.0);
+    _pageController = PageController(viewportFraction: viewPort)
+      ..addListener(() {
+        _streamController.sink.add(_pageController.page!);
+      });
+  }
+
+  @override
+  void dispose() {
+    _streamController.close();
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -12,7 +44,6 @@ class PopularSearchHome extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
@@ -26,77 +57,146 @@ class PopularSearchHome extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 110,
-            child: GridView.builder(
-              itemCount: listProduct.length,
-              shrinkWrap: true,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 16 / 9,
-                mainAxisExtent: 50.0,
-              ),
+          ConstrainedBoxWidget(
+            currentHeight: .25,
+            maxHeight: 180,
+            minHeight: 160,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: widget.listProduct.length,
               itemBuilder: (context, index) {
-                final data = listProduct[index];
-                return InkWell(
-                  onTap: () {},
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Flexible(
-                        flex: 2,
-                        fit: FlexFit.tight,
-                        child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: CachedNetworkImage(
-                            imageUrl: ApiService.imageUrl +
-                                data.product_detail![0].photo,
-                            fit: BoxFit.fill,
-                            httpHeaders: getIt<ApiService>().headers,
-                            placeholder: (context, url) {
-                              return ColoredBox(
-                                color: skeletonColor,
-                                child: const SizedBox(),
-                              );
-                            },
-                          ),
-                        ),
+                final data = widget.listProduct[index];
+                return StreamBuilder<double>(
+                  stream: _streamController.stream,
+                  builder: (context, snapshot) {
+                    double pageOffset = snapshot.data ?? 0.0;
+
+                    double scale = max(
+                        viewPort, (1 - (pageOffset - index).abs()) + viewPort);
+
+                    double angle = (pageOffset - index).abs();
+
+                    if (angle > 0.5) {
+                      angle = 1 - angle;
+                    }
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        right: index == 0 ? 10.0 : 8.0,
+                        left: index == 0 ? 0.0 : 8.0,
+                        top: 20 - scale * 10,
+                        bottom: 8.0,
                       ),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Transform(
+                        transform: Matrix4.identity()
+                          ..setEntry(
+                            3,
+                            2,
+                            0.001,
+                          )
+                          ..rotateY(angle),
+                        alignment: Alignment.center,
+                        child: Stack(
+                          fit: StackFit.expand,
                           children: [
-                            Expanded(
-                              child: Text(
-                                data.name!,
-                                style: PrimaryFont.instance.small(),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
+                            ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(radiusBtn),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: ApiService.imageUrl +
+                                    data.product_detail![0].photo,
+                                fit: BoxFit.cover,
+                                httpHeaders: getIt.get<ApiService>().headers,
+                                placeholder: (context, url) {
+                                  return ColoredBox(
+                                    color: skeletonColor,
+                                    child: const SizedBox(),
+                                  );
+                                },
                               ),
                             ),
-                            const SizedBox(height: 6.0),
-                            Text(
-                              '${data.view!.formatNumber()} lượt tìm kiếm',
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 9.0,
-                                height: 1.0,
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromARGB(255, 240, 157, 113),
+                            DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: darkColor.withOpacity(0.4),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(radiusBtn),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FractionallySizedBox(
+                                heightFactor: 0.4,
+                                alignment: Alignment.bottomLeft,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        data.name!,
+                                        style: PrimaryFont.instance.copyWith(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w300,
+                                          color: lightColor,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        ColoredBox(
+                                          color: errorColor.withOpacity(0.5),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5.0),
+                                            child: Text(
+                                              data.regular_price!
+                                                  .toDouble()
+                                                  .toVndCurrency(),
+                                              style:
+                                                  PrimaryFont.instance.copyWith(
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.w300,
+                                                color: lightColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8.0),
+                                        data.sale_price == null
+                                            ? const SizedBox()
+                                            : ColoredBox(
+                                                color:
+                                                    errorColor.withOpacity(0.5),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 5.0),
+                                                  child: Text(
+                                                    "-${data.sale_price!.toDouble().toVndCurrency()}",
+                                                    style: PrimaryFont.instance
+                                                        .copyWith(
+                                                      fontSize: 9.0,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      color: lightColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    );
+                  },
                 );
               },
             ),

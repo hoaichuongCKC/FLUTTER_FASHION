@@ -11,9 +11,9 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
-      title: 'Giỏ hàng',
+      title: AppLocalizations.of(context)!.my_shopping_cart,
       leading: InkWell(
-        onTap: () => AppRoutes.router.go(Routes.HOME),
+        onTap: () => AppRoutes.router.pop(),
         child: const Icon(Icons.arrow_back),
       ),
       bottomNavigationBar: const BottomNavigationBarCart(),
@@ -25,7 +25,8 @@ class CartPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('Giỏ hàng hiện tại đang trống'),
+                  Text(AppLocalizations.of(context)!
+                      .my_shopping_cart_is_currently_empty),
                   TextButton(
                       onPressed: () {
                         AppRoutes.router.pop();
@@ -55,7 +56,11 @@ class CartPage extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 15.0),
             itemCount: state.items.length,
             itemBuilder: (context, index) {
-              return ItemCart(index: index, item: state.items[index]);
+              return ItemCart(
+                key: ValueKey(index),
+                index: index,
+                item: state.items[index],
+              );
             },
           );
         },

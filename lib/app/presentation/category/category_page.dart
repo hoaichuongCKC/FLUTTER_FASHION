@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/presentation/category/blocs/category_bloc.dart';
 import 'package:flutter_fashion/app/presentation/category/components/menu_list.dart';
 import 'package:flutter_fashion/app/presentation/category/components/product_list.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
@@ -22,8 +21,6 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage>
     with SingleTickerProviderStateMixin {
-  final _categorySelectItemBloc = getIt.get<CategoryPageBloc>();
-
   final bloc = getIt.get<CategoryCubit>();
 
   late TabController _tabController;
@@ -31,7 +28,7 @@ class _CategoryPageState extends State<CategoryPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: bloc.getLength)
+    _tabController = TabController(vsync: this, length: bloc.length)
       ..animateTo(
         widget.index,
         duration: const Duration(
@@ -39,7 +36,6 @@ class _CategoryPageState extends State<CategoryPage>
         ),
         curve: Curves.easeIn,
       );
-    _categorySelectItemBloc.selectIdCate(int.parse(widget.item));
   }
 
   @override
@@ -51,8 +47,15 @@ class _CategoryPageState extends State<CategoryPage>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: bloc.getLength,
+      length: bloc.length,
       child: AppBackgroundBlur.withAppBar(
+        leading: InkWell(
+          onTap: () {},
+          child: const Icon(
+            Icons.arrow_back,
+            size: 24.0,
+          ),
+        ),
         actions: [
           Expanded(
             child: Padding(
@@ -82,7 +85,7 @@ class _CategoryPageState extends State<CategoryPage>
                           ),
                         ),
                         Text(
-                          "Tìm kiếm",
+                          AppLocalizations.of(context)!.search,
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 14.0,
                             color: darkColor.withOpacity(0.5),
@@ -101,7 +104,15 @@ class _CategoryPageState extends State<CategoryPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MenuList(tabController: _tabController),
-            const Expanded(child: ProductList()),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: List<Widget>.generate(
+                  bloc.length,
+                  (index) => const ProductList(),
+                ).toList(),
+              ),
+            ),
           ],
         ),
       ),

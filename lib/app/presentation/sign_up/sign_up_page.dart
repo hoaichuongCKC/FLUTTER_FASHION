@@ -27,7 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
         return AuroraBackgroundPage(
           child: SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(14.0, 15.0, 14.0, 0),
+              padding: const EdgeInsets.fromLTRB(14.0, 5.0, 14.0, 0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -36,9 +36,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     InkWell(
                       onTap: () => AppRoutes.router.pop(),
                       child: const Icon(Icons.arrow_back,
-                          size: 30.0, color: darkColor),
+                          size: 24.0, color: darkColor),
                     ),
-                    const SizedBox(height: 15.0),
+                    const SizedBox(height: 10.0),
                     Text(
                       AppLocalizations.of(context)!.signUp,
                       style: PrimaryFont.instance.copyWith(
@@ -62,6 +62,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: _phoneController,
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.phone,
+                      onFieldSubmitted: (value) {
+                        if (_formKey.currentState!.validate()) {
+                          context
+                              .read<AuthPhoneCubit>()
+                              .authPhone(value, context);
+                        }
+                      },
                       style: PrimaryFont.instance.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
@@ -90,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 30),
                     ButtonWidget(
-                      animate: false,
+                      animate: true,
                       height: 45.0,
                       label: AppLocalizations.of(context)!.continue_r,
                       onPressed: () {
@@ -99,8 +106,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           // context
                           //     .read<AuthPhoneCubit>()
                           //     .authPhone(_phoneController.text, context);
-                          AppRoutes.router.pushNamed(Names.REGISTER,
-                              queryParams: {"phone": _phoneController.text});
+                          AppRoutes.router.pushNamed(Names.OTP, queryParams: {
+                            "phone": _phoneController.text,
+                            "verificationId": "1",
+                          });
                           // FirebaseAuth.instance.signOut();
                         }
                       },

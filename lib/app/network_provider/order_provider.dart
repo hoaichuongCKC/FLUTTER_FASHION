@@ -7,7 +7,7 @@ import 'package:flutter_fashion/core/base/exception/exception.dart';
 import '../../core/base/api/endpoint.dart';
 
 abstract class OrderProvider {
-  Future<List<OrderModel>> fetchOrder();
+  Future<Map<String, dynamic>> fetchOrder();
   Future<OrderModel> create(OrderParams params);
   Future<int> delete(int orderId);
 }
@@ -36,7 +36,7 @@ class OrderProviderImpl implements OrderProvider {
   }
 
   @override
-  Future<List<OrderModel>> fetchOrder() async {
+  Future<Map<String, dynamic>> fetchOrder() async {
     var response = await _apiService.post(ApiEndpoint.fetchOrder);
 
     if (response.statusCode != 200) {
@@ -45,13 +45,13 @@ class OrderProviderImpl implements OrderProvider {
 
     final data = await response.stream.bytesToString();
 
-    final convert = jsonDecode(data)["data"] as List;
+    final convert = jsonDecode(data)["data"] as Map<String, dynamic>;
 
     if (convert.isEmpty) {
-      return [];
+      return {};
     }
 
-    return OrderModel.orderModelFromJson(convert);
+    return convert;
   }
 
   @override
