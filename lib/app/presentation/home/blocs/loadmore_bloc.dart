@@ -11,16 +11,13 @@ class LoadMoreProductBloc {
   bool _hasMoreData = true;
 
   //
-  late BehaviorSubject<bool> _isLoadingSubject;
+  late final BehaviorSubject<bool> _isLoadingSubject =
+      BehaviorSubject<bool>.seeded(false);
 
   //view UI widget loading
   BehaviorSubject<bool> get isLoading => _isLoadingSubject;
 
-  LoadMoreProductBloc({
-    this.loadMoreThreshold = 100,
-  }) {
-    _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
-  }
+  LoadMoreProductBloc({this.loadMoreThreshold = 100});
 
   void dispose() {
     _isLoadingSubject.close();
@@ -40,19 +37,15 @@ class LoadMoreProductBloc {
 
       final data = await getIt<ProductCubit>().loadMoreProducts(_page);
 
-      if (data.isEmpty) _hasMoreData = false;
-
       _isLoadingSubject.add(false);
 
-      if (data.isEmpty) return;
+      if (data.isEmpty) {
+        _hasMoreData = false;
+        return;
+      }
 
       // ignore: use_build_context_synchronously
       context.read<ProductCubit>().addProduct(data);
     }
-  }
-
-  onRefresh() {
-    _page = 1;
-    _hasMoreData = true;
   }
 }

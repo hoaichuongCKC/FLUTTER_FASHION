@@ -16,6 +16,9 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   bool _isLoaded = false;
 
+  List<CategoryModel> get categories =>
+      state.whenOrNull(fetchCompleted: (list) => list)!;
+
   void fetchData() async {
     if (!isClosed && !_isLoaded) {
       emit(const CategoryState.loading());

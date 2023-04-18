@@ -11,17 +11,17 @@ enum SubmitChatStatus {
 
 class ChatState extends Equatable {
   final List<ChatModel> chats;
-  final int? roomChatId;
+
   final SubmitChatStatus submitStatus;
   final AppStatus status;
-  const ChatState(
-      {this.chats = const [],
-      this.status = AppStatus.init,
-      this.roomChatId,
-      this.submitStatus = SubmitChatStatus.init});
+  const ChatState({
+    this.chats = const [],
+    this.status = AppStatus.init,
+    this.submitStatus = SubmitChatStatus.init,
+  });
 
   @override
-  List<Object> get props => [chats, status, roomChatId ?? 0, submitStatus];
+  List<Object> get props => [chats, status, submitStatus];
 
   ChatState copyWith({
     List<ChatModel>? chats,
@@ -31,7 +31,6 @@ class ChatState extends Equatable {
   }) {
     return ChatState(
       chats: chats ?? this.chats,
-      roomChatId: roomChatId ?? this.roomChatId,
       submitStatus: submitStatus ?? this.submitStatus,
       status: status ?? this.status,
     );

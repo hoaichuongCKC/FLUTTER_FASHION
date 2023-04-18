@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/common/components/star_popular.dart';
+import 'package:flutter_fashion/utils/extensions/int.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PopularHome extends StatefulWidget {
@@ -39,6 +39,9 @@ class _PopularHomeState extends State<PopularHome> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = PrimaryFont.instance.copyWith(
+      fontSize: 16.0,
+    );
     return SliverToBoxAdapter(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -52,15 +55,15 @@ class _PopularHomeState extends State<PopularHome> {
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
-                AppLocalizations.of(context)!.popular_product,
+                AppLocalizations.of(context)!.popular,
                 style: PrimaryFont.instance.large(),
               ),
             ),
           ),
           ConstrainedBoxWidget(
             currentHeight: .25,
-            maxHeight: 180,
-            minHeight: 160,
+            maxHeight: 130,
+            minHeight: 90,
             child: PageView.builder(
               controller: _pageController,
               itemCount: widget.listProduct.length,
@@ -96,103 +99,110 @@ class _PopularHomeState extends State<PopularHome> {
                           )
                           ..rotateY(angle),
                         alignment: Alignment.center,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(radiusBtn),
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl: ApiService.imageUrl +
-                                    data.product_detail![0].photo,
-                                fit: BoxFit.cover,
-                                httpHeaders: getIt.get<ApiService>().headers,
-                                placeholder: (context, url) {
-                                  return ColoredBox(
-                                    color: skeletonColor,
-                                    child: const SizedBox(),
-                                  );
-                                },
-                              ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: lightColor,
+                            border: Border.all(color: primaryColor),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(radiusBtn),
                             ),
-                            DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: darkColor.withOpacity(0.4),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(radiusBtn),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: CachedNetworkImage(
+                                  imageUrl: ApiService.imageUrl +
+                                      data.product_detail![0].photo,
+                                  fit: BoxFit.contain,
+                                  httpHeaders: getIt.get<ApiService>().headers,
+                                  placeholder: (context, url) {
+                                    return ColoredBox(
+                                      color: skeletonColor,
+                                      child: const SizedBox(),
+                                    );
+                                  },
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: FractionallySizedBox(
-                                heightFactor: 0.4,
-                                alignment: Alignment.bottomLeft,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
                                         data.name!,
-                                        style: PrimaryFont.instance.copyWith(
+                                        style: textStyle.copyWith(
                                           fontSize: 14.0,
-                                          fontWeight: FontWeight.w300,
-                                          color: lightColor,
                                         ),
                                         maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        ColoredBox(
-                                          color: errorColor.withOpacity(0.5),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5.0),
-                                            child: Text(
-                                              data.regular_price!
-                                                  .toDouble()
-                                                  .toVndCurrency(),
-                                              style:
-                                                  PrimaryFont.instance.copyWith(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w300,
-                                                color: lightColor,
-                                              ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            data.regular_price!
+                                                .toDouble()
+                                                .toVndCurrency(),
+                                            style:
+                                                PrimaryFont.instance.copyWith(
+                                              fontSize: 12.0,
+                                              color: const Color(0xFFFF7262),
+                                              fontWeight: FontWeight.w300,
                                             ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 8.0),
-                                        data.sale_price == null
-                                            ? const SizedBox()
-                                            : ColoredBox(
-                                                color:
-                                                    errorColor.withOpacity(0.5),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 5.0),
-                                                  child: Text(
-                                                    "-${data.sale_price!.toDouble().toVndCurrency()}",
-                                                    style: PrimaryFont.instance
-                                                        .copyWith(
-                                                      fontSize: 9.0,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                      color: lightColor,
+                                          const SizedBox(width: 5.0),
+                                          data.sale_price != null
+                                              ? ColoredBox(
+                                                  color: errorColor
+                                                      .withOpacity(0.2),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 1.0),
+                                                    child: Text(
+                                                      "-${data.sale_price!.toDouble().toVndCurrency()}",
+                                                      style: PrimaryFont
+                                                          .instance
+                                                          .copyWith(
+                                                        fontSize: 7.0,
+                                                        color: errorColor,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                      ],
-                                    ),
-                                  ],
+                                                )
+                                              : const SizedBox()
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            '${AppLocalizations.of(context)!.sold}: ${data.sold ?? 0.formatNumber()}',
+                                            style:
+                                                PrimaryFont.instance.copyWith(
+                                              fontSize: 10.0,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                          SvgPicture.asset(
+                                            "assets/icons/shipping_delivery.svg",
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );

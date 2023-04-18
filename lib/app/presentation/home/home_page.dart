@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.da
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/app/presentation/home/components/address_user_home.dart';
 import 'package:flutter_fashion/app/presentation/home/components/banner.dart';
 import 'package:flutter_fashion/app/presentation/home/components/popular_search.dart';
 import 'package:flutter_fashion/app/presentation/home/components/product_categories.dart';
@@ -57,12 +58,12 @@ class _HomePageState extends State<HomePage> {
           context.read<CategoryCubit>().onRefresh();
           context.read<ProductCubit>().onRefresh();
           context.read<PopularSearchCubit>().onRefresh();
-          getIt<LoadMoreProductBloc>().onRefresh();
         },
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
             const TopHeaderHome(),
+            const AddressUserHome(),
             BlocBuilder<BannerCubit, BannerState>(
               builder: (context, state) {
                 return state.when(

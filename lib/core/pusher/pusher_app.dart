@@ -1,5 +1,11 @@
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../../export.dart';
+
+mixin PusherMixin {
+  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+}
+
 abstract class PusherApp {
   final String eventName = "";
 
@@ -7,9 +13,7 @@ abstract class PusherApp {
 
   Future<void> initialize({required dynamic Function(PusherEvent)? onEvent});
 
-  Future<void> dispose();
-}
+  void handleData(BuildContext context, dynamic data);
 
-mixin PusherMixin {
-  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  Future<void> dispose();
 }

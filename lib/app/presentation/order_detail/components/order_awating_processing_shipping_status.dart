@@ -197,21 +197,19 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15.0),
                     child: ButtonWidget(
-                      onPressed: () {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) =>
-                              ShowDialogTimer(orderId: order.id!),
-                        );
-                      },
-                      height: 40,
-                      radius: 5,
-                      btnColor: primaryColor,
-                      animate: true,
-                      label: AppLocalizations.of(context)!
-                          .cancel(AppLocalizations.of(context)!.order),
-                    ),
+                        onPressed: () {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) =>
+                                ShowDialogTimer(orderId: order.id!),
+                          );
+                        },
+                        height: 40,
+                        radius: 5,
+                        btnColor: primaryColor,
+                        animate: true,
+                        label: AppLocalizations.of(context)!.order),
                   )
                 : const SizedBox()
           ],

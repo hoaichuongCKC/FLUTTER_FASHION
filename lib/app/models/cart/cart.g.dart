@@ -11,6 +11,7 @@ _$_CartModel _$$_CartModelFromJson(Map<String, dynamic> json) => _$_CartModel(
       quantity: json['quantity'] as int,
       color: json['color'] as String,
       size: json['size'] as String,
+      indexImage: json['indexImage'] as int,
     );
 
 Map<String, dynamic> _$$_CartModelToJson(_$_CartModel instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$$_CartModelToJson(_$_CartModel instance) =>
       'quantity': instance.quantity,
       'color': instance.color,
       'size': instance.size,
+      'indexImage': instance.indexImage,
     };

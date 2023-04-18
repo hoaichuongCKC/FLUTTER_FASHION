@@ -1,112 +1,108 @@
-import 'package:flutter_fashion/app/blocs/search_history/search_history_cubit.dart';
+import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 class SearchHistory extends StatelessWidget {
   const SearchHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: lightColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: horizontalPadding - 4, vertical: 8.0),
-        child: Column(
-          children: [
-            StreamBuilder<List<String>>(
-              stream: context.watch<SearchHistoryCubit>().listStream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData ||
-                    snapshot.data!.isEmpty ||
-                    snapshot.data == null) {
-                  return const SizedBox();
-                }
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Lịch sử tìm kiếm',
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () =>
-                          context.read<SearchHistoryCubit>().clearData(),
-                      child: Text(
-                        'Xoá',
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          color: primaryColor,
-                        ),
-                      ),
-                    )
-                  ],
-                );
-              },
-            ),
-            StreamBuilder<List<String>>(
-              stream: context.watch<SearchHistoryCubit>().listStream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData ||
-                    snapshot.data!.isEmpty ||
-                    snapshot.data == null) {
-                  return const SizedBox();
-                }
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        final products = state.products;
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final data = snapshot.data![index];
-                    return ListTile(
-                      onTap: () {},
-                      contentPadding: EdgeInsets.zero,
-                      horizontalTitleGap: 0.0,
-                      dense: true,
-                      title: Text(
-                        data,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          color: darkColor.withOpacity(0.5),
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
+        final status = state.status;
+
+        final keywords = state.cacheKeywords;
+
+        final keyword = state.keyword;
+
+        if (status == AppStatus.loading || keywords.isEmpty) {
+          return const SizedBox();
+        }
+
+        if (products.isNotEmpty || status == AppStatus.success) {
+          return ListTile(
+            contentPadding: EdgeInsets.zero,
+            horizontalTitleGap: 0.0,
+            dense: true,
+            title: Text(
+              "${AppLocalizations.of(context)!.search_keyword} \"$keyword\"",
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 14.0,
+              ),
             ),
-            StreamBuilder<bool>(
-              stream: context.watch<SearchHistoryCubit>().showMoreStream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData ||
-                    snapshot.connectionState == ConnectionState.waiting ||
-                    !snapshot.data!) {
-                  return const SizedBox();
-                }
-                return ButtonWidget(
-                  animate: true,
-                  btnColor: disableDarkColor.withOpacity(0.2),
-                  onPressed: () =>
-                      context.read<SearchHistoryCubit>().loadMoreData(),
-                  height: 40,
-                  radius: 5.0,
-                  labelWidget: Text(
-                    'Hiển thị thêm',
-                    style: PrimaryFont.instance.copyWith(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
+            trailing: Text(
+              "${products.length} ${AppLocalizations.of(context)!.search_result}",
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 12.0,
+                color: primaryColor,
+              ),
+            ),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.search_history,
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => context.read<SearchCubit>().clearHistory(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.delete,
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        color: primaryColor,
+                      ),
                     ),
                   ),
-                );
-              },
+                )
+              ],
+            ),
+            const SizedBox(height: 10.0),
+            ColoredBox(
+              color: lightColor,
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                shrinkWrap: true,
+                itemCount: keywords.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final data = keywords[index];
+                  return ListTile(
+                    onTap: () {
+                      getIt.get<SearchCubit>().search(data);
+                      getIt.get<SearchCubit>().changedKeyword(data);
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    horizontalTitleGap: 0.0,
+                    dense: true,
+                    title: Text(
+                      data,
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        color: darkColor,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

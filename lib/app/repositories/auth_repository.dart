@@ -18,6 +18,9 @@ abstract class AuthRepository {
 
   Future<Either<String, ResponseData>> register(RegisterParams params);
 
+  Future<Either<String, ResponseData>> forgotPassword(
+      String newPassword, String phone);
+
   Future<Either<String, ResponseData>> loggout();
 }
 
@@ -44,13 +47,8 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
     return result.fold((error) => Left(error), (r) => Right(r));
   }
 
-  /// A function that calls the loggout function in the AuthProviderImpl class.
-  ///
-  /// Returns:
-  ///   Either<String, ResponseData>
   @override
   Future<Either<String, ResponseData>> loggout() async {
-    /// A function that is used to handle the error and success of the function.
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
         final data = await _authProviderImpl.loggout();
@@ -93,6 +91,16 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
   Future<Either<String, ResponseData>> checkPhone(String phone) async {
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async => await _authProviderImpl.checkPhone(phone),
+    );
+    return result.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  @override
+  Future<Either<String, ResponseData>> forgotPassword(
+      String newPassword, String phone) async {
+    final result = await baseRepo<ResponseData>(
+      excuteFunction: () async =>
+          await _authProviderImpl.forgotPassword(newPassword, phone),
     );
     return result.fold((error) => Left(error), (r) => Right(r));
   }

@@ -2,7 +2,7 @@
 part of 'category_tab_cubit.dart';
 
 class CategoryTabState extends Equatable {
-  final Map<int, dynamic> data;
+  final List<ProductModel> products;
 
   final double scrollThreshold;
 
@@ -10,29 +10,35 @@ class CategoryTabState extends Equatable {
 
   final int currentId;
 
+  final AppStatus status;
+
   const CategoryTabState({
-    this.data = const {},
+    this.products = const [],
     this.scrollThreshold = 150.0,
     this.loading = false,
-    this.currentId = 1,
+    this.currentId = 0,
+    this.status = AppStatus.init,
   });
 
   factory CategoryTabState.initial() => const CategoryTabState();
 
   @override
-  List<Object?> get props => [currentId, data, loading, scrollThreshold];
+  List<Object?> get props =>
+      [status, products, loading, scrollThreshold, currentId];
 
   CategoryTabState copyWith({
-    Map<int, dynamic>? data,
+    List<ProductModel>? products,
     double? scrollThreshold,
     bool? loading,
     int? currentId,
+    AppStatus? status,
   }) {
     return CategoryTabState(
-      data: data ?? this.data,
+      products: products ?? this.products,
       scrollThreshold: scrollThreshold ?? this.scrollThreshold,
       loading: loading ?? this.loading,
       currentId: currentId ?? this.currentId,
+      status: status ?? this.status,
     );
   }
 }

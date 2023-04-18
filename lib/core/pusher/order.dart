@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
 import 'package:flutter_fashion/core/pusher/pusher_app.dart';
@@ -8,9 +10,11 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 class PusherOrderApp with PusherMixin implements PusherApp {
   final ApiService apiService;
 
-  PusherOrderApp({required this.apiService}) {
-    log("Initial PusherOrder");
-  }
+  PusherOrderApp({required this.apiService});
+
+  String get currentLocation => AppRoutes.router.location;
+
+  String get orderLocation => "${Routes.PROFILE}/${Routes.MY_ORDER}";
 
   @override
   String get eventName => "update-order";
@@ -53,5 +57,16 @@ class PusherOrderApp with PusherMixin implements PusherApp {
   Future<void> dispose() async {
     pusher.disconnect();
     pusher.unsubscribe(channelName: channel);
+  }
+
+  @override
+  void handleData(BuildContext context, data) async {
+    try {
+      final convert = jsonDecode(data);
+
+      final notification = OrderModel.fromJson(convert);
+    } catch (e) {
+      log("Error handle data Chat Pusher: $e");
+    }
   }
 }

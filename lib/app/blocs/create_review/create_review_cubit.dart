@@ -7,7 +7,6 @@ import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:flutter_fashion/utils/alert/success.dart';
 
 part 'create_review_state.dart';
 
@@ -77,12 +76,14 @@ class CreateReviewCubit extends Cubit<CreateReviewState> {
       (responseData) async {
         emit(state.copyWith(status: AppStatus.success));
 
-        await successAlert(context: context, message: responseData.message)
-            .then((value) =>
-                context.read<OrderCubit>().updateEvaluated(int.parse(orderId)));
+        AppRoutes.router.pushNamed(
+          Names.REVIEW_SUCCESS,
+          queryParams: {
+            "index": state.stars.toString(),
+          },
+        );
 
-        //return screen previous
-        AppRoutes.router.pop();
+        context.read<OrderCubit>().updateEvaluated(int.parse(orderId));
       },
     );
   }

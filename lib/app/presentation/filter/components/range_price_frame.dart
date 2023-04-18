@@ -1,6 +1,6 @@
 import 'package:flutter_fashion/app/models/range_pice/range_price.dart';
-import 'package:flutter_fashion/app/presentation/filter/blocs/filter_bloc.dart';
 import 'package:flutter_fashion/app/presentation/filter/components/title_frame.dart';
+import 'package:flutter_fashion/app/presentation/filter/cubit/filter_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class RangePriceFrame extends StatelessWidget {
@@ -8,44 +8,35 @@ class RangePriceFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<FilterBloc>();
+    final filterCubit = context.read<FilterCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleFilterFrame(title: "Giá tiền"),
+        TitleFilterFrame(title: AppLocalizations.of(context)!.price_range),
         const SizedBox(height: 8.0),
-        StreamBuilder<List<RangePriceModel>>(
-          stream: bloc.rangePirceStream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const SizedBox();
-            }
-
+        BlocBuilder<FilterCubit, FilterState>(
+          buildWhen: (previous, current) =>
+              previous.priceIndex != current.priceIndex,
+          builder: (context, state) {
+            final prices = state.priceRangies;
+            final priceSelected = state.priceIndex;
             return Column(
-              children: snapshot.data!.map(
+              children: prices.map(
                 (e) {
-                  final index = snapshot.data!.indexOf(e);
-                  return StreamBuilder<int>(
-                    stream: bloc.selectPriceStream,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const SizedBox();
-                      }
-                      return _buildItem<RangePriceModel>(
-                        title: e
-                            .whenOrNull(
-                              below100k: (priceFirst, piceSendcond) =>
-                                  "0 - ${piceSendcond.toDouble().toVndCurrency()}",
-                              from100kTo500k: (priceFirst, piceSendcond) =>
-                                  "${priceFirst.toDouble().toVndCurrency()} - ${piceSendcond.toDouble().toVndCurrency()}",
-                              from500kAbove: (priceFirst, piceSendcond) =>
-                                  "${priceFirst.toDouble().toVndCurrency()} trở lên",
-                            )
-                            .toString(),
-                        onTap: () => bloc.selectPrice(index),
-                        isSelected: snapshot.data! == index,
-                      );
-                    },
+                  final index = prices.indexOf(e);
+                  final priceLabel = e.when(
+                    below100k: (priceFirst, piceSendcond) =>
+                        "0 - ${piceSendcond.toDouble().toVndCurrency()}",
+                    from100kTo500k: (priceFirst, piceSendcond) =>
+                        "${priceFirst.toDouble().toVndCurrency()} - ${piceSendcond.toDouble().toVndCurrency()}",
+                    from500kAbove: (priceFirst, piceSendcond) =>
+                        "${priceFirst.toDouble().toVndCurrency()} trở lên",
+                    initial: () => "",
+                  );
+                  return _buildItem<RangePriceModel>(
+                    title: priceLabel,
+                    onTap: () => filterCubit.selectPrice(index),
+                    isSelected: priceSelected == index,
                   );
                 },
               ).toList(),

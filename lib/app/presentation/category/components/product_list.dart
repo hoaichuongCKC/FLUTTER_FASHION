@@ -1,6 +1,8 @@
-import 'dart:convert';
+import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
+import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
 import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
+import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 import '../../../../export.dart';
 
@@ -17,13 +19,7 @@ class _ProductListState extends State<ProductList> {
   @override
   void initState() {
     super.initState();
-    _bloc.initScroll();
-  }
-
-  @override
-  void dispose() {
-    _bloc.dispose();
-    super.dispose();
+    _bloc = BlocProvider.of<CategoryTabCubit>(context)..initScroll();
   }
 
   @override
@@ -32,11 +28,18 @@ class _ProductListState extends State<ProductList> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         BlocBuilder<CategoryTabCubit, CategoryTabState>(
-          // buildWhen: (previous, current) => previous.data != current.data,
+          buildWhen: (previous, current) =>
+              previous.products != current.products ||
+              previous.status != current.status,
           builder: (context, state) {
-            final data = state.data[state.currentId]["products"];
-
-            if (data.isEmpty) {
+            final products = state.products;
+            final isLoading = state.status == AppStatus.loading;
+            if (isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (products.isEmpty) {
               return Expanded(
                 child: Center(
                   child: Column(
@@ -53,7 +56,7 @@ class _ProductListState extends State<ProductList> {
             return Expanded(
               child: GridView.builder(
                 controller: _bloc.controller,
-                itemCount: data.length,
+                itemCount: products.length,
                 padding: const EdgeInsets.symmetric(
                     horizontal: horizontalPadding - 4, vertical: 10.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -64,20 +67,39 @@ class _ProductListState extends State<ProductList> {
                   mainAxisExtent: 230.0,
                 ),
                 itemBuilder: (context, index) {
+                  final product = products[index];
                   return ItemProduct(
-                    product: data[index],
-                    onTap: () => AppRoutes.router.pushNamed(
-                      Names.PRODUCT_DETAIL,
-                      params: {
-                        "product": jsonEncode(data[index].toJson()),
-                      },
-                    ),
+                    product: product,
+                    onTap: () {
+                      BlocProvider.of<ProductDetailCubit>(context)
+                          .getProduct(product.id!);
+                      context.read<ReviewCubit>().fetchReview(product.id!);
+                      AppRoutes.router.pushNamed(Names.PRODUCT_DETAIL);
+                    },
                   );
                 },
               ),
             );
           },
         ),
+        BlocBuilder<CategoryTabCubit, CategoryTabState>(
+          buildWhen: (previous, current) => previous.loading != current.loading,
+          builder: (context, state) {
+            final loading = state.loading;
+            if (loading) {
+              return Center(
+                child: Text(
+                  AppLocalizations.of(context)!.loading,
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 12.0,
+                    color: primaryColor,
+                  ),
+                ),
+              );
+            }
+            return const SizedBox();
+          },
+        )
       ],
     );
   }

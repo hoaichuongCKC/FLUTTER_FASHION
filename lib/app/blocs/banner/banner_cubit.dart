@@ -33,8 +33,9 @@ class BannerCubit extends Cubit<BannerState> {
               noButtonCancle: true,
               message: AppLocalizations.of(context)!.login_session_has_expired,
               onPressed: () {
-                PusherBeamsApp.instance.dispose();
                 HydratedBloc.storage.delete(KeyStorage.token);
+                dispose();
+                PusherBeamsApp.instance.dispose();
                 AppRoutes.router.pop();
                 AppRoutes.router.go(Routes.LOGIN);
               },

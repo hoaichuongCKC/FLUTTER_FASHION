@@ -13,18 +13,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final _phoneController = TextEditingController();
-
-  final _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _phoneController.dispose();
-    _passwordController.dispose();
-
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -46,17 +34,26 @@ class _LoginPageState extends State<LoginPage> {
                 width: 200.0,
                 height: 200.0,
               ),
-              FormLogin(
-                formKey: formKey,
-                passwordController: _passwordController,
-                phoneController: _phoneController,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () => AppRoutes.router.push(Routes.SIGNUP),
-                  child: Text(AppLocalizations.of(context)!.signUp),
-                ),
+              FormLogin(formKey: formKey),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () => AppRoutes.router.push(
+                      Routes.SIGNUP,
+                      extra: Names.FORGOT_PASSWORD,
+                    ),
+                    child: Text(
+                        "${AppLocalizations.of(context)!.forgot_password}?"),
+                  ),
+                  TextButton(
+                    onPressed: () => AppRoutes.router.push(
+                      Routes.SIGNUP,
+                      extra: Names.REGISTER,
+                    ),
+                    child: Text(AppLocalizations.of(context)!.signUp),
+                  ),
+                ],
               ),
               BlocBuilder<AuthCubit, AuthState>(
                 buildWhen: (previous, current) =>

@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/bottom_nav_cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/item_cart.dart';
 import 'package:flutter_fashion/export.dart';
@@ -34,14 +33,7 @@ class CartPage extends StatelessWidget {
                           Names.CATEGORY,
                           queryParams: {
                             "search_key": "",
-                            "index": 0.toString(),
-                            "item": getIt
-                                .get<CategoryCubit>()
-                                .state
-                                .whenOrNull(
-                                  fetchCompleted: (data) => data[0].id,
-                                )
-                                .toString(),
+                            "index": 0,
                           },
                         );
                       },

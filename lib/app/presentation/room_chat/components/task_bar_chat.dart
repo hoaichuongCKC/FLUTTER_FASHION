@@ -56,12 +56,15 @@ class _TaskbarChatMessageState extends State<TaskbarChatMessage> {
                   ),
                   child: TextFormField(
                     controller: _controller,
+                    keyboardType: TextInputType.text,
                     style: PrimaryFont.instance.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w300,
                     ),
                     decoration: InputDecoration(
-                      hintText: "Nhập tin nhắn",
+                      hintText: AppLocalizations.of(context)!.enter_the(
+                        AppLocalizations.of(context)!.messenger,
+                      ),
                       isDense: true,
                       filled: false,
                       hintStyle: PrimaryFont.instance.copyWith(
@@ -74,10 +77,8 @@ class _TaskbarChatMessageState extends State<TaskbarChatMessage> {
               ),
               IconButton(
                 onPressed: () {
-                  // final scrollController = widget.scroll;
-                  // final maxHeightScroll =
-                  //     scrollController.position.maxScrollExtent;
-                  // scrollController.jumpTo(0);
+                  if (_controller.text.isEmpty) return;
+
                   FocusScope.of(context).unfocus();
                   context.read<ChatCubit>().createChat(_controller.text);
                   _controller.text = "";

@@ -7,16 +7,20 @@ import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
-import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
-import 'package:flutter_fashion/app/blocs/search_history/search_history_cubit.dart';
+import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
+import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
+import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
+import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/pusher/chat.dart';
+import 'package:flutter_fashion/core/pusher/order.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -44,9 +48,9 @@ Future<void> main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
-  await PusherBeamsApp.instance.getStarted();
+  // HydratedBloc.storage.delete("${KeyStorage.userSearch}12");
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  await PusherBeamsApp.instance.getStarted();
 
   await init();
 
@@ -74,10 +78,16 @@ Future<void> main() async {
           create: (context) => getIt<PopularSearchCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<SearchHistoryCubit>(),
+          create: (context) => getIt<CategoryTabCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<CategoryTabCubit>(),
+          create: (context) => getIt<ProductDetailCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ReviewCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<PromotionCubit>()..fetchPromotion(null),
         ),
       ],
       child: const Phoenix(child: MyApp()),
@@ -96,6 +106,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
 
   final PusherChatApp _pusherChatApp = getIt<PusherChatApp>();
+
+  final PusherOrderApp _pusherOrderApp = getIt<PusherOrderApp>();
 
   @override
   void initState() {
@@ -118,7 +130,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    getIt<UserCubit>().stream.listen(
+    getIt.get<UserCubit>().stream.listen(
       (event) {
         event.when(
             initial: () {},
@@ -130,7 +142,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               //register real-time chat app
               _pusherChatApp.initialize(
                 onEvent: (event) {
-                  log("$event", name: "Pusher-chat-app");
+                  if (event.data.isNotEmpty) {
+                    _pusherChatApp.handleData(context, event.data);
+                  }
+                },
+              );
+
+              _pusherOrderApp.initialize(
+                onEvent: (event) {
+                  if (event.data.isNotEmpty) {
+                    _pusherOrderApp.handleData(context, event.data);
+                  }
                 },
               );
             },
@@ -145,6 +167,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(AppLifecycleObserver());
     if (getIt.isRegistered<PusherChatApp>()) {
       _pusherChatApp.dispose();
+    }
+    if (getIt.isRegistered<PusherOrderApp>()) {
+      _pusherOrderApp.dispose();
     }
     PusherBeamsApp.instance.dispose();
     super.dispose();
@@ -164,9 +189,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           create: (context) => getIt<AddressUserCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<PaymentCubit>(),
-        ),
-        BlocProvider(
           create: (context) => getIt<OrderCubit>()..fetchOrder(),
         ),
         BlocProvider(
@@ -178,8 +200,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(
           create: (context) => getIt<NotificationCubit>()..fetch(null),
         ),
+        BlocProvider(
+          create: (context) => getIt<SearchCubit>(),
+        ),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeState>(
+      child: BlocConsumer<ThemeCubit, ThemeState>(
+        listener: (context, state) {
+          if (state.isDark) {
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+            return;
+          }
+          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+        },
         builder: (context, state) {
           return BlocBuilder<LanguageCubit, LanguageState>(
             builder: (context, languageState) {

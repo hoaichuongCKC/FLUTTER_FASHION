@@ -30,44 +30,48 @@ class NotificationPage extends StatelessWidget {
                     height: 24.0,
                   ),
                 ),
-                fetchCompleted: (user) => SizedBox(
-                  width: 24.0,
-                  height: 24.0,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    clipBehavior: Clip.none,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/cart.svg",
-                      ),
-                      Positioned(
-                        right: -3,
-                        top: -5,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            color: errorColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: SizedBox(
-                            width: 15.0,
-                            height: 15.0,
-                            child: Center(
-                              child: BlocBuilder<CartCubit, CartState>(
-                                builder: (context, state) {
-                                  return Text(
-                                    state.items.length.toString(),
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 9.0,
-                                      color: lightColor,
-                                    ),
-                                  );
-                                },
+                fetchCompleted: (user) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: SizedBox(
+                    width: 20.0,
+                    height: 20.0,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      clipBehavior: Clip.none,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/cart.svg",
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        Positioned(
+                          right: -3,
+                          top: -5,
+                          child: DecoratedBox(
+                            decoration: const BoxDecoration(
+                              color: errorColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: SizedBox(
+                              width: 15.0,
+                              height: 15.0,
+                              child: Center(
+                                child: BlocBuilder<CartCubit, CartState>(
+                                  builder: (context, state) {
+                                    return Text(
+                                      state.items.length.toString(),
+                                      style: PrimaryFont.instance.copyWith(
+                                        fontSize: 9.0,
+                                        color: lightColor,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               )!;
@@ -123,7 +127,7 @@ class NotificationPage extends StatelessWidget {
                     title: Text(
                       AppLocalizations.of(context)!.messenger,
                       style: PrimaryFont.instance.copyWith(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                       ),
                     ),
                     subtitle: notificationChat.isEmpty
@@ -132,7 +136,7 @@ class NotificationPage extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .a_new_message(notificationChat[0].subtitle),
                             style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                               color: disableDarkColor,
                               fontWeight: FontWeight.w300,
                             ),
@@ -195,7 +199,7 @@ class NotificationPage extends StatelessWidget {
                     title: Text(
                       AppLocalizations.of(context)!.my_order,
                       style: PrimaryFont.instance.copyWith(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                       ),
                     ),
                     subtitle: notificationOrder.isEmpty
@@ -204,7 +208,7 @@ class NotificationPage extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .a_new_message(notificationOrder[0].subtitle),
                             style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                               color: disableDarkColor,
                               fontWeight: FontWeight.w300,
                             ),
@@ -267,7 +271,7 @@ class NotificationPage extends StatelessWidget {
                     title: Text(
                       AppLocalizations.of(context)!.daily,
                       style: PrimaryFont.instance.copyWith(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                       ),
                     ),
                     subtitle: notificationDaily.isEmpty
@@ -276,7 +280,7 @@ class NotificationPage extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .a_new_message(notificationDaily[0].subtitle),
                             style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                               color: disableDarkColor,
                               fontWeight: FontWeight.w300,
                             ),

@@ -334,8 +334,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "popular_product": "Sản phẩm phổ biến",
-  "@popular_product": {
+  "popular": "Sản phẩm phổ biến",
+  "@popular": {
     "description": "Không hiểu gì cả"
   },
 
@@ -457,7 +457,6 @@
     }
   },
 
-   
   "login_session_has_expired": "Phiên đăng nhập đã hết hạn!",
   "@login_session_has_expired": {
     "description": "Không hiểu gì cả"
@@ -478,17 +477,6 @@
     "description": "Không hiểu gì cả"
   },
 
-  "cancel": "Tổng {data}",
-  "@cancel": {
-    "description": "Không hiểu gì cả",
-    "placeholders": {
-      "data": {
-        "type": "String",
-        "example": "1"
-      }
-    }
-  },
-
   "search": "Tìm kiếm",
   "@search": {
     "description": "Không hiểu gì cả"
@@ -502,5 +490,134 @@
   "skip": "Bỏ qua",
   "@skip": {
     "description": "Không hiểu gì cả"
+  },
+
+  "feedback": "Phản hồi",
+  "@feedback": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "thanks_your_feedback_it_is_will_helps_us_improve_our_product": "Cảm ơn phản hồi của bạn. Nó rất giúp chúng tôi cải thiện sản phẩm của mình.",
+  "@thanks_your_feedback_it_is_will_helps_us_improve_our_product": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "sizes": "Kích thước",
+  "@sizes": {
+    "description": "Không hiểu gì cả"
+  },
+  
+  "colors": "Màu sắc",
+  "@colors": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "add_to_cart": "Thêm giỏ hàng",
+  "@add_to_cart": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "desc": "Mô tả",
+  "@desc": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "review": "Lượt đánh giá",
+  "@review": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "promotions": "Khuyến mãi",
+  "@promotions": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "expired_date": "Ngày hết hạn: {data}",
+  "@expired_date": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "data": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+
+  "forgot_password": "Quên mật khẩu",
+  "@forgot_password": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "cancel": "Huỷ",
+  "@cancel": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "search_history": "Lịch sử tìm kiếm",
+  "@search_history": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "search_keyword": "Từ khoá tìm kiếm",
+  "@search_keyword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "search_result": "Kết quả",
+  "@search_result": {
+    "description": "Không hiểu gì cả"
+  },
+  
+  "update_your_address": "Cập nhật địa chỉ của bạn",
+  "@update_your_address": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "filter_by_search_results": "Lọc theo kết quả tìm kiếm",
+  "@filter_by_search_results": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "gender": "Giới tính",
+  "@gender": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "product_type": "Loại sản phẩm",
+  "@product_type": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "price_range": "Giá tiền",
+  "@price_range": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "apply": "Áp dụng",
+  "@apply": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "male": "Nam",
+  "@male": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "female": "Nữ",
+  "@female": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "not_found_search_result": "Không tìm thấy kết quả tìm kiếm nào",
+  "@not_found_search_result": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "please_update_information": "Vui lòng cập nhật thông tin",
+  "@please_update_information": {
+    "description": "Không hiểu gì cả"
   }
+
 }

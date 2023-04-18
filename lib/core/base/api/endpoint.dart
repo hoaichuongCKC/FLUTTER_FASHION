@@ -6,6 +6,7 @@ class ApiEndpoint {
   static const String register = "auth/register";
   static const String loggout = "auth/logout";
   static const String checkPhone = "auth/check-phone";
+  static const String forgotPassword = "auth/forgot-password";
 
   static const String me = "user/me";
   static const String update = "user/edit-profile";
@@ -17,7 +18,9 @@ class ApiEndpoint {
   static const String fetchCategory = "cate/fetch-categories";
 
   static const String fetchProduct = "product/fetch-product-all";
+  static const String getDetail = "product/get-detail";
   static const String fetchPopularSearch = "product/fetch-popular";
+  static const String search = "product/search";
 
   static const String fetchReview = "review/fetch-review";
   static const String create = "review/create-review";
@@ -28,4 +31,6 @@ class ApiEndpoint {
 
   static const String fetchNotification = "noti/fetch";
   static const String updateRead = "noti/update-read-noti";
+
+  static const String fetchPromotion = "product/get-promotion";
 }

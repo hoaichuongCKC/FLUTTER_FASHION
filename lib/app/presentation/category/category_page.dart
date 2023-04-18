@@ -6,13 +6,12 @@ import 'package:flutter_fashion/common/components/app/background_app.dart';
 import '../../blocs/category/category_cubit.dart';
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage(
-      {super.key,
-      required this.searchKey,
-      required this.item,
-      required this.index});
+  const CategoryPage({
+    super.key,
+    required this.searchKey,
+    required this.index,
+  });
   final String searchKey;
-  final String item;
   final int index;
 
   @override
@@ -29,19 +28,13 @@ class _CategoryPageState extends State<CategoryPage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: bloc.length)
-      ..animateTo(
-        widget.index,
-        duration: const Duration(
-          milliseconds: 400,
-        ),
-        curve: Curves.easeIn,
-      );
+      ..animateTo(widget.index);
   }
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -104,15 +97,7 @@ class _CategoryPageState extends State<CategoryPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MenuList(tabController: _tabController),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: List<Widget>.generate(
-                  bloc.length,
-                  (index) => const ProductList(),
-                ).toList(),
-              ),
-            ),
+            const Expanded(child: ProductList()),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class PromotionList extends StatelessWidget {
@@ -16,121 +17,113 @@ class PromotionList extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
               child: Text(
-                'Promotions',
+                AppLocalizations.of(context)!.promotions,
                 style: PrimaryFont.instance.large(),
               ),
             ),
             const SizedBox(height: 8.0),
             SizedBox(
-              height: 140.0,
-              child: ListView.separated(
-                separatorBuilder: (context, index) =>
-                    const SizedBox(width: 15.0),
-                itemCount: 3,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPadding - 4),
-                cacheExtent: 140.0,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width * .7,
-                    child: Stack(
-                      fit: StackFit.passthrough,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/images/promotion_card.svg",
-                          fit: BoxFit.fill,
-                          placeholderBuilder: (context) =>
-                              ColoredBox(color: skeletonColor),
-                        ),
-                        Positioned(
-                          top: 3,
-                          left: 6.0,
-                          right: 6.0,
-                          bottom: 0.0,
-                          child: FractionallySizedBox(
-                            heightFactor: 0.4,
-                            alignment: Alignment.topCenter,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Discount',
-                                      style: PrimaryFont.instance.copyWith(
-                                        color: lightColor,
-                                        fontSize: 14.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      '10.000 VNĐ',
-                                      style: PrimaryFont.instance.copyWith(
-                                        color: lightColor,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                ButtonWidget(
-                                  btnColor: lightColor,
-                                  height: 35.0,
-                                  width: 70,
-                                  radius: 3.0,
-                                  onPressed: () {},
-                                  labelWidget: Text(
-                                    "View",
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 12,
-                                      color: primaryColor,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 140 / 2 + 10,
-                          left: 6.0,
-                          right: 6.0,
-                          bottom: 3.0,
-                          child: Column(
-                            children: [
-                              Text(
-                                'To use this voucher, the order must be at least 60k in value.',
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w300,
-                                  color: lightColor,
+              height: 120.0,
+              child: BlocBuilder<PromotionCubit, PromotionState>(
+                builder: (context, state) {
+                  return state.when(
+                    initial: () => const SizedBox(),
+                    loading: () => const SizedBox(),
+                    success: (promotions) => ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 15.0),
+                      itemCount: promotions.length,
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: horizontalPadding - 4),
+                      cacheExtent: 120.0,
+                      itemBuilder: (context, index) {
+                        final promotion = promotions[index];
+                        return LimitedBox(
+                          maxWidth: 280.0,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * .75,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: lightColor,
+                                border: Border.all(color: primaryColor),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(radiusBtn),
                                 ),
                               ),
-                              const SizedBox(height: 5.0),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/calendar.svg",
-                                    width: 18.0,
-                                    height: 18.0,
-                                  ),
-                                  Text(
-                                    'Expiring: 1 day left',
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w300,
-                                      color: lightColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/logo.png",
+                                      width: 70,
+                                      height: 70,
+                                      fit: BoxFit.scaleDown,
                                     ),
-                                  ),
-                                ],
-                              )
-                            ],
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Giảm ${promotion.discount_price}%",
+                                                  style: PrimaryFont.instance
+                                                      .copyWith(
+                                                    fontSize: 14.0,
+                                                    color: primaryColor,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  promotion.desc,
+                                                  style: PrimaryFont.instance
+                                                      .copyWith(
+                                                    fontSize: 12.0,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  maxLines: 3,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .expired_date(
+                                              promotion.end_date
+                                                  .toString()
+                                                  .substring(0, 10),
+                                            ),
+                                            style:
+                                                PrimaryFont.instance.copyWith(
+                                              fontSize: 10.0,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        )
-                      ],
+                        );
+                      },
+                    ),
+                    failure: (e) => Text(
+                      e,
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        color: errorColor,
+                      ),
                     ),
                   );
                 },

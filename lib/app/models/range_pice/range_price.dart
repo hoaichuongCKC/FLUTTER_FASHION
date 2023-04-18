@@ -17,4 +17,13 @@ class RangePriceModel with _$RangePriceModel {
             priceFirst: 100000, piceSendcond: 500000),
         RangePriceModel.from500kAbove(priceFirst: 500000, piceSendcond: 0),
       ];
+
+  static bool queryPrice(int index, int price) {
+    if (index == 0) {
+      return price <= 100000;
+    } else if (index == 1) {
+      return 100000 <= price && price <= 500000;
+    }
+    return price >= 500000;
+  }
 }

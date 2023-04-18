@@ -1,23 +1,33 @@
-import 'package:flutter_fashion/app/models/product/product.dart';
-import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/blocs/ui_detail_bloc.dart';
+import 'package:flutter_fashion/app/presentation/product_detail/components/app_bar_product_detail.dart';
+import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
+import 'package:flutter_fashion/app/presentation/product_detail/overlay_animation/product_overlay.dart';
+import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/export.dart';
 
 class BottomNavigationbarDetail extends StatelessWidget {
   const BottomNavigationbarDetail({super.key});
 
+  static GlobalKey imageKey = GlobalKey();
+
+  static Size getImageSize() {
+    final box = imageKey.currentContext!.findRenderObject() as RenderBox;
+
+    return Size(box.size.width, box.size.height);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final inheritedDetail = ProductDetailInherited.of(context);
+    final detailInherited = ProductDetailInherited.of(context);
 
+    final product = detailInherited.productModel;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: lightColor,
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(radiusBtn),
           ),
         ),
         child: ConstrainedBoxWidget(
@@ -36,9 +46,30 @@ class BottomNavigationbarDetail extends StatelessWidget {
                     animate: true,
                     radius: 5.0,
                     btnColor: primaryColor,
-                    onPressed: () => showModalOption(context,
-                        inheritedDetail.productModel, inheritedDetail.bloc),
-                    label: "Đặt hàng",
+                    onPressed: () {
+                      BlocProvider.of<ProductDetailUiCubit>(context).addToCart(
+                        context,
+                        product,
+                        (quantity) async {
+                          final index =
+                              BlocProvider.of<ProductDetailUiCubit>(context)
+                                  .state
+                                  .indexImage;
+                          final imageWidget = CachedNetworkImage(
+                            key: imageKey,
+                            imageUrl: ApiService.imageUrl +
+                                product.product_detail![index].photo,
+                            width: 200.0,
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                          );
+
+                          ProductOverlay.instance
+                              .showOverlay(context, image: imageWidget);
+                        },
+                      );
+                    },
+                    label: AppLocalizations.of(context)!.add_to_cart,
                   ),
                 ),
               ),
@@ -50,198 +81,107 @@ class BottomNavigationbarDetail extends StatelessWidget {
   }
 }
 
-void showModalOption(
-    BuildContext context, ProductModel product, UiDetailShowBloc bloc) {
-  showModalBottomSheet(
-    backgroundColor: lightColor,
-    isScrollControlled: true,
-    useSafeArea: true,
-    elevation: 5.0,
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(5.0),
-        topRight: Radius.circular(5.0),
-      ),
-    ),
-    builder: (context) {
-      return SizedBox(
-        height: MediaQuery.of(context).size.height * .65,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: horizontalPadding - 4, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Align(
-                child: Text(
-                  'Lựa chọn',
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              Divider(color: darkColor.withOpacity(0.4)),
-              ListTile(
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-                leading: Text(
-                  'Số lượng:',
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                title: CounterCart(
-                  iconSize: 24.0,
-                  onChanged: (p0) => bloc.counter(p0),
-                ),
-              ),
-              product.properties!.colors!.isEmpty
-                  ? const SizedBox()
-                  : ListTile(
-                      dense: true,
-                      contentPadding: EdgeInsets.zero,
-                      leading: Text(
-                        'Màu sắc:',
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      title: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: product.properties!.colors!
-                            .map(
-                              (e) => StreamBuilder<String>(
-                                stream: bloc.colorStream,
-                                builder: (context, snapshot) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: snapshot.data != e
-                                            ? null
-                                            : Border.all(color: primaryColor),
-                                      ),
-                                      child: Padding(
-                                        padding: snapshot.data != e
-                                            ? EdgeInsets.zero
-                                            : const EdgeInsets.all(3.0),
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Color(
-                                              int.parse("0xFF$e"),
-                                            ),
-                                          ),
-                                          child: InkWell(
-                                            onTap: () => bloc.selectColor(e),
-                                            child: const SizedBox(
-                                              width: 25.0,
-                                              height: 25.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-              product.properties!.sizes!.isEmpty
-                  ? const SizedBox()
-                  : ListTile(
-                      dense: true,
-                      contentPadding: EdgeInsets.zero,
-                      leading: Text(
-                        'Kích thước:',
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      title: Wrap(
-                        runSpacing: 10.0,
-                        spacing: 10.0,
-                        children: product.properties!.sizes!
-                            .map(
-                              (e) => StreamBuilder<String>(
-                                stream: bloc.sizeStream,
-                                builder: (context, snapshot) {
-                                  return InkWell(
-                                    onTap: () => bloc.selectSize(e.toString()),
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: snapshot.data == e.toString()
-                                            ? primaryColor
-                                            : lightColor,
-                                        border: snapshot.data == e.toString()
-                                            ? null
-                                            : Border.all(color: primaryColor),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          e.toString(),
-                                          style: PrimaryFont.instance.copyWith(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: snapshot.data == e.toString()
-                                                ? lightColor
-                                                : darkColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-              const Spacer(),
-              Builder(builder: (context) {
-                return Row(
-                  children: [
-                    Flexible(
-                      child: ButtonWidget(
-                        height: 40.0,
-                        animate: true,
-                        radius: 5.0,
-                        btnColor: primaryColor,
-                        onPressed: () => bloc.addToCart(context, product),
-                        labelWidget: const Icon(
-                          Icons.shopping_bag,
-                          color: lightColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Flexible(
-                      flex: 2,
-                      child: ButtonWidget(
-                        height: 40.0,
-                        animate: true,
-                        radius: 5.0,
-                        btnColor: primaryColor,
-                        onPressed: () {},
-                        label: "Mua ngay",
-                      ),
-                    ),
-                  ],
-                );
-              }),
-            ],
-          ),
-        ),
+class ItemProductScaleAnimationDetail extends StatefulWidget {
+  const ItemProductScaleAnimationDetail(
+      {super.key, required this.image, required this.size});
+  final Widget image;
+  final Size size;
+  @override
+  State<ItemProductScaleAnimationDetail> createState() =>
+      _ItemProductScaleAnimationDetailState();
+}
+
+class _ItemProductScaleAnimationDetailState
+    extends State<ItemProductScaleAnimationDetail>
+    with TickerProviderStateMixin {
+  late Animation<Offset> _offsetAnimation;
+
+  late Animation<double> _scaleAnimation;
+
+  late ValueNotifier<double> _notifier;
+
+  late AnimationController _animationController;
+
+  Offset get cartOffset => AppBarProductDetail.getOffset();
+
+  Size get imageSize => BottomNavigationbarDetail.getImageSize();
+
+  late Size size;
+
+  late Offset center;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            ProductOverlay.instance.remove();
+          }
+        },
       );
-    },
-  );
+
+    _notifier = ValueNotifier(0.0);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _notifier.value = 1.0;
+
+      size = widget.size;
+
+      final double centerX = (size.width) / 2 - (imageSize.width / 2);
+
+      final double centerY = size.height / 2 - (imageSize.height / 2);
+
+      center = Offset(centerX, centerY);
+
+      _offsetAnimation = Tween<Offset>(begin: center, end: cartOffset)
+          .animate(_animationController);
+
+      _animationController.forward();
+    });
+
+    _offsetAnimation = Tween<Offset>(begin: const Offset(0, 0), end: cartOffset)
+        .animate(_animationController);
+
+    _scaleAnimation =
+        Tween<double>(begin: 1.0, end: 0.3).animate(_animationController);
+  }
+
+  @override
+  void dispose() {
+    _notifier.dispose();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (BuildContext context, Widget? child) {
+        child = child ??= const SizedBox();
+        return Positioned(
+          left: _offsetAnimation.value.dx,
+          top: _offsetAnimation.value.dy,
+          child: Transform.scale(
+            scale: _scaleAnimation.value,
+            child: child,
+          ),
+        );
+      },
+      child: ValueListenableBuilder<double>(
+        valueListenable: _notifier,
+        builder: (context, opa, child) {
+          return Opacity(
+            opacity: opa,
+            child: widget.image,
+          );
+        },
+      ),
+    );
+  }
 }

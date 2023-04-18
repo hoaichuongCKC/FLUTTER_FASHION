@@ -3,24 +3,15 @@ import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 
 class FormLogin extends StatefulWidget {
-  const FormLogin(
-      {super.key,
-      required this.formKey,
-      required this.phoneController,
-      required this.passwordController});
+  const FormLogin({super.key, required this.formKey});
   final GlobalKey<FormState> formKey;
-  final TextEditingController phoneController;
-  final TextEditingController passwordController;
+
   @override
   State<FormLogin> createState() => _FormLoginState();
 }
 
 class _FormLoginState extends State<FormLogin> {
   GlobalKey<FormState> get _formKey => widget.formKey;
-
-  TextEditingController get _phoneController => widget.phoneController;
-
-  TextEditingController get _passwordController => widget.passwordController;
 
   ValueNotifier<bool> isNotOpenEye = ValueNotifier(true);
 
@@ -47,7 +38,6 @@ class _FormLoginState extends State<FormLogin> {
         children: [
           TextFormField(
             key: const ValueKey("phone_form"),
-            controller: _phoneController,
             keyboardType: TextInputType.phone,
             textInputAction: TextInputAction.next,
             style: PrimaryFont.instance.copyWith(
@@ -100,7 +90,6 @@ class _FormLoginState extends State<FormLogin> {
               builder: (context, bool currentEye, child) {
                 return TextFormField(
                   key: const ValueKey("password_form"),
-                  controller: _passwordController,
                   obscureText: currentEye,
                   style: PrimaryFont.instance.copyWith(
                     fontSize: 16.0,

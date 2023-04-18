@@ -1,10 +1,6 @@
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
-import 'package:flutter_fashion/app_lifecycle.dart';
-import 'package:flutter_fashion/core/base/exception/exception.dart';
-import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_state.dart';
 part 'user_cubit.freezed.dart';

@@ -1,39 +1,35 @@
 import 'package:flutter_fashion/app/presentation/filter/components/title_frame.dart';
+import 'package:flutter_fashion/app/presentation/filter/cubit/filter_cubit.dart';
 import 'package:flutter_fashion/export.dart';
-
-import '../blocs/filter_bloc.dart';
 
 class GenderFrame extends StatelessWidget {
   const GenderFrame({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<FilterBloc>();
+    final filterCubit = context.read<FilterCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleFilterFrame(title: "Giới tính"),
+        TitleFilterFrame(title: AppLocalizations.of(context)!.gender),
         const SizedBox(height: 8.0),
-        StreamBuilder<Gender>(
-          stream: bloc.genderStream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const SizedBox();
-            }
-
+        BlocBuilder<FilterCubit, FilterState>(
+          buildWhen: (previous, current) => previous.gender != current.gender,
+          builder: (context, state) {
+            final gender = state.gender;
+            final String maleLabel = AppLocalizations.of(context)!.male;
+            final String femaleLabel = AppLocalizations.of(context)!.female;
             return Column(
               children: [
                 _buildItem(
-                  title: "Nam",
-                  data: snapshot.data!,
-                  defaultValue: Gender.male,
-                  onTap: () => bloc.selectGender(Gender.male),
+                  title: maleLabel,
+                  isSelected: gender == maleLabel,
+                  onTap: () => filterCubit.changeGender(maleLabel),
                 ),
                 _buildItem(
-                  title: "Nữ",
-                  data: snapshot.data!,
-                  defaultValue: Gender.female,
-                  onTap: () => bloc.selectGender(Gender.female),
+                  title: femaleLabel,
+                  isSelected: gender == femaleLabel,
+                  onTap: () => filterCubit.changeGender(femaleLabel),
                 ),
               ],
             );
@@ -45,8 +41,7 @@ class GenderFrame extends StatelessWidget {
 
   ListTile _buildItem(
       {String title = "",
-      Gender data = Gender.none,
-      required Gender defaultValue,
+      bool isSelected = false,
       required VoidCallback onTap}) {
     return ListTile(
       onTap: onTap,
@@ -79,9 +74,8 @@ class GenderFrame extends StatelessWidget {
           ),
           firstCurve: Curves.easeIn,
           secondCurve: Curves.easeIn,
-          crossFadeState: defaultValue == data
-              ? CrossFadeState.showFirst
-              : CrossFadeState.showSecond,
+          crossFadeState:
+              isSelected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         ),
       ),
       horizontalTitleGap: 0.0,

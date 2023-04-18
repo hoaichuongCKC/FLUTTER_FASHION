@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter_fashion/app/presentation/introduction/cubit/intro_cubit_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 
@@ -74,50 +73,54 @@ class _BodyIntroState extends State<BodyIntro> {
       child: Column(
         children: [
           Expanded(
-            flex: 2,
-            child: BlocBuilder<IntroCubit, IntroState>(
-              builder: (context, state) {
-                return PageView.builder(
-                  controller: _introCubit.pageController,
-                  itemCount: state.intros.length,
-                  itemBuilder: (context, index) {
-                    return state.intros[index].image;
-                  },
-                );
-              },
-            ),
-          ),
-          Expanded(
+            flex: 1,
             child: BlocBuilder<LanguageCubit, LanguageState>(
               builder: (context, languageState) {
                 final isVN = languageState.isVietnamese;
                 return BlocBuilder<IntroCubit, IntroState>(
                   builder: (context, state) {
-                    final intro = state.intros[state.currentIndex];
+                    return PageView.builder(
+                      controller: _introCubit.pageController,
+                      itemCount: state.intros.length,
+                      itemBuilder: (context, index) {
+                        final intro = state.intros[state.currentIndex];
 
-                    final title = isVN ? intro.title : intro.titleEn;
+                        final title = isVN ? intro.title : intro.titleEn;
 
-                    final subtitle = isVN ? intro.subtitle : intro.subtitleEn;
-
-                    return Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            title,
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 24.0,
+                        final subtitle =
+                            isVN ? intro.subtitle : intro.subtitleEn;
+                        return Column(
+                          children: [
+                            Flexible(
+                              flex: 5,
+                              fit: FlexFit.tight,
+                              child: state.intros[index].image,
                             ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            subtitle,
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 20.0,
+                            const Spacer(),
+                            Flexible(
+                              flex: 4,
+                              fit: FlexFit.tight,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    title,
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Text(
+                                    subtitle,
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        );
+                      },
                     );
                   },
                 );
@@ -160,7 +163,9 @@ class _BodyIntroState extends State<BodyIntro> {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () => _introCubit.continuePage(),
+                          onPressed: () => isLastPage
+                              ? AppRoutes.router.go(Routes.LOGIN)
+                              : _introCubit.continuePage(),
                           child: Text(text),
                         ),
                       ),

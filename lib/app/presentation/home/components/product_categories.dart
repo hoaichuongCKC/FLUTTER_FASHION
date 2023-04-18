@@ -1,4 +1,5 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
+import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class ProductCategoriesHome extends StatelessWidget {
@@ -24,14 +25,18 @@ class ProductCategoriesHome extends StatelessWidget {
                   style: PrimaryFont.instance.large(),
                 ),
                 trailing: InkWell(
-                  onTap: () => AppRoutes.router.pushNamed(
-                    Names.CATEGORY,
-                    queryParams: {
-                      "search_key": "",
-                      "item": categoryList[0].id.toString(),
-                      "index": 0.toString(),
-                    },
-                  ),
+                  onTap: () {
+                    context
+                        .read<CategoryTabCubit>()
+                        .changeTab(categoryList[0].id);
+                    AppRoutes.router.pushNamed(
+                      Names.CATEGORY,
+                      queryParams: {
+                        "search_key": "",
+                        "index": "0",
+                      },
+                    );
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -65,14 +70,16 @@ class ProductCategoriesHome extends StatelessWidget {
                   final subtitle = isVietnamese ? item.name_vi : item.name;
 
                   return InkWell(
-                    onTap: () => AppRoutes.router.pushNamed(
-                      Names.CATEGORY,
-                      queryParams: {
-                        "search_key": "",
-                        "item": categoryList[index].id.toString(),
-                        "index": index.toString(),
-                      },
-                    ),
+                    onTap: () {
+                      context.read<CategoryTabCubit>().changeTab(item.id);
+                      AppRoutes.router.pushNamed(
+                        Names.CATEGORY,
+                        queryParams: {
+                          "search_key": "",
+                          "index": "$index",
+                        },
+                      );
+                    },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,

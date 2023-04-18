@@ -3,8 +3,8 @@ import 'package:flutter_fashion/export.dart';
 import '../../../common/components/aurora/aurora_page.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
-
+  const SignUpPage({super.key, required this.payload});
+  final String payload;
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
@@ -21,6 +21,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    String text = AppLocalizations.of(context)!.signUp;
+    if (widget.payload != Names.REGISTER) {
+      text = AppLocalizations.of(context)!.forgot_password;
+    }
+
     return BlocProvider(
       create: (context) => getIt<AuthPhoneCubit>(),
       child: Builder(builder: (context) {
@@ -40,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 10.0),
                     Text(
-                      AppLocalizations.of(context)!.signUp,
+                      text,
                       style: PrimaryFont.instance.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 25.0,
@@ -64,9 +69,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       keyboardType: TextInputType.phone,
                       onFieldSubmitted: (value) {
                         if (_formKey.currentState!.validate()) {
-                          context
-                              .read<AuthPhoneCubit>()
-                              .authPhone(value, context);
+                          final bloc = context.read<AuthPhoneCubit>();
+
+                          bloc.authPhone(value, context, widget.payload);
                         }
                       },
                       style: PrimaryFont.instance.copyWith(
@@ -102,14 +107,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       label: AppLocalizations.of(context)!.continue_r,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // print(FirebaseAuth.instance.currentUser);
-                          // context
-                          //     .read<AuthPhoneCubit>()
-                          //     .authPhone(_phoneController.text, context);
-                          AppRoutes.router.pushNamed(Names.OTP, queryParams: {
-                            "phone": _phoneController.text,
-                            "verificationId": "1",
-                          });
+                          final bloc = context.read<AuthPhoneCubit>();
+                          final text = _phoneController.text;
+                          bloc.authPhone(text, context, widget.payload);
                           // FirebaseAuth.instance.signOut();
                         }
                       },

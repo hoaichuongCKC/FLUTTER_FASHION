@@ -16,13 +16,11 @@ class ItemLocationUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onLongPress: () {
-        showAction(
-          context,
-          onDelete,
-          onUseDefault,
-        );
-      },
+      onTap: () => showAction(
+        context,
+        onDelete,
+        onUseDefault,
+      ),
       child: ConstrainedBoxWidget(
         currentHeight: 0.13,
         child: DecoratedBox(

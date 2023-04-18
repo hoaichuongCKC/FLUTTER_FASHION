@@ -167,7 +167,7 @@ class AppBackgroundBlur extends StatelessWidget {
     if (type == ScreenType.scroll) {
       return ConstrainedBoxWidget(
         currentHeight: 0.1,
-        maxHeight: 60,
+        maxHeight: 55,
         minHeight: 50,
         child: Align(
           alignment: !centerTitle! ? Alignment.centerLeft : Alignment.center,
@@ -179,15 +179,14 @@ class AppBackgroundBlur extends StatelessWidget {
       );
     }
     if (type == ScreenType.withAppBar) {
-      return ConstrainedBoxWidget(
-        currentHeight: 0.1,
-        maxHeight: 55,
-        minHeight: 50,
-        child: ColoredBox(
-          color: backgroundAppbar ??= Colors.transparent,
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: ConstrainedBoxWidget(
+          currentHeight: 0.1,
+          maxHeight: 50,
+          minHeight: 45,
+          child: ColoredBox(
+            color: backgroundAppbar ??= Colors.transparent,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -206,7 +205,10 @@ class AppBackgroundBlur extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     title!,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 20.0),
                   ),
                 ),
                 if (actions != null)
@@ -265,7 +267,10 @@ class AppBackgroundBlur extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title!,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 20.0),
                   ),
                 ),
                 if (actionsSecond != null)

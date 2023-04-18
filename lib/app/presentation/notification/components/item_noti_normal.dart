@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/config/notification.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
 import '../../../../export.dart';

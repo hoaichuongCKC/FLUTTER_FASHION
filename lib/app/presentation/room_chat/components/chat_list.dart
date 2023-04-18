@@ -34,6 +34,12 @@ class ChatList extends StatelessWidget {
         return Expanded(
           child: GroupedListView<ChatModel, String>(
             elements: state.chats.reversed.toList(),
+            reverse: true,
+            sort: false,
+            useStickyGroupSeparators: false, // optional
+            floatingHeader: true, // optional
+            order: GroupedListOrder.DESC,
+            padding: const EdgeInsets.only(bottom: 10.0), //   optional
             groupBy: (element) {
               return element.created_at.checkChatTime();
             },
@@ -42,7 +48,8 @@ class ChatList extends StatelessWidget {
               child: Text(
                 groupByValue,
                 style: PrimaryFont.instance.copyWith(
-                  fontSize: 14.0,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w300,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -78,15 +85,16 @@ class ChatList extends StatelessWidget {
                           ),
                     color: isSentByMe
                         ? primaryColor.withOpacity(0.5)
-                        : Colors.grey.shade300,
+                        : skeletonColor,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text.rich(
                         TextSpan(
                           text: element.message,
                           style: PrimaryFont.instance.copyWith(
-                            fontSize: 16.0,
+                            fontSize: 14.0,
                             color: isSentByMe ? lightColor : null,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                       ),
@@ -95,11 +103,6 @@ class ChatList extends StatelessWidget {
                 ),
               );
             },
-            itemComparator: (item1, item2) =>
-                item1.id.compareTo(item2.id), // optional
-            useStickyGroupSeparators: false, // optional
-            floatingHeader: true, // optional
-            order: GroupedListOrder.ASC, // optional
           ),
         );
       },

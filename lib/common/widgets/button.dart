@@ -9,7 +9,7 @@ class ButtonWidget extends StatefulWidget {
     this.width = double.infinity,
     this.height = 50.0,
     required this.btnColor,
-     this.onPressed,
+    this.onPressed,
     this.label,
     this.labelWidget,
     this.boxShadow,
@@ -105,7 +105,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                               ? darkColor
                               : lightColor,
                       fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
+                      fontSize: 14.0,
                     ),
                   ),
                 ),

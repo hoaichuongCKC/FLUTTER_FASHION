@@ -1,6 +1,6 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
-import 'package:flutter_fashion/app/presentation/filter/blocs/filter_bloc.dart';
 import 'package:flutter_fashion/app/presentation/filter/components/title_frame.dart';
+import 'package:flutter_fashion/app/presentation/filter/cubit/filter_cubit.dart';
 import '../../../../export.dart';
 
 class CategoryFrame extends StatelessWidget {
@@ -8,44 +8,46 @@ class CategoryFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<FilterBloc>();
+    final filterCubit = context.read<FilterCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleFilterFrame(title: "Loại sản phẩm"),
+        TitleFilterFrame(title: AppLocalizations.of(context)!.product_type),
         const SizedBox(height: 8.0),
-        StreamBuilder<List<CategoryModel>>(
-          stream: bloc.buildCateStream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const SizedBox();
-            }
-            return Wrap(
-              crossAxisAlignment: WrapCrossAlignment.start,
-              alignment: WrapAlignment.start,
-              spacing: 0.0,
-              runSpacing: 20.0,
-              children: snapshot.data!.map(
-                (e) {
-                  final index = snapshot.data!.indexOf(e);
-                  if (index == 0) {
-                    return const SizedBox();
-                  }
-                  return StreamBuilder<int>(
-                    stream: bloc.selectCateStream,
-                    builder: (context, snapshotSecond) {
-                      if (!snapshotSecond.hasData) {
+        BlocBuilder<LanguageCubit, LanguageState>(
+          builder: (context, state) {
+            final isVietnamese = state.isVietnamese;
+
+            return BlocBuilder<FilterCubit, FilterState>(
+              buildWhen: (previous, current) =>
+                  previous.categoryId != current.categoryId,
+              builder: (context, state) {
+                final categories = state.categories;
+
+                final categorySelected = state.categoryId;
+                return Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  alignment: WrapAlignment.start,
+                  spacing: 0.0,
+                  runSpacing: 20.0,
+                  children: categories.map(
+                    (e) {
+                      final index = categories.indexOf(e);
+
+                      if (index == 0) {
                         return const SizedBox();
                       }
+
+                      final text = isVietnamese ? e.name_vi : e.name;
                       return _buildItem(
-                        title: e.name_vi,
-                        isSelected: snapshotSecond.data! == index,
-                        onTap: () => bloc.selectCate(index),
+                        title: text,
+                        isSelected: e.id == categorySelected,
+                        onTap: () => filterCubit.changeCategory(e.id),
                       );
                     },
-                  );
-                },
-              ).toList(),
+                  ).toList(),
+                );
+              },
             );
           },
         ),

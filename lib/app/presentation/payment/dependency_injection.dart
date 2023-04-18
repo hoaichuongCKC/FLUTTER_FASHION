@@ -4,7 +4,7 @@ import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/repositories/order_repository.dart';
 
 Future<void> initDIOrder() async {
-  getIt.registerLazySingleton<PaymentCubit>(
+  getIt.registerFactory<PaymentCubit>(
       () => PaymentCubit(orderRepositoryImpl: getIt()));
 
   getIt.registerLazySingleton<OrderRepositoryImpl>(

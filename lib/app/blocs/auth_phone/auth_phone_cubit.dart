@@ -18,8 +18,12 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
 
   String _verificationId = "";
 
-  void authPhone(String phoneNumber, BuildContext context,
-      {bool isResend = false}) async {
+  void authPhone(
+    String phoneNumber,
+    BuildContext context,
+    String payload, {
+    bool isResend = false,
+  }) async {
     emit(const AuthPhoneState.loading());
 
     if (!isResend) loadingAlert(context: context);
@@ -30,8 +34,14 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       (l) => emit(const AuthPhoneState.error()),
       (response) async {
         final statusCode = response.data[0];
+
         if (statusCode == 200) {
-          await _handleAuthPhoneFirebase(phoneNumber, isResend, context);
+          await _handleAuthPhoneFirebase(
+            phoneNumber,
+            isResend,
+            context,
+            payload,
+          );
         } else {
           AppRoutes.router.pop();
           errorAlert(
@@ -45,7 +55,11 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
   }
 
   _handleAuthPhoneFirebase(
-      String phoneNumber, bool isResend, BuildContext context) async {
+    String phoneNumber,
+    bool isResend,
+    BuildContext context,
+    String payload,
+  ) async {
     await verifyPhoneNumber(
       phoneNumber: "+84$phoneNumber",
       verificationCompleted: (user) {
@@ -56,6 +70,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
         if (!isResend) AppRoutes.router.pop();
 
         errorAlert(context: context, message: exception.message!);
+
         emit(const AuthPhoneState.error());
       },
       codeSent: (verificationId, resendToken) {
@@ -66,33 +81,35 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
 
         if (!isResend) {
           AppRoutes.router.pop();
-
-          AppRoutes.router.pushNamed(
-            Names.OTP,
-            queryParams: {
-              "phone": phoneNumber,
-              "verificationId": _verificationId,
-            },
-          );
+          _handleNavigator(payload, phoneNumber);
         }
       },
       codeAutoRetrievalTimeout: (verificationId) {
         log("codeAutoRetrievalTimeout verification nhận được: $verificationId");
-        isResend
-            ? _verificationId = verificationId
-            : AppRoutes.router.pushNamed(
-                Names.OTP,
-                queryParams: {
-                  "phone": phoneNumber,
-                  "verificationId": verificationId,
-                },
-              );
+        _verificationId = verificationId;
+        _handleNavigator(payload, phoneNumber);
       },
     );
   }
 
-  void verifyOtp(String phoneNumber, String smsCode, String verificationId,
-      BuildContext context) async {
+  void _handleNavigator(String payload, String phone) {
+    AppRoutes.router.pushNamed(
+      Names.OTP,
+      queryParams: {
+        "phone": phone,
+        "verificationId": _verificationId,
+        "payload": payload,
+      },
+    );
+  }
+
+  void verifyOtp(
+    String phoneNumber,
+    String smsCode,
+    BuildContext context,
+    String verificationId,
+    String payload,
+  ) async {
     emit(const AuthPhoneState.loading());
     loadingAlert(context: context);
 
@@ -108,22 +125,15 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       },
       (userCredential) {
         AppRoutes.router.pushNamed(
-          Names.REGISTER,
+          payload,
           queryParams: {
             "phone": phoneNumber,
           },
         );
-
         emit(const AuthPhoneState.verifyOtpSuccess());
 
         signOut();
       },
     );
-  }
-
-  @override
-  String toString() {
-    super.toString();
-    return "state: $state";
   }
 }

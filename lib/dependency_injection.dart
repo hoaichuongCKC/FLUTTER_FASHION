@@ -2,13 +2,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/di_injection_home.dart';
 import 'package:flutter_fashion/app/presentation/login/di_login.dart';
 import 'package:flutter_fashion/app/presentation/payment/dependency_injection.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/depedency_injection.dart';
 import 'package:flutter_fashion/app/presentation/profile/di_profile.dart';
-import 'package:flutter_fashion/app/presentation/search/dependency_injection.dart';
 import 'package:flutter_fashion/app/presentation/setting/di_setting.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/di_sign_up.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
@@ -16,6 +16,7 @@ import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
 import 'package:flutter_fashion/core/pusher/chat.dart';
+import 'package:flutter_fashion/core/pusher/order.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'app/blocs/address_user/address_user_cubit.dart';
@@ -28,6 +29,9 @@ import 'app/presentation/personal_information/di_personal_info.dart';
 GetIt getIt = GetIt.instance;
 
 Future<void> init() async {
+  //bloc storage
+  getIt.registerLazySingleton(() => SearchCubit(getIt()));
+
   getIt.registerLazySingleton(() => Connectivity());
 
   getIt.registerLazySingleton(() => ImagePicker());
@@ -38,6 +42,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => NetworkInfoImpl(getIt()));
 
   getIt.registerLazySingleton(() => PusherChatApp(apiService: getIt()));
+
+  getIt.registerLazySingleton(() => PusherOrderApp(apiService: getIt()));
 
   getIt.registerLazySingleton(() => BaseRepository(networkInfoImpl: getIt()));
 
@@ -54,8 +60,6 @@ Future<void> init() async {
   initDISignUp();
 
   initDIHome();
-
-  initDISearch();
 
   initDICategory();
 
@@ -90,6 +94,9 @@ void dispose() {
   if (getIt.isRegistered<NotificationCubit>()) {
     getIt.unregister<NotificationCubit>();
   }
+  if (getIt.isRegistered<SearchCubit>()) {
+    getIt.unregister<SearchCubit>();
+  }
   //register DI again
   getIt.registerLazySingleton(() => UserCubit(userRepositoryImpl: getIt()));
   getIt.registerLazySingleton(() => FavoriteCubit());
@@ -100,4 +107,5 @@ void dispose() {
   getIt.registerLazySingleton(() => PusherChatApp(apiService: getIt()));
   getIt.registerLazySingleton(() => ChatCubit(userRepo: getIt()));
   getIt.registerLazySingleton(() => NotificationCubit(noti: getIt()));
+  getIt.registerLazySingleton(() => SearchCubit(getIt()));
 }

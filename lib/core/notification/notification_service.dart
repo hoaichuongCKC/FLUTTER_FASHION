@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/export.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -22,6 +23,7 @@ class NotificationService {
       const InitializationSettings(
         android: AndroidInitializationSettings("@mipmap/ic_launcher"),
       ),
+      onSelectNotification: _handlePayload,
     );
 
     _androidNotificationDetails = const AndroidNotificationDetails(
@@ -31,6 +33,8 @@ class NotificationService {
       importance: Importance.max,
       priority: Priority.high,
       showProgress: true,
+      playSound: true,
+      enableVibration: true,
     );
 
     _notificationDetails =
@@ -41,6 +45,10 @@ class NotificationService {
     tz.initializeTimeZones();
     const timeZoneName = "Asia/Ho_Chi_Minh";
     tz.setLocalLocation(tz.getLocation(timeZoneName));
+  }
+
+  Future _handlePayload(String? payload) async {
+    // AppRoutes.router.
   }
 
   void createNotification(

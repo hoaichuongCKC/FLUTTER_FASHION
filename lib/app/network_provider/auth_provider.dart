@@ -16,6 +16,8 @@ abstract class AuthProvider {
 
   Future<ResponseData> loggout();
 
+  Future<ResponseData> forgotPassword(String newPassword, String phone);
+
   Future<ResponseData> checkPhone(String phone);
 }
 
@@ -94,6 +96,24 @@ class AuthProviderImpl extends AuthProvider {
     var response = await _apiService.post(
       ApiEndpoint.checkPhone,
       body: {"phone": phone},
+    );
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+    final data = await response.stream.bytesToString();
+
+    return ResponseData.fromJson(jsonDecode(data));
+  }
+
+  @override
+  Future<ResponseData> forgotPassword(String newPassword, String phone) async {
+    var response = await _apiService.post(
+      ApiEndpoint.forgotPassword,
+      isRequestHeader: false,
+      body: {
+        "new_password": newPassword,
+        "phone": phone,
+      },
     );
     if (response.statusCode != 200) {
       throw ServerException();

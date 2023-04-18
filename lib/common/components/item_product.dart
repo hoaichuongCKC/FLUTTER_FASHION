@@ -16,6 +16,7 @@ class ItemProduct extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
+    final image = product.product_detail![0].photo;
     return InkWell(
       onTap: onTap,
       child: Stack(
@@ -30,10 +31,10 @@ class ItemProduct extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
                   child: CachedNetworkImage(
-                    imageUrl:
-                        ApiService.imageUrl + product.product_detail![0].photo,
+                    imageUrl: ApiService.imageUrl + image,
                     fit: BoxFit.fitWidth,
                     httpHeaders: getIt<ApiService>().headers,
+                    cacheKey: image,
                     placeholder: (context, url) {
                       return ColoredBox(
                         color: skeletonColor,

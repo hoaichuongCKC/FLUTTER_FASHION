@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart';
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/app/models/reviews/review.dart';
 import 'package:flutter_fashion/app/network_provider/product_provider.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
@@ -9,14 +10,25 @@ import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class ProductRepository {
   Future<Either<String, List<CategoryModel>>> fetchCategory();
+
   Future<Either<String, List<ProductModel>>> fetchListProduct(int page);
+
   Future<List<ProductModel>> fetchListMoreProduct(int page,
       {int idCagegory = 1});
+
   Future<Either<String, List<ProductModel>>> fetchPopularSearch();
+
   Future<Either<String, List<ReviewModel>>> fetchReviewProduct(
       int page, int idProduct);
 
+  Future<Either<String, ProductModel>> getDetail(int idProduct);
+
+  Future<Either<String, List<PromotionModel>>> fetchPromotion(int page);
+
   Future<Either<String, ResponseData>> createReview(CreateReviewState params);
+
+  Future<Either<String, List<ProductModel>>> search(
+      {required int page, required String keyword});
 }
 
 class ProductRepositoryImpl extends BaseRepository
@@ -82,6 +94,37 @@ class ProductRepositoryImpl extends BaseRepository
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
         return await _productProviderImpl.createReview(params);
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, ProductModel>> getDetail(int idProduct) async {
+    final result = await baseRepo<ProductModel>(
+      excuteFunction: () async {
+        return await _productProviderImpl.getDetail(idProduct);
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, List<PromotionModel>>> fetchPromotion(int page) async {
+    final result = await baseRepo<List<PromotionModel>>(
+      excuteFunction: () async {
+        return await _productProviderImpl.fetchPromotion(page);
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, List<ProductModel>>> search(
+      {required int page, required String keyword}) async {
+    final result = await baseRepo<List<ProductModel>>(
+      excuteFunction: () async {
+        return await _productProviderImpl.search(page, keyword);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

@@ -72,7 +72,7 @@ class _BannerHomeState extends State<BannerHome> {
           children: [
             SizedBox(
               width: double.maxFinite,
-              height: 165.0,
+              height: 180.0,
               child: PageView.builder(
                 controller: _pageController,
                 itemCount: widget.bannerList.length,

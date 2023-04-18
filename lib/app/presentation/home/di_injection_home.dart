@@ -4,6 +4,8 @@ import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
+import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
+import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
 import 'package:flutter_fashion/app/network_provider/banner_provider.dart';
 import 'package:flutter_fashion/app/network_provider/notification_provider.dart';
 import 'package:flutter_fashion/app/network_provider/product_provider.dart';
@@ -20,6 +22,14 @@ Future<void> initDIHome() async {
 
   getIt.registerLazySingleton<BannerCubit>(
     () => BannerCubit(bannerRepositoryImpl: getIt()),
+  );
+
+  getIt.registerLazySingleton<PromotionCubit>(
+    () => PromotionCubit(productRepo: getIt()),
+  );
+
+  getIt.registerLazySingleton<ReviewCubit>(
+    () => ReviewCubit(getIt()),
   );
 
   getIt.registerLazySingleton<PopularSearchCubit>(

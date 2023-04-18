@@ -19,8 +19,7 @@ abstract class UserRepository {
 
   Future<Either<String, List<ChatModel>>> fetchChats();
 
-  Future<Either<String, int>> createChat(
-      {required int? room_chat_id, required String message});
+  Future<Either<String, ChatModel>> createChat({required String message});
 
   Future<Either<String, ResponseData>> changePassword(
       {required ChangePasswordState param});
@@ -73,11 +72,11 @@ class UserRepositoryImpl extends BaseRepository implements UserRepository {
   }
 
   @override
-  Future<Either<String, int>> createChat(
-      {required int? room_chat_id, required String message}) async {
-    final result = await baseRepo<int>(
-      excuteFunction: () async => await _userProviderImpl.createChat(
-          room_chat_id: room_chat_id, message: message),
+  Future<Either<String, ChatModel>> createChat(
+      {required String message}) async {
+    final result = await baseRepo<ChatModel>(
+      excuteFunction: () async =>
+          await _userProviderImpl.createChat(message: message),
     );
     return result.fold((error) => Left(error), (r) => Right(r));
   }

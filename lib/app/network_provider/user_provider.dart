@@ -23,7 +23,7 @@ abstract class UserProvider {
   Future<List<ChatModel>> fetchChats();
 
   // ignore: non_constant_identifier_names
-  Future<int> createChat({required int? room_chat_id, required String message});
+  Future<ChatModel> createChat({required String message});
 }
 
 class UserProviderImpl extends UserProvider {
@@ -106,20 +106,20 @@ class UserProviderImpl extends UserProvider {
   }
 
   @override
-  Future<int> createChat(
-      // ignore: non_constant_identifier_names
-      {required int? room_chat_id,
-      required String message}) async {
+  Future<ChatModel> createChat({required String message}) async {
     var response = await _apiService.post(
       ApiEndpoint.createChat,
       body: {
-        "room_chat_id": room_chat_id!.toString(),
         "message": message.toString(),
       },
     );
     if (response.statusCode != 200) {
       throw ServerException();
     }
-    return response.statusCode;
+    final data = await response.stream.bytesToString();
+
+    final convert = jsonDecode(data)["data"];
+
+    return ChatModel.fromJson(convert);
   }
 }

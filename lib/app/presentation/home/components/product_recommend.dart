@@ -1,5 +1,5 @@
-import 'dart:convert';
-
+import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
+import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
@@ -38,14 +38,15 @@ class ProductRecommend extends StatelessWidget {
                 mainAxisExtent: 230.0,
               ),
               itemBuilder: (context, index) {
+                final product = listProduct[index];
                 return ItemProduct(
                   product: listProduct[index],
-                  onTap: () => AppRoutes.router.pushNamed(
-                    Names.PRODUCT_DETAIL,
-                    params: {
-                      "product": jsonEncode(listProduct[index].toJson()),
-                    },
-                  ),
+                  onTap: () {
+                    BlocProvider.of<ProductDetailCubit>(context)
+                        .getProduct(product.id!);
+                    context.read<ReviewCubit>().fetchReview(product.id!);
+                    AppRoutes.router.pushNamed(Names.PRODUCT_DETAIL);
+                  },
                 );
               },
             ),

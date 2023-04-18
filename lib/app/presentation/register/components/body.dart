@@ -27,7 +27,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final confirmController = TextEditingController();
 
-  late TextEditingController phoneController;
+  late TextEditingController _phoneController;
 
   final _formkey = GlobalKey<FormState>();
 
@@ -37,8 +37,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   void initState() {
-    phoneController = TextEditingController(text: widget.phoneNumber);
     super.initState();
+    _phoneController = TextEditingController(text: widget.phoneNumber);
   }
 
   @override
@@ -96,7 +96,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
           const SizedBox(height: 15.0),
           TextFormFieldRegister(
-            controller: phoneController,
+            readOnly: true,
+            controller: _phoneController,
             keyboardType: TextInputType.phone,
             hintText: AppLocalizations.of(context)!
                 .enter_the(AppLocalizations.of(context)!.phoneNumber)
@@ -207,7 +208,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               final param = RegisterParams(
                 username: usernameController.text,
                 fullname: fullnameController.text,
-                phone: phoneController.text,
+                phone: widget.phoneNumber,
                 email: emailController.text,
                 password: passwordController.text,
                 image: _file!,

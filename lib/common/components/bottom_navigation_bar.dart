@@ -123,7 +123,7 @@ class ItemNavigationBar extends StatelessWidget {
             child: Text(
               routes.translateLabelBottomNavigationBar(context),
               style: PrimaryFont.instance.copyWith(
-                fontSize: 12.0,
+                fontSize: 10.0,
                 color: isSelected ? primaryColor : darkColor.withOpacity(0.5),
                 fontWeight: isSelected ? FontWeight.w400 : FontWeight.w300,
               ),

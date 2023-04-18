@@ -21,7 +21,7 @@ class TitleFilterFrame extends StatelessWidget {
           child: Text(
             title,
             style: PrimaryFont.instance.copyWith(
-              fontSize: 18.0,
+              fontSize: 16.0,
             ),
           ),
         ),

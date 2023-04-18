@@ -42,16 +42,11 @@ class ProductCubit extends Cubit<ProductState> {
 
   void onRefresh() async {
     fetchData(1);
+    _isLoaded = false;
   }
 
   Future<List<ProductModel>> loadMoreProducts(int page) async {
     final result = await _productRepositoryImpl.fetchListMoreProduct(page);
     return result;
-  }
-
-  @override
-  String toString() {
-    super.toString();
-    return "state: $state";
   }
 }

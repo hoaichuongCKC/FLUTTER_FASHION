@@ -1,16 +1,18 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/app/models/chat/chat.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
+import 'package:flutter_fashion/core/notification/notification_service.dart';
 import 'package:flutter_fashion/core/pusher/pusher_app.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 class PusherChatApp with PusherMixin implements PusherApp {
   final ApiService apiService;
 
-  PusherChatApp({required this.apiService}) {
-    log("Initial PusherAppChat");
-  }
+  PusherChatApp({required this.apiService});
 
   @override
   String get eventName => "chat-message";
@@ -38,8 +40,6 @@ class PusherChatApp with PusherMixin implements PusherApp {
           log("onConnectionStateChange: $currentState,,,, $previousState",
               name: "Pusher-chat-onConnectionStateChange");
         },
-        // authEndpoint: "<Your Authendpoint>",
-        // onAuthorizer: onAuthorizer
       );
       await pusher.subscribe(channelName: channel);
 
@@ -53,5 +53,33 @@ class PusherChatApp with PusherMixin implements PusherApp {
   Future<void> dispose() async {
     pusher.disconnect();
     pusher.unsubscribe(channelName: channel);
+  }
+
+  @override
+  void handleData(BuildContext context, data) async {
+    try {
+      final convert = jsonDecode(data);
+
+      final currentLocation = AppRoutes.router.location;
+
+      const chatLocation = "${Routes.PROFILE}/${Routes.MESSENGER}";
+
+      final chat = ChatModel.fromJson(convert);
+
+      if (chatLocation != currentLocation) {
+        NotificationService.instance.createNotification(
+          title: "Tin nhắn mới",
+          body: chat.message,
+          payload: chatLocation,
+        );
+        if (getIt.isRegistered<ChatCubit>()) {
+          getIt.get<ChatCubit>().addChat(chat);
+        }
+      } else {
+        getIt.get<ChatCubit>().addChat(chat);
+      }
+    } catch (e) {
+      log("Error handle data Chat Pusher: $e");
+    }
   }
 }

@@ -337,8 +337,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "popular_product": "Popular product",
-  "@popular_product": {
+  "popular": "Popular",
+  "@popular": {
     "description": "Không hiểu gì cả"
   },
 
@@ -479,17 +479,6 @@
     "description": "Không hiểu gì cả"
   },
 
-  "cancel": "Cancel {data}",
-  "@cancel": {
-    "description": "Không hiểu gì cả",
-    "placeholders": {
-      "data": {
-        "type": "String",
-        "example": "1"
-      }
-    }
-  },
-
   "search": "Search",
   "@search": {
     "description": "Không hiểu gì cả"
@@ -503,5 +492,135 @@
   "skip": "Skip",
   "@skip": {
     "description": "Không hiểu gì cả"
+  },
+
+  "feedback": "Feedback",
+  "@feedback": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "thanks_your_feedback_it_is_will_helps_us_improve_our_product": "Thanks for your feedback\nIt is will helps us improve our product",
+  "@thanks_your_feedback_it_is_will_helps_us_improve_our_product": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "sizes": "Sizes",
+  "@sizes": {
+    "description": "Không hiểu gì cả"
+  },
+  
+  "colors": "Colors",
+  "@colors": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "add_to_cart": "Add to cart",
+  "@add_to_cart": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "desc": "Description",
+  "@desc": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "review": "Reviews",
+  "@review": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "promotions": "Promotions",
+  "@promotions": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "expired_date": "Expiration date: {data}",
+  "@expired_date": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "data": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+
+  "forgot_password": "Forgot password",
+  "@forgot_password": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "search_history": "Search history",
+  "@search_history": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "search_keyword": "Search keyword",
+  "@search_keyword": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "search_result": "Result",
+  "@search_result": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "update_your_address": "Update your address",
+  "@update_your_address": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "filter_by_search_results": "Filter by search results",
+  "@filter_by_search_results": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "gender": "Gender",
+  "@gender": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "product_type": "Product type",
+  "@product_type": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "price_range": "Price range",
+  "@price_range": {
+    "description": "Không hiểu gì cả"
+  },
+
+  
+  "apply": "Apply",
+  "@apply": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "male": "Male",
+  "@male": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "female": "Female",
+  "@female": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "not_found_search_result": "Not found search results",
+  "@not_found_search_result": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "please_update_information": "Please update information",
+  "@please_update_information": {
+    "description": "Không hiểu gì cả"
   }
+
+
 }

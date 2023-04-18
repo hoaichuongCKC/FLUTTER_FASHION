@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/chat/chat.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
@@ -38,34 +37,22 @@ class ChatCubit extends Cubit<ChatState> {
   void addChat(ChatModel chat) {
     final state = this.state;
     final updateList = [...state.chats, chat];
-    emit(state.copyWith(chats: updateList, roomChatId: chat.room_chat_id));
+
+    emit(state.copyWith(chats: updateList));
   }
 
   void createChat(String message) async {
     final state = this.state;
-    final chat = ChatModel(
-      id: 0,
-      room_chat_id: 0,
-      sender_id: getIt.get<UserCubit>().user.id,
-      receiver_id: 0,
-      message: message,
-      created_at: DateTime.now(),
-    );
 
-    final updateList = [...state.chats, chat];
     emit(state.copyWith(submitStatus: SubmitChatStatus.sending));
 
-    final result = await _userRepositoryImpl.createChat(
-        room_chat_id: state.roomChatId, message: message);
+    final result = await _userRepositoryImpl.createChat(message: message);
 
     result.fold(
       (error) {
         emit(state.copyWith(submitStatus: SubmitChatStatus.failure));
       },
-      (statusCode) {
-        emit(state.copyWith(
-            chats: updateList, submitStatus: SubmitChatStatus.successfully));
-      },
+      (chat) {},
     );
   }
 }

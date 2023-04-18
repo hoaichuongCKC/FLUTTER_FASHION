@@ -5,6 +5,7 @@ import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
+import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
@@ -93,6 +94,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
       },
       (dataReposonse) {
         if (dataReposonse.status) {
+          PusherBeamsApp.instance.dispose();
           //setup init location
           AppRoutes.router.go(Routes.LOGIN);
           //dispose register dependency injection
@@ -162,13 +164,28 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     );
   }
 
-  void _logoutGoogle() async {
-    await signOut();
+  void forgotPassword(
+      BuildContext context, String phone, String newPass) async {
+    loadingAlert(context: context);
+    final result = await _authRepositoryImpl.forgotPassword(phone, newPass);
+
+    //remove poup loading
+    AppRoutes.router.pop();
+    result.fold(
+      (error) {
+        if (error.isNotEmpty) {
+          errorAlert(context: context, message: error);
+          emit(state.copyWith(status: AppStatus.error));
+        }
+      },
+      (data) async {
+        await successAlert(context: context, message: data.message);
+        AppRoutes.router.go(Routes.LOGIN);
+      },
+    );
   }
 
-  @override
-  String toString() {
-    super.toString();
-    return "state: $state";
+  void _logoutGoogle() async {
+    await signOut();
   }
 }

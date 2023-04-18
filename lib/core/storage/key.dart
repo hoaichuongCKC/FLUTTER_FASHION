@@ -13,6 +13,8 @@ class KeyStorage {
 
   static const String userLanguage = "user-language-";
 
+  static const String userSearch = "user-search-";
+
   static String get getToken => HydratedBloc.storage.read(token);
 }
 

@@ -14,7 +14,7 @@ class UserInformation extends StatelessWidget {
         children: [
           Text(
             user.username,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           user.phone.isEmpty
               ? Padding(
@@ -34,11 +34,12 @@ class UserInformation extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Vui lòng cập nhật thông tin",
+                              AppLocalizations.of(context)!
+                                  .please_update_information,
                               style: Theme.of(context)
                                   .textTheme
                                   .displaySmall!
-                                  .copyWith(fontSize: 14.0),
+                                  .copyWith(fontSize: 12.0),
                             ),
                           ),
                         ),
@@ -51,7 +52,7 @@ class UserInformation extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall!
-                      .copyWith(fontSize: 14.0),
+                      .copyWith(fontSize: 12.0),
                 ),
         ],
       ),

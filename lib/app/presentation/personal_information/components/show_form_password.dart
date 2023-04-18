@@ -157,6 +157,12 @@ class _ShowInputPasswordState extends State<ShowInputPassword> {
       onChanged: (value) => widget.onChanged(value),
       textInputAction: TextInputAction.done,
       keyboardType: TextInputType.phone,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Password incorrect";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         filled: true,
         fillColor: lightColor,

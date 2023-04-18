@@ -49,7 +49,8 @@ class ItemCart extends StatelessWidget {
                         aspectRatio: 1.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiService.imageUrl +
-                              item.product.product_detail![0].photo,
+                              item.product.product_detail![item.indexImage]
+                                  .photo,
                           fit: BoxFit.fitWidth,
                           placeholder: (context, url) {
                             return ColoredBox(

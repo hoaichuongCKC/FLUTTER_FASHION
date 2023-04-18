@@ -16,28 +16,36 @@ class PaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBackgroundBlur.scroll(
-      isHasBackground: false,
-      centerTitle: false,
-      title: "Đơn hàng",
-      child: BlocListener<PaymentCubit, PaymentState>(
-        listener: (context, state) {
-          if (state.status == AppStatus.success) {
-            context.read<CartCubit>().removeAll();
-            context.read<PaymentCubit>().removeAll();
-          }
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            AddressPaymentView(),
-            ListOrderView(),
-            InfoUserOrderView(),
-            MethodPaymentView(),
-            ListVoucherView(),
-            DetailOrderView(),
-            RulesAppView(),
-          ],
+    return BlocProvider(
+      create: (context) => getIt<PaymentCubit>(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.order),
+          centerTitle: false,
+        ),
+        body: BlocListener<PaymentCubit, PaymentState>(
+          listener: (context, state) {
+            if (state.status == AppStatus.success) {
+              context.read<CartCubit>().removeAll();
+              context.read<PaymentCubit>().removeAll();
+            }
+          },
+          child: SingleChildScrollView(
+            padding:
+                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                AddressPaymentView(),
+                ListOrderView(),
+                InfoUserOrderView(),
+                MethodPaymentView(),
+                ListVoucherView(),
+                DetailOrderView(),
+                RulesAppView(),
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -1,32 +1,24 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class GoRouterObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (kDebugMode) {
-      print('MyTest didPush: $route');
-    }
+    log('MyTest didPush: $route', name: "Go routes push");
   }
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (kDebugMode) {
-      print('MyTest didPop: $route');
-    }
+    log('MyTest didPush: $route', name: "Go routes pop");
   }
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (kDebugMode) {
-      print('MyTest didRemove: $route');
-    }
+    log('MyTest didPush: $route', name: "Go routes remove");
   }
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
-    if (kDebugMode) {
-      print('MyTest didReplace: $newRoute');
-    }
+    log('MyTest didPush: $newRoute', name: "Go routes didReplace");
   }
 }

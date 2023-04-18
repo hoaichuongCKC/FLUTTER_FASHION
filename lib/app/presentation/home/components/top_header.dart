@@ -61,7 +61,7 @@ class TopHeaderHome extends StatelessWidget {
                       onTap: () => AppRoutes.router.push(Routes.CART),
                       child: BlocBuilder<UserCubit, UserState>(
                         builder: (context, state) {
-                          return state.whenOrNull(
+                          return state.when(
                             initial: () => const SizedBox(),
                             loading: () => ColoredBox(
                               color: disableDarkColor.withOpacity(0.2),
@@ -70,6 +70,7 @@ class TopHeaderHome extends StatelessWidget {
                                 height: 24.0,
                               ),
                             ),
+                            failure: (error) => Text(error),
                             fetchCompleted: (user) => SizedBox(
                               width: 24.0,
                               height: 24.0,

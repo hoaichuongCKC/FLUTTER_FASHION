@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names
-import 'dart:convert';
-import 'package:flutter_fashion/app/models/product/product.dart';
+
 import 'package:flutter_fashion/app/presentation/category/category_page.dart';
 import 'package:flutter_fashion/app/presentation/create_review/create_review_page.dart';
 import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_fashion/app/presentation/otp/otp_page.dart';
 import 'package:flutter_fashion/app/presentation/payment/payment_page.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/product_detail_page.dart';
+import 'package:flutter_fashion/app/presentation/promotion/promotion_page.dart';
 import 'package:flutter_fashion/app/presentation/register/register_page.dart';
 import 'package:flutter_fashion/app/presentation/room_chat/room_chat_page.dart';
 import 'package:flutter_fashion/app/presentation/search/search_page.dart';
@@ -24,12 +24,13 @@ import 'package:flutter_fashion/common/transition/fade.dart';
 import 'package:flutter_fashion/common/transition/right_to_left.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/routes/export.dart';
-import 'package:flutter_fashion/routes/observer.dart';
 import '../app/presentation/cart/cart_page.dart';
 import 'dart:developer';
 
 import '../app/presentation/favorites/favorite_page.dart';
+import '../app/presentation/forgot_password/forgot_password_page.dart';
 import '../app/presentation/order_detail/order_detail_page.dart';
+import '../app/presentation/review_success/review_success_page.dart';
 
 abstract class Routes {
   Routes._();
@@ -44,6 +45,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const LOGIN = _Paths.LOGIN;
   static const SIGNUP = _Paths.SIGNUP;
+  static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const REGISTER = _Paths.REGISTER;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const SEARCH = _Paths.SEARCH;
@@ -61,9 +63,11 @@ abstract class Routes {
   static const MESSENGER = _Paths.MESSENGER;
   static const FILTER = _Paths.FILTER;
   static const PAYMENT = _Paths.PAYMENT;
+  static const PROMOTION = _Paths.PROMOTION;
   static const ORDER_DETAIL = _Paths.ORDER_DETAIL;
   static const RATING_PRODUCT = _Paths.RATING_PRODUCT;
   static const NOTIFICATION_DETAIL = _Paths.NOTIFICATION_DETAIL;
+  static const REVIEW_SUCCESS = _Paths.REVIEW_SUCCESS;
 
   //
 
@@ -76,13 +80,15 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SIGNUP = '/sign-up';
+  static const FORGOT_PASSWORD = 'forgot-password';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
   static const SEARCH = 'search';
   static const CATEGORY = 'category';
   static const CART = '/cart';
-  static const PRODUCT_DETAIL = 'product_detail:product';
+  static const PRODUCT_DETAIL = 'product_detail';
   static const ADDRESS_MANAGEMENT = 'address_management';
+  static const PROMOTION = '/promotion';
 
   //second
   static const ORDER_DETAIL = 'order_detail';
@@ -98,6 +104,7 @@ abstract class _Paths {
   static const PAYMENT = '/payment';
   static const RATING_PRODUCT = 'rating_product';
   static const NOTIFICATION_DETAIL = 'notification_detail';
+  static const REVIEW_SUCCESS = 'review-success';
 }
 
 abstract class Names {
@@ -114,10 +121,11 @@ abstract class Names {
   //page second
   // static const SETTING = '/setting';
   static const SIGNUP = 'sign-up';
+  static const FORGOT_PASSWORD = 'forgot-password';
   static const OTP = 'otp';
   static const REGISTER = 'register';
   static const FILTER = 'filter';
-
+  static const PROMOTION = 'promotion';
   static const SETTING = 'setting';
   static const ORDER = 'order';
   static const ORDER_DETAIL = 'order_detail';
@@ -126,6 +134,7 @@ abstract class Names {
   static const ADDRESS_MANAGEMENT = 'address_management';
   static const RATING_PRODUCT = 'rating_product';
   static const NOTIFICATION_DETAIL = 'notification_detail';
+  static const REVIEW_SUCCESS = 'review-success';
 }
 
 class AppRoutes {
@@ -135,7 +144,7 @@ class AppRoutes {
     initialLocation: initLocation,
     navigatorKey: Routes.navigatorKey,
     debugLogDiagnostics: true,
-    observers: [GoRouterObserver()],
+    // observers: [GoRouterObserver()],
     redirect: (context, state) {
       log("Redirect: ${state.location}", name: "Redirect");
 
@@ -170,6 +179,7 @@ class AppRoutes {
         parentNavigatorKey: Routes.navigatorKey,
         builder: (context, state) => SignUpPage(
           key: state.pageKey,
+          payload: state.extra as String,
         ),
         routes: [
           GoRoute(
@@ -181,7 +191,18 @@ class AppRoutes {
               child: OtpPage(
                 phoneNumber: state.queryParams["phone"]!,
                 verificationId: state.queryParams["verificationId"]!,
+                payload: state.queryParams['payload'] ?? "",
               ),
+            ),
+          ),
+          GoRoute(
+            name: Names.FORGOT_PASSWORD,
+            path: Routes.FORGOT_PASSWORD,
+            parentNavigatorKey: Routes.navigatorKey,
+            pageBuilder: (context, state) => SlideTransitionPage(
+              key: state.pageKey,
+              child: ForgotPasswordPage(
+                  phoneNumber: state.queryParams["phone"] ?? ""),
             ),
           ),
           GoRoute(
@@ -227,13 +248,28 @@ class AppRoutes {
           );
         },
       ),
+      GoRoute(
+        path: Routes.PROMOTION,
+        name: Names.PROMOTION,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) {
+          return FadeTransitionPage<PromotionPage>(
+            key: state.pageKey,
+            child: const PromotionPage(),
+          );
+        },
+      ),
       ShellRoute(
         navigatorKey: Routes.shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
+          final isVisibility = state.subloc == Routes.HOME ||
+              state.subloc == Routes.NOTIFICATION ||
+              Routes.PROFILE == state.subloc;
+          final widget = BottomNavigationBarApp(pagePath: state.subloc);
           return Scaffold(
             body: child,
             /* ... */
-            bottomNavigationBar: BottomNavigationBarApp(pagePath: state.subloc),
+            bottomNavigationBar: isVisibility ? widget : null,
           );
         },
         routes: <RouteBase>[
@@ -255,20 +291,6 @@ class AppRoutes {
                   key: state.pageKey,
                   child: const SearchPage(),
                 ),
-              ),
-              GoRoute(
-                name: Names.CATEGORY,
-                path: Routes.CATEGORY,
-                parentNavigatorKey: Routes.navigatorKey,
-                pageBuilder: (context, state) =>
-                    FadeTransitionPage<CategoryPage>(
-                  key: state.pageKey,
-                  child: CategoryPage(
-                    searchKey: state.queryParams["search_key"]!,
-                    item: state.queryParams["item"]!,
-                    index: int.parse(state.queryParams["index"]!),
-                  ),
-                ),
                 routes: [
                   GoRoute(
                     name: Names.FILTER,
@@ -283,16 +305,26 @@ class AppRoutes {
                 ],
               ),
               GoRoute(
+                name: Names.CATEGORY,
+                path: Routes.CATEGORY,
+                parentNavigatorKey: Routes.navigatorKey,
+                pageBuilder: (context, state) =>
+                    FadeTransitionPage<CategoryPage>(
+                  key: state.pageKey,
+                  child: CategoryPage(
+                    searchKey: state.queryParams["search_key"] ?? "",
+                    index: int.parse(state.queryParams["index"]!),
+                  ),
+                ),
+              ),
+              GoRoute(
                 name: Names.PRODUCT_DETAIL,
                 path: Routes.PRODUCT_DETAIL,
                 parentNavigatorKey: Routes.navigatorKey,
                 pageBuilder: (context, state) =>
                     FadeTransitionPage<ProductDetailPage>(
                   key: state.pageKey,
-                  child: ProductDetailPage(
-                    product: ProductModel.fromJson(
-                        jsonDecode(state.params["product"]!)),
-                  ),
+                  child: const ProductDetailPage(),
                 ),
               ),
             ],
@@ -366,6 +398,21 @@ class AppRoutes {
                           ),
                         );
                       },
+                      routes: [
+                        GoRoute(
+                          path: Routes.REVIEW_SUCCESS,
+                          name: Names.REVIEW_SUCCESS,
+                          parentNavigatorKey: Routes.navigatorKey,
+                          pageBuilder: (context, state) {
+                            final index =
+                                int.parse(state.queryParams["index"]!);
+                            return SlideTransitionPage<ReviewSuccessPage>(
+                              key: state.pageKey,
+                              child: ReviewSuccessPage(indexParam: index),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       path: Routes.RATING_PRODUCT,

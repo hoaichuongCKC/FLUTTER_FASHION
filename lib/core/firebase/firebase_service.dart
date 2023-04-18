@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +14,7 @@ mixin FirebaseMixin {
       required Function(String verificationId, int? resendToken) codeSent,
       required Function(String verificationId) codeAutoRetrievalTimeout,
       int? forceResendingToken,
-      Duration timeoutDuration = const Duration(seconds: 2 * 60)}) async {
+      Duration timeoutDuration = const Duration(seconds: 30)}) async {
     await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) =>

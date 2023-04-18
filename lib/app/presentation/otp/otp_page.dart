@@ -7,9 +7,13 @@ import '../../../export.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage(
-      {super.key, required this.phoneNumber, required this.verificationId});
+      {super.key,
+      required this.phoneNumber,
+      required this.verificationId,
+      required this.payload});
   final String phoneNumber;
   final String verificationId;
+  final String payload;
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -109,8 +113,8 @@ class _OtpPageState extends State<OtpPage> {
                       ],
                       onFieldSubmitted: (value) => context
                           .read<AuthPhoneCubit>()
-                          .verifyOtp(widget.phoneNumber, value,
-                              widget.verificationId, context),
+                          .verifyOtp(widget.phoneNumber, value, context,
+                              widget.verificationId, widget.payload),
                       controller: otpController,
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 16,
@@ -142,7 +146,8 @@ class _OtpPageState extends State<OtpPage> {
                           return TextButton(
                             onPressed: () => context
                                 .read<AuthPhoneCubit>()
-                                .authPhone(widget.phoneNumber, context,
+                                .authPhone(
+                                    widget.phoneNumber, context, widget.payload,
                                     isResend: true),
                             child: const Text('Send again'),
                           );

@@ -5,34 +5,52 @@ import '../../../../export.dart';
 class TextFormFieldRegister extends StatefulWidget {
   const TextFormFieldRegister(
       {super.key,
-      required this.controller,
+      this.controller,
       this.keyboardType,
       required this.onChanged,
       this.hintText,
       this.prefixIcon,
+      this.readOnly = false,
       required this.labelText,
       this.subFixIcon,
       this.isobscureText = false,
       this.textInputAction = TextInputAction.next,
       this.validator});
-  final TextEditingController controller;
+  final TextEditingController? controller;
+
   final TextInputType? keyboardType;
+
   final String? hintText;
+
   final Function(String?) onChanged;
+
   final String? Function(String?)? validator;
+
   final Widget? prefixIcon;
+
   final Widget? subFixIcon;
+
   final Widget labelText;
+
   final bool isobscureText;
+
   final TextInputAction? textInputAction;
+
+  final bool readOnly;
   @override
   State<TextFormFieldRegister> createState() => _TextFormFieldRegisterState();
 }
 
 class _TextFormFieldRegisterState extends State<TextFormFieldRegister> {
-  TextEditingController get _controller => widget.controller;
+  late TextEditingController _controller;
 
   bool _isVisibility = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -48,6 +66,7 @@ class _TextFormFieldRegisterState extends State<TextFormFieldRegister> {
         widget.labelText,
         const SizedBox(height: 5.0),
         TextFormField(
+          readOnly: widget.readOnly,
           key: ValueKey(widget.hintText),
           validator: widget.validator ??
               (value) {
