@@ -28,8 +28,16 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
 
     if (!isResend) loadingAlert(context: context);
 
+    if (payload == Names.REGISTER) {
+      await _handleAuthPhoneFirebase(
+        phoneNumber,
+        isResend,
+        context,
+        payload,
+      );
+      return;
+    }
     final result = await _auth.checkPhone(phoneNumber);
-
     result.fold(
       (l) => emit(const AuthPhoneState.error()),
       (response) async {

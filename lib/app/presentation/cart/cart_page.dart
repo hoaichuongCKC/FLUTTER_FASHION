@@ -32,8 +32,7 @@ class CartPage extends StatelessWidget {
                         AppRoutes.router.pushNamed(
                           Names.CATEGORY,
                           queryParams: {
-                            "search_key": "",
-                            "index": 0,
+                            "index": "0",
                           },
                         );
                       },

@@ -26,7 +26,7 @@ _$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
           ? null
           : Category.fromJson(json['category'] as Map<String, dynamic>),
       product_detail: (json['product_detail'] as List<dynamic>?)
-          ?.map((e) => PhotoModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ProductDetailModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -68,13 +68,28 @@ _$_Properties _$$_PropertiesFromJson(Map<String, dynamic> json) =>
     _$_Properties(
       sizes: json['sizes'] as List<dynamic>?,
       origin: json['origin'] as String?,
-      colors:
-          (json['colors'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$_PropertiesToJson(_$_Properties instance) =>
     <String, dynamic>{
       'sizes': instance.sizes,
       'origin': instance.origin,
-      'colors': instance.colors,
+    };
+
+_$_ProductDetailModel _$$_ProductDetailModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_ProductDetailModel(
+      id: json['id'] as int,
+      photo: json['photo'] as String,
+      color: json['color'] as String?,
+      stock: json['stock'] as int?,
+    );
+
+Map<String, dynamic> _$$_ProductDetailModelToJson(
+        _$_ProductDetailModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'photo': instance.photo,
+      'color': instance.color,
+      'stock': instance.stock,
     };

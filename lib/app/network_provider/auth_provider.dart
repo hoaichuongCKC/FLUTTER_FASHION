@@ -66,11 +66,13 @@ class AuthProviderImpl extends AuthProvider {
         body: params.toJson(),
         isRequestHeader: false,
         images: [File(params.image.path)]);
+
+    print(response.statusCode);
     if (response.statusCode != 200) {
       throw ServerException();
     }
-    return ResponseData.fromJson(
-        jsonDecode(await response.stream.bytesToString()));
+    final data = await response.stream.bytesToString();
+    return ResponseData.fromJson(jsonDecode(data));
   }
 
   @override

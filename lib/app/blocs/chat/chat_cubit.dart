@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/chat/chat.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
@@ -42,17 +43,46 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   void createChat(String message) async {
-    final state = this.state;
-
-    emit(state.copyWith(submitStatus: SubmitChatStatus.sending));
+    final userId = getIt.get<UserCubit>().user.id;
+    final chat = ChatModel(
+        id: -1,
+        room_chat_id: -1,
+        sender_id: userId,
+        receiver_id: -1,
+        message: message,
+        created_at: DateTime.now());
+    final updatedChats = [...state.chats, chat];
+    emit(state.copyWith(
+        chats: updatedChats, submitStatus: SubmitChatStatus.sending));
 
     final result = await _userRepositoryImpl.createChat(message: message);
 
     result.fold(
       (error) {
-        emit(state.copyWith(submitStatus: SubmitChatStatus.failure));
+        AppSnackbarMessenger.showMessage(
+            content: error, background: lightColor);
+        final update = List<ChatModel>.from(state.chats)..removeLast();
+        emit(state.copyWith(
+            chats: update, submitStatus: SubmitChatStatus.failure));
       },
-      (chat) {},
+      (chatReponse) {
+        final update = List<ChatModel>.from(state.chats).map((item) {
+          if (item.id == chat.id) {
+            return item.copyWith(
+              id: chatReponse.id,
+              room_chat_id: chatReponse.room_chat_id,
+              sender_id: chatReponse.sender_id,
+              receiver_id: chatReponse.receiver_id,
+              message: message,
+              created_at: chatReponse.created_at,
+            );
+          }
+          return item;
+        }).toList();
+
+        emit(state.copyWith(
+            chats: update, submitStatus: SubmitChatStatus.successfully));
+      },
     );
   }
 }

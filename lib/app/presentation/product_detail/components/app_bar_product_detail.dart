@@ -10,13 +10,14 @@ import '../../../../export.dart';
 
 class AppBarProductDetail extends StatelessWidget {
   const AppBarProductDetail({super.key});
-  static GlobalKey cartKey = GlobalKey();
+  static GlobalKey appbarKey = GlobalKey();
 
   static Offset getOffset() {
-    final box = cartKey.currentContext!.findRenderObject() as RenderBox;
+    final box = appbarKey.currentContext!.findRenderObject() as RenderBox;
 
     Offset offset = box.localToGlobal(Offset.zero);
-    offset = Offset(offset.dx - box.size.width * 3, 0);
+
+    offset = Offset(box.size.width - box.size.width * 0.4, 0);
     return offset;
   }
 
@@ -27,6 +28,7 @@ class AppBarProductDetail extends StatelessWidget {
       child: LimitedBox(
         maxHeight: 60,
         child: Row(
+          key: appbarKey,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
@@ -66,7 +68,6 @@ class AppBarProductDetail extends StatelessWidget {
                     InkWell(
                       onTap: () => AppRoutes.router.push(Routes.CART),
                       child: SizedBox(
-                        key: cartKey,
                         width: 24.0,
                         height: 24.0,
                         child: Stack(

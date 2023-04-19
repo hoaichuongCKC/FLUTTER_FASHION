@@ -30,7 +30,7 @@ class NotificationService {
       'your_channel_id_0',
       'pushnotification',
       'desc',
-      importance: Importance.max,
+      importance: Importance.high,
       priority: Priority.high,
       showProgress: true,
       playSound: true,
@@ -57,7 +57,7 @@ class NotificationService {
       id,
       title,
       body,
-      _notificationDetails,
+      _notificationDetails..android,
       payload: payload,
     );
   }

@@ -121,7 +121,11 @@ class ItemProduct extends StatelessWidget {
                 failure: (error) => const SizedBox(),
                 fetchCompleted: (user) =>
                     BlocSelector<FavoriteCubit, FavoriteState, bool>(
-                  selector: (state) => state.listProduct.contains(product),
+                  selector: (state) {
+                    final bool isCheck = (state.listProduct
+                        .any((element) => element.id == product.id));
+                    return isCheck;
+                  },
                   builder: (context, state) {
                     if (!state) {
                       return const SizedBox();

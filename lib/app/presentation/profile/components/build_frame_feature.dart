@@ -11,8 +11,8 @@ class BuildFrameFeature extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: verticalPadding - 7),
       margin: const EdgeInsets.only(top: verticalPadding - 4),
       constraints: const BoxConstraints(
-        maxHeight: 180.0,
-        minHeight: 160.0,
+        maxHeight: 160.0,
+        minHeight: 140.0,
       ),
       height: size.height * 0.3,
       decoration: BoxDecoration(
@@ -23,8 +23,8 @@ class BuildFrameFeature extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: primaryColor.withOpacity(0.5),
-            offset: const Offset(1, 3),
-            blurRadius: 7.0,
+            offset: const Offset(0.5, 2),
+            blurRadius: 3.0,
           )
         ],
       ),
@@ -41,10 +41,10 @@ class BuildFrameFeature extends StatelessWidget {
                           listFeatureFirst[listFeatureFirst.indexOf(e)].path),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
-                          minHeight: 60,
-                          minWidth: 60,
-                          maxHeight: 70,
-                          maxWidth: 70,
+                          minHeight: 50,
+                          minWidth: 50,
+                          maxHeight: 60,
+                          maxWidth: 60,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,10 +79,10 @@ class BuildFrameFeature extends StatelessWidget {
                           listFeatureSecond[listFeatureSecond.indexOf(e)].path),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
-                          minHeight: 60,
-                          minWidth: 60,
-                          maxHeight: 70,
-                          maxWidth: 70,
+                          minHeight: 50,
+                          minWidth: 50,
+                          maxHeight: 60,
+                          maxWidth: 60,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,

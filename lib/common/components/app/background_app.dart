@@ -180,7 +180,8 @@ class AppBackgroundBlur extends StatelessWidget {
     }
     if (type == ScreenType.withAppBar) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(
+            vertical: 8.0, horizontal: horizontalPadding - 4),
         child: ConstrainedBoxWidget(
           currentHeight: 0.1,
           maxHeight: 50,
@@ -191,15 +192,15 @@ class AppBackgroundBlur extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 leading == null
-                    ? const SizedBox()
-                    : InkWell(
+                    ? InkWell(
                         onTap: () => AppRoutes.router.pop(),
                         child: Icon(
                           Icons.arrow_back,
                           size: 24.0,
                           color: Theme.of(context).iconTheme.color,
                         ),
-                      ),
+                      )
+                    : leading!,
                 title!.isEmpty ? const SizedBox() : const SizedBox(width: 10.0),
                 Align(
                   alignment: Alignment.center,

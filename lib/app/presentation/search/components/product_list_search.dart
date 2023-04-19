@@ -16,12 +16,18 @@ class ProductListSearch extends StatelessWidget {
         final products = state.products;
 
         final status = state.status;
-        if (products.isEmpty && status == AppStatus.loading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+        if (status == AppStatus.loading) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                CircularProgressIndicator(),
+              ],
+            ),
           );
         }
-        if (products.isNotEmpty && status == AppStatus.init) {
+        if (products.isEmpty && status == AppStatus.init) {
           return const SizedBox();
         }
 

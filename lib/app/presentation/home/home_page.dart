@@ -2,6 +2,7 @@ import 'package:flutter_fashion/app/blocs/banner/banner_cubit.dart';
 import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/blocs/popular_search/popular_search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
+import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/components/address_user_home.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     context.read<CategoryCubit>().fetchData();
     context.read<ProductCubit>().fetchData();
     context.read<PopularSearchCubit>().fetchData();
+    context.read<PromotionCubit>().fetchPromotion(null);
   }
 
   @override
@@ -58,6 +60,7 @@ class _HomePageState extends State<HomePage> {
           context.read<CategoryCubit>().onRefresh();
           context.read<ProductCubit>().onRefresh();
           context.read<PopularSearchCubit>().onRefresh();
+          context.read<PromotionCubit>().onRefresh();
         },
         child: CustomScrollView(
           controller: _scrollController,

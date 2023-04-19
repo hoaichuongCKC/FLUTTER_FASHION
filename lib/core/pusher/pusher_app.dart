@@ -13,6 +13,8 @@ abstract class PusherApp {
 
   Future<void> initialize({required dynamic Function(PusherEvent)? onEvent});
 
+  void trigger(PusherEvent event);
+
   void handleData(BuildContext context, dynamic data);
 
   Future<void> dispose();

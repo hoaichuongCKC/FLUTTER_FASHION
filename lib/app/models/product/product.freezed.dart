@@ -33,7 +33,8 @@ mixin _$ProductModel {
   int? get sold => throw _privateConstructorUsedError;
   bool? get is_popular => throw _privateConstructorUsedError;
   Category? get category => throw _privateConstructorUsedError;
-  List<PhotoModel>? get product_detail => throw _privateConstructorUsedError;
+  List<ProductDetailModel>? get product_detail =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,7 +62,7 @@ abstract class $ProductModelCopyWith<$Res> {
       int? sold,
       bool? is_popular,
       Category? category,
-      List<PhotoModel>? product_detail});
+      List<ProductDetailModel>? product_detail});
 
   $PropertiesCopyWith<$Res>? get properties;
   $CategoryCopyWith<$Res>? get category;
@@ -151,7 +152,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       product_detail: freezed == product_detail
           ? _value.product_detail
           : product_detail // ignore: cast_nullable_to_non_nullable
-              as List<PhotoModel>?,
+              as List<ProductDetailModel>?,
     ) as $Val);
   }
 
@@ -202,7 +203,7 @@ abstract class _$$_ProductModelCopyWith<$Res>
       int? sold,
       bool? is_popular,
       Category? category,
-      List<PhotoModel>? product_detail});
+      List<ProductDetailModel>? product_detail});
 
   @override
   $PropertiesCopyWith<$Res>? get properties;
@@ -292,7 +293,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
       product_detail: freezed == product_detail
           ? _value._product_detail
           : product_detail // ignore: cast_nullable_to_non_nullable
-              as List<PhotoModel>?,
+              as List<ProductDetailModel>?,
     ));
   }
 }
@@ -315,7 +316,7 @@ class _$_ProductModel implements _ProductModel {
       this.sold,
       this.is_popular,
       this.category,
-      final List<PhotoModel>? product_detail})
+      final List<ProductDetailModel>? product_detail})
       : _product_detail = product_detail;
 
   factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -347,9 +348,9 @@ class _$_ProductModel implements _ProductModel {
   final bool? is_popular;
   @override
   final Category? category;
-  final List<PhotoModel>? _product_detail;
+  final List<ProductDetailModel>? _product_detail;
   @override
-  List<PhotoModel>? get product_detail {
+  List<ProductDetailModel>? get product_detail {
     final value = _product_detail;
     if (value == null) return null;
     if (_product_detail is EqualUnmodifiableListView) return _product_detail;
@@ -438,7 +439,7 @@ abstract class _ProductModel implements ProductModel {
       final int? sold,
       final bool? is_popular,
       final Category? category,
-      final List<PhotoModel>? product_detail}) = _$_ProductModel;
+      final List<ProductDetailModel>? product_detail}) = _$_ProductModel;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
@@ -470,7 +471,7 @@ abstract class _ProductModel implements ProductModel {
   @override
   Category? get category;
   @override
-  List<PhotoModel>? get product_detail;
+  List<ProductDetailModel>? get product_detail;
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>
@@ -674,7 +675,6 @@ Properties _$PropertiesFromJson(Map<String, dynamic> json) {
 mixin _$Properties {
   List<dynamic>? get sizes => throw _privateConstructorUsedError;
   String? get origin => throw _privateConstructorUsedError;
-  List<String>? get colors => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -688,7 +688,7 @@ abstract class $PropertiesCopyWith<$Res> {
           Properties value, $Res Function(Properties) then) =
       _$PropertiesCopyWithImpl<$Res, Properties>;
   @useResult
-  $Res call({List<dynamic>? sizes, String? origin, List<String>? colors});
+  $Res call({List<dynamic>? sizes, String? origin});
 }
 
 /// @nodoc
@@ -706,7 +706,6 @@ class _$PropertiesCopyWithImpl<$Res, $Val extends Properties>
   $Res call({
     Object? sizes = freezed,
     Object? origin = freezed,
-    Object? colors = freezed,
   }) {
     return _then(_value.copyWith(
       sizes: freezed == sizes
@@ -717,10 +716,6 @@ class _$PropertiesCopyWithImpl<$Res, $Val extends Properties>
           ? _value.origin
           : origin // ignore: cast_nullable_to_non_nullable
               as String?,
-      colors: freezed == colors
-          ? _value.colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
     ) as $Val);
   }
 }
@@ -733,7 +728,7 @@ abstract class _$$_PropertiesCopyWith<$Res>
       __$$_PropertiesCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<dynamic>? sizes, String? origin, List<String>? colors});
+  $Res call({List<dynamic>? sizes, String? origin});
 }
 
 /// @nodoc
@@ -749,7 +744,6 @@ class __$$_PropertiesCopyWithImpl<$Res>
   $Res call({
     Object? sizes = freezed,
     Object? origin = freezed,
-    Object? colors = freezed,
   }) {
     return _then(_$_Properties(
       sizes: freezed == sizes
@@ -760,10 +754,6 @@ class __$$_PropertiesCopyWithImpl<$Res>
           ? _value.origin
           : origin // ignore: cast_nullable_to_non_nullable
               as String?,
-      colors: freezed == colors
-          ? _value._colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
     ));
   }
 }
@@ -771,10 +761,8 @@ class __$$_PropertiesCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Properties implements _Properties {
-  const _$_Properties(
-      {final List<dynamic>? sizes, this.origin, final List<String>? colors})
-      : _sizes = sizes,
-        _colors = colors;
+  const _$_Properties({final List<dynamic>? sizes, this.origin})
+      : _sizes = sizes;
 
   factory _$_Properties.fromJson(Map<String, dynamic> json) =>
       _$$_PropertiesFromJson(json);
@@ -791,19 +779,10 @@ class _$_Properties implements _Properties {
 
   @override
   final String? origin;
-  final List<String>? _colors;
-  @override
-  List<String>? get colors {
-    final value = _colors;
-    if (value == null) return null;
-    if (_colors is EqualUnmodifiableListView) return _colors;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
 
   @override
   String toString() {
-    return 'Properties(sizes: $sizes, origin: $origin, colors: $colors)';
+    return 'Properties(sizes: $sizes, origin: $origin)';
   }
 
   @override
@@ -812,17 +791,13 @@ class _$_Properties implements _Properties {
         (other.runtimeType == runtimeType &&
             other is _$_Properties &&
             const DeepCollectionEquality().equals(other._sizes, _sizes) &&
-            (identical(other.origin, origin) || other.origin == origin) &&
-            const DeepCollectionEquality().equals(other._colors, _colors));
+            (identical(other.origin, origin) || other.origin == origin));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_sizes),
-      origin,
-      const DeepCollectionEquality().hash(_colors));
+      runtimeType, const DeepCollectionEquality().hash(_sizes), origin);
 
   @JsonKey(ignore: true)
   @override
@@ -840,9 +815,7 @@ class _$_Properties implements _Properties {
 
 abstract class _Properties implements Properties {
   const factory _Properties(
-      {final List<dynamic>? sizes,
-      final String? origin,
-      final List<String>? colors}) = _$_Properties;
+      {final List<dynamic>? sizes, final String? origin}) = _$_Properties;
 
   factory _Properties.fromJson(Map<String, dynamic> json) =
       _$_Properties.fromJson;
@@ -852,9 +825,197 @@ abstract class _Properties implements Properties {
   @override
   String? get origin;
   @override
-  List<String>? get colors;
-  @override
   @JsonKey(ignore: true)
   _$$_PropertiesCopyWith<_$_Properties> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ProductDetailModel _$ProductDetailModelFromJson(Map<String, dynamic> json) {
+  return _ProductDetailModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProductDetailModel {
+  int get id => throw _privateConstructorUsedError;
+  String get photo => throw _privateConstructorUsedError;
+  String? get color => throw _privateConstructorUsedError;
+  int? get stock => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ProductDetailModelCopyWith<ProductDetailModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProductDetailModelCopyWith<$Res> {
+  factory $ProductDetailModelCopyWith(
+          ProductDetailModel value, $Res Function(ProductDetailModel) then) =
+      _$ProductDetailModelCopyWithImpl<$Res, ProductDetailModel>;
+  @useResult
+  $Res call({int id, String photo, String? color, int? stock});
+}
+
+/// @nodoc
+class _$ProductDetailModelCopyWithImpl<$Res, $Val extends ProductDetailModel>
+    implements $ProductDetailModelCopyWith<$Res> {
+  _$ProductDetailModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? photo = null,
+    Object? color = freezed,
+    Object? stock = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stock: freezed == stock
+          ? _value.stock
+          : stock // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ProductDetailModelCopyWith<$Res>
+    implements $ProductDetailModelCopyWith<$Res> {
+  factory _$$_ProductDetailModelCopyWith(_$_ProductDetailModel value,
+          $Res Function(_$_ProductDetailModel) then) =
+      __$$_ProductDetailModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id, String photo, String? color, int? stock});
+}
+
+/// @nodoc
+class __$$_ProductDetailModelCopyWithImpl<$Res>
+    extends _$ProductDetailModelCopyWithImpl<$Res, _$_ProductDetailModel>
+    implements _$$_ProductDetailModelCopyWith<$Res> {
+  __$$_ProductDetailModelCopyWithImpl(
+      _$_ProductDetailModel _value, $Res Function(_$_ProductDetailModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? photo = null,
+    Object? color = freezed,
+    Object? stock = freezed,
+  }) {
+    return _then(_$_ProductDetailModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stock: freezed == stock
+          ? _value.stock
+          : stock // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ProductDetailModel implements _ProductDetailModel {
+  const _$_ProductDetailModel(
+      {required this.id, required this.photo, this.color, this.stock});
+
+  factory _$_ProductDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ProductDetailModelFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String photo;
+  @override
+  final String? color;
+  @override
+  final int? stock;
+
+  @override
+  String toString() {
+    return 'ProductDetailModel(id: $id, photo: $photo, color: $color, stock: $stock)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ProductDetailModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.stock, stock) || other.stock == stock));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, photo, color, stock);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ProductDetailModelCopyWith<_$_ProductDetailModel> get copyWith =>
+      __$$_ProductDetailModelCopyWithImpl<_$_ProductDetailModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ProductDetailModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ProductDetailModel implements ProductDetailModel {
+  const factory _ProductDetailModel(
+      {required final int id,
+      required final String photo,
+      final String? color,
+      final int? stock}) = _$_ProductDetailModel;
+
+  factory _ProductDetailModel.fromJson(Map<String, dynamic> json) =
+      _$_ProductDetailModel.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get photo;
+  @override
+  String? get color;
+  @override
+  int? get stock;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ProductDetailModelCopyWith<_$_ProductDetailModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

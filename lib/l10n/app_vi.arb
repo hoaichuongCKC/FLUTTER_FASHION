@@ -618,6 +618,35 @@
   "please_update_information": "Vui lòng cập nhật thông tin",
   "@please_update_information": {
     "description": "Không hiểu gì cả"
-  }
+  },
 
+  "text_validate_valid_pass": "Mật khẩu phải từ 7 ký tự trở lên và có 1 chữ thường, chữ hoa và 1 số.",
+  "@text_validate_valid_pass": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "please_choose_color": "Vui lòng chọn màu sắc",
+  "@please_choose_color": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "please_choose_size": "Vui lòng chọn kích thước",
+  "@please_choose_size": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "edit": "Chỉnh sửa",
+  "@edit": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_choose_avatar": "Vui lòng chọn avatar",
+  "@please_choose_avatar": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "password_not_match": "Mật khẩu không trùng khớp",
+  "@password_not_match": {
+    "description": "nó là chỉnh sửa"
+  }
 }

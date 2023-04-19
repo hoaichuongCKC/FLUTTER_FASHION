@@ -73,6 +73,12 @@ class _TextFormFieldRegisterState extends State<TextFormFieldRegister> {
                 if (value!.isEmpty) {
                   return "Invalid form";
                 }
+                if (widget.isobscureText) {
+                  if (!value.isValidPassword) {
+                    return AppLocalizations.of(context)!
+                        .text_validate_valid_pass;
+                  }
+                }
                 return null;
               },
           controller: _controller,
@@ -82,7 +88,7 @@ class _TextFormFieldRegisterState extends State<TextFormFieldRegister> {
           keyboardType: widget.keyboardType,
           style: Theme.of(context)
               .textTheme
-              .bodyMedium!
+              .bodySmall!
               .copyWith(fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: widget.hintText ?? "",
@@ -103,6 +109,7 @@ class _TextFormFieldRegisterState extends State<TextFormFieldRegister> {
                   )
                 : null,
             isDense: true,
+            errorMaxLines: 3,
             filled: true,
             fillColor: lightColor,
           ),

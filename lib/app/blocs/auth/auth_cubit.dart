@@ -119,7 +119,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         errorAlert(context: context, message: error);
       },
       (dataReposonse) async {
-        if (dataReposonse.message == "Email or phone are already exists") {
+        if (dataReposonse.message == "Email already exists") {
           emit(state.copyWith(status: AppStatus.error));
           errorAlert(context: context, message: dataReposonse.message);
         } else {

@@ -312,7 +312,6 @@ class AppRoutes {
                     FadeTransitionPage<CategoryPage>(
                   key: state.pageKey,
                   child: CategoryPage(
-                    searchKey: state.queryParams["search_key"] ?? "",
                     index: int.parse(state.queryParams["index"]!),
                   ),
                 ),

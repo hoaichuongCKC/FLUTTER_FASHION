@@ -12,50 +12,43 @@ class UserAvatarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isLight = Theme.of(context).brightness == Brightness.light;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border:
-            Border.all(color: isLight ? primaryColor : lightColor, width: 0.7),
-        shape: BoxShape.circle,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxHeight: 60.0,
+        minHeight: 40.0,
+        maxWidth: 60.0,
+        minWidth: 40.0,
       ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxHeight: 90.0,
-          minHeight: 80.0,
-          minWidth: 80.0,
-          maxWidth: 90.0,
-        ),
-        child: SizedBox(
-          width: size.width * 0.3,
-          height: size.width * 0.3,
-          child: imageUrl.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(7.0),
-                  child: CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: CachedNetworkImageProvider(
-                      ApiService.imageUrl + imageUrl,
-                      headers: getIt<ApiService>().headers,
-                      cacheKey: ApiService.imageUrl + imageUrl,
-                    ),
+      child: SizedBox(
+        width: size.width * 0.15,
+        height: size.width * 0.15,
+        child: imageUrl.isNotEmpty
+            ? AspectRatio(
+                aspectRatio: 1.0,
+                child: CircleAvatar(
+                  radius: 40.0,
+                  backgroundImage: CachedNetworkImageProvider(
+                    ApiService.imageUrl + imageUrl,
+                    headers: getIt<ApiService>().headers,
+                    cacheKey: ApiService.imageUrl + imageUrl,
                   ),
-                )
-              : Stack(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: Align(
-                          child: SvgPicture.asset(
-                            "assets/icons/user1.svg",
-                            fit: BoxFit.contain,
-                            color: darkColor.withOpacity(0.7),
-                            width: 40,
-                            height: 40,
-                          ),
-                        )),
-                  ],
                 ),
-        ),
+              )
+            : Stack(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: Align(
+                        child: SvgPicture.asset(
+                          "assets/icons/user1.svg",
+                          fit: BoxFit.contain,
+                          color: darkColor.withOpacity(0.7),
+                          width: 40,
+                          height: 40,
+                        ),
+                      )),
+                ],
+              ),
       ),
     );
   }

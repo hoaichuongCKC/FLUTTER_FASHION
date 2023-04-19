@@ -168,7 +168,6 @@ class ItemCart extends StatelessWidget {
                             text: "Chi tiết: ",
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 14.0,
-                              color: disableDarkColor,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
@@ -177,7 +176,6 @@ class ItemCart extends StatelessWidget {
                             text: item.size,
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 14.0,
-                              color: disableDarkColor,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
@@ -187,6 +185,16 @@ class ItemCart extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Color(int.parse("0xFF${item.color}")),
                                 shape: BoxShape.circle,
+                                boxShadow: item.color != "ffffff"
+                                    ? null
+                                    : const [
+                                        BoxShadow(
+                                          color: primaryColor,
+                                          blurRadius: 0.0,
+                                          spreadRadius: 2.0,
+                                          blurStyle: BlurStyle.inner,
+                                        )
+                                      ],
                               ),
                               child: const SizedBox(
                                 width: 20,

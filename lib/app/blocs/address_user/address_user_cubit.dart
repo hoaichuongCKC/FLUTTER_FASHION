@@ -29,7 +29,6 @@ class AddressUserCubit extends HydratedCubit<AddressUserState> {
 
     emit(state.copyWith(
         storageList: List<ItemAddress>.from(state.storageList)..remove(item)));
-    log("storage list :${state.storageList}", name: "Deleted_Address");
   }
 
   void setUseDefault(ItemAddress item) {

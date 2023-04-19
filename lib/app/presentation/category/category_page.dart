@@ -8,10 +8,8 @@ import '../../blocs/category/category_cubit.dart';
 class CategoryPage extends StatefulWidget {
   const CategoryPage({
     super.key,
-    required this.searchKey,
     required this.index,
   });
-  final String searchKey;
   final int index;
 
   @override
@@ -42,13 +40,6 @@ class _CategoryPageState extends State<CategoryPage>
     return DefaultTabController(
       length: bloc.length,
       child: AppBackgroundBlur.withAppBar(
-        leading: InkWell(
-          onTap: () {},
-          child: const Icon(
-            Icons.arrow_back,
-            size: 24.0,
-          ),
-        ),
         actions: [
           Expanded(
             child: Padding(
@@ -56,7 +47,9 @@ class _CategoryPageState extends State<CategoryPage>
               child: GestureDetector(
                 onTap: () => AppRoutes.router.pushNamed(Names.SEARCH),
                 child: FractionallySizedBox(
-                  heightFactor: 0.7,
+                  heightFactor: 1.0,
+                  widthFactor: 0.9,
+                  alignment: Alignment.centerRight,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: lightColor,
@@ -73,15 +66,17 @@ class _CategoryPageState extends State<CategoryPage>
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: SvgPicture.asset(
                             "assets/icons/search.svg",
-                            colorFilter: ColorFilter.mode(
-                                darkColor.withOpacity(0.5), BlendMode.srcIn),
+                            width: 20.0,
+                            height: 20.0,
+                            colorFilter: const ColorFilter.mode(
+                                darkColor, BlendMode.srcIn),
                           ),
                         ),
                         Text(
                           AppLocalizations.of(context)!.search,
                           style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            color: darkColor.withOpacity(0.5),
+                            fontSize: 12.0,
+                            color: darkColor,
                             fontWeight: FontWeight.w300,
                           ),
                         )

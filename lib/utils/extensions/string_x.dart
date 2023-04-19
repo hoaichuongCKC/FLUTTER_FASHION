@@ -87,4 +87,10 @@ extension StringX on String {
         emailDomain.contains('gmail') &&
         endsWith('.com');
   }
+
+  bool get isValidPassword {
+    final RegExp passwordRegex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    return passwordRegex.hasMatch(this);
+  }
 }

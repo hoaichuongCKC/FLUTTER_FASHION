@@ -36,7 +36,7 @@ class EditInformationCubit extends Cubit<EditInformationState> {
       emit(state.copyWith(email: value, status: EditStatus.onChangeValue));
 
   void onChangedImage() async {
-    final file = await cameraInfo.openGallery();
+    final file = await cameraInfo.chooseImage();
 
     if (file == null) return;
 

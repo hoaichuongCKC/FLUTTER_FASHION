@@ -25,7 +25,7 @@ class ProductModel with _$ProductModel {
     int? sold,
     bool? is_popular,
     Category? category,
-    List<PhotoModel>? product_detail,
+    List<ProductDetailModel>? product_detail,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -56,9 +56,21 @@ class Properties with _$Properties {
   const factory Properties({
     List<dynamic>? sizes,
     String? origin,
-    List<String>? colors,
   }) = _Properties;
 
   factory Properties.fromJson(Map<String, dynamic> json) =>
       _$PropertiesFromJson(json);
+}
+
+@freezed
+class ProductDetailModel with _$ProductDetailModel {
+  const factory ProductDetailModel({
+    required int id,
+    required String photo,
+    String? color,
+    int? stock,
+  }) = _ProductDetailModel;
+
+  factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailModelFromJson(json);
 }

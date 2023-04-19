@@ -15,6 +15,7 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBackgroundBlur.withAppBar(
       isHasBackground: false,
+      leading: const SizedBox(),
       title: AppLocalizations.of(context)!.notificationPage,
       actions: [
         InkWell(
@@ -103,7 +104,6 @@ class NotificationPage extends StatelessWidget {
           final notificationDaily = state.notificationsDaily;
           final notificationOrder = state.notificationsOrder;
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

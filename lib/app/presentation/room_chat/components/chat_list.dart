@@ -31,9 +31,10 @@ class ChatList extends StatelessWidget {
         if (state.chats.isEmpty) {
           return const Spacer();
         }
+        final chats = state.chats.reversed.toList();
         return Expanded(
           child: GroupedListView<ChatModel, String>(
-            elements: state.chats.reversed.toList(),
+            elements: chats,
             reverse: true,
             sort: false,
             useStickyGroupSeparators: false, // optional

@@ -47,27 +47,24 @@ class BottomNavigationbarDetail extends StatelessWidget {
                     radius: 5.0,
                     btnColor: primaryColor,
                     onPressed: () {
-                      BlocProvider.of<ProductDetailUiCubit>(context).addToCart(
-                        context,
-                        product,
-                        (quantity) async {
-                          final index =
-                              BlocProvider.of<ProductDetailUiCubit>(context)
-                                  .state
-                                  .indexImage;
-                          final imageWidget = CachedNetworkImage(
-                            key: imageKey,
-                            imageUrl: ApiService.imageUrl +
-                                product.product_detail![index].photo,
-                            width: 200.0,
-                            height: 200.0,
-                            fit: BoxFit.cover,
-                          );
+                      BlocProvider.of<ProductDetailUiCubit>(context)
+                          .addToCart(context, product, () {
+                        final index =
+                            BlocProvider.of<ProductDetailUiCubit>(context)
+                                .state
+                                .indexImage;
+                        final imageWidget = CachedNetworkImage(
+                          key: imageKey,
+                          imageUrl: ApiService.imageUrl +
+                              product.product_detail![index].photo,
+                          width: 200.0,
+                          height: 200.0,
+                          fit: BoxFit.cover,
+                        );
 
-                          ProductOverlay.instance
-                              .showOverlay(context, image: imageWidget);
-                        },
-                      );
+                        ProductOverlay.instance
+                            .showOverlay(context, image: imageWidget);
+                      });
                     },
                     label: AppLocalizations.of(context)!.add_to_cart,
                   ),
@@ -102,7 +99,7 @@ class _ItemProductScaleAnimationDetailState
 
   late AnimationController _animationController;
 
-  Offset get cartOffset => AppBarProductDetail.getOffset();
+  Offset get appbarOffset => AppBarProductDetail.getOffset();
 
   Size get imageSize => BottomNavigationbarDetail.getImageSize();
 
@@ -138,14 +135,15 @@ class _ItemProductScaleAnimationDetailState
 
       center = Offset(centerX, centerY);
 
-      _offsetAnimation = Tween<Offset>(begin: center, end: cartOffset)
+      _offsetAnimation = Tween<Offset>(begin: center, end: appbarOffset)
           .animate(_animationController);
 
       _animationController.forward();
     });
 
-    _offsetAnimation = Tween<Offset>(begin: const Offset(0, 0), end: cartOffset)
-        .animate(_animationController);
+    _offsetAnimation =
+        Tween<Offset>(begin: const Offset(0, 0), end: appbarOffset)
+            .animate(_animationController);
 
     _scaleAnimation =
         Tween<double>(begin: 1.0, end: 0.3).animate(_animationController);

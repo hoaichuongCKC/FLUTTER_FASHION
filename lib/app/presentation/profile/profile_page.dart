@@ -32,24 +32,21 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               child: SafeArea(
-                child: RefreshIndicator(
-                  onRefresh: () async {},
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                    child: BlocBuilder<UserCubit, UserState>(
-                      builder: (context, state) {
-                        return state.when(
-                          initial: () => const SizedBox(),
-                          loading: () =>
-                              const Center(child: CircularProgressIndicator()),
-                          fetchCompleted: (data) =>
-                              ProfileData(data, child: const ProfileBody()),
-                          failure: (error) => Center(
-                            child: Text(error),
-                          ),
-                        );
-                      },
-                    ),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: BlocBuilder<UserCubit, UserState>(
+                    builder: (context, state) {
+                      return state.when(
+                        initial: () => const SizedBox(),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                        fetchCompleted: (data) =>
+                            ProfileData(data, child: const ProfileBody()),
+                        failure: (error) => Center(
+                          child: Text(error),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

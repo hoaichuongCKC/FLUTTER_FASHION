@@ -19,16 +19,16 @@ class CameraInfo {
     } else {}
   }
 
-  Future openGallery() async {
-    final XFile? image =
+  Future chooseImage() async {
+    final XFile? pickedFile =
         await _imagePicker.pickImage(source: ImageSource.gallery);
 
-    if (image == null) return;
+    if (pickedFile == null) return;
 
-    return image;
+    return pickedFile;
   }
 
-  Future openCamera() async {
+  Future takePhoto() async {
     final XFile? image =
         await _imagePicker.pickImage(source: ImageSource.camera);
 
@@ -37,7 +37,7 @@ class CameraInfo {
     return image;
   }
 
-  Future<List<XFile>?> openMultiImage() async {
+  Future<List<XFile>?> chooseImages() async {
     final List<XFile> image = await _imagePicker.pickMultiImage();
 
     if (image.isEmpty) return [];
@@ -45,20 +45,21 @@ class CameraInfo {
     return image;
   }
 
-  Future<File?> compressAndGetFile(File file, String targetPath,
+  Future<File?> compressAndGetFile(File file, String? targetPath,
       {Size size = const Size(1920, 1080)}) async {
     final filePath = file.absolute.path;
 
-    final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
+    final lastIndex = filePath.lastIndexOf(RegExp(r'.jp|png'));
 
     final splitted = filePath.substring(0, (lastIndex));
 
     final outPath =
-        "${splitted}_${targetPath}_out${filePath.substring(lastIndex)}";
+        "${splitted}_${targetPath ??= "Flutter"}_out${filePath.substring(lastIndex)}";
 
     var result = await FlutterImageCompress.compressAndGetFile(
       filePath,
       outPath,
+      quality: 90,
     );
 
     return result;

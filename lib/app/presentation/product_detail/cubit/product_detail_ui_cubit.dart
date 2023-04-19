@@ -1,25 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
-import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/export_detail.dart';
 import 'package:flutter_fashion/utils/alert/pop_up.dart';
 part 'product_detail_ui_state.dart';
 
-typedef QuantityOptionCallback = void Function(int);
-
 class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
   ProductDetailUiCubit() : super(const ProductDetailUiState());
-  int _indexImage = 0;
 
-  void changeImage(int index) {
+  void changeImage(int id) {
     final state = this.state;
-    emit(state.copyWith(indexImage: index));
+    emit(state.copyWith(idImage: id));
   }
 
-  void changeColor(String code, index) {
-    _indexImage = index;
+  void changeColor(String code, int index) {
     final state = this.state;
     emit(state.copyWith(color: code, indexImage: index));
   }
@@ -37,7 +32,7 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
   void addToCart(
     BuildContext context,
     ProductModel product,
-    QuantityOptionCallback onCompleted,
+    VoidCallback completed,
   ) {
     final state = this.state;
 
@@ -47,7 +42,7 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
       popupAlert(
         hasTimer: true,
         context: context,
-        message: "Vui lòng chọn màu sắc",
+        message: AppLocalizations.of(context)!.please_choose_color,
       );
       return;
     }
@@ -56,22 +51,22 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
         popupAlert(
           hasTimer: true,
           context: context,
-          message: "Vui lòng chọn kích thước",
+          message: AppLocalizations.of(context)!.please_choose_size,
         );
         return;
       }
     }
 
-    CartModel cartItem = CartModel(
+    final CartModel cartItem = CartModel(
       color: state.color,
       quantity: state.quantity,
       product: product,
-      indexImage: _indexImage,
       size: state.size,
+      indexImage: state.indexImage,
     );
 
     BlocProvider.of<CartCubit>(context).addToCart(cartItem);
 
-    onCompleted(cartItem.quantity);
+    completed();
   }
 }

@@ -13,6 +13,9 @@ class PusherChatApp with PusherMixin implements PusherApp {
   final ApiService apiService;
 
   PusherChatApp({required this.apiService});
+  String get currentLocation => AppRoutes.router.location;
+
+  String get chatLocation => "${Routes.PROFILE}/${Routes.MESSENGER}";
 
   @override
   String get eventName => "chat-message";
@@ -37,7 +40,7 @@ class PusherChatApp with PusherMixin implements PusherApp {
         },
         onEvent: onEvent,
         onConnectionStateChange: (currentState, previousState) {
-          log("onConnectionStateChange: $currentState,,,, $previousState",
+          log("onConnectionStateChange: $currentState",
               name: "Pusher-chat-onConnectionStateChange");
         },
       );
@@ -60,10 +63,6 @@ class PusherChatApp with PusherMixin implements PusherApp {
     try {
       final convert = jsonDecode(data);
 
-      final currentLocation = AppRoutes.router.location;
-
-      const chatLocation = "${Routes.PROFILE}/${Routes.MESSENGER}";
-
       final chat = ChatModel.fromJson(convert);
 
       if (chatLocation != currentLocation) {
@@ -81,5 +80,10 @@ class PusherChatApp with PusherMixin implements PusherApp {
     } catch (e) {
       log("Error handle data Chat Pusher: $e");
     }
+  }
+
+  @override
+  void trigger(PusherEvent event) async {
+    await pusher.trigger(event);
   }
 }

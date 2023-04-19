@@ -9,6 +9,7 @@ class ProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = ProfileData.of(context)!.user;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

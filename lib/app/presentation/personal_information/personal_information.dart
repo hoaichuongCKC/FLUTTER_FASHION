@@ -24,31 +24,21 @@ class PersonalInformationPage extends StatelessWidget {
         actions: [
           BlocBuilder<EditInformationCubit, EditInformationState>(
             builder: (context, state) {
-              Color color = primaryColor.withOpacity(0.6);
               bool isDisable = true;
-              if ((state.status != EditStatus.init)) {
-                color = primaryColor;
+              if (state.status != EditStatus.init) {
                 isDisable = false;
               }
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: const BorderRadius.all(Radius.circular(7.0)),
-                ),
-                child: InkWell(
-                  onTap: isDisable
-                      ? null
-                      : () => context
-                          .read<EditInformationCubit>()
-                          .onSubmit(context),
-                  child: const SizedBox(
-                    width: 40,
-                    height: 35.0,
-                    child: Icon(
-                      Icons.check,
-                      size: 25.0,
-                      color: lightColor,
-                    ),
+              return InkWell(
+                onTap: isDisable
+                    ? null
+                    : () =>
+                        context.read<EditInformationCubit>().onSubmit(context),
+                child: Text(
+                  AppLocalizations.of(context)!.edit,
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 14,
+                    color: isDisable ? disableDarkColor : darkColor,
+                    fontWeight: isDisable ? FontWeight.w300 : FontWeight.w400,
                   ),
                 ),
               );

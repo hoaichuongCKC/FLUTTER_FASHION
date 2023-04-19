@@ -39,8 +39,8 @@ class PusherOrderApp with PusherMixin implements PusherApp {
         },
         onEvent: onEvent,
         onConnectionStateChange: (currentState, previousState) {
-          log("onConnectionStateChange: $currentState,,,, $previousState",
-              name: "Pusher-chat-onConnectionStateChange");
+          log("onConnectionStateChange: $currentState",
+              name: "Pusher-order-onConnectionStateChange");
         },
         // authEndpoint: "<Your Authendpoint>",
         // onAuthorizer: onAuthorizer
@@ -68,5 +68,10 @@ class PusherOrderApp with PusherMixin implements PusherApp {
     } catch (e) {
       log("Error handle data Chat Pusher: $e");
     }
+  }
+
+  @override
+  void trigger(PusherEvent event) {
+    // TODO: implement trigger
   }
 }

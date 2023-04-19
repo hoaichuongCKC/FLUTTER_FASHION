@@ -62,20 +62,22 @@ class SearchCubit extends HydratedCubit<SearchState> {
       if (gender == "Male") {
         gender = "nam";
       } else if (gender == "Female") {
-        gender = "Nữ";
+        gender = "nữ";
       }
     }
 
     final query = List<ProductModel>.from(products)
       ..retainWhere(
         (element) {
-          return element.name!.contains(gender) && categoryId > 0
+          final bool isCheckGender = element.name!.contains(gender);
+          final bool isCheckCategory = categoryId > 0
               ? element.category!.id == categoryId
-              : element.category!.id > 0 &&
-                  RangePriceModel.queryPrice(
-                    rangePrice,
-                    element.regular_price!,
-                  );
+              : element.category!.id > 0;
+          final bool isCheckPrice = RangePriceModel.queryPrice(
+            rangePrice,
+            element.regular_price!,
+          );
+          return isCheckGender && isCheckCategory && isCheckPrice;
         },
       );
 

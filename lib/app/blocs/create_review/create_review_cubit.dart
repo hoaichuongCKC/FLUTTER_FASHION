@@ -27,7 +27,7 @@ class CreateReviewCubit extends Cubit<CreateReviewState> {
 
   void onSelectImage(BuildContext context) async {
     final state = this.state;
-    final files = await cameraInfo.openMultiImage();
+    final files = await cameraInfo.chooseImages();
 
     if (files == null) return;
 

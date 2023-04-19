@@ -19,7 +19,7 @@ class FilterCubit extends Cubit<FilterState> {
     if (state.categoryId > 0) {
       return true;
     }
-    if (state.priceIndex > 0) {
+    if (state.priceIndex >= 0) {
       return true;
     }
     return false;
@@ -46,6 +46,7 @@ class FilterCubit extends Cubit<FilterState> {
             categoryId: categoryId,
             rangePrice: priceIndex,
           );
+      AppRoutes.router.pop();
     }
   }
 }

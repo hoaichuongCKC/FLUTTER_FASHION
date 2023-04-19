@@ -427,12 +427,12 @@
     "description": "Không hiểu gì cả"
   },
 
-  "my_shopping_cart": "My shopping cart",
+  "my_shopping_cart": "Shopping cart",
   "@my_shopping_cart": {
     "description": "Không hiểu gì cả"
   },
 
-  "my_shopping_cart_is_currently_empty": "My shopping cart is currently empty",
+  "my_shopping_cart_is_currently_empty": "Shopping cart is currently empty",
   "@my_shopping_cart_is_currently_empty": {
     "description": "Không hiểu gì cả"
   },
@@ -620,7 +620,36 @@
   "please_update_information": "Please update information",
   "@please_update_information": {
     "description": "Không hiểu gì cả"
-  }
+  },
 
+  "text_validate_valid_pass": "Password must be 7 characters or more and contain 1 lowercase letter, uppercase letter and 1 number.",
+  "@text_validate_valid_pass": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "please_choose_color": "Please choose color",
+  "@please_choose_color": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "please_choose_size": "Please choose size",
+  "@please_choose_size": {
+    "description": "Không hiểu gì cả"
+  },
+
+  "edit": "Edit",
+  "@edit": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_choose_avatar": "Please choose avatar",
+  "@please_choose_avatar": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "password_not_match": "Password do not match",
+  "@password_not_match": {
+    "description": "nó là chỉnh sửa"
+  }
 
 }

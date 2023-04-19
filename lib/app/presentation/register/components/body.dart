@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
+import 'package:flutter_fashion/app/presentation/register/components/choose_avatar.dart';
 import 'package:flutter_fashion/app/presentation/register/components/text_field_register.dart';
-import 'package:flutter_fashion/common/components/user_avatar.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
-import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,8 +30,6 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   XFile? _file;
 
-  Widget? _imageChild;
-
   @override
   void initState() {
     super.initState();
@@ -48,11 +43,12 @@ class _BodyRegisterState extends State<BodyRegister> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: UserAvatarDefault(
-              onPressed: _handleImage,
-              child: _imageChild,
-            ),
+          ChooseAvatar(
+            onTap: (imageWidget, file) {
+              _file = file;
+
+              setState(() {});
+            },
           ),
           const SizedBox(height: 15.0),
           TextFormFieldRegister(
@@ -196,12 +192,16 @@ class _BodyRegisterState extends State<BodyRegister> {
 
               if (_file == null) {
                 errorAlert(
-                    context: context, message: "Required choose image avatar");
+                    context: context,
+                    message:
+                        AppLocalizations.of(context)!.please_choose_avatar);
                 return;
               }
 
               if (passwordController.text != confirmController.text) {
-                errorAlert(context: context, message: "Password do not match");
+                errorAlert(
+                    context: context,
+                    message: AppLocalizations.of(context)!.password_not_match);
                 return;
               }
 
@@ -213,7 +213,6 @@ class _BodyRegisterState extends State<BodyRegister> {
                 password: passwordController.text,
                 image: _file!,
               );
-
               context.read<AuthCubit>().accountRegister(param, context);
             },
             label: AppLocalizations.of(context)!.completed,
@@ -222,19 +221,5 @@ class _BodyRegisterState extends State<BodyRegister> {
         ],
       ),
     );
-  }
-
-  void _handleImage() async {
-    final XFile file = await getIt<CameraInfo>().openGallery();
-    setState(() {
-      _file = file;
-      _imageChild = ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-        child: Image.file(
-          File(file.path),
-          fit: BoxFit.cover,
-        ),
-      );
-    });
   }
 }

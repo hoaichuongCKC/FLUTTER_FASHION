@@ -19,6 +19,7 @@ class RangePriceModel with _$RangePriceModel {
       ];
 
   static bool queryPrice(int index, int price) {
+    if (index == -1) return true;
     if (index == 0) {
       return price <= 100000;
     } else if (index == 1) {

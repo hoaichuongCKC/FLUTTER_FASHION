@@ -59,10 +59,10 @@ class _FormSearchState extends State<FormSearch> {
                   fontWeight: FontWeight.w400,
                 ),
                 onChanged: (value) {
-                  if (!isCheck) {
-                    setState(() {
-                      _notifier.value = !isCheck;
-                    });
+                  if (!isCheck && _controller.text.isNotEmpty) {
+                    _notifier.value = !isCheck;
+                  } else if (isCheck && _controller.text.isEmpty) {
+                    _notifier.value = !isCheck;
                   }
                 },
                 onFieldSubmitted: (value) {

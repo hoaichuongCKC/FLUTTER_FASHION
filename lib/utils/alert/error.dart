@@ -9,10 +9,12 @@ import 'package:flutter_svg/svg.dart';
 import '../../routes/app_routes.dart';
 
 void errorAlert(
-    {required BuildContext context, String message = "Nani"}) async {
+    {required BuildContext context,
+    String message = "Nani",
+    int counter = 2}) async {
   const Duration duration = Duration(seconds: 1);
   Timer.periodic(duration, (timer) {
-    if (timer.tick == 2) {
+    if (timer.tick == counter) {
       timer.cancel();
       AppRoutes.router.pop();
     }

@@ -1,3 +1,4 @@
+import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
 
@@ -22,7 +23,7 @@ class OptionColorSizeDetail extends StatelessWidget {
           builder: (context, state) {
             return _buildOptionColors(
               title: AppLocalizations.of(context)!.colors,
-              options: product.properties!.colors!,
+              options: product.product_detail!,
               colorCode: state.color,
               onPressed: (code, index) => blocDetailUi.changeColor(code, index),
             );
@@ -46,7 +47,7 @@ class OptionColorSizeDetail extends StatelessWidget {
 
   _buildOptionColors({
     required String title,
-    required List options,
+    required List<ProductDetailModel> options,
     String colorCode = "",
     required Function(String, int) onPressed,
   }) {
@@ -66,20 +67,45 @@ class OptionColorSizeDetail extends StatelessWidget {
         Wrap(
           spacing: 10.0,
           children: options.map((e) {
-            final isSelected = colorCode == e;
+            final isSelected = colorCode == e.color;
 
-            final color = int.parse("0xFF$e");
+            final color = int.parse("0xFF${e.color}");
 
             final index = options.indexOf(e);
 
             const padding = EdgeInsets.all(3.5);
 
-            return InkWell(
-              onTap: () => onPressed(e, index),
-              customBorder: const CircleBorder(),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  border: isSelected ? Border.all(color: primaryColor) : null,
+            final bool isStock = e.stock! > 0;
+
+            late final Widget itemColor;
+
+            if (isStock) {
+              itemColor = InkWell(
+                onTap: () => onPressed(e.color!, index),
+                customBorder: const CircleBorder(),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: isSelected ? Border.all(color: primaryColor) : null,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: padding,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Color(color),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const SizedBox(
+                        width: 25.0,
+                        height: 25.0,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              itemColor = DecoratedBox(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
@@ -89,14 +115,32 @@ class OptionColorSizeDetail extends StatelessWidget {
                       color: Color(color),
                       shape: BoxShape.circle,
                     ),
-                    child: const SizedBox(
+                    child: SizedBox(
                       width: 25.0,
                       height: 25.0,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        clipBehavior: Clip.none,
+                        children: [
+                          Align(
+                            child: Transform.rotate(
+                              angle: 95,
+                              child: Container(
+                                width: 30.0,
+                                height: 3.0,
+                                color: errorColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
+              );
+            }
+
+            return itemColor;
           }).toList(),
         ),
       ],

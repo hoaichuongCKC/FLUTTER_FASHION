@@ -15,6 +15,7 @@ class SearchPage extends StatelessWidget {
         Expanded(
           child: FormSearch(
             onFieldSubmitted: (value) {
+              if (value.isEmpty) return;
               getIt.get<SearchCubit>().search(value);
             },
           ),
@@ -33,6 +34,7 @@ class SearchPage extends StatelessWidget {
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             SearchHistory(),

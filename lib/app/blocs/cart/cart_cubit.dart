@@ -15,10 +15,42 @@ class CartCubit extends HydratedCubit<CartState> {
   String get storageToken =>
       KeyStorage.userCart + getIt.get<UserCubit>().user.id.toString();
 
-  void addToCart(CartModel product) {
+  void addToCart(CartModel cart) {
     final state = this.state;
-    emit(
-        state.copyWith(items: List<CartModel>.from(state.items)..add(product)));
+
+    if (_checkExists(cart)) {
+      _handleUpdateQuantity(cart);
+      return;
+    }
+    emit(state.copyWith(items: List<CartModel>.from(state.items)..add(cart)));
+  }
+
+  bool _checkExists(CartModel cart) {
+    final state = this.state;
+    final isExist = List<CartModel>.from(state.items).where((item) {
+      final bool checkId = item.product.id == cart.product.id;
+
+      final bool checkIndexColor = item.indexImage == cart.indexImage;
+
+      return checkId && checkIndexColor;
+    }).toList();
+
+    return isExist.isNotEmpty;
+  }
+
+  void _handleUpdateQuantity(CartModel cart) {
+    final state = this.state;
+
+    final updatedList = List<CartModel>.from(state.items).map(
+      (item) {
+        if (item.product.id == cart.product.id) {
+          return item.copyWith(quantity: item.quantity + cart.quantity);
+        }
+        return item;
+      },
+    ).toList();
+
+    emit(state.copyWith(items: updatedList));
   }
 
   void removeFromCart(int index) {

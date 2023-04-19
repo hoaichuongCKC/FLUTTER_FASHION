@@ -75,15 +75,47 @@ class _TaskbarChatMessageState extends State<TaskbarChatMessage> {
                   ),
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  if (_controller.text.isEmpty) return;
-
-                  FocusScope.of(context).unfocus();
-                  context.read<ChatCubit>().createChat(_controller.text);
-                  _controller.text = "";
+              BlocConsumer<ChatCubit, ChatState>(
+                buildWhen: (previous, current) =>
+                    previous.submitStatus != current.submitStatus,
+                listenWhen: (previous, current) =>
+                    previous.submitStatus != current.submitStatus,
+                listener: (context, state) {
+                  final isSubmitSuccess =
+                      state.submitStatus == SubmitChatStatus.successfully;
+                  if (isSubmitSuccess) {
+                    _controller.text = "";
+                  }
                 },
-                icon: SvgPicture.asset("assets/icons/sent-fast.svg"),
+                builder: (context, state) {
+                  final isSubmitLoading =
+                      state.submitStatus == SubmitChatStatus.sending;
+                  final Widget icon = isSubmitLoading
+                      ? const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: FractionallySizedBox(
+                            heightFactor: 0.7,
+                            child: SizedBox(
+                              width: 30,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3.0,
+                              ),
+                            ),
+                          ),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            if (_controller.text.isEmpty) return;
+
+                            FocusScope.of(context).unfocus();
+                            context
+                                .read<ChatCubit>()
+                                .createChat(_controller.text);
+                          },
+                          icon: SvgPicture.asset("assets/icons/sent-fast.svg"),
+                        );
+                  return icon;
+                },
               )
             ],
           ),

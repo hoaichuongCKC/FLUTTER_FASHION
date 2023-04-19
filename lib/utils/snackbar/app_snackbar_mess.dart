@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/font_style.dart';
 
@@ -17,12 +18,18 @@ class AppSnackbarMessenger {
           behavior: SnackBarBehavior.floating,
           dismissDirection: DismissDirection.startToEnd,
           backgroundColor: background ?? darkColor,
-          content: Text(
-            content,
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 12.0,
-              color: textColor ?? lightColor,
-            ),
+          content: Row(
+            children: [
+              SvgPicture.asset("assets/icons/check_successfully.svg"),
+              const SizedBox(width: 8.0),
+              Text(
+                content,
+                style: PrimaryFont.instance.copyWith(
+                  fontSize: 12.0,
+                  color: textColor ?? lightColor,
+                ),
+              ),
+            ],
           ),
           showCloseIcon: true,
           closeIconColor: background == lightColor ? darkColor : lightColor,

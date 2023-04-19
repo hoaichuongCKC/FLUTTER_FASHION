@@ -58,9 +58,6 @@ dependencies:
   firebase_auth: ^4.2.9
   firebase_messaging: ^14.2.5
 
-  #handle animation logic ui
-  rxdart:
-
   #check connect internet
   connectivity_plus: ^3.0.3
 

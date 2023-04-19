@@ -20,7 +20,6 @@ import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/pusher/chat.dart';
 import 'package:flutter_fashion/core/pusher/order.dart';
-import 'package:flutter_fashion/core/storage/key.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -48,7 +47,7 @@ Future<void> main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
-  // HydratedBloc.storage.delete("${KeyStorage.userSearch}12");
+  // HydratedBloc.storage.clear();
 
   await PusherBeamsApp.instance.getStarted();
 
@@ -87,7 +86,7 @@ Future<void> main() async {
           create: (context) => getIt<ReviewCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<PromotionCubit>()..fetchPromotion(null),
+          create: (context) => getIt<PromotionCubit>(),
         ),
       ],
       child: const Phoenix(child: MyApp()),
@@ -105,9 +104,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
 
-  final PusherChatApp _pusherChatApp = getIt<PusherChatApp>();
+  late PusherChatApp _pusherChatApp;
 
-  final PusherOrderApp _pusherOrderApp = getIt<PusherOrderApp>();
+  // late PusherOrderApp _pusherOrderApp;
 
   @override
   void initState() {
@@ -140,21 +139,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               PusherBeamsApp.instance.initToUser(user.id);
 
               //register real-time chat app
-              _pusherChatApp.initialize(
-                onEvent: (event) {
-                  if (event.data.isNotEmpty) {
-                    _pusherChatApp.handleData(context, event.data);
-                  }
-                },
-              );
+              _pusherChatApp = getIt<PusherChatApp>()
+                ..initialize(
+                  onEvent: (event) {
+                    if (event.data.isNotEmpty) {
+                      _pusherChatApp.handleData(context, event.data);
+                    }
+                  },
+                );
 
-              _pusherOrderApp.initialize(
-                onEvent: (event) {
-                  if (event.data.isNotEmpty) {
-                    _pusherOrderApp.handleData(context, event.data);
-                  }
-                },
-              );
+              // _pusherOrderApp = getIt<PusherOrderApp>()
+              //   ..initialize(
+              //     onEvent: (event) {
+              //       if (event.data.isNotEmpty) {
+              //         _pusherOrderApp.handleData(context, event.data);
+              //       }
+              //     },
+              //   );
             },
             failure: (e) {});
       },
@@ -168,9 +169,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (getIt.isRegistered<PusherChatApp>()) {
       _pusherChatApp.dispose();
     }
-    if (getIt.isRegistered<PusherOrderApp>()) {
-      _pusherOrderApp.dispose();
-    }
+    // if (getIt.isRegistered<PusherOrderApp>()) {
+    //   _pusherOrderApp.dispose();
+    // }
     PusherBeamsApp.instance.dispose();
     super.dispose();
   }

@@ -26,11 +26,12 @@ class BodyProductDetail extends StatelessWidget {
           width: double.infinity,
           height: size.height * 0.3,
           child: BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
-            buildWhen: (previous, current) =>
-                previous.indexImage != current.indexImage,
             builder: (context, state) {
               final images = product.product_detail!;
-              final image = images[state.indexImage];
+              final idImage = state.idImage;
+              final String url = idImage == 0
+                  ? images[0].photo
+                  : images.firstWhere((ele) => ele.id == idImage).photo;
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -49,18 +50,18 @@ class BodyProductDetail extends StatelessWidget {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (ctx, index) {
-                              final isSelected = state.indexImage == index;
+                              final image = images[index];
 
-                              final data = images[index];
+                              final isSelected = idImage == image.id;
 
                               final imageWidget = Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: CachedNetworkImage(
                                   key: ValueKey(index),
-                                  imageUrl: ApiService.imageUrl + data.photo,
+                                  imageUrl: ApiService.imageUrl + image.photo,
                                   fit: BoxFit.contain,
                                   httpHeaders: getIt<ApiService>().headers,
-                                  cacheKey: data.photo,
+                                  cacheKey: image.photo,
                                   width: size.width * 0.1,
                                   height: size.width * 0.1,
                                   placeholder: (context, url) {
@@ -78,7 +79,7 @@ class BodyProductDetail extends StatelessWidget {
                                 child: !isSelected
                                     ? InkWell(
                                         onTap: () =>
-                                            blocDetailUi.changeImage(index),
+                                            blocDetailUi.changeImage(image.id),
                                         child: imageWidget,
                                       )
                                     : DecoratedBox(
@@ -110,10 +111,10 @@ class BodyProductDetail extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: CachedNetworkImage(
-                      imageUrl: ApiService.imageUrl + image.photo,
+                      imageUrl: ApiService.imageUrl + url,
                       fit: BoxFit.scaleDown,
                       httpHeaders: getIt<ApiService>().headers,
-                      cacheKey: image.photo,
+                      cacheKey: url,
                       placeholder: (context, url) {
                         return ColoredBox(
                           color: skeletonColor,

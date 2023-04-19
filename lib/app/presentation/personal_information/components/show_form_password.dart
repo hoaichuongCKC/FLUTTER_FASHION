@@ -31,7 +31,7 @@ class _FormChangePasswordState extends State<FormChangePassword> {
         child: AlertDialog(
           scrollable: true,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: BorderRadius.all(Radius.circular(radiusBtn)),
           ),
           insetPadding: EdgeInsets.zero,
           titleTextStyle: PrimaryFont.instance.large(),
@@ -89,22 +89,34 @@ class _FormChangePasswordState extends State<FormChangePassword> {
                       onPressed: !isCheckParam
                           ? null
                           : () {
+                              final bool isValidPassword =
+                                  newPassword.text.isValidPassword ||
+                                      confirmPassword.text.isValidPassword;
+
+                              if (!isValidPassword) {
+                                errorAlert(
+                                  context: context,
+                                  counter: 4,
+                                  message: AppLocalizations.of(context)!
+                                      .text_validate_valid_pass,
+                                );
+                                return;
+                              }
                               if (newPassword.text != confirmPassword.text) {
                                 errorAlert(
                                   context: context,
                                   message: AppLocalizations.of(context)!
                                       .theNewPasswordDoesNotMatch,
                                 );
-                              } else {
-                                context
-                                    .read<ChangePasswordCubit>()
-                                    .submitForm(context);
+                                return;
                               }
+                              final bloc = context.read<ChangePasswordCubit>();
+                              bloc.submitForm(context);
                             },
                       labelWidget: Text(
                         AppLocalizations.of(context)!.change,
                         style: PrimaryFont.instance.copyWith(
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           color: lightColor,
                         ),
                       ),
@@ -144,74 +156,77 @@ class _ShowInputPasswordState extends State<ShowInputPassword> {
   bool _isVisibility = true;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      key: widget.key,
-      controller: widget.controller,
-      obscureText: _isVisibility,
-      style: PrimaryFont.instance.copyWith(
-        fontSize: 16.0,
-        color: darkColor,
-        fontWeight: FontWeight.w300,
-        wordSpacing: 5,
-      ),
-      onChanged: (value) => widget.onChanged(value),
-      textInputAction: TextInputAction.done,
-      keyboardType: TextInputType.phone,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Password incorrect";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: lightColor,
-        hintText: widget.hintText,
-        isDense: true,
-        suffixIconConstraints: const BoxConstraints(
-          minHeight: 20.0,
-          maxHeight: 50.0,
-          minWidth: 20.0,
-          maxWidth: 50.0,
+    return SizedBox(
+      height: 45.0,
+      child: TextFormField(
+        key: widget.key,
+        controller: widget.controller,
+        obscureText: _isVisibility,
+        style: PrimaryFont.instance.copyWith(
+          fontSize: 14.0,
+          color: darkColor,
+          fontWeight: FontWeight.w300,
+          wordSpacing: 5,
         ),
-        suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-          child: InkWell(
-            onTap: () => setState(() {
-              _isVisibility = !_isVisibility;
-            }),
-            customBorder: const CircleBorder(),
-            child: SvgPicture.asset(
-              _isVisibility
-                  ? "assets/icons/eye.svg"
-                  : "assets/icons/eye_off.svg",
-              fit: BoxFit.contain,
-              width: 40.0,
-              height: 40.0,
-              // ignore: deprecated_member_use
-              color: primaryColor,
+        onChanged: (value) => widget.onChanged(value),
+        textInputAction: TextInputAction.done,
+        keyboardType: TextInputType.phone,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Password incorrect";
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: lightColor,
+          hintText: widget.hintText,
+          isDense: true,
+          suffixIconConstraints: const BoxConstraints(
+            minHeight: 20.0,
+            maxHeight: 50.0,
+            minWidth: 20.0,
+            maxWidth: 50.0,
+          ),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: InkWell(
+              onTap: () => setState(() {
+                _isVisibility = !_isVisibility;
+              }),
+              customBorder: const CircleBorder(),
+              child: SvgPicture.asset(
+                _isVisibility
+                    ? "assets/icons/eye.svg"
+                    : "assets/icons/eye_off.svg",
+                fit: BoxFit.contain,
+                width: 40.0,
+                height: 40.0,
+                // ignore: deprecated_member_use
+                color: primaryColor,
+              ),
             ),
           ),
-        ),
-        prefixIconConstraints: const BoxConstraints(
-          minHeight: 20.0,
-          maxHeight: 50.0,
-          minWidth: 20.0,
-          maxWidth: 50.0,
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-          child: SvgPicture.asset(
-            widget.iconUrl,
-            fit: BoxFit.contain,
-            width: 40.0,
-            height: 40.0,
+          prefixIconConstraints: const BoxConstraints(
+            minHeight: 20.0,
+            maxHeight: 50.0,
+            minWidth: 20.0,
+            maxWidth: 50.0,
           ),
-        ),
-        hintStyle: PrimaryFont.instance.copyWith(
-          fontSize: 14.0,
-          fontWeight: FontWeight.w400,
-          color: disableDarkColor,
+          prefixIcon: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: SvgPicture.asset(
+              widget.iconUrl,
+              fit: BoxFit.contain,
+              width: 24.0,
+              height: 24.0,
+            ),
+          ),
+          hintStyle: PrimaryFont.instance.copyWith(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w400,
+            color: disableDarkColor,
+          ),
         ),
       ),
     );
