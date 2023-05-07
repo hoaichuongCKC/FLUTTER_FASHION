@@ -7,9 +7,14 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!--  quyền truy cập Internet và thiết bị nhận thông báo -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="com.example.flutter_fashion.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.flutter_fashion.permission.C2D_MESSAGE" />
     <application
-        android:label="KiraStore"
+        android:label="You me"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
@@ -54,10 +59,23 @@
                     <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
                 </intent-filter>
             </receiver>
-             <!-- Config FCM firebase -->
+             <!-- Config FCM firebase + pusher -->
             <meta-data
-                android:name="com.google.firebase.messaging.default_notification"
-                android:value="pushnotification" />
+                android:name="com.pusher.pushnotifications.auto_init"
+                android:value="true" />
+           <meta-data
+                android:name="com.pusher.pushnotifications.notification_channel_description"
+                android:value="desc" />
+            <meta-data
+                android:name="com.pusher.pushnotifications.notification_channel_name"
+                android:value="notification_pusher" />
+            <!-- <meta-data
+                android:name="com.pusher.pushnotifications.notification_channel_sound"
+                android:sound="@raw/cartoon_bubble" /> -->
+            <meta-data
+                android:name="com.pusher.pushnotifications.notification_channel_id"
+                android:value="YouMe" />
+         
         <!-- <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_ic_notification" /> -->
