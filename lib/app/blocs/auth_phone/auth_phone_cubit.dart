@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_fashion/app/presentation/forgot_password/forgot_password_page.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
+import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
@@ -16,9 +18,11 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       : _auth = auth,
         super(const AuthPhoneState.initial());
 
-  String _verificationId = "";
+  bool get isSuccess => state.whenOrNull(
+        authPhoneSuccess: () => true,
+      )!;
 
-  void authPhone(
+  void phoneAuth(
     String phoneNumber,
     BuildContext context,
     String payload, {
@@ -28,36 +32,38 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
 
     if (!isResend) loadingAlert(context: context);
 
-    if (payload == Names.REGISTER) {
-      await _handleAuthPhoneFirebase(
-        phoneNumber,
-        isResend,
-        context,
-        payload,
-      );
-      return;
-    }
     final result = await _auth.checkPhone(phoneNumber);
+
     result.fold(
       (l) => emit(const AuthPhoneState.error()),
       (response) async {
         final statusCode = response.data[0];
 
-        if (statusCode == 200) {
-          await _handleAuthPhoneFirebase(
-            phoneNumber,
-            isResend,
-            context,
-            payload,
-          );
+        if (payload == Names.REGISTER) {
+          if (statusCode != 201) {
+            AppRoutes.router.pop();
+            errorAlert(
+              context: context,
+              message: AppLocalizations.of(context)!
+                  .registerd_phone_number_in_the_system,
+            );
+          }
         } else {
-          AppRoutes.router.pop();
-          errorAlert(
-            context: context,
-            message: AppLocalizations.of(context)!
-                .registerd_phone_number_in_the_system,
-          );
+          if (statusCode != 200) {
+            AppRoutes.router.pop();
+            errorAlert(
+              context: context,
+              message: AppLocalizations.of(context)!
+                  .phone_number_not_registered_in_the_system,
+            );
+          }
         }
+        await _handleAuthPhoneFirebase(
+          phoneNumber,
+          isResend,
+          context,
+          payload,
+        );
       },
     );
   }
@@ -83,30 +89,25 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
       },
       codeSent: (verificationId, resendToken) {
         log("verification nhận được: $verificationId");
-        _verificationId = verificationId;
+        if (payload == Names.FORGOT_PASSWORD) {
+          ForgotPasswordPage.verificationId = verificationId;
+        } else {
+          SignUpPage.verificationId = verificationId;
+        }
 
         emit(const AuthPhoneState.authPhoneSuccess());
 
         if (!isResend) {
           AppRoutes.router.pop();
-          _handleNavigator(payload, phoneNumber);
         }
       },
       codeAutoRetrievalTimeout: (verificationId) {
-        log("codeAutoRetrievalTimeout verification nhận được: $verificationId");
-        _verificationId = verificationId;
-        _handleNavigator(payload, phoneNumber);
-      },
-    );
-  }
-
-  void _handleNavigator(String payload, String phone) {
-    AppRoutes.router.pushNamed(
-      Names.OTP,
-      queryParams: {
-        "phone": phone,
-        "verificationId": _verificationId,
-        "payload": payload,
+        if (payload == Names.FORGOT_PASSWORD) {
+          ForgotPasswordPage.verificationId = verificationId;
+        } else {
+          SignUpPage.verificationId = verificationId;
+        }
+        log("codeAutoRetrievalTimeout");
       },
     );
   }
@@ -116,7 +117,6 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
     String smsCode,
     BuildContext context,
     String verificationId,
-    String payload,
   ) async {
     emit(const AuthPhoneState.loading());
     loadingAlert(context: context);
@@ -132,12 +132,6 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
         errorAlert(context: context, message: errorFirebase);
       },
       (userCredential) {
-        AppRoutes.router.pushNamed(
-          payload,
-          queryParams: {
-            "phone": phoneNumber,
-          },
-        );
         emit(const AuthPhoneState.verifyOtpSuccess());
 
         signOut();

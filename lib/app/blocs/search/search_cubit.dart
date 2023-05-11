@@ -1,7 +1,9 @@
+// ignore_for_file: invalid_override_of_non_virtual_member
+
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
-import 'package:flutter_fashion/app/models/range_pice/range_price.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
+import 'package:flutter_fashion/core/models/range_pice/range_price.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -53,7 +55,11 @@ class SearchCubit extends HydratedCubit<SearchState> {
     );
   }
 
-  void filter({String gender = '', int categoryId = -1, int rangePrice = -1}) {
+  void filter(
+      {String gender = '',
+      bool isPopular = false,
+      bool isSale = false,
+      int rangePrice = -1}) {
     final state = this.state;
 
     final products = state.products;
@@ -70,14 +76,14 @@ class SearchCubit extends HydratedCubit<SearchState> {
       ..retainWhere(
         (element) {
           final bool isCheckGender = element.name!.contains(gender);
-          final bool isCheckCategory = categoryId > 0
-              ? element.category!.id == categoryId
-              : element.category!.id > 0;
+          final bool isCheckPopular = element.is_popular == isPopular;
+          final bool isCheckSale =
+              isSale ? element.sale_price != null : element.sale_price == null;
           final bool isCheckPrice = RangePriceModel.queryPrice(
             rangePrice,
             element.regular_price!,
           );
-          return isCheckGender && isCheckCategory && isCheckPrice;
+          return isCheckGender && isCheckPopular && isCheckSale && isCheckPrice;
         },
       );
 

@@ -1,7 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
-import 'dart:developer';
-
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
@@ -20,18 +16,21 @@ class ItemCart extends StatelessWidget {
   final bool isItemCart;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: lightColor,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(5.0),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: disablePrimaryColor,
-            blurRadius: 8.0,
-          )
-        ],
+        boxShadow: !ThemeDataApp.instance.isLight
+            ? null
+            : [
+                const BoxShadow(
+                  color: disablePrimaryColor,
+                  blurRadius: 8.0,
+                )
+              ],
       ),
       child: SizedBox(
         height: 120.0,
@@ -48,9 +47,7 @@ class ItemCart extends StatelessWidget {
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: CachedNetworkImage(
-                          imageUrl: ApiService.imageUrl +
-                              item.product.product_detail![item.indexImage]
-                                  .photo,
+                          imageUrl: ApiService.imageUrl + item.photo,
                           fit: BoxFit.fitWidth,
                           placeholder: (context, url) {
                             return ColoredBox(
@@ -69,7 +66,7 @@ class ItemCart extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                   child: Text(
@@ -91,7 +88,10 @@ class ItemCart extends StatelessWidget {
                                           heightFactor: 0.35,
                                           child: SvgPicture.asset(
                                             "assets/icons/trash.svg",
-                                            color: primaryColor,
+                                            colorFilter: const ColorFilter.mode(
+                                              primaryColor,
+                                              BlendMode.srcIn,
+                                            ),
                                             fit: BoxFit.scaleDown,
                                           ),
                                         ),
@@ -104,15 +104,36 @@ class ItemCart extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                item.product.regular_price!
-                                    .toDouble()
-                                    .toVndCurrency(),
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 12.0,
-                                  color: const Color(0xFFFF7262),
-                                  fontWeight: FontWeight.w300,
-                                ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    item.product.regular_price!
+                                        .toDouble()
+                                        .toVndCurrency(),
+                                    style: theme.textTheme.bodySmall!.copyWith(
+                                      fontSize: 10.0,
+                                      color: disableDarkColor,
+                                      decoration:
+                                          item.product.sale_price == null
+                                              ? null
+                                              : TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 3.0),
+                                  item.product.sale_price != null
+                                      ? Text(
+                                          item.product.sale_price!
+                                              .toDouble()
+                                              .toVndCurrency(),
+                                          style: PrimaryFont.instance.copyWith(
+                                            fontSize: 12.0,
+                                            color: const Color(0xFFFF7262),
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      : const SizedBox()
+                                ],
                               ),
                               isItemCart
                                   ? CounterCart(
@@ -121,10 +142,6 @@ class ItemCart extends StatelessWidget {
                                           context.read<CartCubit>().ins(index),
                                       des: () =>
                                           context.read<CartCubit>().des(index),
-                                      onChanged: (p0) {
-                                        log("counter $p0",
-                                            name: "Counter-cart");
-                                      },
                                     )
                                   : Text(
                                       'x${item.quantity}',
@@ -136,15 +153,14 @@ class ItemCart extends StatelessWidget {
                                     )
                             ],
                           ),
-                          item.product.sale_price == null
-                              ? const SizedBox()
-                              : ColoredBox(
+                          item.product.sale_price != null
+                              ? ColoredBox(
                                   color: errorColor.withOpacity(0.2),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 1.0),
                                     child: Text(
-                                      "-${item.product.sale_price!.toDouble().toVndCurrency()}",
+                                      "-${(item.product.regular_price!.toDouble() - item.product.sale_price!.toDouble()).toVndCurrency()}",
                                       style: PrimaryFont.instance.copyWith(
                                         fontSize: 7.0,
                                         color: errorColor,
@@ -152,6 +168,7 @@ class ItemCart extends StatelessWidget {
                                     ),
                                   ),
                                 )
+                              : const SizedBox()
                         ],
                       ),
                     ),
@@ -165,7 +182,7 @@ class ItemCart extends StatelessWidget {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: "Chi tiết: ",
+                            text: "${AppLocalizations.of(context)!.detail}: ",
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w300,

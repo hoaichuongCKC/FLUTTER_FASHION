@@ -6,7 +6,6 @@ export 'package:flutter_fashion/config/constant.dart';
 export 'package:flutter_fashion/config/font_style.dart';
 export 'package:flutter_fashion/app/presentation/profile/components/user_information.dart';
 export 'package:flutter_fashion/app/presentation/profile/constant.dart';
-export 'package:flutter_fashion/common/components/screen_background/screen_background.dart';
 export 'components/build_frame_feature.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';

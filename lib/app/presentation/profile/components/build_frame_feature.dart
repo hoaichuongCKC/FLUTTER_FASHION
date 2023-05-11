@@ -6,7 +6,8 @@ class BuildFrameFeature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isLight = Brightness.light == Theme.of(context).brightness;
+    final theme = Theme.of(context);
+    final isLight = Brightness.light == theme.brightness;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: verticalPadding - 7),
       margin: const EdgeInsets.only(top: verticalPadding - 4),
@@ -16,17 +17,19 @@ class BuildFrameFeature extends StatelessWidget {
       ),
       height: size.height * 0.3,
       decoration: BoxDecoration(
-        color: isLight ? lightColor : lightColor.withOpacity(0.9),
+        color: theme.cardColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(radiusBtn),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: primaryColor.withOpacity(0.5),
-            offset: const Offset(0.5, 2),
-            blurRadius: 3.0,
-          )
-        ],
+        boxShadow: !isLight
+            ? null
+            : [
+                BoxShadow(
+                  color: primaryColor.withOpacity(0.5),
+                  offset: const Offset(0.5, 2),
+                  blurRadius: 3.0,
+                )
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,10 +58,7 @@ class BuildFrameFeature extends StatelessWidget {
                             Align(
                               child: Text(
                                 e.path.translateLabelFeatureProfile(context),
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w300,
-                                ),
+                                style: theme.textTheme.bodySmall,
                               ),
                             ),
                           ],
@@ -93,10 +93,7 @@ class BuildFrameFeature extends StatelessWidget {
                             Align(
                               child: Text(
                                 e.path.translateLabelFeatureProfile(context),
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w300,
-                                ),
+                                style: theme.textTheme.bodySmall,
                               ),
                             ),
                           ],

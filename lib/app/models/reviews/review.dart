@@ -11,6 +11,7 @@ class ReviewModel with _$ReviewModel {
   const factory ReviewModel({
     required int id,
     required UserModel user,
+    required int product_id,
     required int star,
     required String? content,
     required DateTime? created_at,

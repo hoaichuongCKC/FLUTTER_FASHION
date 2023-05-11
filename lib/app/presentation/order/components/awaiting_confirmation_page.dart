@@ -25,6 +25,7 @@ class ToPay extends StatelessWidget {
             child: Text('Server Error'),
           );
         }
+        print("===================${state}=======================");
         if (state.status == AppStatus.success && state.toPayList.isEmpty) {
           return Center(
             child: Column(
@@ -33,12 +34,16 @@ class ToPay extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   "assets/icons/empty_list.svg",
-                  width: 100.0,
-                  height: 100.0,
+                  width: 80.0,
+                  height: 80.0,
                 ),
                 const SizedBox(height: 10.0),
                 Text(
-                    AppLocalizations.of(context)!.you_currently_have_no_orders),
+                  AppLocalizations.of(context)!.you_currently_have_no_orders,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 14.0,
+                      ),
+                ),
               ],
             ),
           );
@@ -126,8 +131,8 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
                 Text(
                   'Bạn muốn huỷ đơn?',
                   style: PrimaryFont.instance.copyWith(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
                 const SizedBox(height: 8.0),

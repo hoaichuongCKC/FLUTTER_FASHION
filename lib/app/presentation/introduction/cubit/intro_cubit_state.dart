@@ -8,7 +8,7 @@ final dataIntro = [
       fit: BoxFit.contain,
     ),
     title: 'Chào mừng bạn',
-    subtitle: 'đến với cửa hàng Kira',
+    subtitle: 'đến với You & Me',
     titleEn: 'Welcome to',
     subtitleEn: 'our store',
   ),

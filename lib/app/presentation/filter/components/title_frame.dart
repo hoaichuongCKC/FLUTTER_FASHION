@@ -10,9 +10,11 @@ class TitleFilterFrame extends StatelessWidget {
       maxHeight: 45.0,
       minHeight: 40.0,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: disablePrimaryColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: ThemeDataApp.instance.isLight
+              ? disablePrimaryColor
+              : Theme.of(context).cardColor,
+          borderRadius: const BorderRadius.all(
             Radius.circular(8.0),
           ),
         ),
@@ -20,9 +22,10 @@ class TitleFilterFrame extends StatelessWidget {
           alignment: const Alignment(-.9, 0),
           child: Text(
             title,
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 16.0,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
       ),

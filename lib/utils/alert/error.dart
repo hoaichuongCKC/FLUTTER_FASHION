@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../routes/app_routes.dart';
@@ -34,6 +33,8 @@ void errorAlert(
     pageBuilder: (newCtx, a1, a2) {
       return Center(
         child: Material(
+          color: lightColor,
+          surfaceTintColor: lightColor,
           borderRadius: const BorderRadius.all(Radius.circular(14.0)),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * .8,
@@ -67,10 +68,11 @@ void errorAlert(
                       Align(
                         child: Text(
                           message,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 14.0,
+                                    color: darkColor,
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ),

@@ -7,6 +7,7 @@ class MethodPaymentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
@@ -21,17 +22,19 @@ class MethodPaymentView extends StatelessWidget {
               color: primaryColor,
             ),
             title: Text(
-              'Phương thức thanh toán',
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 18.0,
+              AppLocalizations.of(context)!.payment_method,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
           DecoratedBox(
-            decoration: const BoxDecoration(
-              color: disablePrimaryColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.0),
+            decoration: BoxDecoration(
+              color: !ThemeDataApp.instance.isLight
+                  ? theme.cardColor
+                  : disablePrimaryColor,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(radiusBtn),
               ),
             ),
             child: ListTile(
@@ -39,12 +42,13 @@ class MethodPaymentView extends StatelessWidget {
               contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
               title: Text(
                 'Phương thức COD (mặc định)',
-                style: PrimaryFont.instance.copyWith(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: theme.textTheme.bodySmall,
               ),
-              trailing: const Icon(Icons.arrow_right_sharp),
+              trailing: SvgPicture.asset(
+                "assets/icons/arrow_right.svg",
+                colorFilter:
+                    ColorFilter.mode(theme.iconTheme.color!, BlendMode.srcIn),
+              ),
             ),
           ),
         ],

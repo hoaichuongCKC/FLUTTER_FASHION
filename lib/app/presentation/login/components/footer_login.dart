@@ -34,13 +34,15 @@ class FooterLogin extends StatelessWidget {
           onPressed: () => context.read<AuthCubit>().authGoogle(context),
           btnColor: lightColor,
           radius: radiusBtn,
-          boxShadow: [
-            BoxShadow(
-              color: darkColor.withOpacity(0.3),
-              offset: const Offset(2, 4),
-              blurRadius: 8,
-            ),
-          ],
+          boxShadow: !ThemeDataApp.instance.isLight
+              ? null
+              : [
+                  BoxShadow(
+                    color: darkColor.withOpacity(0.3),
+                    offset: const Offset(2, 4),
+                    blurRadius: 8,
+                  ),
+                ],
           labelWidget: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +60,7 @@ class FooterLogin extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.continueWithGoogle,
                   style: PrimaryFont.instance.copyWith(
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     color: darkColor,
                     fontWeight: FontWeight.w300,
                   ),

@@ -7,6 +7,7 @@ import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'create_review_state.dart';
 
@@ -25,13 +26,10 @@ class CreateReviewCubit extends Cubit<CreateReviewState> {
 
   void changedOrderId(String orderId) => emit(state.copyWith(orderId: orderId));
 
-  void onSelectImage(BuildContext context) async {
-    final state = this.state;
-    final files = await cameraInfo.chooseImages();
-
+  void onSelectImage(BuildContext context, List<XFile>? files) async {
     if (files == null) return;
 
-    if (state.files.length + files.length > 3) {
+    if (state.files.length + files.length > 5) {
       // ignore: use_build_context_synchronously
       errorAlert(
         context: context,
@@ -42,8 +40,7 @@ class CreateReviewCubit extends Cubit<CreateReviewState> {
 
     final fileCompress = await cameraInfo.compressAndGetListFile(
       files.map((file) => File(file.path)).toList(),
-      "upload",
-      size: const Size(150, 150),
+      "upload-reviews",
     );
 
     if (fileCompress != null) {

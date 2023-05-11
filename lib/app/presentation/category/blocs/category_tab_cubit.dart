@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/app/repositories/product_repository.dart';
+import 'package:flutter_fashion/app/repositories/category_repository.dart';
+
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 import '../../../models/product/product.dart';
@@ -8,12 +9,12 @@ import '../../../models/product/product.dart';
 part 'category_tab_state.dart';
 
 class CategoryTabCubit extends Cubit<CategoryTabState> {
-  final ProductRepositoryImpl _productRepositoryImpl;
+  final CategoryRepositoryImpl _categoryRepo;
 
   late ScrollController _scrollController;
 
-  CategoryTabCubit({required ProductRepositoryImpl product})
-      : _productRepositoryImpl = product,
+  CategoryTabCubit({required CategoryRepositoryImpl caterepo})
+      : _categoryRepo = caterepo,
         super(CategoryTabState.initial());
 
   double get _scrollThresold => state.scrollThreshold;
@@ -39,16 +40,19 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
     if (!_productCache.containsKey(idCategory)) {
       emit(state.copyWith(status: AppStatus.loading));
 
-      final result = await _productRepositoryImpl.fetchListMoreProduct(1,
-          idCagegory: idCategory);
+      final result = await _categoryRepo.fetchProductByCate(idCategory, 1);
 
-      _productCache[idCategory] = {
-        keyPage: 1,
-        keyProducts: result,
-        keyLoadMore: true,
-      };
-
-      emit(state.copyWith(products: result, status: AppStatus.success));
+      result.fold(
+        (error) => emit(state.copyWith(status: AppStatus.error)),
+        (products) {
+          emit(state.copyWith(products: products, status: AppStatus.success));
+          _productCache[idCategory] = {
+            keyPage: 1,
+            keyProducts: products,
+            keyLoadMore: true,
+          };
+        },
+      );
     } else {
       emit(state.copyWith(products: _productCache[idCategory][keyProducts]));
     }
@@ -68,21 +72,25 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
 
       final page = ++_productCache[idCategory]?[keyPage];
 
-      final result = await _productRepositoryImpl.fetchListMoreProduct(page,
-          idCagegory: idCategory);
+      final result = await _categoryRepo.fetchProductByCate(idCategory, page);
 
-      if (result.isEmpty) {
-        _productCache[idCategory]?[keyLoadMore] = false;
+      result.fold(
+        (error) => emit(state.copyWith(status: AppStatus.error)),
+        (products) {
+          if (products.isEmpty) {
+            _productCache[idCategory]?[keyLoadMore] = false;
 
-        emit(state.copyWith(loading: false));
-        return;
-      }
+            emit(state.copyWith(loading: false));
+            return;
+          }
 
-      final products = state.products..addAll(result);
+          final updatedList = [...state.products, ...products];
 
-      _productCache[idCategory][keyProducts] = products;
+          emit(state.copyWith(products: updatedList, loading: false));
 
-      emit(state.copyWith(products: products, loading: false));
+          _productCache[idCategory][keyProducts] = updatedList;
+        },
+      );
     }
   }
 

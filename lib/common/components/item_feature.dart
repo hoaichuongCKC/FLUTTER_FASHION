@@ -17,19 +17,13 @@ class ItemFeatureProfile extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: model.color.withOpacity(0.2),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: SvgPicture.asset(
-                model.imageUrl,
-                width: 18.0,
-                height: 18.0,
-                fit: BoxFit.contain,
-              ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: SvgPicture.asset(
+              model.imageUrl,
+              width: 18.0,
+              height: 18.0,
+              fit: BoxFit.contain,
             ),
           ),
           model.path == Names.ORDER

@@ -22,7 +22,7 @@ class ApiService {
 
   //call when app started
   void _initHeader() {
-    final token = HydratedBloc.storage.read(KeyStorage.token);
+    final String? token = HydratedBloc.storage.read(KeyStorage.token);
     //get token
 
     _headers = {
@@ -40,11 +40,18 @@ class ApiService {
     };
   }
 
-  Future<http.Response> get(String url) async {
-    return await http.get(
-      Uri.parse("$baseUrl$url"),
-      headers: _headers,
-    );
+  Future<http.StreamedResponse> get(String url) async {
+    final uri = Uri.parse("$baseUrl$url");
+
+    http.MultipartRequest request = http.MultipartRequest('GET', uri);
+
+    http.StreamedResponse response = await request.send();
+
+    if (ApiEndpoint.loggout == url || response.statusCode == 401) {
+      _clearHeader();
+    }
+
+    return response;
   }
 
   Future<http.StreamedResponse> post(

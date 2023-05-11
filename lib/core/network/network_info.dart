@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
-import 'package:rxdart/rxdart.dart';
 
 enum NetWorkStatus {
   successfully,
@@ -18,13 +17,9 @@ class NetworkInfoImpl implements NetworkInfo {
 
   NetWorkStatus _status = NetWorkStatus.successfully;
 
-  final networkSubject = BehaviorSubject<NetWorkStatus>();
-
   NetworkInfoImpl(Connectivity connectivity) : _connectivity = connectivity {
     _handleConnect();
   }
-
-  Stream<NetWorkStatus> get networkStream => networkSubject.stream;
 
   Future<void> _handleConnect() async {
     var connectivityResult = await _connectivity.checkConnectivity();
@@ -48,6 +43,5 @@ class NetworkInfoImpl implements NetworkInfo {
       _status = NetWorkStatus.noInternet;
       AppSnackbarMessenger.showMessage(content: "No Internet!!!");
     }
-    networkSubject.sink.add(_status);
   }
 }

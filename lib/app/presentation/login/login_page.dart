@@ -3,15 +3,8 @@ import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,26 +27,18 @@ class _LoginPageState extends State<LoginPage> {
                 width: 200.0,
                 height: 200.0,
               ),
-              FormLogin(formKey: formKey),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () => AppRoutes.router.push(
-                      Routes.SIGNUP,
-                      extra: Names.FORGOT_PASSWORD,
-                    ),
-                    child: Text(
-                        "${AppLocalizations.of(context)!.forgot_password}?"),
+              const FormLogin(),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () => AppRoutes.router.push(
+                    Routes.SIGNUP,
                   ),
-                  TextButton(
-                    onPressed: () => AppRoutes.router.push(
-                      Routes.SIGNUP,
-                      extra: Names.REGISTER,
-                    ),
-                    child: Text(AppLocalizations.of(context)!.signUp),
+                  child: Text(
+                    AppLocalizations.of(context)!.signUp,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                ],
+                ),
               ),
               BlocBuilder<AuthCubit, AuthState>(
                 buildWhen: (previous, current) =>
@@ -62,29 +47,43 @@ class _LoginPageState extends State<LoginPage> {
                   bool isDisable =
                       state.phoneNumber.isNotEmpty && state.password.isNotEmpty;
                   return ButtonWidget(
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryColor.withOpacity(0.5),
-                        offset: const Offset(2, 4),
-                        blurRadius: 10,
-                      ),
-                    ],
+                    boxShadow: !ThemeDataApp.instance.isLight
+                        ? null
+                        : [
+                            BoxShadow(
+                              color: primaryColor.withOpacity(0.5),
+                              offset: const Offset(2, 4),
+                              blurRadius: 10,
+                            ),
+                          ],
                     btnColor: !isDisable ? disablePrimaryColor : primaryColor,
                     onPressed: !isDisable
                         ? null
                         : () {
-                            if (formKey.currentState!.validate()) {
+                            if (validateLogin) {
                               context.read<AuthCubit>().call(
                                   AuthEvent.submitLogin,
                                   context: context);
                             }
                           },
-                    animate: true,
+                    animate: isDisable,
                     label: AppLocalizations.of(context)!.login,
                   );
                 },
               ),
-              const SizedBox(height: 50.0),
+              Align(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () => AppRoutes.router.push(
+                    Routes.FORGOT_PASSWORD,
+                  ),
+                  child: Text(
+                    "${AppLocalizations.of(context)!.forgot_password}?",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 35.0),
               const FooterLogin(),
               if (MediaQuery.of(context).size.height < 720.0)
                 const SizedBox(height: 50)

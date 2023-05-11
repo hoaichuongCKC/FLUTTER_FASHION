@@ -24,6 +24,8 @@ class AppBackgroundBlur extends StatelessWidget {
 
   Color? backgroundAppbar;
 
+  bool? autoLeading;
+
   AppBackgroundBlur.normal({
     super.key,
     this.leading,
@@ -65,6 +67,7 @@ class AppBackgroundBlur extends StatelessWidget {
     this.bottomNavigationBar,
     Widget? floatingActionButton,
     this.actionsSecond,
+    this.autoLeading = true,
     this.isHasBackground = true,
   });
 
@@ -141,9 +144,11 @@ class AppBackgroundBlur extends StatelessWidget {
           fit: StackFit.passthrough,
           children: [
             isHasBackground
-                ? BlocBuilder<ThemeCubit, ThemeState>(
-                    builder: (context, state) {
-                      if (state.isDark) {
+                ? BlocBuilder<SettingsCubit, SettingsState>(
+                    buildWhen: (previous, current) =>
+                        previous.isThemeLight != current.isThemeLight,
+                    builder: (context, settings) {
+                      if (!settings.isThemeLight) {
                         return const SizedBox();
                       }
                       return Positioned(
@@ -192,14 +197,16 @@ class AppBackgroundBlur extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 leading == null
-                    ? InkWell(
-                        onTap: () => AppRoutes.router.pop(),
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 24.0,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                      )
+                    ? !autoLeading!
+                        ? const SizedBox()
+                        : InkWell(
+                            onTap: () => AppRoutes.router.pop(),
+                            child: Icon(
+                              Icons.arrow_back,
+                              size: 24.0,
+                              color: Theme.of(context).iconTheme.color,
+                            ),
+                          )
                     : leading!,
                 title!.isEmpty ? const SizedBox() : const SizedBox(width: 10.0),
                 Align(
@@ -239,6 +246,7 @@ class AppBackgroundBlur extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
+              flex: 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -247,9 +255,11 @@ class AppBackgroundBlur extends StatelessWidget {
                       ? leading!
                       : InkWell(
                           onTap: () => AppRoutes.router.pop(),
-                          child: Icon(Icons.arrow_back,
-                              size: 24.0,
-                              color: Theme.of(context).iconTheme.color),
+                          child: Icon(
+                            Icons.arrow_back,
+                            size: 24.0,
+                            color: Theme.of(context).iconTheme.color,
+                          ),
                         ),
                   if (actions != null)
                     for (int i = 0; i < actions!.length; i++)
@@ -262,27 +272,30 @@ class AppBackgroundBlur extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    title!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 20.0),
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      title!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 20.0),
+                    ),
                   ),
-                ),
-                if (actionsSecond != null)
-                  for (int i = 0; i < actionsSecond!.length; i++)
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        actionsSecond![i],
-                      ],
-                    )
-              ],
+                  if (actionsSecond != null)
+                    for (int i = 0; i < actionsSecond!.length; i++)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          actionsSecond![i],
+                        ],
+                      )
+                ],
+              ),
             )
           ],
         ),

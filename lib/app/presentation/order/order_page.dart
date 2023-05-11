@@ -33,6 +33,7 @@ class _OrderPageState extends State<OrderPage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return DefaultTabController(
       length: ChoiceChipCustom.listData.length,
       child: AppBackgroundBlur.normal(
@@ -40,7 +41,7 @@ class _OrderPageState extends State<OrderPage>
         title: AppLocalizations.of(context)!.my_order,
         leading: InkWell(
           onTap: () => AppRoutes.router.go(Routes.PROFILE),
-          child: const Icon(Icons.arrow_back, size: 20.0),
+          child: const Icon(Icons.arrow_back, size: 24.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,10 +50,6 @@ class _OrderPageState extends State<OrderPage>
               splashBorderRadius: const BorderRadius.all(Radius.circular(5.0)),
               unselectedLabelColor: darkColor.withOpacity(0.5),
               indicatorSize: TabBarIndicatorSize.label,
-              labelStyle: PrimaryFont.instance.copyWith(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w300,
-              ),
               controller: _tabBarController,
               isScrollable: true,
               tabs: ChoiceChipCustom.listData
@@ -62,7 +59,12 @@ class _OrderPageState extends State<OrderPage>
                         children: [
                           e.prefixIcon,
                           const SizedBox(width: 3.0),
-                          Text(e.label.translateTabOrder(context)),
+                          Text(
+                            e.label.translateTabOrder(context),
+                            style: theme.textTheme.bodyMedium!.copyWith(
+                              fontSize: 14.0,
+                            ),
+                          ),
                         ],
                       ),
                     ),

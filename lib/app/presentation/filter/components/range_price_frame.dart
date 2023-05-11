@@ -1,7 +1,7 @@
-import 'package:flutter_fashion/app/models/range_pice/range_price.dart';
 import 'package:flutter_fashion/app/presentation/filter/components/title_frame.dart';
 import 'package:flutter_fashion/app/presentation/filter/cubit/filter_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/core/models/range_pice/range_price.dart';
 
 class RangePriceFrame extends StatelessWidget {
   const RangePriceFrame({super.key});
@@ -34,6 +34,7 @@ class RangePriceFrame extends StatelessWidget {
                     initial: () => "",
                   );
                   return _buildItem<RangePriceModel>(
+                    context,
                     title: priceLabel,
                     onTap: () => filterCubit.selectPrice(index),
                     isSelected: priceSelected == index,
@@ -47,7 +48,7 @@ class RangePriceFrame extends StatelessWidget {
     );
   }
 
-  ListTile _buildItem<T>(
+  ListTile _buildItem<T>(context,
       {String title = "",
       required bool isSelected,
       required VoidCallback onTap}) {
@@ -91,9 +92,7 @@ class RangePriceFrame extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(
         title,
-        style: PrimaryFont.instance.copyWith(
-          fontSize: 14.0,
-        ),
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }

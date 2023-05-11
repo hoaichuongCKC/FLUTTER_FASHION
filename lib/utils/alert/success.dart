@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/config/colors.dart';
 import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 import 'package:flutter_fashion/routes/app_routes.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -66,10 +64,10 @@ Future successAlert({
                       Align(
                         child: Text(
                           message,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 14.0,
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ),

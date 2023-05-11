@@ -25,9 +25,7 @@ class BannerCubit extends Cubit<BannerState> {
 
       result.fold(
         (error) {
-          if (error != AuthenticatedException.message) {
-            emit(BannerState.error(error));
-          } else {
+          if (error == AuthenticatedException.message) {
             popupAlert(
               context: context,
               noButtonCancle: true,
@@ -50,17 +48,9 @@ class BannerCubit extends Cubit<BannerState> {
     }
   }
 
-  void onRefresh() async {
-    emit(const BannerState.loading());
-    final result = await _bannerRepositoryImpl.fetchBanner();
-
-    result.fold(
-      (error) => emit(BannerState.error(error)),
-      (list) {
-        emit(BannerState.fetchCompleted(list));
-        _isFirstLoad = true;
-      },
-    );
+  void onRefresh(context) async {
+    _isFirstLoad = false;
+    fetchData(context);
   }
 
   @override

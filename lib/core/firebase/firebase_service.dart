@@ -39,8 +39,7 @@ mixin FirebaseMixin {
         return const Left("Invalid-code");
       }
     } on FirebaseAuthException catch (e) {
-      // Handle sign in errors here
-      return Left(e.message!);
+      return Left(e.code);
     }
   }
 

@@ -22,6 +22,7 @@ ReviewModel _$ReviewModelFromJson(Map<String, dynamic> json) {
 mixin _$ReviewModel {
   int get id => throw _privateConstructorUsedError;
   UserModel get user => throw _privateConstructorUsedError;
+  int get product_id => throw _privateConstructorUsedError;
   int get star => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $ReviewModelCopyWith<$Res> {
   $Res call(
       {int id,
       UserModel user,
+      int product_id,
       int star,
       String? content,
       DateTime? created_at,
@@ -65,6 +67,7 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
   $Res call({
     Object? id = null,
     Object? user = null,
+    Object? product_id = null,
     Object? star = null,
     Object? content = freezed,
     Object? created_at = freezed,
@@ -79,6 +82,10 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      product_id: null == product_id
+          ? _value.product_id
+          : product_id // ignore: cast_nullable_to_non_nullable
+              as int,
       star: null == star
           ? _value.star
           : star // ignore: cast_nullable_to_non_nullable
@@ -118,6 +125,7 @@ abstract class _$$_ReviewModelCopyWith<$Res>
   $Res call(
       {int id,
       UserModel user,
+      int product_id,
       int star,
       String? content,
       DateTime? created_at,
@@ -140,6 +148,7 @@ class __$$_ReviewModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? user = null,
+    Object? product_id = null,
     Object? star = null,
     Object? content = freezed,
     Object? created_at = freezed,
@@ -154,6 +163,10 @@ class __$$_ReviewModelCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      product_id: null == product_id
+          ? _value.product_id
+          : product_id // ignore: cast_nullable_to_non_nullable
+              as int,
       star: null == star
           ? _value.star
           : star // ignore: cast_nullable_to_non_nullable
@@ -181,6 +194,7 @@ class _$_ReviewModel implements _ReviewModel {
   const _$_ReviewModel(
       {required this.id,
       required this.user,
+      required this.product_id,
       required this.star,
       required this.content,
       required this.created_at,
@@ -194,6 +208,8 @@ class _$_ReviewModel implements _ReviewModel {
   final int id;
   @override
   final UserModel user;
+  @override
+  final int product_id;
   @override
   final int star;
   @override
@@ -212,7 +228,7 @@ class _$_ReviewModel implements _ReviewModel {
 
   @override
   String toString() {
-    return 'ReviewModel(id: $id, user: $user, star: $star, content: $content, created_at: $created_at, images: $images)';
+    return 'ReviewModel(id: $id, user: $user, product_id: $product_id, star: $star, content: $content, created_at: $created_at, images: $images)';
   }
 
   @override
@@ -222,6 +238,8 @@ class _$_ReviewModel implements _ReviewModel {
             other is _$_ReviewModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user, user) || other.user == user) &&
+            (identical(other.product_id, product_id) ||
+                other.product_id == product_id) &&
             (identical(other.star, star) || other.star == star) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.created_at, created_at) ||
@@ -231,8 +249,8 @@ class _$_ReviewModel implements _ReviewModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, user, star, content,
-      created_at, const DeepCollectionEquality().hash(_images));
+  int get hashCode => Object.hash(runtimeType, id, user, product_id, star,
+      content, created_at, const DeepCollectionEquality().hash(_images));
 
   @JsonKey(ignore: true)
   @override
@@ -252,6 +270,7 @@ abstract class _ReviewModel implements ReviewModel {
   const factory _ReviewModel(
       {required final int id,
       required final UserModel user,
+      required final int product_id,
       required final int star,
       required final String? content,
       required final DateTime? created_at,
@@ -264,6 +283,8 @@ abstract class _ReviewModel implements ReviewModel {
   int get id;
   @override
   UserModel get user;
+  @override
+  int get product_id;
   @override
   int get star;
   @override

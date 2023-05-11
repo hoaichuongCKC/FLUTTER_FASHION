@@ -16,6 +16,10 @@ class PromotionCubit extends Cubit<PromotionState> {
 
   bool _isFirstLoad = false;
 
+  List<PromotionModel> get promotions => state.whenOrNull(
+        success: (promotions) => promotions,
+      )!;
+
   void incrementPage() => _page++;
 
   void fetchPromotion(bool? getAll) async {

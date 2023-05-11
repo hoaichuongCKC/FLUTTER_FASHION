@@ -6,9 +6,9 @@ class ViewSelectedAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<AddressManagementBloc>();
+    final bloc = getIt.get<AddressManagementBloc>();
     return StreamBuilder<List<String>>(
-      stream: bloc.seletedListStream,
+      stream: bloc.seletedListStream.stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const SizedBox();
@@ -28,7 +28,7 @@ class ViewSelectedAddress extends StatelessWidget {
                   .toList(),
             ),
             StreamBuilder<ListBuilding>(
-              stream: bloc.buildingStream,
+              stream: bloc.buildingStream.stream,
               builder: (context, snapshot) {
                 if (snapshot.data == ListBuilding.desc) {
                   return const SizedBox();
@@ -37,7 +37,7 @@ class ViewSelectedAddress extends StatelessWidget {
               },
             ),
             StreamBuilder<ListBuilding>(
-              stream: bloc.buildingStream,
+              stream: bloc.buildingStream.stream,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(child: Text('ERROR'));
@@ -86,16 +86,17 @@ class BuildSelectedAddress extends StatelessWidget {
   final bool isInfoNextStep;
   @override
   Widget build(BuildContext context) {
+    final color = ThemeDataApp.instance.isLight
+        ? darkColor.withOpacity(0.5)
+        : lightColor.withOpacity(0.7);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: !isInfoNextStep
             ? null
-            : const BorderRadius.all(Radius.circular(5.0)),
-        border: !isInfoNextStep
-            ? null
-            : Border.all(
-                color: disableDarkColor.withOpacity(0.2),
+            : const BorderRadius.all(
+                Radius.circular(5.0),
               ),
+        border: !isInfoNextStep ? null : Border.all(color: color),
       ),
       child: Padding(
         padding: !isInfoNextStep
@@ -112,9 +113,7 @@ class BuildSelectedAddress extends StatelessWidget {
                 DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isInfoNextStep
-                        ? null
-                        : disableDarkColor.withOpacity(0.2),
+                    color: isInfoNextStep ? null : color,
                     border: !isInfoNextStep
                         ? null
                         : Border.all(color: successfullyColor),
@@ -142,7 +141,7 @@ class BuildSelectedAddress extends StatelessWidget {
                 ColoredBox(
                   color: isInfoNextStep
                       ? successfullyColor.withOpacity(0.7)
-                      : disableDarkColor.withOpacity(0.2),
+                      : color,
                   child: const SizedBox(
                     width: 1,
                     height: 15,
@@ -154,11 +153,13 @@ class BuildSelectedAddress extends StatelessWidget {
             Text(
               name,
               style: PrimaryFont.instance.copyWith(
-                fontSize: 14.0,
+                fontSize: 12.0,
                 height: 1.0,
                 color: isInfoNextStep
                     ? successfullyColor
-                    : disableDarkColor.withOpacity(0.5),
+                    : ThemeDataApp.instance.isLight
+                        ? disableDarkColor
+                        : lightColor.withOpacity(0.7),
                 fontWeight: FontWeight.w400,
               ),
             )

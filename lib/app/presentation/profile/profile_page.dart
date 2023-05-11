@@ -1,6 +1,6 @@
 import 'package:flutter_fashion/app/blocs/edit_information/edit_information_cubit.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
-import 'package:flutter_fashion/app/presentation/profile/profile_data.dart';
+import 'package:flutter_fashion/common/components/app/background_app.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -22,15 +22,9 @@ class ProfilePage extends StatelessWidget {
         },
         child: Builder(
           builder: (context) {
-            return ProfileBackgroundPage(
-              appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle.dark,
-                backgroundColor: Colors.transparent,
-                title: Text(
-                  AppLocalizations.of(context)!.profile,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
+            return AppBackgroundBlur.withAppBar(
+              autoLeading: false,
+              title: AppLocalizations.of(context)!.profile,
               child: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -40,8 +34,10 @@ class ProfilePage extends StatelessWidget {
                         initial: () => const SizedBox(),
                         loading: () =>
                             const Center(child: CircularProgressIndicator()),
-                        fetchCompleted: (data) =>
-                            ProfileData(data, child: const ProfileBody()),
+                        fetchCompleted: (user) => InheritedDataApp(
+                          data: user,
+                          child: const ProfileBody(),
+                        ),
                         failure: (error) => Center(
                           child: Text(error),
                         ),

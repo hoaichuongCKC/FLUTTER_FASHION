@@ -6,7 +6,7 @@ import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class NotificationProvider {
-  Future<Map<String, dynamic>> fetchData(int page, String? type);
+  Future<Map<String, dynamic>> fetchData(int page);
   Future<ResponseData> updateReadNoti(int idNoti, String? type);
 }
 
@@ -17,14 +17,9 @@ class NotificationProviderImpl extends NotificationProvider {
       : _apiService = apiService;
 
   @override
-  Future<Map<String, dynamic>> fetchData(int page, String? type) async {
-    late String uri;
+  Future<Map<String, dynamic>> fetchData(int page) async {
+    final String uri = "${ApiEndpoint.fetchNotification}?page=$page";
 
-    if (type == null) {
-      uri = "${ApiEndpoint.fetchNotification}?page=$page";
-    } else {
-      uri = "${ApiEndpoint.fetchNotification}?page=$page&type=$type";
-    }
     var response = await _apiService.post(uri);
 
     if (response.statusCode != 200) {

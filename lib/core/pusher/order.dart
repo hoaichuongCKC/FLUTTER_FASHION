@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
-import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
 import 'package:flutter_fashion/core/pusher/pusher_app.dart';
@@ -61,17 +58,11 @@ class PusherOrderApp with PusherMixin implements PusherApp {
 
   @override
   void handleData(BuildContext context, data) async {
-    try {
-      final convert = jsonDecode(data);
-
-      final notification = OrderModel.fromJson(convert);
-    } catch (e) {
+    try {} catch (e) {
       log("Error handle data Chat Pusher: $e");
     }
   }
 
   @override
-  void trigger(PusherEvent event) {
-    // TODO: implement trigger
-  }
+  void trigger(PusherEvent event) {}
 }

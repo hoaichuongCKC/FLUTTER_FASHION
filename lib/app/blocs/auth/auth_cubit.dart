@@ -106,11 +106,11 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     );
   }
 
-  void accountRegister(RegisterParams param, BuildContext context) async {
+  void accountRegister(RegisterParams? param, BuildContext context) async {
     emit(state.copyWith(status: AppStatus.loading));
     loadingAlert(context: context);
 
-    final result = await _authRepositoryImpl.register(param);
+    final result = await _authRepositoryImpl.register(param!);
 
     AppRoutes.router.pop();
     result.fold(
@@ -132,6 +132,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
   }
 
   void authGoogle(BuildContext context) async {
+    emit(state.copyWith(status: AppStatus.loading));
     loadingAlert(context: context);
     final result = await signInWithGoogle();
 
@@ -145,8 +146,6 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         }
       },
       (data) async {
-        emit(state.copyWith(status: AppStatus.loading));
-
         _logoutGoogle();
         final resultSecond = await _authRepositoryImpl.loginGoogle(
             data.user!.displayName!, data.user!.email!);

@@ -1,128 +1,140 @@
 import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart';
+import 'package:flutter_fashion/app/presentation/sign_up/widgets/choose_image_widget.dart';
 import '../../../../export.dart';
 
-class ListImageRating extends StatelessWidget {
+class ListImageRating extends StatefulWidget {
   const ListImageRating({super.key});
 
   @override
+  State<ListImageRating> createState() => _ListImageRatingState();
+}
+
+class _ListImageRatingState extends State<ListImageRating> {
+  final ValueNotifier<bool> _removeNotifier = ValueNotifier(false);
+  @override
+  void dispose() {
+    _removeNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreateReviewCubit, CreateReviewState>(
-      buildWhen: (previous, current) => previous.files != current.files,
-      builder: (context, state) {
-        if (state.files.isNotEmpty) {
-          return Wrap(
-            spacing: 5.0,
-            runSpacing: 5.0,
-            children: state.files
-                .map(
-                  (item) => Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: 100.0,
-                          height: 100.0,
-                          child: FractionallySizedBox(
-                            heightFactor: 0.8,
-                            child: AspectRatio(
-                              aspectRatio: 1.0,
-                              child: ClipRRect(
+    final theme = Theme.of(context);
+    final bloc = context.read<CreateReviewCubit>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BlocBuilder<CreateReviewCubit, CreateReviewState>(
+          buildWhen: (previous, current) => previous.files != current.files,
+          builder: (context, state) {
+            final buttonChooseImage = ChooseImageWidget(
+              isChooseMultipleImage: true,
+              size: 100.0,
+              color: darkColor.withOpacity(0.25),
+              onListen: (files) => bloc.onSelectImage(context, files),
+            );
+
+            if (state.files.isNotEmpty) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Hình ảnh đánh giá',
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: _removeNotifier,
+                        builder: (context, bool isRemove, child) {
+                          final text = isRemove
+                              ? AppLocalizations.of(context)!.cancel
+                              : AppLocalizations.of(context)!.delete;
+                          return GestureDetector(
+                            onTap: () => _removeNotifier.value = !isRemove,
+                            child: Text(
+                              text,
+                              style: theme.textTheme.bodyMedium!.copyWith(
+                                color: primaryColor,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0,
+                      mainAxisExtent: 100.0,
+                    ),
+                    itemCount: state.files.length + 1,
+                    itemBuilder: (context, index) {
+                      if ((state.files.length + 1) - 1 == index) {
+                        return buttonChooseImage;
+                      }
+
+                      final file = state.files[index];
+
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(radiusBtn),
+                            ),
+                            child: Image.file(
+                              file,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          ValueListenableBuilder<bool>(
+                            valueListenable: _removeNotifier,
+                            builder: (context, bool isRemove, child) {
+                              if (!isRemove) return const SizedBox();
+                              return ClipRRect(
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(radiusBtn),
                                 ),
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    Image.file(
-                                      item,
-                                      fit: BoxFit.cover,
+                                child: ColoredBox(
+                                  color: darkColor.withOpacity(0.25),
+                                  child: IconButton(
+                                    onPressed: () => bloc.deleteImage(index),
+                                    icon: SvgPicture.asset(
+                                      "assets/icons/trash.svg",
+                                      width: 20,
+                                      height: 20.0,
                                     ),
-                                    IconButton(
-                                      onPressed: () => context
-                                          .read<CreateReviewCubit>()
-                                          .deleteImage(
-                                              state.files.indexOf(item)),
-                                      icon: Align(
-                                        alignment: const Alignment(0, 0),
-                                        child: SvgPicture.asset(
-                                          "assets/icons/trash.svg",
-                                          width: 20.0,
-                                          height: 25.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (state.files.indexOf(item) == state.files.length - 1)
-                          IconButton(
-                            onPressed: () => context
-                                .read<CreateReviewCubit>()
-                                .onSelectImage(context),
-                            icon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/camera.svg",
-                                ),
-                                const SizedBox(width: 3.0),
-                                Text(
-                                  "Add photo",
-                                  style: PrimaryFont.instance.copyWith(
-                                    color: primaryColor,
-                                    fontSize: 14.0,
                                   ),
                                 ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
-                      ],
-                    ),
-                  ),
-                )
-                .toList(),
-          );
-        }
-        return SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height * .2,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: lightColor,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(radiusBtn),
-              ),
-              border: Border.all(
-                color: primaryColor,
-              ),
-            ),
-            child: InkWell(
-              onTap: () =>
-                  context.read<CreateReviewCubit>().onSelectImage(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/camera.svg",
-                  ),
-                  const SizedBox(width: 8.0),
-                  Text(
-                    AppLocalizations.of(context)!.click_here_to_choose_a_photo,
-                    style: PrimaryFont.instance.copyWith(
-                      fontSize: 14.0,
-                      color: primaryColor,
-                    ),
+                        ],
+                      );
+                    },
                   ),
                 ],
-              ),
-            ),
-          ),
-        );
-      },
+              );
+            }
+            return Align(
+              child: buttonChooseImage,
+            );
+          },
+        ),
+      ],
     );
   }
 }

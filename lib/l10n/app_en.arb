@@ -73,7 +73,7 @@
     "description": "Không hiểu gì cả",
     "placeholders": {
       "number": {
-        "type": "int",
+        "type": "String",
         "example": "Bob"
       }
     }
@@ -151,12 +151,6 @@
     "description": "Không hiểu gì cả"
   },
 
-  
-  "clickOnTheParagraphThatNeedsToBeEdited": "(Click on the paragraph that needs to be edited)",
-  "@clickOnTheParagraphThatNeedsToBeEdited": {
-    "description": "Không hiểu gì cả"
-  },
-
   "gotIt": "Got it",
   "@gotIt": {
     "description": "Không hiểu gì cả"
@@ -218,10 +212,11 @@
     "description": "Không hiểu gì cả"
   },
 
-  "change": "Change",
-  "@change": {
+  "update": "Update",
+  "@update": {
     "description": "Không hiểu gì cả"
   },
+
 
   "theNewPasswordDoesNotMatch": "The new password does not match",
   "@theNewPasswordDoesNotMatch": {
@@ -287,7 +282,7 @@
     "description": "Không hiểu gì cả"
   },
 
-  "you_currently_have_no_orders": "You currently have no orders",
+  "you_currently_have_no_orders": "No orders",
   "@you_currently_have_no_orders": {
     "description": "Không hiểu gì cả"
   },
@@ -317,8 +312,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "you_currently_have_no_product_favorite": "You currently have no product favorite",
-  "@you_currently_have_no_product_favorite": {
+  "no_favorite": "No favorites",
+  "@no_favorite": {
     "description": "Không hiểu gì cả"
   },
 
@@ -367,8 +362,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "you_have_not_updated_your_address_yet": "You have not updated your address yet",
-  "@you_have_not_updated_your_address_yet": {
+  "no_address": "No address",
+  "@no_address": {
     "description": "Không hiểu gì cả"
   },
 
@@ -432,8 +427,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "my_shopping_cart_is_currently_empty": "Shopping cart is currently empty",
-  "@my_shopping_cart_is_currently_empty": {
+  "no_carts": "No carts",
+  "@no_carts": {
     "description": "Không hiểu gì cả"
   },
 
@@ -649,6 +644,152 @@
 
   "password_not_match": "Password do not match",
   "@password_not_match": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "shipping_address": "Shipping address",
+  "@shipping_address": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "detail": "Detail",
+  "@detail": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "recipient_informatio": "Recipient information",
+  "@recipient_informatio": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "payment_method": "Payment method",
+  "@payment_method": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "recipient": "Recipient",
+  "@recipient": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "note": "Note",
+  "@note": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "choose_a_promotion": "Choose a promotion",
+  "@choose_a_promotion": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "sub_total": "sub-total",
+  "@sub_total": {
+    "description": "nó là chỉnh sửa"
+  },
+  
+  "total_amount": "Total amount",
+  "@total_amount": {
+    "description": "nó là chỉnh sửa"
+  },
+  
+  "policies": "Please carefully read about the terms and return and delivery policies of the store",
+  "@policies": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "no_notifications": "No notifications",
+  "@no_notifications": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_successfully": "Order successfully",
+  "@order_successfully": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "popular": "Popular",
+  "@popular": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "sale": "Sale",
+  "@sale": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "buy_now": "Buy now",
+  "@buy_now": {
+    "description": "nó là chỉnh sửa"
+  },
+  
+  "create": "Create",
+  "@create": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "list_of_review": "List of review",
+  "@list_of_review": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "filter": "Filter",
+  "@filter": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "check_it_out": "Check out",
+  "@check_it_out": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_set_up_your_address": "Please set your address",
+  "@please_set_up_your_address": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "remove_all": "Remove all",
+  "@remove_all": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "in_use": "In use",
+  "@in_use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "not_in_use": "Not in use",
+  "@not_in_use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "go_back": "Go back",
+  "@go_back": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  
+  "phone_number_not_registered_in_the_system": "Phone number not registered in the system",
+  "@phone_number_not_registered_in_the_system": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "not_use": "Not use",
+  "@not_use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "use": "Sử dụng",
+  "@use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "the_number_of_photos_exceeds_the_limit" : "The number of photos exceeds the limit",
+  "@the_number_of_photos_exceeds_the_limit": {
     "description": "nó là chỉnh sửa"
   }
 

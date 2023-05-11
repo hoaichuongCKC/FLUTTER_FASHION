@@ -30,7 +30,7 @@ class CartCubit extends HydratedCubit<CartState> {
     final isExist = List<CartModel>.from(state.items).where((item) {
       final bool checkId = item.product.id == cart.product.id;
 
-      final bool checkIndexColor = item.indexImage == cart.indexImage;
+      final bool checkIndexColor = item.photo == cart.photo;
 
       return checkId && checkIndexColor;
     }).toList();

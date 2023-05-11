@@ -1,12 +1,10 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/notification/components/skeleton_noti.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
 import 'package:flutter_fashion/config/notification.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
-import '../../../export.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -95,231 +93,151 @@ class NotificationPage extends StatelessWidget {
           }
 
           if (status == AppStatus.error) {
-            return const Center(
-              child: Text("SERVER ERROR"),
+            return Center(
+              child: Text(
+                "SERVER ERROR",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             );
           }
 
           final notificationChat = state.notificationsChat;
           final notificationDaily = state.notificationsDaily;
           final notificationOrder = state.notificationsOrder;
+
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ColoredBox(
-                  color: lightColor,
-                  child: ListTile(
-                    onTap: () => AppRoutes.router.push(
-                      "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
-                      extra: {
-                        "name": typeChat,
-                      },
-                    ),
-                    leading: SvgPicture.asset(
-                      "assets/icons/profile/messenger.svg",
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.scaleDown,
-                      colorFilter:
-                          const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)!.messenger,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    subtitle: notificationChat.isEmpty
-                        ? null
-                        : Text(
-                            AppLocalizations.of(context)!
-                                .a_new_message(notificationChat[0].subtitle),
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              color: disableDarkColor,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        state.chatDonotRead.isEmpty
-                            ? const SizedBox()
-                            : DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    color: errorColor, shape: BoxShape.circle),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    state.chatDonotRead.length.toString(),
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 12.0,
-                                      color: lightColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        state.chatDonotRead.isEmpty
-                            ? const SizedBox()
-                            : const SizedBox(width: 3.0),
-                        SvgPicture.asset("assets/icons/arrow_right.svg"),
-                      ],
-                    ),
-                    dense: true,
-                    horizontalTitleGap: 6.0,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: horizontalPadding - 4),
+                _buildListitle(
+                  context,
+                  iconPath: "assets/icons/profile/messenger.svg",
+                  onTap: () => AppRoutes.router.push(
+                    "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
+                    extra: {
+                      "name": typeChat,
+                    },
                   ),
+                  subtitle: notificationChat.isEmpty
+                      ? ""
+                      : notificationChat[0].subtitle,
+                  lengthReaded: state.chatDonotRead.length,
+                  title: AppLocalizations.of(context)!.messenger,
                 ),
-                const ColoredBox(
-                  color: scaffoldBackgroundColor,
-                  child: SizedBox(
-                    height: 2.0,
-                    width: double.infinity,
+                _buildDivider(context),
+                _buildListitle(
+                  context,
+                  iconPath: "assets/icons/profile/order.svg",
+                  onTap: () => AppRoutes.router.push(
+                    "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
+                    extra: {
+                      "name": typeOrder,
+                    },
                   ),
+                  subtitle: notificationOrder.isEmpty
+                      ? ""
+                      : notificationOrder[0].subtitle,
+                  lengthReaded: state.orderDonotRead.length,
+                  title: AppLocalizations.of(context)!.my_order,
                 ),
-                ColoredBox(
-                  color: lightColor,
-                  child: ListTile(
-                    onTap: () => AppRoutes.router.push(
-                      "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
-                      extra: {
-                        "name": typeOrder,
-                      },
-                    ),
-                    leading: SvgPicture.asset(
-                      "assets/icons/profile/order.svg",
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.scaleDown,
-                      colorFilter:
-                          const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)!.my_order,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    subtitle: notificationOrder.isEmpty
-                        ? null
-                        : Text(
-                            AppLocalizations.of(context)!
-                                .a_new_message(notificationOrder[0].subtitle),
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              color: disableDarkColor,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        state.orderDonotRead.isEmpty
-                            ? const SizedBox()
-                            : DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    color: errorColor, shape: BoxShape.circle),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    state.orderDonotRead.length.toString(),
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 12.0,
-                                      color: lightColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        state.orderDonotRead.isEmpty
-                            ? const SizedBox()
-                            : const SizedBox(width: 3.0),
-                        SvgPicture.asset("assets/icons/arrow_right.svg"),
-                      ],
-                    ),
-                    dense: true,
-                    horizontalTitleGap: 6.0,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: horizontalPadding - 4),
+                _buildDivider(context),
+                _buildListitle(
+                  context,
+                  iconPath: "assets/icons/notification.svg",
+                  onTap: () => AppRoutes.router.push(
+                    "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
+                    extra: {
+                      "name": typeDaily,
+                    },
                   ),
-                ),
-                const ColoredBox(
-                  color: scaffoldBackgroundColor,
-                  child: SizedBox(
-                    height: 2.0,
-                    width: double.infinity,
-                  ),
-                ),
-                ColoredBox(
-                  color: lightColor,
-                  child: ListTile(
-                    onTap: () => AppRoutes.router.push(
-                      "${Routes.NOTIFICATION}/${Routes.NOTIFICATION_DETAIL}",
-                      extra: {
-                        "name": typeDaily,
-                      },
-                    ),
-                    leading: SvgPicture.asset(
-                      "assets/icons/notification.svg",
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.scaleDown,
-                      colorFilter:
-                          const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)!.daily,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    subtitle: notificationDaily.isEmpty
-                        ? null
-                        : Text(
-                            AppLocalizations.of(context)!
-                                .a_new_message(notificationDaily[0].subtitle),
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              color: disableDarkColor,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        state.dailyDonotRead.isEmpty
-                            ? const SizedBox()
-                            : DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    color: errorColor, shape: BoxShape.circle),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    state.dailyDonotRead.length.toString(),
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 12.0,
-                                      color: lightColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        state.dailyDonotRead.isEmpty
-                            ? const SizedBox()
-                            : const SizedBox(width: 3.0),
-                        SvgPicture.asset("assets/icons/arrow_right.svg"),
-                      ],
-                    ),
-                    dense: true,
-                    horizontalTitleGap: 6.0,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: horizontalPadding - 4),
-                  ),
+                  subtitle: notificationDaily.isEmpty
+                      ? ""
+                      : notificationDaily[0].subtitle,
+                  lengthReaded: state.dailyDonotRead.length,
+                  title: AppLocalizations.of(context)!.daily,
                 ),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildDivider(BuildContext context) {
+    return ColoredBox(
+      color: Theme.of(context).dividerColor,
+      child: const SizedBox(
+        height: 1.0,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  Widget _buildListitle(
+    BuildContext context, {
+    required String iconPath,
+    required String title,
+    String subtitle = "",
+    int lengthReaded = 0,
+    required VoidCallback onTap,
+  }) {
+    return ColoredBox(
+      color: Theme.of(context).cardColor,
+      child: ListTile(
+        onTap: onTap,
+        leading: SvgPicture.asset(
+          iconPath,
+          width: 40.0,
+          height: 40.0,
+          fit: BoxFit.scaleDown,
+          colorFilter: const ColorFilter.mode(primaryColor, BlendMode.srcIn),
+        ),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontSize: 14.0,
+              ),
+        ),
+        subtitle: subtitle.isEmpty
+            ? null
+            : Text(
+                AppLocalizations.of(context)!.a_new_message(subtitle),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            lengthReaded == 0
+                ? const SizedBox()
+                : DecoratedBox(
+                    decoration: const BoxDecoration(
+                        color: errorColor, shape: BoxShape.circle),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        lengthReaded.toString(),
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 10.0,
+                          color: lightColor,
+                        ),
+                      ),
+                    ),
+                  ),
+            lengthReaded == 0 ? const SizedBox() : const SizedBox(width: 3.0),
+            SvgPicture.asset(
+              "assets/icons/arrow_right.svg",
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).iconTheme.color!,
+                BlendMode.srcIn,
+              ),
+            ),
+          ],
+        ),
+        dense: true,
+        horizontalTitleGap: 6.0,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/rules_app_view.dart';
 import 'package:flutter_fashion/app/repositories/order_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
+import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/pop_up.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
@@ -28,8 +28,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   void removeAll() => emit(const PaymentState());
 
   _createOrder(BuildContext context) async {
-    final state = this.state;
-
     emit(state.copyWith(status: AppStatus.loading));
     //get cart
     final cartCubit = getIt.get<CartCubit>().state;
@@ -42,16 +40,19 @@ class PaymentCubit extends Cubit<PaymentState> {
       shippingPhone: state.phone,
       total: cartCubit.totalCart(),
     );
+
     final result = await _orderRepositoryImpl.create(params);
 
+    AppRoutes.router.pop();
     result.fold(
-      (error) => emit(state.copyWith(status: AppStatus.error)),
-      (order) async {
-        context.read<OrderCubit>().addOrder(order);
+      (error) {
+        errorAlert(context: context, message: error);
+        emit(state.copyWith(status: AppStatus.error));
+      },
+      (order) {
+        AppRoutes.router.go("${Routes.PAYMENT}/${Routes.ORDER_SUCCESS}");
         emit(state.copyWith(status: AppStatus.success));
-        await Future.delayed(const Duration(seconds: 2));
-        AppRoutes.router.go(Routes.PROFILE);
-        AppRoutes.router.pushNamed(Names.ORDER);
+        getIt.get<OrderCubit>().addOrder(order);
       },
     );
   }
@@ -66,7 +67,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   Future<bool> _checkRule(context) async {
-    log("Start check rule");
     if (!state.isRead) {
       await popupAlert(
         context: context,
@@ -81,7 +81,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   _checkInforUser(context) async {
-    log("Start check infor user");
     final phone = state.phone;
     final fullname = state.fullname;
     final address = getIt.get<AddressUserCubit>().state.usingAddress;

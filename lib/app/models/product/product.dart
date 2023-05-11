@@ -2,9 +2,6 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
-
-import '../photo/photo.dart';
-
 part 'product.freezed.dart';
 part 'product.g.dart';
 

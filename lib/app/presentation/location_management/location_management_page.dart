@@ -7,14 +7,8 @@ import 'package:flutter_fashion/app/presentation/location_management/components/
 import 'package:flutter_fashion/core/models/address.dart';
 import 'package:flutter_fashion/export.dart';
 
-class LocationManagementPage extends StatefulWidget {
+class LocationManagementPage extends StatelessWidget {
   const LocationManagementPage({Key? key}) : super(key: key);
-
-  @override
-  State<LocationManagementPage> createState() => _LocationManagementPageState();
-}
-
-class _LocationManagementPageState extends State<LocationManagementPage> {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
@@ -53,8 +47,9 @@ class _LocationManagementPageState extends State<LocationManagementPage> {
               padding:
                   const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
               child: Center(
-                child: Text(AppLocalizations.of(context)!
-                    .you_have_not_updated_your_address_yet),
+                child: Text(
+                  AppLocalizations.of(context)!.no_address,
+                ),
               ),
             );
           }

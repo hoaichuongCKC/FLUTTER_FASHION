@@ -15,19 +15,21 @@ class BottomNavigationBarCart extends StatelessWidget {
           return const SizedBox();
         }
         return DecoratedBox(
-          decoration: const BoxDecoration(
-            color: lightColor,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(5.0),
               topRight: Radius.circular(5.0),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: disablePrimaryColor,
-                offset: Offset(0, -1),
-                blurRadius: 10.0,
-              )
-            ],
+            boxShadow: !ThemeDataApp.instance.isLight
+                ? null
+                : [
+                    const BoxShadow(
+                      color: disablePrimaryColor,
+                      offset: Offset(0, -1),
+                      blurRadius: 10.0,
+                    )
+                  ],
           ),
           child: ConstrainedBoxWidget(
             currentHeight: 0.1,
@@ -44,10 +46,10 @@ class BottomNavigationBarCart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Thành tiền:',
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                        ),
+                        "${AppLocalizations.of(context)!.total_amount}:",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontSize: 14.0,
+                            ),
                       ),
                       Text(
                         state.totalCart().toDouble().toVndCurrency(),
@@ -64,7 +66,7 @@ class BottomNavigationBarCart extends StatelessWidget {
                     child: ButtonWidget(
                       height: 40.0,
                       btnColor: primaryColor,
-                      label: "Đặt hàng",
+                      label: AppLocalizations.of(context)!.order,
                       onPressed: () =>
                           AppRoutes.router.pushNamed(Names.PAYMENT),
                     ),

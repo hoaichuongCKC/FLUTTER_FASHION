@@ -98,7 +98,13 @@ class _BannerHomeState extends State<BannerHome> {
               ),
             ),
             const SizedBox(height: 8.0),
-            DotPage(length: widget.bannerList.length, currentDot: _currentPage),
+            DotPage(
+              length: widget.bannerList.length,
+              currentDot: _currentPage,
+              disableDot: !ThemeDataApp.instance.isLight
+                  ? Theme.of(context).indicatorColor
+                  : darkColor,
+            ),
           ],
         ),
       ),

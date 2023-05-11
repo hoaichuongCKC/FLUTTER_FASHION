@@ -8,16 +8,22 @@ import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 class PaymentState extends Equatable {
   final String phone;
+
   final String fullname;
+
   final String note;
+
   final String address;
+
   final bool isRead;
+
   final AppStatus status;
+
   const PaymentState({
     this.phone = "",
     this.fullname = "",
     this.address = "",
-    this.note = "",
+    this.note = "Note",
     this.isRead = false,
     this.status = AppStatus.init,
   });
@@ -95,26 +101,13 @@ class OrderParams extends Equatable {
       'shipping_address': shippingAddress,
       'shipping_fullname': shippingFullname,
       'shipping_phone': shippingPhone,
-      'order_payment': paymentMethod,
+      'payment_method': paymentMethod,
       'temp_price': tempPrice.toString(),
-      'ship_prce': shipPrice.toString(),
-      'list_product': jsonEncode(toMapListCart()),
+      'ship_price': shipPrice.toString(),
+      'list_product': jsonEncode(listCart),
       'notes': note,
       'total_price': total.toString(),
     };
-  }
-
-  List toMapListCart() {
-    return listCart
-        .map(
-          (e) => <String, dynamic>{
-            'product_id': e.product.id.toString(),
-            'quantity': e.quantity.toString(),
-            'size': e.size,
-            'color': e.color,
-          },
-        )
-        .toList();
   }
 
   String toJson() => json.encode(toMap());

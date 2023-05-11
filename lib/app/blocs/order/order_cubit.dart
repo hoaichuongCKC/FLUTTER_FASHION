@@ -75,6 +75,7 @@ class OrderCubit extends Cubit<OrderState> {
       (error) => emit(state.copyWith(status: AppStatus.error)),
       (dataMap) {
         final queue = Queue<void>();
+
         queue.addLast(_handleToPay(dataMap));
         queue.addLast(_handleToShip(dataMap));
         queue.addLast(_handleToReceive(dataMap));
@@ -86,6 +87,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void _handleToPay(Map<String, dynamic> data) {
+    log("=========================To_pay=========================");
     emit(state.copyWith(status: AppStatus.success));
 
     final listMap = data["to_pay"];
@@ -100,6 +102,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void _handleToShip(Map<String, dynamic> data) {
+    log("=========================to_ship=========================");
     final listMap = data["to_ship"];
 
     if (listMap.isNotEmpty) {
@@ -112,6 +115,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void _handleToReceive(Map<String, dynamic> data) {
+    log("=========================to_receive=========================");
     final listMap = data["to_receive"];
 
     if (listMap.isNotEmpty) {
@@ -124,6 +128,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void _handleDataDelivered(Map<String, dynamic> data) {
+    log("=========================completed=========================");
     final listMap = data["completed"];
 
     if (listMap.isNotEmpty) {

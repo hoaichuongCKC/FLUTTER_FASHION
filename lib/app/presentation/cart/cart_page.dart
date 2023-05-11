@@ -11,10 +11,6 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
       title: AppLocalizations.of(context)!.my_shopping_cart,
-      leading: InkWell(
-        onTap: () => AppRoutes.router.pop(),
-        child: const Icon(Icons.arrow_back),
-      ),
       bottomNavigationBar: const BottomNavigationBarCart(),
       child: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
@@ -24,19 +20,27 @@ class CartPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(AppLocalizations.of(context)!
-                      .my_shopping_cart_is_currently_empty),
+                  Text(
+                    AppLocalizations.of(context)!.no_carts,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   TextButton(
-                      onPressed: () {
-                        AppRoutes.router.pop();
-                        AppRoutes.router.pushNamed(
-                          Names.CATEGORY,
-                          queryParams: {
-                            "index": "0",
-                          },
-                        );
-                      },
-                      child: const Text('Mua ngay')),
+                    onPressed: () {
+                      AppRoutes.router.pushNamed(
+                        Names.CATEGORY,
+                        queryParams: {
+                          "index": "0",
+                        },
+                      );
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.buy_now,
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );

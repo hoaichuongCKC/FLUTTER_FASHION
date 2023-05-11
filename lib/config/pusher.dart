@@ -3,9 +3,9 @@
 class PusherConfig {
   static const String PUSHER_APP_ID = "1573734";
 
-  static const String PUSHER_APP_KEY = "4d113286ba59e9f3a4c1";
+  static const String PUSHER_APP_KEY = "b18a8b47f86b06965176";
 
-  static const String PUSHER_APP_SECRET = "78189514d3f365763ee8";
+  static const String PUSHER_APP_SECRET = "80eb6081c130837f9796";
 
   static const String PUSHER_APP_CLUSTER = "ap1";
 

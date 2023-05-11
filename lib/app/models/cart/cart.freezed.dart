@@ -24,7 +24,8 @@ mixin _$CartModel {
   int get quantity => throw _privateConstructorUsedError;
   String get color => throw _privateConstructorUsedError;
   String get size => throw _privateConstructorUsedError;
-  int get indexImage => throw _privateConstructorUsedError;
+  String get photo => throw _privateConstructorUsedError;
+  DateTime get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,8 @@ abstract class $CartModelCopyWith<$Res> {
       int quantity,
       String color,
       String size,
-      int indexImage});
+      String photo,
+      DateTime created_at});
 
   $ProductModelCopyWith<$Res> get product;
 }
@@ -64,7 +66,8 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
     Object? quantity = null,
     Object? color = null,
     Object? size = null,
-    Object? indexImage = null,
+    Object? photo = null,
+    Object? created_at = null,
   }) {
     return _then(_value.copyWith(
       product: null == product
@@ -83,10 +86,14 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as String,
-      indexImage: null == indexImage
-          ? _value.indexImage
-          : indexImage // ignore: cast_nullable_to_non_nullable
-              as int,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 
@@ -111,7 +118,8 @@ abstract class _$$_CartModelCopyWith<$Res> implements $CartModelCopyWith<$Res> {
       int quantity,
       String color,
       String size,
-      int indexImage});
+      String photo,
+      DateTime created_at});
 
   @override
   $ProductModelCopyWith<$Res> get product;
@@ -132,7 +140,8 @@ class __$$_CartModelCopyWithImpl<$Res>
     Object? quantity = null,
     Object? color = null,
     Object? size = null,
-    Object? indexImage = null,
+    Object? photo = null,
+    Object? created_at = null,
   }) {
     return _then(_$_CartModel(
       product: null == product
@@ -151,10 +160,14 @@ class __$$_CartModelCopyWithImpl<$Res>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as String,
-      indexImage: null == indexImage
-          ? _value.indexImage
-          : indexImage // ignore: cast_nullable_to_non_nullable
-              as int,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -168,7 +181,8 @@ class _$_CartModel implements _CartModel {
       required this.quantity,
       required this.color,
       required this.size,
-      required this.indexImage});
+      required this.photo,
+      required this.created_at});
 
   factory _$_CartModel.fromJson(Map<String, dynamic> json) =>
       _$$_CartModelFromJson(json);
@@ -182,11 +196,13 @@ class _$_CartModel implements _CartModel {
   @override
   final String size;
   @override
-  final int indexImage;
+  final String photo;
+  @override
+  final DateTime created_at;
 
   @override
   String toString() {
-    return 'CartModel(product: $product, quantity: $quantity, color: $color, size: $size, indexImage: $indexImage)';
+    return 'CartModel(product: $product, quantity: $quantity, color: $color, size: $size, photo: $photo, created_at: $created_at)';
   }
 
   @override
@@ -199,14 +215,15 @@ class _$_CartModel implements _CartModel {
                 other.quantity == quantity) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.size, size) || other.size == size) &&
-            (identical(other.indexImage, indexImage) ||
-                other.indexImage == indexImage));
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, product, quantity, color, size, indexImage);
+  int get hashCode => Object.hash(
+      runtimeType, product, quantity, color, size, photo, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -228,7 +245,8 @@ abstract class _CartModel implements CartModel {
       required final int quantity,
       required final String color,
       required final String size,
-      required final int indexImage}) = _$_CartModel;
+      required final String photo,
+      required final DateTime created_at}) = _$_CartModel;
 
   factory _CartModel.fromJson(Map<String, dynamic> json) =
       _$_CartModel.fromJson;
@@ -242,7 +260,9 @@ abstract class _CartModel implements CartModel {
   @override
   String get size;
   @override
-  int get indexImage;
+  String get photo;
+  @override
+  DateTime get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_CartModelCopyWith<_$_CartModel> get copyWith =>

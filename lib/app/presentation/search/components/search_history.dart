@@ -28,16 +28,15 @@ class SearchHistory extends StatelessWidget {
             dense: true,
             title: Text(
               "${AppLocalizations.of(context)!.search_keyword} \"$keyword\"",
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 14.0,
-              ),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 14.0,
+                  ),
             ),
             trailing: Text(
               "${products.length} ${AppLocalizations.of(context)!.search_result}",
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 12.0,
-                color: primaryColor,
-              ),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 14.0,
+                  ),
             ),
           );
         }
@@ -50,10 +49,7 @@ class SearchHistory extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.search_history,
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 InkWell(
                   onTap: () => context.read<SearchCubit>().clearHistory(),
@@ -62,7 +58,7 @@ class SearchHistory extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context)!.delete,
                       style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
+                        fontSize: 12.0,
                         color: primaryColor,
                       ),
                     ),
@@ -71,8 +67,13 @@ class SearchHistory extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10.0),
-            ColoredBox(
-              color: lightColor,
+            DecoratedBox(
+              decoration: const BoxDecoration(
+                color: lightColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(radiusBtn / 2),
+                ),
+              ),
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 shrinkWrap: true,

@@ -3,14 +3,12 @@ import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterParams extends Equatable {
-  final String username;
   final String fullname;
   final String phone;
   final String email;
   final String password;
   final XFile image;
   const RegisterParams({
-    required this.username,
     required this.fullname,
     required this.phone,
     required this.email,
@@ -19,7 +17,6 @@ class RegisterParams extends Equatable {
   });
 
   Map<String, String> toJson() => {
-        "username": username,
         "fullname": fullname,
         "phone": phone,
         "email": email,
@@ -27,6 +24,5 @@ class RegisterParams extends Equatable {
       };
 
   @override
-  List<Object?> get props =>
-      [username, fullname, phone, email, password, image];
+  List<Object?> get props => [fullname, phone, email, password, image];
 }

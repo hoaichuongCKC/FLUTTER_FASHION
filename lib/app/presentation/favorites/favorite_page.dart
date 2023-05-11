@@ -1,4 +1,9 @@
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
+import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
+import 'package:flutter_fashion/app/presentation/favorites/components/action_appbar_favorite.dart';
+import 'package:flutter_fashion/app/presentation/favorites/components/bottom_navigationbar.dart';
+import 'package:flutter_fashion/app/presentation/favorites/components/checkbox_favorite.dart';
+import 'package:flutter_fashion/app/presentation/favorites/components/floating_action_favorite.dart';
 import 'package:flutter_fashion/export.dart';
 import '../../../common/components/app/background_app.dart';
 import '../../../common/components/item_product.dart';
@@ -10,66 +15,28 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
       title: AppLocalizations.of(context)!.favorite,
+      actionsSecond: const [
+        ActionAppBarFavorite(),
+      ],
       isHasBackground: false,
-      floatingActionButton: BlocSelector<FavoriteCubit, FavoriteState, bool>(
-        selector: (state) {
-          return state.listProduct.isEmpty;
-        },
-        builder: (context, state) {
-          if (state) {
-            return const SizedBox();
-          }
-          return ButtonWidget(
-            btnColor: primaryColor,
-            width: 120.0,
-            height: 40.0,
-            animate: true,
-            onPressed: () => context.read<FavoriteCubit>().removeAll(),
-            radius: radiusBtn,
-            labelWidget: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Align(
-                  child: SvgPicture.asset(
-                    "assets/icons/trash.svg",
-                    placeholderBuilder: (context) => ColoredBox(
-                      color: disableDarkColor.withOpacity(0.5),
-                    ),
-                    fit: BoxFit.contain,
-                    width: 20.0,
-                    height: 20.0,
-                  ),
-                ),
-                const SizedBox(width: 5.0),
-                Align(
-                  child: Text(
-                    "Xoá tất cả",
-                    style: PrimaryFont.instance.copyWith(
-                      fontSize: 14.0,
-                      color: lightColor,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-      ),
+      floatingActionButton: const FloatingActionFavorite(),
+      bottomNavigationBar: const BottomNavigationBarFavorite(),
       child: BlocBuilder<FavoriteCubit, FavoriteState>(
         builder: (context, state) {
           final listProduct = state.listProduct;
           if (listProduct.isEmpty) {
             return Center(
-              child: Text(AppLocalizations.of(context)!
-                  .you_currently_have_no_product_favorite),
+              child: Text(
+                AppLocalizations.of(context)!.no_favorite,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             );
           }
           return GridView.builder(
             itemCount: listProduct.length,
             shrinkWrap: true,
-            padding:
-                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+            padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPadding - 4, vertical: verticalPadding),
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -79,9 +46,22 @@ class FavoritePage extends StatelessWidget {
               mainAxisExtent: 230.0,
             ),
             itemBuilder: (context, index) {
-              return ItemProduct(
-                onTap: () {},
-                product: listProduct[index],
+              final product = listProduct[index];
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  ItemProduct(
+                    onTap: () {
+                      final bloc = BlocProvider.of<ProductDetailCubit>(context);
+
+                      bloc.getProduct(product.id!);
+
+                      AppRoutes.router.pushNamed(Names.PRODUCT_DETAIL);
+                    },
+                    product: listProduct[index],
+                  ),
+                  CheckBoxFavorite(product: product),
+                ],
               );
             },
           );

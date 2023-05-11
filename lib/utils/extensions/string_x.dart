@@ -89,8 +89,8 @@ extension StringX on String {
   }
 
   bool get isValidPassword {
-    final RegExp passwordRegex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    final RegExp passwordRegex = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?\d)(?=.*?[!@#\$&*~])[A-Za-z\d!@#\$&*~]{7,}$');
     return passwordRegex.hasMatch(this);
   }
 }

@@ -12,11 +12,10 @@ class ToPayShipReceiveDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final order = OrderDetailInherited.of(context).order;
     final status = OrderDetailInherited.of(context).status;
+    final theme = Theme.of(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
       child: Material(
-        surfaceTintColor: scaffoldBackgroundColor,
-        color: scaffoldBackgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,20 +36,12 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                     children: [
                       Text(
                         "${order.shipping_fullname!},",
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300,
-                          color: darkColor.withOpacity(0.5),
-                        ),
+                        style: theme.textTheme.bodySmall,
                       ),
                       const SizedBox(width: 8.0),
                       Text(
                         order.shipping_phone!,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300,
-                          color: darkColor.withOpacity(0.5),
-                        ),
+                        style: theme.textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -71,11 +62,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                   Expanded(
                     child: Text(
                       order.shipping_address!,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w300,
-                        color: darkColor.withOpacity(0.5),
-                      ),
+                      style: theme.textTheme.bodySmall,
                     ),
                   ),
                 ],
@@ -93,11 +80,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                 Expanded(
                   child: Text(
                     order.created_at!.formatDateTime(),
-                    style: PrimaryFont.instance.copyWith(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
-                      color: darkColor.withOpacity(0.5),
-                    ),
+                    style: theme.textTheme.bodySmall,
                   ),
                 ),
               ],
@@ -114,9 +97,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                   leading: SvgPicture.asset("assets/icons/order_box.svg"),
                   title: Text(
                     AppLocalizations.of(context)!.my_order,
-                    style: PrimaryFont.instance.copyWith(
-                      fontSize: 18.0,
-                    ),
+                    style: theme.textTheme.bodyLarge,
                   ),
                 ),
                 ListView.separated(
@@ -141,10 +122,8 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "${AppLocalizations.of(context)!.status}: ",
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w300,
-                      ),
+                      style:
+                          theme.textTheme.bodySmall!.copyWith(fontSize: 14.0),
                     ),
                     WidgetSpan(
                       child: ColoredBox(
@@ -154,10 +133,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                               horizontal: 4.0, vertical: 3),
                           child: Text(
                             order.status!.getOrderStatus(context),
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              color: lightColor,
-                            ),
+                            style: theme.textTheme.bodySmall,
                           ),
                         ),
                       ),
@@ -174,10 +150,8 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "${AppLocalizations.of(context)!.total}: ",
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w300,
-                      ),
+                      style:
+                          theme.textTheme.bodySmall!.copyWith(fontSize: 14.0),
                     ),
                     WidgetSpan(
                       child: Text(
@@ -206,10 +180,10 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                           );
                         },
                         height: 40,
-                        radius: 5,
+                        radius: radiusBtn,
                         btnColor: primaryColor,
                         animate: true,
-                        label: AppLocalizations.of(context)!.order),
+                        label: AppLocalizations.of(context)!.cancel),
                   )
                 : const SizedBox()
           ],

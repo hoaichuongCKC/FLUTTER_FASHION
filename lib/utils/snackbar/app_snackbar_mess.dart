@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/font_style.dart';
 
 class AppSnackbarMessenger {
   AppSnackbarMessenger._();
@@ -20,7 +17,8 @@ class AppSnackbarMessenger {
           backgroundColor: background ?? darkColor,
           content: Row(
             children: [
-              SvgPicture.asset("assets/icons/check_successfully.svg"),
+              SvgPicture.asset("assets/icons/check_sucessfully.svg",
+                  width: 18.0, height: 18.0),
               const SizedBox(width: 8.0),
               Text(
                 content,

@@ -32,12 +32,14 @@ class OrderProcessingPage extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   "assets/icons/empty_list.svg",
-                  width: 100.0,
-                  height: 100.0,
+                  width: 80.0,
+                  height: 80.0,
                 ),
                 const SizedBox(height: 10.0),
                 Text(
-                    AppLocalizations.of(context)!.you_currently_have_no_orders),
+                  AppLocalizations.of(context)!.you_currently_have_no_orders,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ],
             ),
           );

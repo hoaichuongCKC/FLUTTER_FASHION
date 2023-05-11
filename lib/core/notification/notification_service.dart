@@ -4,7 +4,9 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
-  static final NotificationService instance = NotificationService._();
+  static NotificationService? _instance;
+  static NotificationService get instance =>
+      _instance ??= NotificationService._();
 
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -13,28 +15,37 @@ class NotificationService {
 
   late AndroidNotificationDetails _androidNotificationDetails;
 
+  bool _isPlaySound = true;
+
+  final timeZoneName = "Asia/Ho_Chi_Minh";
+
   NotificationService._() {
     _initialize();
     _initialTimezone();
   }
 
+  set playSound(bool isPlaySound) {
+    _isPlaySound = isPlaySound;
+  }
+
   _initialize() async {
+    // await _initSound();
     _flutterLocalNotificationsPlugin.initialize(
       const InitializationSettings(
         android: AndroidInitializationSettings("@mipmap/ic_launcher"),
       ),
       onSelectNotification: _handlePayload,
     );
+    const sound = "cartoon_bubble";
 
-    _androidNotificationDetails = const AndroidNotificationDetails(
-      'your_channel_id_0',
-      'pushnotification',
+    _androidNotificationDetails = AndroidNotificationDetails(
+      'YouMe',
+      'notification_pusher',
       'desc',
       importance: Importance.high,
       priority: Priority.high,
-      showProgress: true,
-      playSound: true,
-      enableVibration: true,
+      playSound: _isPlaySound,
+      sound: const RawResourceAndroidNotificationSound(sound),
     );
 
     _notificationDetails =
@@ -43,12 +54,12 @@ class NotificationService {
 
   _initialTimezone() {
     tz.initializeTimeZones();
-    const timeZoneName = "Asia/Ho_Chi_Minh";
+
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
   Future _handlePayload(String? payload) async {
-    // AppRoutes.router.
+    AppRoutes.router.push(payload!);
   }
 
   void createNotification(
@@ -57,7 +68,7 @@ class NotificationService {
       id,
       title,
       body,
-      _notificationDetails..android,
+      _notificationDetails,
       payload: payload,
     );
   }

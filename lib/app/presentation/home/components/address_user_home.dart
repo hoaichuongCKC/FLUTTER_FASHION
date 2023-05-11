@@ -41,22 +41,23 @@ class AddressUserHome extends StatelessWidget {
                       final address = state.usingAddress[0].name;
                       return Text(
                         address,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontSize: 14.0,
+                            ),
                       );
                     }
                     return ColoredBox(
-                      color: warningColor.withOpacity(0.2),
+                      color: ThemeDataApp.instance.isLight
+                          ? warningColor.withOpacity(0.2)
+                          : Colors.teal,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
                           AppLocalizations.of(context)!.update_your_address,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w300,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 14.0,
+                                  ),
                         ),
                       ),
                     );
@@ -67,7 +68,13 @@ class AddressUserHome extends StatelessWidget {
             );
           },
         ),
-        trailing: SvgPicture.asset("assets/icons/arrow_right.svg"),
+        trailing: SvgPicture.asset(
+          "assets/icons/arrow_right.svg",
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).iconTheme.color!,
+            BlendMode.srcIn,
+          ),
+        ),
       ),
     );
   }

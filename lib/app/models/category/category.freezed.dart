@@ -24,6 +24,8 @@ mixin _$CategoryModel {
   String get name => throw _privateConstructorUsedError;
   String get name_vi => throw _privateConstructorUsedError;
   String get photo => throw _privateConstructorUsedError;
+  String? get background_color => throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +39,13 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({int id, String name, String name_vi, String photo});
+  $Res call(
+      {int id,
+      String name,
+      String name_vi,
+      String photo,
+      String? background_color,
+      DateTime? created_at});
 }
 
 /// @nodoc
@@ -57,6 +65,8 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? name = null,
     Object? name_vi = null,
     Object? photo = null,
+    Object? background_color = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +85,14 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      background_color: freezed == background_color
+          ? _value.background_color
+          : background_color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: freezed == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -87,7 +105,13 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       __$$_CategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String name_vi, String photo});
+  $Res call(
+      {int id,
+      String name,
+      String name_vi,
+      String photo,
+      String? background_color,
+      DateTime? created_at});
 }
 
 /// @nodoc
@@ -105,6 +129,8 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? name = null,
     Object? name_vi = null,
     Object? photo = null,
+    Object? background_color = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_$_CategoryModel(
       id: null == id
@@ -123,6 +149,14 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      background_color: freezed == background_color
+          ? _value.background_color
+          : background_color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: freezed == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -132,7 +166,12 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$_CategoryModel implements _CategoryModel {
   const _$_CategoryModel(
-      {this.id = 0, this.name = "", this.name_vi = "", this.photo = ""});
+      {this.id = 0,
+      this.name = "",
+      this.name_vi = "",
+      this.photo = "",
+      this.background_color,
+      this.created_at});
 
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryModelFromJson(json);
@@ -149,10 +188,14 @@ class _$_CategoryModel implements _CategoryModel {
   @override
   @JsonKey()
   final String photo;
+  @override
+  final String? background_color;
+  @override
+  final DateTime? created_at;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, name_vi: $name_vi, photo: $photo)';
+    return 'CategoryModel(id: $id, name: $name, name_vi: $name_vi, photo: $photo, background_color: $background_color, created_at: $created_at)';
   }
 
   @override
@@ -163,12 +206,17 @@ class _$_CategoryModel implements _CategoryModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.name_vi, name_vi) || other.name_vi == name_vi) &&
-            (identical(other.photo, photo) || other.photo == photo));
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.background_color, background_color) ||
+                other.background_color == background_color) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, name_vi, photo);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, name_vi, photo, background_color, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -189,7 +237,9 @@ abstract class _CategoryModel implements CategoryModel {
       {final int id,
       final String name,
       final String name_vi,
-      final String photo}) = _$_CategoryModel;
+      final String photo,
+      final String? background_color,
+      final DateTime? created_at}) = _$_CategoryModel;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;
@@ -202,6 +252,10 @@ abstract class _CategoryModel implements CategoryModel {
   String get name_vi;
   @override
   String get photo;
+  @override
+  String? get background_color;
+  @override
+  DateTime? get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>

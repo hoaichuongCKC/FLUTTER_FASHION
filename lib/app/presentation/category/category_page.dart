@@ -1,9 +1,8 @@
+import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/category/components/menu_list.dart';
 import 'package:flutter_fashion/app/presentation/category/components/product_list.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
-
-import '../../blocs/category/category_cubit.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({
@@ -27,6 +26,9 @@ class _CategoryPageState extends State<CategoryPage>
     super.initState();
     _tabController = TabController(vsync: this, length: bloc.length)
       ..animateTo(widget.index);
+    if (widget.index.compareTo(0) == 0) {
+      context.read<CategoryTabCubit>().changeTab(bloc.categories[0].id);
+    }
   }
 
   @override
@@ -47,14 +49,16 @@ class _CategoryPageState extends State<CategoryPage>
               child: GestureDetector(
                 onTap: () => AppRoutes.router.pushNamed(Names.SEARCH),
                 child: FractionallySizedBox(
-                  heightFactor: 1.0,
-                  widthFactor: 0.9,
+                  heightFactor: .9,
+                  widthFactor: 0.95,
                   alignment: Alignment.centerRight,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: lightColor,
+                      color: ThemeDataApp.instance.isLight
+                          ? lightColor
+                          : Theme.of(context).cardColor,
                       borderRadius: const BorderRadius.all(
-                        Radius.circular(5.0),
+                        Radius.circular(radiusBtn),
                       ),
                       boxShadow: [
                         BoxShadow(color: darkColor.withOpacity(0.15))
@@ -68,17 +72,15 @@ class _CategoryPageState extends State<CategoryPage>
                             "assets/icons/search.svg",
                             width: 20.0,
                             height: 20.0,
-                            colorFilter: const ColorFilter.mode(
-                                darkColor, BlendMode.srcIn),
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                         Text(
                           AppLocalizations.of(context)!.search,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 12.0,
-                            color: darkColor,
-                            fontWeight: FontWeight.w300,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall,
                         )
                       ],
                     ),

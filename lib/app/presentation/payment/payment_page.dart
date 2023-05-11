@@ -16,34 +16,41 @@ class PaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (context) => getIt<PaymentCubit>(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.order),
-          centerTitle: false,
-        ),
-        body: BlocListener<PaymentCubit, PaymentState>(
-          listener: (context, state) {
-            if (state.status == AppStatus.success) {
-              context.read<CartCubit>().removeAll();
-              context.read<PaymentCubit>().removeAll();
-            }
-          },
-          child: SingleChildScrollView(
-            padding:
-                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                AddressPaymentView(),
-                ListOrderView(),
-                InfoUserOrderView(),
-                MethodPaymentView(),
-                ListVoucherView(),
-                DetailOrderView(),
-                RulesAppView(),
-              ],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              AppLocalizations.of(context)!.order,
+              style: theme.textTheme.titleSmall,
+            ),
+            centerTitle: false,
+          ),
+          body: BlocListener<PaymentCubit, PaymentState>(
+            listener: (context, state) {
+              if (state.status == AppStatus.success) {
+                context.read<CartCubit>().removeAll();
+                context.read<PaymentCubit>().removeAll();
+              }
+            },
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: horizontalPadding - 4, vertical: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  AddressPaymentView(),
+                  ListOrderView(),
+                  InfoUserOrderView(),
+                  MethodPaymentView(),
+                  ListVoucherView(),
+                  DetailOrderView(),
+                  RulesAppView(),
+                ],
+              ),
             ),
           ),
         ),

@@ -20,11 +20,64 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
     emit(state.copyWith(listProduct: updatedList));
   }
 
+  void showCheckBox() {
+    emit(state.copyWith(isShowCheckBox: !state.isShowCheckBox));
+    _clearAllIndex();
+  }
+
+  void addId(int id) {
+    final state = this.state;
+
+    if (_checkExistIndex(id)) {
+      return;
+    }
+
+    final updatedList = [id, ...state.chooseItemsDelete];
+
+    emit(state.copyWith(chooseItemsDelete: updatedList));
+  }
+
+  void removeId(id) {
+    final state = this.state;
+    final updatedList = List<int>.from(state.chooseItemsDelete)..remove(id);
+
+    emit(state.copyWith(chooseItemsDelete: updatedList));
+  }
+
   void removeFavorite(ProductModel product) {
     final state = this.state;
     final list = state.listProduct;
-    emit(state.copyWith(
-        listProduct: List<ProductModel>.from(list)..remove(product)));
+
+    final updatedList = List<ProductModel>.from(list)
+      ..retainWhere((item) => item.id != product.id);
+    emit(state.copyWith(listProduct: updatedList));
+  }
+
+  void removeListFavorite() {
+    final state = this.state;
+    final list = state.listProduct;
+
+    for (int id in state.chooseItemsDelete) {
+      final updatedList = List<ProductModel>.from(list)
+        ..retainWhere(
+          (item) => item.id != id,
+        );
+
+      emit(state.copyWith(listProduct: updatedList));
+    }
+    showCheckBox();
+  }
+
+  bool _checkExistIndex(int index) {
+    final state = this.state;
+    return state.chooseItemsDelete.contains(index);
+  }
+
+  void _clearAllIndex() {
+    final state = this.state;
+    if (state.chooseItemsDelete.isNotEmpty) {
+      emit(state.copyWith(chooseItemsDelete: []));
+    }
   }
 
   void removeAll() {

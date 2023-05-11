@@ -1,6 +1,6 @@
+import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/app_bar_product_detail.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/overlay_animation/product_overlay.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/export.dart';
@@ -18,71 +18,58 @@ class BottomNavigationbarDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final detailInherited = ProductDetailInherited.of(context);
+    final ProductModel product =
+        InheritedDataApp.of<ProductModel>(context)!.data;
 
-    final product = detailInherited.productModel;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: lightColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(radiusBtn),
-          ),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+      child: ButtonWidget(
+        height: 40.0,
+        animate: true,
+        radius: radiusBtn,
+        btnColor: primaryColor,
+        onPressed: () =>
+            BlocProvider.of<ProductDetailUiCubit>(context).addToCart(
+          context,
+          product,
+          (photo, quantity) => handleAnimation(quantity, photo, context),
         ),
-        child: ConstrainedBoxWidget(
-          currentHeight: 0.1,
-          maxHeight: 45.0,
-          minHeight: 40.0,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Flexible(
-                flex: 1,
-                child: FractionallySizedBox(
-                  heightFactor: 1.0,
-                  child: ButtonWidget(
-                    height: 40.0,
-                    animate: true,
-                    radius: 5.0,
-                    btnColor: primaryColor,
-                    onPressed: () {
-                      BlocProvider.of<ProductDetailUiCubit>(context)
-                          .addToCart(context, product, () {
-                        final index =
-                            BlocProvider.of<ProductDetailUiCubit>(context)
-                                .state
-                                .indexImage;
-                        final imageWidget = CachedNetworkImage(
-                          key: imageKey,
-                          imageUrl: ApiService.imageUrl +
-                              product.product_detail![index].photo,
-                          width: 200.0,
-                          height: 200.0,
-                          fit: BoxFit.cover,
-                        );
-
-                        ProductOverlay.instance
-                            .showOverlay(context, image: imageWidget);
-                      });
-                    },
-                    label: AppLocalizations.of(context)!.add_to_cart,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        label: AppLocalizations.of(context)!.add_to_cart,
       ),
+    );
+  }
+
+  void handleAnimation(quantity, photo, context) async {
+    final imageWidget = CachedNetworkImage(
+      key: imageKey,
+      imageUrl: ApiService.imageUrl + photo,
+      width: 200.0,
+      height: 200.0,
+      fit: BoxFit.cover,
+    );
+
+    ProductOverlay.instance.showOverlay(
+      context,
+      image: imageWidget,
+    );
+
+    AppSnackbarMessenger.showMessage(
+      content: "Thêm giỏ hàng thành công",
+      background: lightColor,
+      textColor: darkColor,
     );
   }
 }
 
 class ItemProductScaleAnimationDetail extends StatefulWidget {
-  const ItemProductScaleAnimationDetail(
-      {super.key, required this.image, required this.size});
+  const ItemProductScaleAnimationDetail({
+    super.key,
+    required this.image,
+    required this.size,
+  });
   final Widget image;
   final Size size;
+
   @override
   State<ItemProductScaleAnimationDetail> createState() =>
       _ItemProductScaleAnimationDetailState();
@@ -107,13 +94,15 @@ class _ItemProductScaleAnimationDetailState
 
   late Offset center;
 
+  final durationAnimation = const Duration(milliseconds: 700);
+
   @override
   void initState() {
     super.initState();
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: durationAnimation,
     )..addStatusListener(
         (status) {
           if (status == AnimationStatus.completed) {

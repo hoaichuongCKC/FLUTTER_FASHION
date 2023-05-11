@@ -12,6 +12,8 @@ class CategoryModel with _$CategoryModel {
     @Default("") String name,
     @Default("") String name_vi,
     @Default("") String photo,
+    String? background_color,
+    DateTime? created_at,
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>

@@ -3,79 +3,67 @@
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
-class AddressPaymentView extends StatefulWidget {
+class AddressPaymentView extends StatelessWidget {
   const AddressPaymentView({super.key});
 
-  @override
-  State<AddressPaymentView> createState() => _AddressPaymentViewState();
-}
-
-class _AddressPaymentViewState extends State<AddressPaymentView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddressUserCubit, AddressUserState>(
       builder: (context, state) {
         return DecoratedBox(
           decoration: BoxDecoration(
-            color: lightColor,
+            color: !ThemeDataApp.instance.isLight
+                ? Theme.of(context).cardColor
+                : lightColor,
             borderRadius: const BorderRadius.all(
               Radius.circular(5.0),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: primaryColor.withOpacity(0.2),
-                blurRadius: 8.0,
-              )
-            ],
+            boxShadow: !ThemeDataApp.instance.isLight
+                ? null
+                : [
+                    BoxShadow(
+                      color: primaryColor.withOpacity(0.2),
+                      blurRadius: 8.0,
+                    )
+                  ],
           ),
           child: ListTile(
-            leading: SvgPicture.asset(
-              "assets/icons/map_address.svg",
-              width: 24.0,
-              height: 24.0,
-              color: primaryColor,
-            ),
-            dense: true,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-            minLeadingWidth: 0.0,
-            title: Text(
-              "Địa chỉ giao hàng",
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 16.0,
+              leading: SvgPicture.asset(
+                "assets/icons/map_address.svg",
+                width: 24.0,
+                height: 24.0,
+                color: primaryColor,
               ),
-            ),
-            subtitle: Text(
-              state.usingAddress.isEmpty
-                  ? "Vui lòng cập nhật địa chỉ giao hàng"
-                  : state.usingAddress[0].name,
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w300,
-                color: state.usingAddress.isEmpty
-                    ? errorColor
-                    : darkColor.withOpacity(0.5),
+              dense: true,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+              minLeadingWidth: 0.0,
+              title: Text(
+                AppLocalizations.of(context)!.shipping_address,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-            ),
-            trailing: state.usingAddress.isEmpty
-                ? InkWell(
-                    onTap: () => AppRoutes.router
-                        .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
-                    child: const Icon(
-                      Icons.add_circle_outline,
-                      color: primaryColor,
-                      size: 24.0,
+              subtitle: Text(
+                state.usingAddress.isEmpty
+                    ? AppLocalizations.of(context)!.please_set_up_your_address
+                    : state.usingAddress[0].name,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: state.usingAddress.isEmpty ? errorColor : null,
                     ),
-                  )
-                : InkWell(
-                    onTap: () => AppRoutes.router
-                        .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
-                    child: SvgPicture.asset(
-                      "assets/icons/edit.svg",
-                      color: primaryColor,
-                    ),
-                  ),
-          ),
+              ),
+              trailing: InkWell(
+                onTap: () => AppRoutes.router
+                    .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
+                child: state.usingAddress.isEmpty
+                    ? const Icon(
+                        Icons.add_circle_outline,
+                        color: primaryColor,
+                        size: 24.0,
+                      )
+                    : SvgPicture.asset(
+                        "assets/icons/edit.svg",
+                        color: primaryColor,
+                      ),
+              )),
         );
       },
     );

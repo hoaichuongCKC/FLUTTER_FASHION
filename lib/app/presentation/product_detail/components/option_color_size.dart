@@ -1,7 +1,5 @@
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
-
 import '../../../../export.dart';
 
 class OptionColorSizeDetail extends StatelessWidget {
@@ -9,11 +7,12 @@ class OptionColorSizeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final detailInherited = ProductDetailInherited.of(context);
-
-    final product = detailInherited.productModel;
+    final ProductModel product =
+        InheritedDataApp.of<ProductModel>(context)!.data;
 
     final blocDetailUi = BlocProvider.of<ProductDetailUiCubit>(context);
+
+    final theme = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,6 +21,7 @@ class OptionColorSizeDetail extends StatelessWidget {
           buildWhen: (previous, current) => previous.color != current.color,
           builder: (context, state) {
             return _buildOptionColors(
+              theme,
               title: AppLocalizations.of(context)!.colors,
               options: product.product_detail!,
               colorCode: state.color,
@@ -34,6 +34,7 @@ class OptionColorSizeDetail extends StatelessWidget {
           buildWhen: (previous, current) => previous.size != current.size,
           builder: (context, state) {
             return _buildOptionSizes(
+              theme,
               title: AppLocalizations.of(context)!.sizes,
               options: product.properties!.sizes!,
               size: state.size,
@@ -45,7 +46,8 @@ class OptionColorSizeDetail extends StatelessWidget {
     );
   }
 
-  _buildOptionColors({
+  _buildOptionColors(
+    ThemeData theme, {
     required String title,
     required List<ProductDetailModel> options,
     String colorCode = "",
@@ -59,8 +61,8 @@ class OptionColorSizeDetail extends StatelessWidget {
       children: [
         Text(
           title,
-          style: PrimaryFont.instance.copyWith(
-            fontSize: 16.0,
+          style: theme.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 5.0),
@@ -147,7 +149,8 @@ class OptionColorSizeDetail extends StatelessWidget {
     );
   }
 
-  _buildOptionSizes({
+  _buildOptionSizes(
+    ThemeData theme, {
     required String title,
     required List options,
     String size = "",
@@ -162,8 +165,8 @@ class OptionColorSizeDetail extends StatelessWidget {
       children: [
         Text(
           title,
-          style: PrimaryFont.instance.copyWith(
-            fontSize: 16.0,
+          style: theme.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 5.0),
@@ -184,9 +187,11 @@ class OptionColorSizeDetail extends StatelessWidget {
                   color: color,
                   borderRadius:
                       const BorderRadius.all(Radius.circular(radiusBtn)),
-                  boxShadow: const [
-                    BoxShadow(color: disablePrimaryColor, blurRadius: 8.0)
-                  ],
+                  boxShadow: !ThemeDataApp.instance.isLight
+                      ? null
+                      : const [
+                          BoxShadow(color: disablePrimaryColor, blurRadius: 8.0)
+                        ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),

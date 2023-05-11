@@ -4,7 +4,7 @@ import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class NotificationRepository {
-  Future<Either<String, Map<String, dynamic>>> fetch(int page, String? type);
+  Future<Either<String, Map<String, dynamic>>> fetch(int page);
   Future<Either<String, ResponseData>> updateReadNoti(int idNoti, String? type);
 }
 
@@ -18,11 +18,10 @@ class NotificationRepositoryImpl extends BaseRepository
   }) : _notificationProvider = notificationProvider;
 
   @override
-  Future<Either<String, Map<String, dynamic>>> fetch(
-      int page, String? type) async {
+  Future<Either<String, Map<String, dynamic>>> fetch(int page) async {
     final result = await baseRepo<Map<String, dynamic>>(
       excuteFunction: () async {
-        return await _notificationProvider.fetchData(page, type);
+        return await _notificationProvider.fetchData(page);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

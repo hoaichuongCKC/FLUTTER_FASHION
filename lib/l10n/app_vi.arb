@@ -9,7 +9,7 @@
     "description": "Không hiểu gì cả"
   },
 
-  "username": "Tên đăng nhập",
+  "username": "Tên hiển thị",
   "@username": {
     "description": "Không hiểu gì cả"
   },
@@ -74,7 +74,7 @@
     "description": "Không hiểu gì cả",
     "placeholders": {
       "number": {
-        "type": "int",
+        "type": "String",
         "example": "Bob"
       }
     }
@@ -150,10 +150,6 @@
     "description": "Không hiểu gì cả"
   },
 
-  "clickOnTheParagraphThatNeedsToBeEdited": "(Nhấn vào đoạn văn cần chỉnh sửa)",
-  "@clickOnTheParagraphThatNeedsToBeEdited": {
-    "description": "Không hiểu gì cả"
-  },
 
   "gotIt": "Đã hiểu",
   "@gotIt": {
@@ -214,8 +210,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "change": "Thay đổi",
-  "@change": {
+  "update": "Cập nhật",
+  "@update": {
     "description": "Không hiểu gì cả"
   },
 
@@ -314,8 +310,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "you_currently_have_no_product_favorite": "Hiện tại bạn chưa có sản phẩm yêu thích",
-  "@you_currently_have_no_product_favorite": {
+  "no_favorite": "Không có sản phẩm yêu thích",
+  "@no_favorite": {
     "description": "Không hiểu gì cả"
   },
 
@@ -364,8 +360,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "you_have_not_updated_your_address_yet": "Hiện tại bạn chưa cập nhật địa chỉ",
-  "@you_have_not_updated_your_address_yet": {
+  "no_address": "Không có địa chỉ",
+  "@no_address": {
     "description": "Không hiểu gì cả"
   },
 
@@ -430,8 +426,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "my_shopping_cart_is_currently_empty": "Giỏ hàng của bạn hiện tại đang trống",
-  "@my_shopping_cart_is_currently_empty": {
+  "no_carts": "Giỏ hàng trống",
+  "@no_carts": {
     "description": "Không hiểu gì cả"
   },
 
@@ -532,7 +528,7 @@
     "description": "Không hiểu gì cả"
   },
 
-  "expired_date": "Ngày hết hạn: {data}",
+  "expired_date": "Hết hạn: {data}",
   "@expired_date": {
     "description": "Không hiểu gì cả",
     "placeholders": {
@@ -609,7 +605,7 @@
     "description": "Không hiểu gì cả"
   },
 
-  "not_found_search_result": "Không tìm thấy kết quả tìm kiếm nào",
+  "not_found_search_result": "Không tìm thấy kết quả nào",
   "@not_found_search_result": {
     "description": "Không hiểu gì cả"
   },
@@ -648,5 +644,151 @@
   "password_not_match": "Mật khẩu không trùng khớp",
   "@password_not_match": {
     "description": "nó là chỉnh sửa"
+  },
+
+  "shipping_address": "Địa chỉ giao hàng",
+  "@shipping_address": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "detail": "Chi tiết",
+  "@detail": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "recipient_informatio": "Thông tin người nhận",
+  "@recipient_informatio": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "payment_method": "Phương thức thanh toán",
+  "@payment_method": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "recipient": "Người nhận",
+  "@recipient": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "note": "Lưu ý",
+  "@note": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "choose_a_promotion": "Chọn khuyến mãi",
+  "@choose_a_promotion": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "sub_total": "Tạm tính",
+  "@sub_total": {
+    "description": "nó là chỉnh sửa"
+  },
+  
+  "total_amount": "Thành tiền",
+  "@total_amount": {
+    "description": "nó là chỉnh sửa"
+  },
+  
+  "policies": "Vui lòng đọc kĩ về điều khoản và chính sách đổi trả và nhận hàng của cửa hàng",
+  "@policies": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "no_notifications": "Không có thông báo nào",
+  "@no_notifications": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_successfully": "Đặt hàng thành công",
+  "@order_successfully": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "popular": "Phổ biến",
+  "@popular": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "sale": "Giảm giá",
+  "@sale": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "buy_now": "Mua ngay",
+  "@buy_now": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "create": "Tạo mới",
+  "@create": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "list_of_review": "Bài đánh giá",
+  "@list_of_review": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "filter": "Lọc",
+  "@filter": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "check_it_out": "Thanh toán",
+  "@check_it_out": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_set_up_your_address": "Vui lòng thiết lập địa chỉ của bạn",
+  "@please_set_up_your_address": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "remove_all": "Xoá tất cả",
+  "@remove_all": {
+    "description": "nó là chỉnh sửa"
+  },
+  "in_use" : "Đang sử dụng",
+  "@in_use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "not_in_use": "Không được sử dụng",
+  "@not_in_use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "go_back": "Quay lại",
+  "@go_back": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "phone_number_not_registered_in_the_system": "Số điện thoại chưa được đăng ký trong hệ thống",
+  "@phone_number_not_registered_in_the_system": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "not_use": "Không sử dụng",
+  "@not_use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "use": "Sử dụng",
+  "@use": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "save": "Lưu",
+  "@save": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "the_number_of_photos_exceeds_the_limit" : "Số ảnh vượt quá giới hạn",
+  "@the_number_of_photos_exceeds_the_limit": {
+    "description": "nó là chỉnh sửa"
   }
+
+
 }

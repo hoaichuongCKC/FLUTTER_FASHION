@@ -17,10 +17,12 @@ class ChangePasswordState extends Equatable {
 
   @override
   List<Object?> get props => [currentPass, newPass, confirmPass, status];
+
   Map<String, String> toJson() => {
         "current_password": currentPass,
         "new_password": newPass,
       };
+
   ChangePasswordState copyWith({
     String? currentPass,
     String? newPass,

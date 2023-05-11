@@ -30,11 +30,13 @@ popupAlert({
           child: child);
     },
     pageBuilder: (newCtx, a1, a2) {
+      final width = MediaQuery.of(context).size.width * .8;
+      final theme = Theme.of(context);
       return Center(
         child: Material(
           borderRadius: const BorderRadius.all(Radius.circular(14.0)),
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * .8,
+            width: width,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -42,12 +44,12 @@ popupAlert({
                 DecoratedBox(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(14.0),
-                        topRight: Radius.circular(14.0)),
+                        topLeft: Radius.circular(radiusBtn),
+                        topRight: Radius.circular(radiusBtn)),
                     color: primaryColor,
                   ),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .8,
+                    width: width,
                     height: 14.0,
                   ),
                 ),
@@ -62,10 +64,8 @@ popupAlert({
                       Align(
                         child: Text(
                           message,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: theme.textTheme.bodyMedium!
+                              .copyWith(fontSize: 14.0),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -79,26 +79,23 @@ popupAlert({
                               children: [
                                 noButtonCancle
                                     ? const SizedBox()
-                                    : ButtonWidget(
-                                        height: 30,
-                                        width: 60,
-                                        animate: false,
-                                        onPressed: onCancel ??
+                                    : InkWell(
+                                        onTap: onCancel ??
                                             () {
                                               AppRoutes.router.pop();
                                               AppRoutes.router.pop();
                                             },
-                                        btnColor: disablePrimaryColor,
-                                        labelWidget: Padding(
-                                          padding: const EdgeInsets.all(5.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Align(
                                             child: Text(
                                               AppLocalizations.of(context)!
-                                                  .canceled,
-                                              style:
-                                                  PrimaryFont.instance.copyWith(
-                                                fontSize: 12.0,
-                                                color: lightColor,
+                                                  .cancel,
+                                              style: theme.textTheme.bodySmall!
+                                                  .copyWith(
+                                                color: primaryColor
+                                                    .withOpacity(0.5),
+                                                fontWeight: FontWeight.w600,
                                               ),
                                             ),
                                           ),
@@ -107,20 +104,17 @@ popupAlert({
                                 noButtonCancle
                                     ? const SizedBox()
                                     : const SizedBox(width: 15.0),
-                                ButtonWidget(
-                                  height: 30,
-                                  width: 60,
-                                  animate: false,
-                                  onPressed: onPressed,
-                                  btnColor: primaryColor,
-                                  labelWidget: Padding(
-                                    padding: const EdgeInsets.all(5.0),
+                                InkWell(
+                                  onTap: onPressed,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Align(
                                       child: Text(
                                         AppLocalizations.of(context)!.ok,
-                                        style: PrimaryFont.instance.copyWith(
-                                          fontSize: 12.0,
-                                          color: lightColor,
+                                        style:
+                                            theme.textTheme.bodySmall!.copyWith(
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),

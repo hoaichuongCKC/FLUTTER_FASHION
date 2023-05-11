@@ -31,11 +31,12 @@ class BottomNavigationBarApp extends StatelessWidget {
     }
 
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
 
     return Container(
       width: double.infinity,
       height: size.height * 0.1,
-      color: lightColor,
+      color: theme.cardColor,
       constraints: const BoxConstraints(
         maxHeight: 50.0,
         minHeight: 45,
@@ -61,7 +62,7 @@ class BottomNavigationBarApp extends StatelessWidget {
                         height: 20,
                         color: currentPage == index
                             ? primaryColor
-                            : darkColor.withOpacity(0.5),
+                            : theme.iconTheme.color,
                       ),
                     ),
                     routes: bottomData[index].path,
@@ -111,6 +112,7 @@ class ItemNavigationBar extends StatelessWidget {
   final bool isSelected;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: onPressed,
       child: Column(
@@ -124,7 +126,9 @@ class ItemNavigationBar extends StatelessWidget {
               routes.translateLabelBottomNavigationBar(context),
               style: PrimaryFont.instance.copyWith(
                 fontSize: 10.0,
-                color: isSelected ? primaryColor : darkColor.withOpacity(0.5),
+                color: isSelected
+                    ? primaryColor
+                    : theme.textTheme.bodySmall!.color,
                 fontWeight: isSelected ? FontWeight.w400 : FontWeight.w300,
               ),
             ),

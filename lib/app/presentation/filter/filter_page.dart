@@ -1,7 +1,6 @@
-import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
-import 'package:flutter_fashion/app/presentation/filter/components/category_frame.dart';
 import 'package:flutter_fashion/app/presentation/filter/components/gender_frame.dart';
 import 'package:flutter_fashion/app/presentation/filter/components/range_price_frame.dart';
+import 'package:flutter_fashion/app/presentation/filter/components/service_frame.dart';
 import 'package:flutter_fashion/app/presentation/filter/cubit/filter_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
@@ -48,7 +47,7 @@ class FilterPage extends StatelessWidget {
             children: const [
               GenderFrame(),
               SizedBox(height: 10.0),
-              CategoryFrame(),
+              ServiceFrame(),
               SizedBox(height: 10.0),
               RangePriceFrame(),
             ],

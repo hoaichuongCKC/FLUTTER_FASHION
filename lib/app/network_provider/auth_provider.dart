@@ -67,7 +67,6 @@ class AuthProviderImpl extends AuthProvider {
         isRequestHeader: false,
         images: [File(params.image.path)]);
 
-    print(response.statusCode);
     if (response.statusCode != 200) {
       throw ServerException();
     }
@@ -88,9 +87,9 @@ class AuthProviderImpl extends AuthProvider {
     if (response.statusCode != 200) {
       throw ServerException();
     }
+    final data = await response.stream.bytesToString();
 
-    return ResponseData.fromJson(
-        jsonDecode(await response.stream.bytesToString()));
+    return ResponseData.fromJson(jsonDecode(data));
   }
 
   @override
@@ -99,6 +98,7 @@ class AuthProviderImpl extends AuthProvider {
       ApiEndpoint.checkPhone,
       body: {"phone": phone},
     );
+
     if (response.statusCode != 200) {
       throw ServerException();
     }

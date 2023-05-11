@@ -13,18 +13,29 @@ class CreateAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = getIt<AddressManagementBloc>();
     return AppBackgroundBlur.normal(
+      leading: InkWell(
+        onTap: () {
+          AppRoutes.router.pop();
+          bloc.reset();
+        },
+        child: const Icon(
+          Icons.arrow_back,
+          size: 20,
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Builder(
           builder: (context) {
             return StreamBuilder<ListBuilding>(
-              stream: getIt<AddressManagementBloc>().buildingStream,
+              stream: bloc.buildingStream.stream,
               builder: (context, snapshot) {
                 if (snapshot.data == ListBuilding.desc) {
                   return ButtonWidget(
                     btnColor: primaryColor,
-                    label: "Tạo mới",
+                    label: AppLocalizations.of(context)!.create,
                     radius: 5.0,
                     height: 45.0,
                     animate: true,
@@ -45,13 +56,14 @@ class CreateAddressPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             StreamBuilder<List<String>>(
-              stream: getIt<AddressManagementBloc>().seletedListStream,
+              stream: bloc.seletedListStream.stream,
               builder: (context, snapshot) {
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return ButtonWidget(
-                    btnColor: lightColor,
+                    btnColor: Theme.of(context).cardColor,
                     animate: true,
                     height: 45.0,
+                    radius: radiusBtn,
                     onPressed: () => getIt<AddressManagementBloc>()
                         .getCurrentLocation(context),
                     boxShadow: [
@@ -68,7 +80,12 @@ class CreateAddressPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                            AppLocalizations.of(context)!.get_current_location),
+                          AppLocalizations.of(context)!.get_current_location,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 14.0,
+                                  ),
+                        ),
                       ],
                     ),
                   );
@@ -78,13 +95,13 @@ class CreateAddressPage extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.seleted_address,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                     ),
                     InkWell(
-                      onTap: () => getIt<AddressManagementBloc>().reset(),
+                      onTap: () => bloc.reset(),
                       child: Text(
                         AppLocalizations.of(context)!.delete,
                         style: PrimaryFont.instance.copyWith(
@@ -102,13 +119,14 @@ class CreateAddressPage extends StatelessWidget {
             const SizedBox(height: 15.0),
             Expanded(
               child: StreamBuilder<ListBuilding>(
-                stream: getIt<AddressManagementBloc>().buildingStream,
+                stream: bloc.buildingStream.stream,
                 builder: (context, snapshot) {
+                  if ((snapshot.connectionState == ConnectionState.waiting)) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
                   if (!snapshot.hasData) {
                     return const Center(child: Text('ERROR'));
-                  }
-                  if (!(snapshot.connectionState == ConnectionState.active)) {
-                    return const SizedBox();
                   }
 
                   if (snapshot.data! == ListBuilding.province) {

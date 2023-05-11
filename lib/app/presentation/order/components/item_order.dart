@@ -41,8 +41,8 @@ class ItemOrder extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Kira_Store',
-                        style: PrimaryFont.instance.copyWith(fontSize: 18.0),
+                        'You&Me',
+                        style: PrimaryFont.instance.copyWith(fontSize: 16.0),
                       ),
                       ColoredBox(
                         color: primaryColor.withOpacity(0.5),
@@ -64,25 +64,19 @@ class ItemOrder extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Hero(
-                          tag: "location${order.id}",
-                          child: SvgPicture.asset(
-                            "assets/icons/location.svg",
-                            colorFilter: const ColorFilter.mode(
-                                primaryColor, BlendMode.srcIn),
-                          ),
+                        SvgPicture.asset(
+                          "assets/icons/location.svg",
+                          colorFilter: const ColorFilter.mode(
+                              primaryColor, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Expanded(
-                          child: Hero(
-                            tag: "${order.id}${order.shipping_address!}",
-                            child: Text(
-                              order.shipping_address!,
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w300,
-                                color: darkColor.withOpacity(0.5),
-                              ),
+                          child: Text(
+                            order.shipping_address!,
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w300,
+                              color: darkColor.withOpacity(0.5),
                             ),
                           ),
                         ),
@@ -104,15 +98,12 @@ class ItemOrder extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8.0),
-                      Hero(
-                        tag: "${order.id}${order.created_at!.formatDateTime()}",
-                        child: Text(
-                          order.created_at!.formatDateTime(),
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w300,
-                            color: darkColor.withOpacity(0.5),
-                          ),
+                      Text(
+                        order.created_at!.formatDateTime(),
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w300,
+                          color: darkColor.withOpacity(0.5),
                         ),
                       ),
                     ],
@@ -135,16 +126,12 @@ class ItemOrder extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8.0),
-                        Hero(
-                          tag:
-                              "${order.id}${order.total_price!.toDouble().toVndCurrency()}",
-                          child: Text(
-                            order.total_price!.toDouble().toVndCurrency(),
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w300,
-                              color: errorColor.withOpacity(0.5),
-                            ),
+                        Text(
+                          order.total_price!.toDouble().toVndCurrency(),
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w300,
+                            color: errorColor.withOpacity(0.5),
                           ),
                         ),
                       ],
@@ -191,7 +178,12 @@ class ItemOrder extends StatelessWidget {
                                 },
                               );
                             },
-                            label: AppLocalizations.of(context)!.rate_now,
+                            labelWidget: Text(
+                              AppLocalizations.of(context)!.rate_now,
+                              style: PrimaryFont.instance.copyWith(
+                                fontSize: 14.0,
+                              ),
+                            ),
                           ),
                   )
                 : const SizedBox()

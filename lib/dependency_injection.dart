@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_fashion/app/blocs/chat/chat_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
@@ -15,14 +14,12 @@ import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
-import 'package:flutter_fashion/core/pusher/chat.dart';
 import 'package:flutter_fashion/core/pusher/order.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'app/blocs/address_user/address_user_cubit.dart';
 import 'app/blocs/cart/cart_cubit.dart';
 import 'app/blocs/favorite/favorite_cubit.dart';
-import 'app/blocs/payment/payment.dart';
 import 'app/presentation/category/di_category.dart';
 import 'app/presentation/personal_information/di_personal_info.dart';
 
@@ -40,8 +37,6 @@ Future<void> init() async {
 
   //internal app
   getIt.registerLazySingleton(() => NetworkInfoImpl(getIt()));
-
-  getIt.registerLazySingleton(() => PusherChatApp(apiService: getIt()));
 
   getIt.registerLazySingleton(() => PusherOrderApp(apiService: getIt()));
 
@@ -69,43 +64,25 @@ Future<void> init() async {
 }
 
 void dispose() {
-  getIt.unregister<UserCubit>();
-  if (getIt.isRegistered<CartCubit>()) {
-    getIt.unregister<CartCubit>();
-  }
-  if (getIt.isRegistered<AddressUserCubit>()) {
-    getIt.unregister<AddressUserCubit>();
-  }
-  if (getIt.isRegistered<PaymentCubit>()) {
-    getIt.unregister<PaymentCubit>();
-  }
-  if (getIt.isRegistered<FavoriteCubit>()) {
-    getIt.unregister<FavoriteCubit>();
-  }
-  if (getIt.isRegistered<OrderCubit>()) {
-    getIt.unregister<OrderCubit>();
-  }
-  if (getIt.isRegistered<PusherChatApp>()) {
-    getIt.unregister<PusherChatApp>();
-  }
-  if (getIt.isRegistered<ChatCubit>()) {
-    getIt.unregister<ChatCubit>();
-  }
-  if (getIt.isRegistered<NotificationCubit>()) {
-    getIt.unregister<NotificationCubit>();
-  }
-  if (getIt.isRegistered<SearchCubit>()) {
-    getIt.unregister<SearchCubit>();
-  }
+  destroyRegister<UserCubit>();
+  destroyRegister<CartCubit>();
+  destroyRegister<AddressUserCubit>();
+  destroyRegister<FavoriteCubit>();
+  destroyRegister<OrderCubit>();
+  destroyRegister<NotificationCubit>();
+  destroyRegister<SearchCubit>();
   //register DI again
   getIt.registerLazySingleton(() => UserCubit(userRepositoryImpl: getIt()));
   getIt.registerLazySingleton(() => FavoriteCubit());
   getIt.registerLazySingleton(() => CartCubit());
   getIt.registerLazySingleton(() => OrderCubit(orderRepositoryImpl: getIt()));
   getIt.registerLazySingleton(() => AddressUserCubit());
-  getIt.registerLazySingleton(() => PaymentCubit(orderRepositoryImpl: getIt()));
-  getIt.registerLazySingleton(() => PusherChatApp(apiService: getIt()));
-  getIt.registerLazySingleton(() => ChatCubit(userRepo: getIt()));
   getIt.registerLazySingleton(() => NotificationCubit(noti: getIt()));
   getIt.registerLazySingleton(() => SearchCubit(getIt()));
+}
+
+void destroyRegister<T extends Object>() {
+  if (getIt.isRegistered<T>()) {
+    getIt.unregister<T>();
+  }
 }

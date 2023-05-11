@@ -21,9 +21,9 @@ class IntroductionPage extends StatelessWidget {
                 right: 0.0,
                 left: 0.0,
                 child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: lightColor,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(radiusBtn * 3),
                       topRight: Radius.circular(radiusBtn * 3),
                     ),
@@ -68,13 +68,14 @@ class _BodyIntroState extends State<BodyIntro> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Positioned.fill(
       top: size.height * .15,
       child: Column(
         children: [
           Expanded(
             flex: 1,
-            child: BlocBuilder<LanguageCubit, LanguageState>(
+            child: BlocBuilder<SettingsCubit, SettingsState>(
               builder: (context, languageState) {
                 final isVN = languageState.isVietnamese;
                 return BlocBuilder<IntroCubit, IntroState>(
@@ -105,14 +106,18 @@ class _BodyIntroState extends State<BodyIntro> {
                                   Text(
                                     title,
                                     style: PrimaryFont.instance.copyWith(
-                                      fontSize: 24.0,
+                                      fontSize: 24,
+                                      color: theme.textTheme.bodySmall!.color,
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                   const SizedBox(height: 8.0),
                                   Text(
                                     subtitle,
                                     style: PrimaryFont.instance.copyWith(
-                                      fontSize: 20.0,
+                                      fontSize: 20,
+                                      color: theme.textTheme.bodySmall!.color,
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                 ],
@@ -149,6 +154,11 @@ class _BodyIntroState extends State<BodyIntro> {
                                 onPressed: () => _introCubit.skipPage(),
                                 child: Text(
                                   AppLocalizations.of(context)!.skip,
+                                  style: PrimaryFont.instance.copyWith(
+                                    fontSize: 14,
+                                    color: theme.textTheme.bodySmall!.color,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
                               ),
                             ),
@@ -157,6 +167,9 @@ class _BodyIntroState extends State<BodyIntro> {
                       child: DotPage(
                         currentDot: state.currentIndex,
                         length: state.intros.length,
+                        disableDot: theme.brightness == Brightness.dark
+                            ? theme.indicatorColor
+                            : darkColor,
                       ),
                     ),
                     Expanded(
@@ -166,7 +179,14 @@ class _BodyIntroState extends State<BodyIntro> {
                           onPressed: () => isLastPage
                               ? AppRoutes.router.go(Routes.LOGIN)
                               : _introCubit.continuePage(),
-                          child: Text(text),
+                          child: Text(
+                            text,
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 14,
+                              color: theme.textTheme.bodySmall!.color,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
                         ),
                       ),
                     ),

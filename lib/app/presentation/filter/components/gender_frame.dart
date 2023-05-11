@@ -22,11 +22,13 @@ class GenderFrame extends StatelessWidget {
             return Column(
               children: [
                 _buildItem(
+                  context,
                   title: maleLabel,
                   isSelected: gender == maleLabel,
                   onTap: () => filterCubit.changeGender(maleLabel),
                 ),
                 _buildItem(
+                  context,
                   title: femaleLabel,
                   isSelected: gender == femaleLabel,
                   onTap: () => filterCubit.changeGender(femaleLabel),
@@ -39,7 +41,7 @@ class GenderFrame extends StatelessWidget {
     );
   }
 
-  ListTile _buildItem(
+  ListTile _buildItem(BuildContext context,
       {String title = "",
       bool isSelected = false,
       required VoidCallback onTap}) {
@@ -83,9 +85,7 @@ class GenderFrame extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(
         title,
-        style: PrimaryFont.instance.copyWith(
-          fontSize: 14.0,
-        ),
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }

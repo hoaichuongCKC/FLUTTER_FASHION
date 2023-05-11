@@ -1,19 +1,18 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter_fashion/app/presentation/category/category_page.dart';
+import 'package:flutter_fashion/app/presentation/change_password/change_password_page.dart';
 import 'package:flutter_fashion/app/presentation/create_review/create_review_page.dart';
 import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/location_management/location_management_page.dart';
 import 'package:flutter_fashion/app/presentation/notification_detail/notification_detail_page.dart';
 import 'package:flutter_fashion/app/presentation/order/order_page.dart';
-import 'package:flutter_fashion/app/presentation/otp/otp_page.dart';
+import 'package:flutter_fashion/app/presentation/order_success/order_success_page.dart';
 import 'package:flutter_fashion/app/presentation/payment/payment_page.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/product_detail_page.dart';
 import 'package:flutter_fashion/app/presentation/promotion/promotion_page.dart';
-import 'package:flutter_fashion/app/presentation/register/register_page.dart';
-import 'package:flutter_fashion/app/presentation/room_chat/room_chat_page.dart';
 import 'package:flutter_fashion/app/presentation/search/search_page.dart';
 import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
@@ -46,15 +45,12 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SIGNUP = _Paths.SIGNUP;
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
-  static const REGISTER = _Paths.REGISTER;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const SEARCH = _Paths.SEARCH;
   static const CATEGORY = _Paths.CATEGORY;
   static const CART = _Paths.CART;
   static const ADDRESS_MANAGEMENT = _Paths.ADDRESS_MANAGEMENT;
   static const PRODUCT_DETAIL = _Paths.PRODUCT_DETAIL;
-
-  //page second
   static const SETTING = _Paths.SETTING;
   static const PERSONAL = _Paths.PERSONAL;
   static const REPORT = _Paths.REPORT;
@@ -68,10 +64,8 @@ abstract class Routes {
   static const RATING_PRODUCT = _Paths.RATING_PRODUCT;
   static const NOTIFICATION_DETAIL = _Paths.NOTIFICATION_DETAIL;
   static const REVIEW_SUCCESS = _Paths.REVIEW_SUCCESS;
-
-  //
-
-  static const OTP = _Paths.OTP;
+  static const ORDER_SUCCESS = _Paths.ORDER_SUCCESS;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -80,7 +74,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SIGNUP = '/sign-up';
-  static const FORGOT_PASSWORD = 'forgot-password';
+  static const FORGOT_PASSWORD = '/forgot-password';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
   static const SEARCH = 'search';
@@ -89,6 +83,7 @@ abstract class _Paths {
   static const PRODUCT_DETAIL = 'product_detail';
   static const ADDRESS_MANAGEMENT = 'address_management';
   static const PROMOTION = '/promotion';
+  static const ORDER_SUCCESS = 'order-success';
 
   //second
   static const ORDER_DETAIL = 'order_detail';
@@ -98,13 +93,12 @@ abstract class _Paths {
   static const FAVORITE = 'favorite';
   static const MESSENGER = 'messenger';
   static const ORDER = 'order';
-  static const OTP = 'otp';
-  static const REGISTER = 'resgister';
   static const FILTER = 'filter';
   static const PAYMENT = '/payment';
   static const RATING_PRODUCT = 'rating_product';
   static const NOTIFICATION_DETAIL = 'notification_detail';
   static const REVIEW_SUCCESS = 'review-success';
+  static const CHANGE_PASSWORD = "change-password";
 }
 
 abstract class Names {
@@ -122,7 +116,6 @@ abstract class Names {
   // static const SETTING = '/setting';
   static const SIGNUP = 'sign-up';
   static const FORGOT_PASSWORD = 'forgot-password';
-  static const OTP = 'otp';
   static const REGISTER = 'register';
   static const FILTER = 'filter';
   static const PROMOTION = 'promotion';
@@ -146,8 +139,6 @@ class AppRoutes {
     debugLogDiagnostics: true,
     // observers: [GoRouterObserver()],
     redirect: (context, state) {
-      log("Redirect: ${state.location}", name: "Redirect");
-
       if (state.subloc == Routes.INTRODUCTION) {
         String? isAuthenticated = HydratedBloc.storage.read(KeyStorage.token);
 
@@ -177,44 +168,19 @@ class AppRoutes {
       GoRoute(
         path: Routes.SIGNUP,
         parentNavigatorKey: Routes.navigatorKey,
-        builder: (context, state) => SignUpPage(
+        pageBuilder: (context, state) => SlideTransitionPage(
           key: state.pageKey,
-          payload: state.extra as String,
+          child: const SignUpPage(),
         ),
-        routes: [
-          GoRoute(
-            name: Names.OTP,
-            path: Routes.OTP,
-            parentNavigatorKey: Routes.navigatorKey,
-            pageBuilder: (context, state) => SlideTransitionPage(
-              key: state.pageKey,
-              child: OtpPage(
-                phoneNumber: state.queryParams["phone"]!,
-                verificationId: state.queryParams["verificationId"]!,
-                payload: state.queryParams['payload'] ?? "",
-              ),
-            ),
-          ),
-          GoRoute(
-            name: Names.FORGOT_PASSWORD,
-            path: Routes.FORGOT_PASSWORD,
-            parentNavigatorKey: Routes.navigatorKey,
-            pageBuilder: (context, state) => SlideTransitionPage(
-              key: state.pageKey,
-              child: ForgotPasswordPage(
-                  phoneNumber: state.queryParams["phone"] ?? ""),
-            ),
-          ),
-          GoRoute(
-            name: Names.REGISTER,
-            path: Routes.REGISTER,
-            parentNavigatorKey: Routes.navigatorKey,
-            pageBuilder: (context, state) => SlideTransitionPage<RegisterPage>(
-              key: state.pageKey,
-              child: RegisterPage(phoneNumber: state.queryParams["phone"]!),
-            ),
-          ),
-        ],
+      ),
+      GoRoute(
+        name: Names.FORGOT_PASSWORD,
+        path: Routes.FORGOT_PASSWORD,
+        parentNavigatorKey: Routes.navigatorKey,
+        pageBuilder: (context, state) => SlideTransitionPage(
+          key: state.pageKey,
+          child: const ForgotPasswordPage(),
+        ),
       ),
       GoRoute(
         name: Names.PERSONAL,
@@ -238,16 +204,27 @@ class AppRoutes {
         },
       ),
       GoRoute(
-        path: Routes.PAYMENT,
-        name: Names.PAYMENT,
-        parentNavigatorKey: Routes.navigatorKey,
-        pageBuilder: (context, state) {
-          return FadeTransitionPage<PaymentPage>(
-            key: state.pageKey,
-            child: const PaymentPage(),
-          );
-        },
-      ),
+          path: Routes.PAYMENT,
+          name: Names.PAYMENT,
+          parentNavigatorKey: Routes.navigatorKey,
+          pageBuilder: (context, state) {
+            return FadeTransitionPage<PaymentPage>(
+              key: state.pageKey,
+              child: const PaymentPage(),
+            );
+          },
+          routes: [
+            GoRoute(
+              path: Routes.ORDER_SUCCESS,
+              parentNavigatorKey: Routes.navigatorKey,
+              pageBuilder: (context, state) {
+                return SlideTransitionPage<OrderSuccessPage>(
+                  key: state.pageKey,
+                  child: const OrderSuccessPage(),
+                );
+              },
+            ),
+          ]),
       GoRoute(
         path: Routes.PROMOTION,
         name: Names.PROMOTION,
@@ -363,16 +340,25 @@ class AppRoutes {
             },
             routes: [
               GoRoute(
-                path: Routes.SETTING,
-                name: Names.SETTING,
-                parentNavigatorKey: Routes.navigatorKey,
-                pageBuilder: (context, state) {
-                  return SlideTransitionPage<SettingPage>(
-                    key: state.pageKey,
-                    child: const SettingPage(),
-                  );
-                },
-              ),
+                  path: Routes.SETTING,
+                  name: Names.SETTING,
+                  parentNavigatorKey: Routes.navigatorKey,
+                  pageBuilder: (context, state) {
+                    return SlideTransitionPage<SettingPage>(
+                      key: state.pageKey,
+                      child: const SettingPage(),
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      path: Routes.CHANGE_PASSWORD,
+                      parentNavigatorKey: Routes.navigatorKey,
+                      pageBuilder: (context, state) => SlideTransitionPage(
+                        key: state.pageKey,
+                        child: const ChangePasswordPage(),
+                      ),
+                    ),
+                  ]),
               GoRoute(
                   path: Routes.MY_ORDER,
                   name: Names.ORDER,
@@ -446,17 +432,6 @@ class AppRoutes {
                   return FadeTransitionPage<LocationManagementPage>(
                     key: state.pageKey,
                     child: const LocationManagementPage(),
-                  );
-                },
-              ),
-              GoRoute(
-                path: Routes.MESSENGER,
-                name: Names.MESSENGER,
-                parentNavigatorKey: Routes.navigatorKey,
-                pageBuilder: (context, state) {
-                  return SlideTransitionPage<RoomChatMessagePage>(
-                    key: state.pageKey,
-                    child: const RoomChatMessagePage(),
                   );
                 },
               ),

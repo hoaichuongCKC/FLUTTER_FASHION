@@ -1,9 +1,10 @@
+import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/option_color_size.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/tabbar_desc_reviews.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/inherited.dart';
+import 'package:flutter_fashion/common/widgets/popular.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BodyProductDetail extends StatelessWidget {
@@ -11,13 +12,16 @@ class BodyProductDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final detailInherited = ProductDetailInherited.of(context);
-
-    final product = detailInherited.productModel;
+    final ProductModel product =
+        InheritedDataApp.of<ProductModel>(context)!.data;
 
     final size = MediaQuery.of(context).size;
 
     final blocDetailUi = BlocProvider.of<ProductDetailUiCubit>(context);
+
+    final theme = Theme.of(context);
+
+    final images = product.product_detail;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,160 +29,190 @@ class BodyProductDetail extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: size.height * 0.3,
-          child: BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
-            builder: (context, state) {
-              final images = product.product_detail!;
-              final idImage = state.idImage;
-              final String url = idImage == 0
-                  ? images[0].photo
-                  : images.firstWhere((ele) => ele.id == idImage).photo;
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Column(
-                      children: [
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: ListView.separated(
-                            padding: EdgeInsets.zero,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 10.0),
-                            scrollDirection: Axis.vertical,
-                            itemCount: images.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, index) {
-                              final image = images[index];
-
-                              final isSelected = idImage == image.id;
-
-                              final imageWidget = Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: CachedNetworkImage(
-                                  key: ValueKey(index),
-                                  imageUrl: ApiService.imageUrl + image.photo,
-                                  fit: BoxFit.contain,
-                                  httpHeaders: getIt<ApiService>().headers,
-                                  cacheKey: image.photo,
-                                  width: size.width * 0.1,
-                                  height: size.width * 0.1,
-                                  placeholder: (context, url) {
-                                    return ColoredBox(
-                                      color: skeletonColor,
-                                      child: const SizedBox(),
-                                    );
-                                  },
-                                ),
-                              );
-                              return AnimatedSwitcher(
-                                switchInCurve: Curves.linearToEaseOut,
-                                switchOutCurve: Curves.fastLinearToSlowEaseIn,
-                                duration: const Duration(milliseconds: 500),
-                                child: !isSelected
-                                    ? InkWell(
-                                        onTap: () =>
-                                            blocDetailUi.changeImage(image.id),
-                                        child: imageWidget,
-                                      )
-                                    : DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(radiusBtn)),
-                                          border:
-                                              Border.all(color: primaryColor),
-                                        ),
-                                        child: imageWidget,
-                                      ),
-                              );
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            product.regular_price!.toDouble().toVndCurrency(),
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              color: errorColor,
-                            ),
-                          ),
-                        )
-                      ],
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: darkColor.withOpacity(0.03),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(radiusBtn / 2),
                     ),
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: CachedNetworkImage(
-                      imageUrl: ApiService.imageUrl + url,
-                      fit: BoxFit.scaleDown,
-                      httpHeaders: getIt<ApiService>().headers,
-                      cacheKey: url,
-                      placeholder: (context, url) {
-                        return ColoredBox(
-                          color: skeletonColor,
-                          child: const SizedBox(),
-                        );
-                      },
-                    ),
-                  )
-                ],
-              );
-            },
+                  child:
+                      BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
+                    buildWhen: (p, c) => p.color != c.color,
+                    builder: (context, state) {
+                      return ListView.separated(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10.0),
+                        scrollDirection: Axis.vertical,
+                        itemCount: images!.length,
+                        itemBuilder: (ctx, index) {
+                          final image = images[index];
+
+                          final isSelected = state.color == image.color;
+
+                          final imageWidget = Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: CachedNetworkImage(
+                              key: ValueKey(index),
+                              imageUrl: ApiService.imageUrl + image.photo,
+                              fit: BoxFit.contain,
+                              httpHeaders: getIt<ApiService>().headers,
+                              cacheKey: image.photo,
+                              width: size.width * 0.1,
+                              height: size.width * 0.1,
+                              placeholder: (context, url) {
+                                return ColoredBox(
+                                  color: skeletonColor,
+                                  child: const SizedBox(),
+                                );
+                              },
+                            ),
+                          );
+                          return AnimatedSwitcher(
+                            switchInCurve: Curves.linearToEaseOut,
+                            switchOutCurve: Curves.fastLinearToSlowEaseIn,
+                            duration: const Duration(milliseconds: 500),
+                            child: !isSelected
+                                ? InkWell(
+                                    onTap: () => blocDetailUi.changeColor(
+                                        image.color!, index),
+                                    child: imageWidget,
+                                  )
+                                : DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(radiusBtn)),
+                                      border: Border.all(color: primaryColor),
+                                    ),
+                                    child: imageWidget,
+                                  ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: LayoutBuilder(builder: (context, constraints) {
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
+                        buildWhen: (p, c) =>
+                            p.color != c.color || p.indexImage != c.indexImage,
+                        builder: (context, state) {
+                          return CachedNetworkImage(
+                            imageUrl: ApiService.imageUrl +
+                                images![state.indexImage].photo,
+                            fit: BoxFit.scaleDown,
+                            httpHeaders: getIt.get<ApiService>().headers,
+                            cacheKey: images[state.indexImage].photo,
+                            placeholder: (context, url) {
+                              return ColoredBox(
+                                color: skeletonColor,
+                                child: const SizedBox(),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      product.sale_price == null
+                          ? const SizedBox()
+                          : Positioned(
+                              top: 0,
+                              right: 0,
+                              width: constraints.biggest.width * .15,
+                              height: constraints.biggest.height * .25,
+                              child: Container(
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: const BoxDecoration(
+                                  color: Colors.amber,
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "-${product.discount!.toInt()}%",
+                                  style: theme.textTheme.bodySmall!.copyWith(
+                                    color: lightColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ],
+                  );
+                }),
+              )
+            ],
           ),
         ),
-        Text.rich(
-          TextSpan(
-            text: product.name,
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 16.0,
-            ),
-            children: [
-              product.sale_price == null
-                  ? const WidgetSpan(child: SizedBox())
-                  : WidgetSpan(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ColoredBox(
-                          color: errorColor.withOpacity(0.2),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 1.0),
-                            child: Text(
-                              "-${product.sale_price!.toDouble().toVndCurrency()}",
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 14.0,
-                                color: errorColor,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text.rich(
+            TextSpan(
+              text: product.name,
+              style: theme.textTheme.bodyMedium,
+              children: [
+                product.sale_price == null
+                    ? const WidgetSpan(child: SizedBox())
+                    : WidgetSpan(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ColoredBox(
+                            color: errorColor.withOpacity(0.2),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 1.0),
+                              child: Text(
+                                "-${(product.regular_price!.toDouble() - product.sale_price!.toDouble()).toVndCurrency()}",
+                                style: PrimaryFont.instance.copyWith(
+                                  fontSize: 10.0,
+                                  color: errorColor,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-              product.star == null || product.star == 0.0
-                  ? const WidgetSpan(child: SizedBox())
-                  : WidgetSpan(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              product.star!.toStringAsFixed(1).toString(),
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 12.0,
-                              ),
-                            ),
-                            SvgPicture.asset("assets/icons/star.svg"),
-                          ],
-                        ),
-                      ),
-                    ),
-            ],
+              ],
+            ),
+            textAlign: TextAlign.left,
+            style: GoogleFonts.roboto(height: 1.0),
           ),
-          textAlign: TextAlign.left,
-          style: GoogleFonts.roboto(height: 1.0),
+        ),
+        Row(
+          children: [
+            Text(
+              product.regular_price!.toDouble().toVndCurrency(),
+              style: theme.textTheme.bodySmall!.copyWith(
+                color: product.sale_price == null
+                    ? const Color(0xFFFF7262)
+                    : disableDarkColor,
+                decoration: product.sale_price == null
+                    ? null
+                    : TextDecoration.lineThrough,
+                fontWeight: product.sale_price == null ? FontWeight.w600 : null,
+              ),
+            ),
+            const SizedBox(width: 8.0),
+            product.sale_price == null
+                ? const SizedBox()
+                : Text(
+                    product.sale_price!.toDouble().toVndCurrency(),
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: const Color(0xFFFF7262),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          ],
         ),
         product.sold == null
             ? const SizedBox()
@@ -187,20 +221,47 @@ class BodyProductDetail extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${AppLocalizations.of(context)!.sold} | ${product.sold}",
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 12.0,
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${AppLocalizations.of(context)!.sold}: ${product.sold} | ",
+                          style: theme.textTheme.bodySmall,
+                        ),
+                        product.is_popular!
+                            ? const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                child: PopularWidget(),
+                              )
+                            : const SizedBox(),
+                        product.star == null || product.star == 0.0
+                            ? const SizedBox()
+                            : Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    product.star!.toDouble().toString(),
+                                    style: theme.textTheme.bodySmall!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SvgPicture.asset(
+                                    "assets/icons/star.svg",
+                                    colorFilter: ColorFilter.mode(
+                                      Colors.yellow.shade700,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ],
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "Số lượng:  ",
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 12.0,
-                          ),
+                          AppLocalizations.of(context)!.quantity(""),
+                          style: theme.textTheme.bodySmall,
                         ),
                         CounterCart(
                           onChanged: (p0) => blocDetailUi.changeQuantity(p0),
@@ -212,7 +273,10 @@ class BodyProductDetail extends StatelessWidget {
                 ),
               ),
         const OptionColorSizeDetail(),
+        const SizedBox(height: 8.0),
+        const Divider(),
         const TabbarDescReviewsDetail(),
+        const SizedBox(height: 100.0),
       ],
     );
   }

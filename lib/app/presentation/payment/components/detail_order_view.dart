@@ -7,6 +7,7 @@ class DetailOrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final cartInfo = getIt.get<CartCubit>().state;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -22,24 +23,26 @@ class DetailOrderView extends StatelessWidget {
               color: primaryColor,
             ),
             title: Text(
-              'Chi tiết đơn hàng',
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 18.0,
+              AppLocalizations.of(context)!.order_detail,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
           DecoratedBox(
             decoration: BoxDecoration(
-              color: lightColor,
+              color: theme.cardColor,
               borderRadius: const BorderRadius.all(
-                Radius.circular(5.0),
+                Radius.circular(radiusBtn),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withOpacity(0.2),
-                  blurRadius: 8.0,
-                )
-              ],
+              boxShadow: !ThemeDataApp.instance.isLight
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.2),
+                        blurRadius: 8.0,
+                      )
+                    ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -47,7 +50,7 @@ class DetailOrderView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ItemDetailOrder(
-                    title: "Tạm tính",
+                    title: AppLocalizations.of(context)!.sub_total,
                     value: cartInfo.totalCart().toDouble().toVndCurrency(),
                     textStyleValue: PrimaryFont.instance.copyWith(
                       fontSize: 12.0,
@@ -62,7 +65,7 @@ class DetailOrderView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8.0),
                   ItemDetailOrder(
-                    title: "Thành tiền",
+                    title: AppLocalizations.of(context)!.total_amount,
                     value: cartInfo.totalCart().toDouble().toVndCurrency(),
                   ),
                 ],
@@ -88,26 +91,17 @@ class ItemDetailOrder extends StatelessWidget {
   final TextStyle? textStyleValue;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
-          style: textStyle ??
-              PrimaryFont.instance.copyWith(
-                fontSize: 14.0,
-                color: darkColor.withOpacity(0.5),
-                fontWeight: FontWeight.w300,
-              ),
+          style: textStyle ?? theme.textTheme.bodySmall,
         ),
         Text(
           value,
-          style: textStyleValue ??
-              PrimaryFont.instance.copyWith(
-                fontSize: 12.0,
-                color: darkColor.withOpacity(0.5),
-                fontWeight: FontWeight.w300,
-              ),
+          style: textStyleValue ?? theme.textTheme.bodySmall,
         ),
       ],
     );

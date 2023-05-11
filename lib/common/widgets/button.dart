@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/constant.dart';
-import 'package:flutter_fashion/config/font_style.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class ButtonWidget extends StatefulWidget {
   const ButtonWidget({
     super.key,
     this.width = double.infinity,
     this.height = 50.0,
-    required this.btnColor,
+    this.btnColor,
     this.onPressed,
     this.label,
     this.labelWidget,
@@ -37,8 +34,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
   double get _height => widget.height;
 
-  Color get _btnColor =>
-      widget.btnColor != null ? widget.btnColor! : disablePrimaryColor;
+  Color get _btnColor => widget.btnColor ?? disablePrimaryColor;
 
   VoidCallback? get _onPressed => widget.onPressed;
 
@@ -54,6 +50,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: !_animate ? _onPressed : null,
       onTapDown: !_animate
@@ -70,17 +67,17 @@ class _ButtonWidgetState extends State<ButtonWidget> {
               if (_onPressed != null) _onPressed!();
             },
       child: !_animate
-          ? _buildBody()
+          ? _buildBody(theme)
           : AnimatedScale(
               duration: const Duration(milliseconds: 300),
               curve: Curves.linearToEaseOut,
               scale: isScale ? 0.95 : 1.0,
-              child: _buildBody(),
+              child: _buildBody(theme),
             ),
     );
   }
 
-  _buildBody() => DecoratedBox(
+  _buildBody(ThemeData theme) => DecoratedBox(
         decoration: BoxDecoration(
           color: widget.outlineButton! ? lightColor : _btnColor,
           borderRadius: BorderRadius.all(
@@ -99,13 +96,11 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                   child: Text(
                     _label!,
                     style: PrimaryFont.instance.copyWith(
-                      color: widget.outlineButton!
-                          ? darkColor
-                          : _onPressed == null
-                              ? darkColor
-                              : lightColor,
-                      fontWeight: FontWeight.w400,
                       fontSize: 14.0,
+                      fontWeight: FontWeight.w300,
+                      color: ThemeDataApp.instance.isLight
+                          ? lightColor
+                          : darkColor,
                     ),
                   ),
                 ),

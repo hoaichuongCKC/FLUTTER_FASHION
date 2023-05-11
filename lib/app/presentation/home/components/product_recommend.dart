@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
@@ -15,13 +14,16 @@ class ProductRecommend extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
             ListTile(
               dense: true,
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
                 AppLocalizations.of(context)!.recommed_product,
-                style: PrimaryFont.instance.large(),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
             GridView.builder(
@@ -35,16 +37,17 @@ class ProductRecommend extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 childAspectRatio: 2 / 4,
-                mainAxisExtent: 230.0,
+                mainAxisExtent: 240,
               ),
               itemBuilder: (context, index) {
                 final product = listProduct[index];
                 return ItemProduct(
                   product: listProduct[index],
                   onTap: () {
-                    BlocProvider.of<ProductDetailCubit>(context)
-                        .getProduct(product.id!);
-                    context.read<ReviewCubit>().fetchReview(product.id!);
+                    final bloc = BlocProvider.of<ProductDetailCubit>(context);
+
+                    bloc.getProduct(product.id!);
+
                     AppRoutes.router.pushNamed(Names.PRODUCT_DETAIL);
                   },
                 );

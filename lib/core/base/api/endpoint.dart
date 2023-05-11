@@ -16,6 +16,7 @@ class ApiEndpoint {
 
   static const String fetchBanner = "banner/fetch-banner";
   static const String fetchCategory = "cate/fetch-categories";
+  static const String fetchProductByCate = "cate/fetch-product-by-category";
 
   static const String fetchProduct = "product/fetch-product-all";
   static const String getDetail = "product/get-detail";
@@ -28,6 +29,7 @@ class ApiEndpoint {
   static const String createOrder = "order/create";
   static const String fetchOrder = "order/fetch-order";
   static const String deleteOrder = "order/delete-order";
+  static const String updateLimitOrder = "product/update-promotion";
 
   static const String fetchNotification = "noti/fetch";
   static const String updateRead = "noti/update-read-noti";

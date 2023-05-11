@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_fashion/config/colors.dart';
-import 'package:flutter_fashion/config/font_style.dart';
+import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class CounterCart extends StatefulWidget {
   const CounterCart({
@@ -66,7 +64,12 @@ class _CounterCartState extends State<CounterCart> {
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: Text(
             _counter.toString(),
-            style: PrimaryFont.instance.small(),
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 10.0,
+                  color:
+                      ThemeDataApp.instance.isLight ? darkColor : primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
         InkWell(

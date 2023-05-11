@@ -1,14 +1,13 @@
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:lottie/lottie.dart';
 
 class RulesAppView extends StatelessWidget {
   const RulesAppView({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
@@ -29,9 +28,11 @@ class RulesAppView extends StatelessWidget {
                         child: state.isRead
                             ? DecoratedBox(
                                 key: const ValueKey(true),
-                                decoration: const BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.all(
+                                decoration: BoxDecoration(
+                                  color: ThemeDataApp.instance.isLight
+                                      ? primaryColor
+                                      : theme.cardColor,
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(3.0),
                                   ),
                                 ),
@@ -55,8 +56,10 @@ class RulesAppView extends StatelessWidget {
                             : DecoratedBox(
                                 key: const ValueKey(false),
                                 decoration: BoxDecoration(
-                                  color: lightColor,
-                                  border: Border.all(color: primaryColor),
+                                  color: theme.cardColor,
+                                  border: !ThemeDataApp.instance.isLight
+                                      ? null
+                                      : Border.all(color: primaryColor),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(3.0),
                                   ),
@@ -76,24 +79,17 @@ class RulesAppView extends StatelessWidget {
                 const WidgetSpan(child: SizedBox(width: 5.0)),
                 TextSpan(
                   text: "Vui lòng đọc kĩ về ",
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w300,
-                  ),
+                  style: theme.textTheme.bodySmall,
                 ),
                 TextSpan(
                   text: "điều khoản & chính sách ",
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 12.0,
+                  style: theme.textTheme.bodySmall!.copyWith(
                     color: primaryColor,
                   ),
                 ),
                 TextSpan(
                   text: "đổi trả, nhận hàng của cửa hàng",
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w300,
-                  ),
+                  style: theme.textTheme.bodySmall,
                 )
               ],
             ),
@@ -106,7 +102,7 @@ class RulesAppView extends StatelessWidget {
               context.read<PaymentCubit>().order(context);
             },
             height: 45.0,
-            label: "Thanh toán",
+            label: AppLocalizations.of(context)!.check_it_out,
           ),
         ],
       ),
@@ -163,51 +159,21 @@ class _DialogOrderState extends State<DialogOrder>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BlocBuilder<PaymentCubit, PaymentState>(
-              buildWhen: (previous, current) =>
-                  previous.status != current.status,
-              builder: (context, state) {
-                if (state.status == AppStatus.success) {
-                  return Lottie.asset(
-                    "assets/json/order-success.json",
-                    controller: _controller,
-                    onLoaded: (p0) {
-                      _controller.duration = p0.duration;
-                      _controller.repeat();
-                    },
-                  );
-                }
-                return Lottie.asset(
-                  "assets/json/order-received.json",
-                  controller: _controller,
-                  onLoaded: (p0) {
-                    _controller.duration = p0.duration;
-                    _controller.repeat();
-                  },
-                );
+            Lottie.asset(
+              "assets/json/order-received.json",
+              controller: _controller,
+              onLoaded: (p0) {
+                _controller.duration = p0.duration;
+                _controller.repeat();
               },
             ),
-            BlocBuilder<PaymentCubit, PaymentState>(
-              buildWhen: (previous, current) =>
-                  previous.status != current.status,
-              builder: (context, state) {
-                if (state.status == AppStatus.success) {
-                  return const SizedBox();
-                }
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 10.0),
-                    Text(
-                      'Vui lòng đợi...',
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ],
-                );
-              },
+            const SizedBox(height: 10),
+            Text(
+              AppLocalizations.of(context)!.loading,
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 14.0,
+                color: primaryColor,
+              ),
             )
           ],
         ),

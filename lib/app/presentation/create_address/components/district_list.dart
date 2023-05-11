@@ -7,17 +7,20 @@ class DistrictList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<AddressManagementBloc>();
+    final bloc = getIt.get<AddressManagementBloc>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           AppLocalizations.of(context)!.district,
-          style: PrimaryFont.instance.small(),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w400,
+              ),
         ),
         Expanded(
           child: StreamBuilder<List<ItemDistrictModel>>(
-            stream: bloc.districtStream,
+            stream: bloc.districtStream.stream,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting ||
                   snapshot.data!.isEmpty) {
@@ -41,10 +44,7 @@ class DistrictList extends StatelessWidget {
                         dense: true,
                         leading: Text(
                           item.name,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
                       Divider(color: disableDarkColor.withOpacity(0.1)),

@@ -11,6 +11,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.withAppBar(
+      autoLeading: false,
       actions: [
         Expanded(
           child: FormSearch(

@@ -7,11 +7,13 @@ import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
 import 'package:flutter_fashion/app/network_provider/banner_provider.dart';
+import 'package:flutter_fashion/app/network_provider/category_provider.dart';
 import 'package:flutter_fashion/app/network_provider/notification_provider.dart';
 import 'package:flutter_fashion/app/network_provider/product_provider.dart';
 import 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/banner_repository.dart';
+import 'package:flutter_fashion/app/repositories/category_repository.dart';
 import 'package:flutter_fashion/app/repositories/notification_repository.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
 
@@ -41,7 +43,7 @@ Future<void> initDIHome() async {
   );
 
   getIt.registerLazySingleton<CategoryCubit>(
-    () => CategoryCubit(productRepositoryImpl: getIt()),
+    () => CategoryCubit(categoryRepositoryImpl: getIt()),
   );
 
   getIt.registerLazySingleton<ProductCubit>(
@@ -52,6 +54,19 @@ Future<void> initDIHome() async {
     () => AddressUserCubit(),
   );
 
+  //category repo=provider
+  getIt.registerLazySingleton(
+    () => CategoryProviderImpl(apiService: getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => CategoryRepositoryImpl(
+      categoryProviderImpl: getIt(),
+      networkInfoImpl: getIt(),
+    ),
+  );
+
+  //banner repo - provider
   getIt.registerLazySingleton(
     () => BannerProviderImpl(apiService: getIt()),
   );

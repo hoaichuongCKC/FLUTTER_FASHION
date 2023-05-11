@@ -1,136 +1,93 @@
-import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/common/components/promotion.dart';
+
+const double _maxHeightCardPromotion = 130.0;
+const double _maxWidthCardPromotion = 280.0;
 
 class PromotionList extends StatelessWidget {
   const PromotionList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(vertical: verticalPadding + 1),
-      sliver: SliverToBoxAdapter(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-              child: Text(
+    return SliverToBoxAdapter(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+            child: ListTile(
+              dense: true,
+              minVerticalPadding: 0,
+              contentPadding: EdgeInsets.zero,
+              title: Text(
                 AppLocalizations.of(context)!.promotions,
-                style: PrimaryFont.instance.large(),
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            SizedBox(
-              height: 120.0,
-              child: BlocBuilder<PromotionCubit, PromotionState>(
-                builder: (context, state) {
-                  return state.when(
-                    initial: () => const SizedBox(),
-                    loading: () => const SizedBox(),
-                    success: (promotions) => ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 15.0),
-                      itemCount: promotions.length,
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: horizontalPadding - 4),
-                      cacheExtent: 120.0,
-                      itemBuilder: (context, index) {
-                        final promotion = promotions[index];
-                        return LimitedBox(
-                          maxWidth: 280.0,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * .75,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: lightColor,
-                                border: Border.all(color: primaryColor),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(radiusBtn),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/logo.png",
-                                      width: 70,
-                                      height: 70,
-                                      fit: BoxFit.scaleDown,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Giảm ${promotion.discount_price}%",
-                                                  style: PrimaryFont.instance
-                                                      .copyWith(
-                                                    fontSize: 14.0,
-                                                    color: primaryColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  promotion.desc,
-                                                  style: PrimaryFont.instance
-                                                      .copyWith(
-                                                    fontSize: 12.0,
-                                                    fontWeight: FontWeight.w300,
-                                                  ),
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .expired_date(
-                                              promotion.end_date
-                                                  .toString()
-                                                  .substring(0, 10),
-                                            ),
-                                            style:
-                                                PrimaryFont.instance.copyWith(
-                                              fontSize: 10.0,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
-                    failure: (e) => Text(
-                      e,
+              ),
+              trailing: InkWell(
+                onTap: () => AppRoutes.router.push(Routes.PROMOTION),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.view_all,
                       style: PrimaryFont.instance.copyWith(
-                        fontSize: 14.0,
-                        color: errorColor,
+                        fontSize: 12.0,
+                        color: primaryColor,
                       ),
                     ),
-                  );
-                },
+                    const Icon(Icons.arrow_right,
+                        size: 25.0, color: primaryColor),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: _maxHeightCardPromotion,
+            child: BlocBuilder<PromotionCubit, PromotionState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => const SizedBox(),
+                  loading: () => const SizedBox(),
+                  success: (promotions) => ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 15.0),
+                    itemCount: promotions.length,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: horizontalPadding - 4),
+                    cacheExtent: _maxHeightCardPromotion,
+                    itemBuilder: (context, index) {
+                      final promotion = promotions[index];
+
+                      return LimitedBox(
+                        maxWidth: _maxWidthCardPromotion,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .75,
+                          child: PromotionWidget(
+                            promotion: promotion,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  failure: (e) => Text(
+                    e,
+                    style: PrimaryFont.instance.copyWith(
+                      fontSize: 14.0,
+                      color: errorColor,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart';
-import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
-import 'package:flutter_fashion/app/models/reviews/review.dart';
+import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
+import 'package:flutter_fashion/core/parse_json_isolate/product.dart';
+import 'package:flutter_fashion/export.dart';
 
+@mustCallSuper
 abstract class ProductProvider {
-  Future<List<CategoryModel>> fetchCategory();
-
-  Future<List<ProductModel>> fetchListProduct(int page, {int idCagegory = 1});
+  Future<List<ProductModel>> fetchListProduct(int page);
 
   Future<List<ProductModel>> fetchPopularSearch();
 
-  Future<List<ReviewModel>> fetchReviewProduct(int page, int idProduct);
+  Future<ReviewsModel> fetchReviewProduct(int page, int idProduct);
 
   Future<ProductModel> getDetail(int idProduct);
 
@@ -35,10 +35,11 @@ class ProductProviderImpl extends ProductProvider {
       : _apiService = apiService;
 
   @override
-  Future<List<CategoryModel>> fetchCategory() async {
-    var response = await _apiService.post(ApiEndpoint.fetchCategory);
-
-    final data = await response.stream.bytesToString();
+  Future<List<ProductModel>> fetchListProduct(
+    int page,
+  ) async {
+    var response =
+        await _apiService.post("${ApiEndpoint.fetchProduct}?page=$page");
 
     if (response.statusCode == 401) {
       throw AuthenticatedException();
@@ -46,29 +47,9 @@ class ProductProviderImpl extends ProductProvider {
       throw ServerException();
     }
 
-    return CategoryModel.fromListJson(jsonDecode(data)["data"]);
-  }
-
-  @override
-  Future<List<ProductModel>> fetchListProduct(int page,
-      {int idCagegory = 1}) async {
-    var response = await _apiService
-        .post("${ApiEndpoint.fetchProduct}?page=$page&type=$idCagegory");
-
     final data = await response.stream.bytesToString();
-    if (response.statusCode == 401) {
-      throw AuthenticatedException();
-    } else if (response.statusCode != 200) {
-      throw ServerException();
-    }
 
-    final dataConvert = (jsonDecode(data)["data"]);
-
-    if (dataConvert == null) {
-      return [];
-    }
-
-    return ProductModel.productModelFromJson(dataConvert);
+    return await compute(parseProductJson, data);
   }
 
   @override
@@ -92,7 +73,7 @@ class ProductProviderImpl extends ProductProvider {
   }
 
   @override
-  Future<List<ReviewModel>> fetchReviewProduct(int page, int idProduct) async {
+  Future<ReviewsModel> fetchReviewProduct(int page, int idProduct) async {
     var response = await _apiService
         .post("${ApiEndpoint.fetchReview}?page=$page&id_product=$idProduct");
 
@@ -103,11 +84,7 @@ class ProductProviderImpl extends ProductProvider {
     }
     final dataConvert = jsonDecode(data)["data"];
 
-    if (dataConvert == null) {
-      return [];
-    }
-
-    return ReviewModel.fromListJson(dataConvert);
+    return ReviewsModel.fromJson(dataConvert);
   }
 
   @override

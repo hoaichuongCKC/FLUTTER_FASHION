@@ -1,5 +1,5 @@
+import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
-import 'package:flutter_fashion/app/presentation/profile/profile_data.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/pop_up.dart';
 
@@ -8,34 +8,20 @@ class ProfileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = ProfileData.of(context)!.user;
+    final user = InheritedDataApp.of<UserModel>(context)!.data;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxHeight: 100.0,
-            minHeight: 80,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              UserAvatarApp(imageUrl: user.photo),
-              const SizedBox(width: 10.0),
-              const UserInformation()
-            ],
-          ),
+        Row(
+          children: [
+            UserAvatarApp(imageUrl: user.photo),
+            const SizedBox(width: 10.0),
+            const UserInformation()
+          ],
         ),
         const BuildFrameFeature(),
-        const SizedBox(height: 30),
-        ButtonWidget(
-          height: MediaQuery.of(context).size.height * .06,
-          btnColor: primaryColor,
-          onPressed: () => showDialogNotiLogout(context),
-          label: AppLocalizations.of(context)!.logout,
-        ),
         const SizedBox(height: 30),
       ],
     );

@@ -9,6 +9,6 @@ Future<void> initDICategory() async {
   );
 
   getIt.registerLazySingleton<CategoryTabCubit>(
-    () => CategoryTabCubit(product: getIt()),
+    () => CategoryTabCubit(caterepo: getIt()),
   );
 }

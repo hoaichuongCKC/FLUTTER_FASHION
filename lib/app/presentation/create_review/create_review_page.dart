@@ -10,64 +10,62 @@ class CreateReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final order =
-    //     context.watch<OrderCubit>().state.deliveredList[int.parse(index)];
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (context) => getIt<CreateReviewCubit>()..changedOrderId(orderId),
       child: AppBackgroundBlur.normal(
         isHasBackground: false,
         title: AppLocalizations.of(context)!.product_rating,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: horizontalPadding - 4,
+              horizontal: horizontalPadding - 4),
+          child: Builder(builder: (context) {
+            return ButtonWidget(
+              btnColor: primaryColor,
+              onPressed: () =>
+                  context.read<CreateReviewCubit>().rating(context, orderId),
+              height: 45.0,
+              animate: true,
+              label: AppLocalizations.of(context)!.rate_now,
+            );
+          }),
+        ),
         child: Builder(builder: (context) {
           return SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const ListStar(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
-                  child: TextFormField(
-                    maxLines: 5,
-                    onChanged: (value) =>
-                        context.read<CreateReviewCubit>().changedContent(value),
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.write_something,
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 14.0, vertical: 10.0),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: primaryColor),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(radiusBtn),
-                        ),
-                      ),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: primaryColor),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(radiusBtn),
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: primaryColor),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(radiusBtn),
-                        ),
-                      ),
-                    ),
-                  ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: ListStarCpn(),
                 ),
-                const ListImageRating(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
-                  child: ButtonWidget(
-                    btnColor: primaryColor,
-                    onPressed: () => context
-                        .read<CreateReviewCubit>()
-                        .rating(context, orderId),
-                    height: 45.0,
-                    animate: true,
-                    label: AppLocalizations.of(context)!.rate_now,
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.0),
+                  child: ListImageRating(),
+                ),
+                TextFormField(
+                  maxLines: 5,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  onChanged: (value) =>
+                      context.read<CreateReviewCubit>().changedContent(value),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.write_something,
+                    hintStyle: theme.inputDecorationTheme.hintStyle!,
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14.0, vertical: 10.0),
+                    enabledBorder: theme.inputDecorationTheme.border!.copyWith(
+                      borderSide: const BorderSide(color: primaryColor),
+                    ),
+                    border: theme.inputDecorationTheme.border!.copyWith(
+                      borderSide: const BorderSide(color: primaryColor),
+                    ),
+                    focusedBorder: theme.inputDecorationTheme.border!.copyWith(
+                      borderSide: const BorderSide(color: primaryColor),
+                    ),
                   ),
                 ),
               ],

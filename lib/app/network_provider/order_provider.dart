@@ -3,12 +3,14 @@ import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/models/response_data.dart';
 
 import '../../core/base/api/endpoint.dart';
 
 abstract class OrderProvider {
   Future<Map<String, dynamic>> fetchOrder();
   Future<OrderModel> create(OrderParams params);
+  Future<ResponseData> updatedLimitPromotion(int idPromo);
   Future<int> delete(int orderId);
 }
 
@@ -24,7 +26,6 @@ class OrderProviderImpl implements OrderProvider {
       ApiEndpoint.createOrder,
       body: params.toMap(),
     );
-
     if (response.statusCode != 200) {
       throw ServerException();
     }
@@ -64,5 +65,17 @@ class OrderProviderImpl implements OrderProvider {
     }
 
     return response.statusCode;
+  }
+
+  @override
+  Future<ResponseData> updatedLimitPromotion(int idPromo) async {
+    var response = await _apiService.post(ApiEndpoint.updateLimitOrder);
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    }
+    final data = await response.stream.bytesToString();
+
+    return ResponseData.fromJson(jsonDecode(data));
   }
 }

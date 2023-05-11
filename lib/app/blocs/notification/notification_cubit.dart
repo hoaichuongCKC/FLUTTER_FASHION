@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/models/notification/notification_model.dart'
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/notification_repository.dart';
 import 'package:flutter_fashion/config/notification.dart';
+import 'package:flutter_fashion/core/parse_json_isolate/notification.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/pop_up.dart';
@@ -29,10 +30,10 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   List<NotificationModel> get lengthOrderDonotRead => state.orderDonotRead;
 
-  void fetch(String? type) async {
+  void fetch() async {
     emit(state.copyWith(status: AppStatus.loading));
 
-    final result = await _notificationRepositoryImpl.fetch(currentPage, type);
+    final result = await _notificationRepositoryImpl.fetch(currentPage);
 
     result.fold(
       (error) => emit(state.copyWith(status: AppStatus.error)),
@@ -173,12 +174,4 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   @override
   String toString() => "state: $state";
-}
-
-List<NotificationModel> parseJson(String params) {
-  final notifications = jsonDecode(params);
-
-  final notificationList = NotificationModel.notiModelFromJson(notifications);
-
-  return (notificationList);
 }

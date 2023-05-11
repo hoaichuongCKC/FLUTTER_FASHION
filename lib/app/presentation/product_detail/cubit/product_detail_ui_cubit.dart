@@ -9,11 +9,6 @@ part 'product_detail_ui_state.dart';
 class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
   ProductDetailUiCubit() : super(const ProductDetailUiState());
 
-  void changeImage(int id) {
-    final state = this.state;
-    emit(state.copyWith(idImage: id));
-  }
-
   void changeColor(String code, int index) {
     final state = this.state;
     emit(state.copyWith(color: code, indexImage: index));
@@ -29,14 +24,25 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
     emit(state.copyWith(quantity: qunatity));
   }
 
+  void changeHasLoadmore(value) => emit(state.copyWith(hasLoadMore: value));
+
+  void changeShowFloatingAction(bool value) {
+    final state = this.state;
+    if (state.isShow && value || !state.isShow && !value) {
+      return;
+    }
+    emit(state.copyWith(isShow: !state.isShow));
+  }
+
   void addToCart(
     BuildContext context,
     ProductModel product,
-    VoidCallback completed,
+    void Function(String, int) completed,
   ) {
     final state = this.state;
 
-    final product = ProductDetailInherited.of(context).productModel;
+    final ProductModel product =
+        InheritedDataApp.of<ProductModel>(context)!.data;
 
     if (state.color.isEmpty) {
       popupAlert(
@@ -57,16 +63,19 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
       }
     }
 
-    final CartModel cartItem = CartModel(
-      color: state.color,
-      quantity: state.quantity,
-      product: product,
-      size: state.size,
-      indexImage: state.indexImage,
+    final CartModel cartItem = CartModel.init(
+      {
+        "product": product,
+        "color": state.color,
+        "quantity": state.quantity,
+        "size": state.size,
+        "photo": product.product_detail![state.indexImage].photo,
+      },
     );
 
     BlocProvider.of<CartCubit>(context).addToCart(cartItem);
 
-    completed();
+    completed(
+        product.product_detail![state.indexImage].photo, cartItem.quantity);
   }
 }

@@ -14,6 +14,7 @@ class InfoUserOrderView extends StatelessWidget {
     final user = getIt.get<UserCubit>().user;
     final fullnameController = TextEditingController(text: user.fullName);
     final phoneController = TextEditingController(text: user.phone);
+    final theme = Theme.of(context);
     context.read<PaymentCubit>().changedFullname(user.fullName);
     context.read<PaymentCubit>().changedPhone(user.phone);
 
@@ -30,24 +31,26 @@ class InfoUserOrderView extends StatelessWidget {
             color: primaryColor,
           ),
           title: Text(
-            'Thông tin người đặt',
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 18.0,
+            AppLocalizations.of(context)!.recipient_informatio,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
         DecoratedBox(
           decoration: BoxDecoration(
-            color: lightColor,
+            color: theme.cardColor,
             borderRadius: const BorderRadius.all(
               Radius.circular(5.0),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: primaryColor.withOpacity(0.2),
-                blurRadius: 8.0,
-              )
-            ],
+            boxShadow: !ThemeDataApp.instance.isLight
+                ? null
+                : [
+                    BoxShadow(
+                      color: primaryColor.withOpacity(0.2),
+                      blurRadius: 8.0,
+                    )
+                  ],
           ),
           child: Builder(builder: (context) {
             return Padding(
@@ -56,7 +59,7 @@ class InfoUserOrderView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ItemInforUserOrder(
-                    title: "Người nhận hàng",
+                    title: AppLocalizations.of(context)!.recipient,
                     controller: fullnameController,
                     onChanged: (value) =>
                         context.read<PaymentCubit>().changedFullname(value),
@@ -67,7 +70,7 @@ class InfoUserOrderView extends StatelessWidget {
                         previous.phone != current.phone,
                     builder: (context, state) {
                       return ItemInforUserOrder(
-                        title: "Số điện thoại",
+                        title: AppLocalizations.of(context)!.phoneNumber,
                         controller: phoneController,
                         hintText: state.phone.isEmpty
                             ? "Vui lòng nhập số điện thoại"
@@ -79,7 +82,7 @@ class InfoUserOrderView extends StatelessWidget {
                   ),
                   const SizedBox(height: 5.0),
                   ItemInforUserOrder(
-                    title: "Lưu ý:",
+                    title: AppLocalizations.of(context)!.note,
                     controller: noteController,
                     onChanged: (value) =>
                         context.read<PaymentCubit>().changeNote(value),
@@ -118,15 +121,14 @@ class _ItemInforUserOrderState extends State<ItemInforUserOrder> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.title,
-          style: PrimaryFont.instance.copyWith(
-            fontSize: 16.0,
-            color: darkColor,
-            fontWeight: FontWeight.w300,
+          style: theme.textTheme.bodyMedium!.copyWith(
+            fontSize: 14.0,
           ),
         ),
         const SizedBox(width: 10.0),
@@ -135,16 +137,13 @@ class _ItemInforUserOrderState extends State<ItemInforUserOrder> {
             onChanged: widget.onChanged,
             textAlign: TextAlign.end,
             controller: widget.controller,
-            style: PrimaryFont.instance.copyWith(
+            style: theme.textTheme.bodyMedium!.copyWith(
               fontSize: 14.0,
-              color: darkColor.withOpacity(0.5),
-              fontWeight: FontWeight.w300,
             ),
             decoration: InputDecoration.collapsed(
               hintText: widget.hintText ?? "",
-              hintStyle: PrimaryFont.instance.copyWith(
+              hintStyle: theme.textTheme.bodySmall!.copyWith(
                 color: errorColor,
-                fontSize: 14.0,
               ),
             ),
           ),

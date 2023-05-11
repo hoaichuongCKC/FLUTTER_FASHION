@@ -1,12 +1,14 @@
-import 'package:flutter_fashion/app/presentation/profile/export.dart';
-import 'package:flutter_fashion/app/presentation/profile/profile_data.dart';
+import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 
 class UserInformation extends StatelessWidget {
   const UserInformation({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = ProfileData.of(context)!.user;
+    final isLight = Theme.of(context).brightness == Brightness.light;
+
+    final user = InheritedDataApp.of<UserModel>(context)!.data;
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -38,8 +40,13 @@ class UserInformation extends StatelessWidget {
                                   .please_update_information,
                               style: Theme.of(context)
                                   .textTheme
-                                  .displaySmall!
-                                  .copyWith(fontSize: 12.0),
+                                  .bodySmall!
+                                  .copyWith(
+                                    fontSize: 12.0,
+                                    color: isLight
+                                        ? darkColor
+                                        : lightColor.withOpacity(0.75),
+                                  ),
                             ),
                           ),
                         ),
@@ -51,7 +58,7 @@ class UserInformation extends StatelessWidget {
                   user.phone,
                   style: Theme.of(context)
                       .textTheme
-                      .displaySmall!
+                      .bodySmall!
                       .copyWith(fontSize: 12.0),
                 ),
         ],

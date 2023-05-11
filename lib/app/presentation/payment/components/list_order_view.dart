@@ -9,6 +9,7 @@ class ListOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listCart = getIt.get<CartCubit>().state.items;
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
@@ -20,9 +21,9 @@ class ListOrderView extends StatelessWidget {
             minLeadingWidth: 0.0,
             leading: SvgPicture.asset("assets/icons/order_box.svg"),
             title: Text(
-              'Đơn hàng đã đặt',
-              style: PrimaryFont.instance.copyWith(
-                fontSize: 18.0,
+              AppLocalizations.of(context)!.my_order,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

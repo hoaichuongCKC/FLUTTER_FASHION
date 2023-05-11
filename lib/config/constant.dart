@@ -15,15 +15,7 @@ const String messagePasswordIncorrect =
 const String messageConfirmPassword =
     "Current password incorrect!,Please try again!!";
 
-const List<Color> rangeColor = [
-  Color(0xFFCDA263),
-  Color(0xFF8282D3),
-  Color(0xFFF78FB3),
-  Color(0xFFD96161),
-  Color(0xFFF3AE4E),
-  Color.fromARGB(255, 46, 126, 190),
-  Color.fromARGB(255, 171, 196, 32),
-];
+const googleProvider = "google";
 
 const int toPayStatus = 1;
 
@@ -32,3 +24,25 @@ const int processingStatus = 2;
 const int shippingStatus = 3;
 
 const int deliveredStatus = -1;
+
+//key signUp
+final formKeySignUp = GlobalKey<FormState>();
+
+bool get validateSignUp => formKeySignUp.currentState!.validate();
+
+//key login
+final formKeyLogin = GlobalKey<FormState>();
+
+bool get validateLogin => formKeyLogin.currentState!.validate();
+
+//key edit information
+final formKeyEditInformation = GlobalKey<FormState>();
+
+bool get validateEditInformation =>
+    formKeyEditInformation.currentState!.validate();
+
+//key change password
+final formkeyChangePassword = GlobalKey<FormState>();
+
+bool get validateChangePassword =>
+    formkeyChangePassword.currentState!.validate();

@@ -1,10 +1,6 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
-
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/core/models/address.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
@@ -34,22 +30,19 @@ class AddressUserCubit extends HydratedCubit<AddressUserState> {
   void setUseDefault(ItemAddress item) {
     final state = this.state;
 
-    if (!(item.isSelected)) {
-      final storageList = state.storageList;
-      final updatedStorageList = List<ItemAddress>.from(storageList).map(
-        (e) {
-          if (e.name == item.name) {
-            return e.copyWith(isSelected: true);
-          } else {
-            return e.copyWith(isSelected: false);
-          }
-        },
-      ).toList();
+    final storageList = state.storageList;
 
-      log('updated: $updatedStorageList', name: "Update variable is_selected");
+    final updatedStorageList = List<ItemAddress>.from(storageList).map(
+      (e) {
+        if (e.name == item.name) {
+          return e.copyWith(isSelected: !item.isSelected);
+        } else {
+          return e.copyWith(isSelected: false);
+        }
+      },
+    ).toList();
 
-      emit(state.copyWith(storageList: updatedStorageList));
-    }
+    emit(state.copyWith(storageList: updatedStorageList));
   }
 
   @override

@@ -34,11 +34,7 @@ class TopHeaderHome extends StatelessWidget {
                         ),
                         fetchCompleted: (user) => Text(
                           '${AppLocalizations.of(context)!.wellcome}\n${user.fullName}!',
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 22.0,
-                            color: darkColor,
-                            height: 1.3,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       )!;
                     },
@@ -54,7 +50,13 @@ class TopHeaderHome extends StatelessWidget {
                       icon: Hero(
                         tag: "icon-search",
                         transitionOnUserGestures: true,
-                        child: SvgPicture.asset("assets/icons/search.svg"),
+                        child: SvgPicture.asset(
+                          "assets/icons/search.svg",
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).iconTheme.color!,
+                            BlendMode.srcIn,
+                          ),
+                        ),
                       ),
                     ),
                     InkWell(
@@ -80,6 +82,10 @@ class TopHeaderHome extends StatelessWidget {
                                 children: [
                                   SvgPicture.asset(
                                     "assets/icons/cart.svg",
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).iconTheme.color!,
+                                      BlendMode.srcIn,
+                                    ),
                                   ),
                                   Positioned(
                                     right: -3,

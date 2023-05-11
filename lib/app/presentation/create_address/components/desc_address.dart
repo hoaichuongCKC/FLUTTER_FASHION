@@ -6,34 +6,29 @@ class DescAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<AddressManagementBloc>();
+    final bloc = getIt.get<AddressManagementBloc>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Mô tả cụ thể',
-          style: PrimaryFont.instance.copyWith(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w400,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
         ),
         const SizedBox(height: 8.0),
         TextFormField(
-          style: PrimaryFont.instance.copyWith(
-            fontSize: 12.0,
-            fontWeight: FontWeight.w300,
-            height: 1.0,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontSize: 14.0,
+              ),
           onChanged: (value) => bloc.setDesc(value),
           maxLines: 1,
           minLines: 1,
           decoration: InputDecoration(
             hintText: "Vd: 46 Tuyên Quang...",
-            hintStyle: PrimaryFont.instance.copyWith(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w300,
-              height: 1.0,
-            ),
+            filled: true,
+            fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+            hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
           ),
         ),
       ],

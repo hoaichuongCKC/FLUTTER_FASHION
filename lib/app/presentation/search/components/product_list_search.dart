@@ -1,5 +1,5 @@
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
+
 import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
@@ -34,9 +34,7 @@ class ProductListSearch extends StatelessWidget {
         if (products.isEmpty && status == AppStatus.success) {
           return Text(
             AppLocalizations.of(context)!.not_found_search_result,
-            style: PrimaryFont.instance.copyWith(
-              fontSize: 14.0,
-            ),
+            style: Theme.of(context).textTheme.bodySmall,
           );
         }
         return GridView.builder(
@@ -57,9 +55,10 @@ class ProductListSearch extends StatelessWidget {
             return ItemProduct(
               product: product,
               onTap: () {
-                BlocProvider.of<ProductDetailCubit>(context)
-                    .getProduct(product.id!);
-                context.read<ReviewCubit>().fetchReview(product.id!);
+                final bloc = BlocProvider.of<ProductDetailCubit>(context);
+
+                bloc.getProduct(product.id!);
+
                 AppRoutes.router.pushNamed(Names.PRODUCT_DETAIL);
               },
             );

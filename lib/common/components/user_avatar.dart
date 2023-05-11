@@ -11,22 +11,23 @@ class UserAvatarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isLight = Theme.of(context).brightness == Brightness.light;
+    final theme = Theme.of(context);
+    final bool isLight = theme.brightness == Brightness.light;
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        maxHeight: 60.0,
-        minHeight: 40.0,
-        maxWidth: 60.0,
-        minWidth: 40.0,
+        maxHeight: 80.0,
+        minHeight: 65.0,
+        maxWidth: 80.0,
+        minWidth: 65.0,
       ),
       child: SizedBox(
-        width: size.width * 0.15,
-        height: size.width * 0.15,
+        width: size.width * 0.25,
+        height: size.width * 0.25,
         child: imageUrl.isNotEmpty
             ? AspectRatio(
                 aspectRatio: 1.0,
                 child: CircleAvatar(
-                  radius: 40.0,
+                  radius: 70.0,
                   backgroundImage: CachedNetworkImageProvider(
                     ApiService.imageUrl + imageUrl,
                     headers: getIt<ApiService>().headers,
@@ -42,7 +43,9 @@ class UserAvatarApp extends StatelessWidget {
                         child: SvgPicture.asset(
                           "assets/icons/user1.svg",
                           fit: BoxFit.contain,
-                          color: darkColor.withOpacity(0.7),
+                          color: isLight
+                              ? darkColor.withOpacity(0.7)
+                              : lightColor.withOpacity(0.7),
                           width: 40,
                           height: 40,
                         ),

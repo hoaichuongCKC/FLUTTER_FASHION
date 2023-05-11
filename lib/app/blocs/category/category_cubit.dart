@@ -1,6 +1,6 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/app/repositories/product_repository.dart';
+import 'package:flutter_fashion/app/repositories/category_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,10 +8,10 @@ part 'category_state.dart';
 part 'category_cubit.freezed.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
-  final ProductRepositoryImpl _productRepositoryImpl;
+  final CategoryRepositoryImpl _categoryRepositoryImpl;
 
-  CategoryCubit({required ProductRepositoryImpl productRepositoryImpl})
-      : _productRepositoryImpl = productRepositoryImpl,
+  CategoryCubit({required CategoryRepositoryImpl categoryRepositoryImpl})
+      : _categoryRepositoryImpl = categoryRepositoryImpl,
         super(const CategoryState.initial());
 
   bool _isLoaded = false;
@@ -22,16 +22,23 @@ class CategoryCubit extends Cubit<CategoryState> {
   void fetchData() async {
     if (!isClosed && !_isLoaded) {
       emit(const CategoryState.loading());
-      final result = await _productRepositoryImpl.fetchCategory();
+      final result = await _categoryRepositoryImpl.fetchCategory();
       result.fold(
         (error) {
           if (error != AuthenticatedException.message) {
             emit(CategoryState.error(error));
           }
         },
-        (list) {
+        (categories) {
           _isLoaded = true;
-          emit(CategoryState.fetchCompleted(list));
+          //create tab all
+          const tabAll = CategoryModel(
+            id: -1,
+            name: "All",
+            name_vi: "Tất cả",
+          );
+          final updatedList = [...categories, tabAll];
+          emit(CategoryState.fetchCompleted(updatedList));
         },
       );
     }
@@ -39,7 +46,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   void onRefresh() async {
     emit(const CategoryState.loading());
-    final result = await _productRepositoryImpl.fetchCategory();
+    final result = await _categoryRepositoryImpl.fetchCategory();
 
     result.fold(
       (error) => emit(CategoryState.error(error)),

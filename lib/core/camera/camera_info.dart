@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
@@ -47,22 +47,28 @@ class CameraInfo {
 
   Future<File?> compressAndGetFile(File file, String? targetPath,
       {Size size = const Size(1920, 1080)}) async {
-    final filePath = file.absolute.path;
+    try {
+      final filePath = file.absolute.path;
 
-    final lastIndex = filePath.lastIndexOf(RegExp(r'.jp|png'));
+      final lastIndex = filePath.lastIndexOf(RegExp(r'.jpeg|.jpg'));
 
-    final splitted = filePath.substring(0, (lastIndex));
+      final splitted = filePath.substring(
+          0, (lastIndex == -1 ? filePath.length - 4 : lastIndex));
 
-    final outPath =
-        "${splitted}_${targetPath ??= "Flutter"}_out${filePath.substring(lastIndex)}";
+      final fileFormat =
+          lastIndex == -1 ? ".jpg" : filePath.substring(lastIndex);
 
-    var result = await FlutterImageCompress.compressAndGetFile(
-      filePath,
-      outPath,
-      quality: 90,
-    );
+      final outPath = "${splitted}_${targetPath ??= "Flutter"}$fileFormat";
 
-    return result;
+      var result = await FlutterImageCompress.compressAndGetFile(
+        filePath,
+        outPath,
+        quality: 90,
+      );
+
+      return result;
+    } catch (e) {}
+    return null;
   }
 
   Future<List<File>?> compressAndGetListFile(
@@ -72,12 +78,15 @@ class CameraInfo {
     for (File file in files) {
       final filePath = file.absolute.path;
 
-      final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
+      final lastIndex = filePath.lastIndexOf(RegExp(r'.jpeg|.jpg'));
 
-      final splitted = filePath.substring(0, (lastIndex));
+      final splitted = filePath.substring(
+          0, (lastIndex == -1 ? filePath.length - 4 : lastIndex));
 
-      final outPath =
-          "${splitted}_${targetPath}_out${filePath.substring(lastIndex)}";
+      final fileFormat =
+          lastIndex == -1 ? ".jpg" : filePath.substring(lastIndex);
+
+      final outPath = "${splitted}_${targetPath}_out$fileFormat";
 
       var result = await FlutterImageCompress.compressAndGetFile(
         filePath,
