@@ -12,7 +12,7 @@ class TitleFilterFrame extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: ThemeDataApp.instance.isLight
-              ? disablePrimaryColor
+              ? secondaryColor.withAlpha(50)
               : Theme.of(context).cardColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(8.0),

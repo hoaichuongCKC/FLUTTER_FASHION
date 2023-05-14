@@ -87,7 +87,8 @@ class OptionColorSizeDetail extends StatelessWidget {
                 customBorder: const CircleBorder(),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border: isSelected ? Border.all(color: primaryColor) : null,
+                    border:
+                        isSelected ? Border.all(color: secondaryColor) : null,
                     shape: BoxShape.circle,
                   ),
                   child: Padding(
@@ -187,11 +188,8 @@ class OptionColorSizeDetail extends StatelessWidget {
                   color: color,
                   borderRadius:
                       const BorderRadius.all(Radius.circular(radiusBtn)),
-                  boxShadow: !ThemeDataApp.instance.isLight
-                      ? null
-                      : const [
-                          BoxShadow(color: disablePrimaryColor, blurRadius: 8.0)
-                        ],
+                  boxShadow:
+                      !ThemeDataApp.instance.isLight ? null : [shadowBox],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),

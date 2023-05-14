@@ -71,7 +71,7 @@ class SearchHistory extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: lightColor,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(radiusBtn / 2),
+                  Radius.circular(radiusBtn),
                 ),
               ),
               child: ListView.builder(

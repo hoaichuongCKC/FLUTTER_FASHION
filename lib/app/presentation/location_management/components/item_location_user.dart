@@ -18,6 +18,7 @@ class ItemLocationUser extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final bool isDark = !ThemeDataApp.instance.isLight;
     return InkWell(
       onTap: () => showAction(
         context,
@@ -29,13 +30,16 @@ class ItemLocationUser extends StatelessWidget {
         currentHeight: 0.11,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: theme.cardColor,
+            color: isDark ? theme.cardColor : lightColor,
             borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
-            boxShadow: !ThemeDataApp.instance.isLight
+            boxShadow: isDark
                 ? null
                 : [
-                    const BoxShadow(
-                        color: disablePrimaryColor, blurRadius: 8.0),
+                    BoxShadow(
+                      color: darkColor.withOpacity(0.05),
+                      blurRadius: 8.0,
+                      offset: const Offset(0, 1),
+                    ),
                   ],
           ),
           child: Padding(

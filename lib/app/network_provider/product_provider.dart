@@ -14,7 +14,11 @@ import 'package:flutter_fashion/export.dart';
 abstract class ProductProvider {
   Future<List<ProductModel>> fetchListProduct(int page);
 
-  Future<List<ProductModel>> fetchPopularSearch();
+  Future<List<ProductModel>> fetchPopularProduct();
+
+  Future<List<ProductModel>> fetchSaleProduct(int page);
+
+  Future<List<ProductModel>> fetchNewProduct(int page);
 
   Future<ReviewsModel> fetchReviewProduct(int page, int idProduct);
 
@@ -53,7 +57,7 @@ class ProductProviderImpl extends ProductProvider {
   }
 
   @override
-  Future<List<ProductModel>> fetchPopularSearch() async {
+  Future<List<ProductModel>> fetchPopularProduct() async {
     var response = await _apiService.post(ApiEndpoint.fetchPopularSearch);
 
     final data = await response.stream.bytesToString();
@@ -140,7 +144,20 @@ class ProductProviderImpl extends ProductProvider {
     var response = await _apiService
         .post("${ApiEndpoint.search}?page=$page&keyword=$keyword");
 
+    if (response.statusCode == 401) {
+      throw AuthenticatedException();
+    } else if (response.statusCode != 200) {
+      throw ServerException();
+    }
+
     final data = await response.stream.bytesToString();
+
+    return await compute(parseProductJson, data);
+  }
+
+  @override
+  Future<List<ProductModel>> fetchSaleProduct(int page) async {
+    var response = await _apiService.post(ApiEndpoint.fetchSaleProduct);
 
     if (response.statusCode == 401) {
       throw AuthenticatedException();
@@ -148,12 +165,23 @@ class ProductProviderImpl extends ProductProvider {
       throw ServerException();
     }
 
-    final dataConvert = (jsonDecode(data)["data"]) as List;
+    final data = await response.stream.bytesToString();
 
-    if (dataConvert.isEmpty) {
-      return [];
+    return await compute(parseProductJson, data);
+  }
+
+  @override
+  Future<List<ProductModel>> fetchNewProduct(int page) async {
+    var response = await _apiService.post(ApiEndpoint.fetchNewProducts);
+
+    if (response.statusCode == 401) {
+      throw AuthenticatedException();
+    } else if (response.statusCode != 200) {
+      throw ServerException();
     }
 
-    return ProductModel.productModelFromJson(dataConvert);
+    final data = await response.stream.bytesToString();
+
+    return await compute(parseProductJson, data);
   }
 }

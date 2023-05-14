@@ -8,6 +8,8 @@ class RulesAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final applocalization = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
@@ -59,7 +61,7 @@ class RulesAppView extends StatelessWidget {
                                   color: theme.cardColor,
                                   border: !ThemeDataApp.instance.isLight
                                       ? null
-                                      : Border.all(color: primaryColor),
+                                      : Border.all(color: secondaryColor),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(3.0),
                                   ),
@@ -78,17 +80,18 @@ class RulesAppView extends StatelessWidget {
                 ),
                 const WidgetSpan(child: SizedBox(width: 5.0)),
                 TextSpan(
-                  text: "Vui lòng đọc kĩ về ",
+                  text: applocalization!.please_carefully_read_the,
                   style: theme.textTheme.bodySmall,
                 ),
                 TextSpan(
-                  text: "điều khoản & chính sách ",
+                  text: " ${applocalization.the_terms_and_conditions} ",
                   style: theme.textTheme.bodySmall!.copyWith(
-                    color: primaryColor,
+                    color: secondaryColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 TextSpan(
-                  text: "đổi trả, nhận hàng của cửa hàng",
+                  text: applocalization.of_the_store_is_return_policy,
                   style: theme.textTheme.bodySmall,
                 )
               ],
@@ -96,13 +99,18 @@ class RulesAppView extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           ButtonWidget(
-            btnColor: primaryColor,
-            animate: true,
             onPressed: () {
               context.read<PaymentCubit>().order(context);
             },
             height: 45.0,
-            label: AppLocalizations.of(context)!.check_it_out,
+            child: Text(
+              AppLocalizations.of(context)!.check_it_out,
+              style: PrimaryFont.instance.copyWith(
+                color: lightColor,
+                fontSize: 14.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ),
         ],
       ),

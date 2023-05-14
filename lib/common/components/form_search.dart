@@ -49,9 +49,10 @@ class _FormSearchState extends State<FormSearch> {
             decoration: BoxDecoration(
               boxShadow: ThemeDataApp.instance.isLight
                   ? [
-                      const BoxShadow(
-                        color: disablePrimaryColor,
-                        blurRadius: 7.0,
+                      BoxShadow(
+                        color: darkColor.withOpacity(0.05),
+                        blurRadius: 8.0,
+                        offset: const Offset(0, 1),
                       )
                     ]
                   : null,
@@ -76,53 +77,54 @@ class _FormSearchState extends State<FormSearch> {
                 _controller.text = "";
               },
               decoration: InputDecoration(
-                  prefixIcon: Hero(
-                    tag: "icon-search",
-                    transitionOnUserGestures: true,
-                    child: SvgPicture.asset(
-                      "assets/icons/search.svg",
-                      fit: BoxFit.scaleDown,
-                      width: 18.0,
-                      height: 18.0,
-                      color: darkColor,
-                    ),
+                prefixIcon: Hero(
+                  tag: "icon-search",
+                  transitionOnUserGestures: true,
+                  child: SvgPicture.asset(
+                    "assets/icons/search.svg",
+                    fit: BoxFit.scaleDown,
+                    width: 18.0,
+                    height: 18.0,
+                    color: darkColor,
                   ),
-                  hintText: "vd: Quần jean",
-                  fillColor: lightColor,
-                  hintStyle: PrimaryFont.instance.copyWith(
-                    fontSize: 10.0,
-                    color: darkColor.withOpacity(0.4),
-                    fontWeight: FontWeight.w400,
+                ),
+                hintText: "vd: Quần jean",
+                fillColor: lightColor,
+                hintStyle: PrimaryFont.instance.copyWith(
+                  fontSize: 10.0,
+                  color: darkColor.withOpacity(0.4),
+                  fontWeight: FontWeight.w400,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPadding - 4),
+                isDense: true,
+                filled: true,
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(radiusBtn + 10),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: horizontalPadding - 4),
-                  isDense: true,
-                  filled: true,
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(radiusBtn / 2),
-                    ),
-                  ),
-                  suffixIcon: (isCheck)
-                      ? IconButton(
-                          onPressed: () {
-                            _notifier.value = false;
-                            _controller.clear();
-                          },
-                          icon: const Icon(
-                            Icons.clear,
-                            size: 18.0,
-                            color: darkColor,
-                          ),
-                        )
-                      : InkWell(
-                          onTap: () => AppRoutes.router.pushNamed(Names.FILTER),
-                          child: SvgPicture.asset(
-                            "assets/icons/filter.svg",
-                            fit: BoxFit.scaleDown,
-                          ),
-                        )),
+                ),
+                suffixIcon: (isCheck)
+                    ? IconButton(
+                        onPressed: () {
+                          _notifier.value = false;
+                          _controller.clear();
+                        },
+                        icon: const Icon(
+                          Icons.clear,
+                          size: 18.0,
+                          color: darkColor,
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () => AppRoutes.router.pushNamed(Names.FILTER),
+                        child: SvgPicture.asset(
+                          "assets/icons/filter.svg",
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+              ),
             ),
           );
         },

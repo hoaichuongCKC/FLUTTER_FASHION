@@ -1,7 +1,7 @@
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/components/filling_out_information_personal.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/widgets/choose_image_widget.dart';
-import 'package:flutter_fashion/app/presentation/sign_up/widgets/text_form_field_widget.dart';
+import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 
 class SetupPasswordAvatarCpn extends StatelessWidget {
   const SetupPasswordAvatarCpn({super.key});
@@ -9,6 +9,8 @@ class SetupPasswordAvatarCpn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final applocalization = AppLocalizations.of(context)!;
     return Column(
       children: [
         ChooseImageWidget(
@@ -16,48 +18,67 @@ class SetupPasswordAvatarCpn extends StatelessWidget {
             FillingOutInformationPersonalCpn.data["avatar"] = file;
           },
         ),
-        const SizedBox(height: 15.0),
-        TextFormFieldRegister(
+        const SizedBox(height: 10.0),
+        TextFormFieldApp(
+          title: applocalization.password,
           textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.name,
-          hintText: AppLocalizations.of(context)!
-              .enter_the(AppLocalizations.of(context)!.password)
-              .toBeginningOfSentenceCase(),
-          labelText: Text(
-            "${AppLocalizations.of(context)!.password}(*)",
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          isobscureText: true,
-          prefixIcon: SvgPicture.asset(
-            "assets/icons/lock.svg",
-            fit: BoxFit.scaleDown,
-          ),
-          onChanged: (value) =>
-              FillingOutInformationPersonalCpn.data["password"] = value,
+          keyboardType: TextInputType.visiblePassword,
+          obscureText: true,
+          hintText: applocalization.enter_the(applocalization.password),
+          onChanged: (p0) =>
+              FillingOutInformationPersonalCpn.data["password"] = p0,
         ),
-        const SizedBox(height: 15.0),
-        TextFormFieldRegister(
-          keyboardType: TextInputType.name,
+        const SizedBox(height: 10.0),
+        TextFormFieldApp(
+          title: applocalization.confirmPassword,
           textInputAction: TextInputAction.done,
-          hintText: AppLocalizations.of(context)!
-              .enter_the(AppLocalizations.of(context)!.confirmPassword)
-              .toBeginningOfSentenceCase(),
-          labelText: Text(
-            "${AppLocalizations.of(context)!.confirmPassword}(*)",
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          isobscureText: true,
-          prefixIcon: SvgPicture.asset(
-            "assets/icons/lock.svg",
-            fit: BoxFit.scaleDown,
-          ),
-          onChanged: (value) =>
-              FillingOutInformationPersonalCpn.data["confirm"] = value,
+          obscureText: true,
+          keyboardType: TextInputType.visiblePassword,
+          hintText: applocalization.confirmPassword,
+          onChanged: (p0) =>
+              FillingOutInformationPersonalCpn.data["password"] = p0,
         ),
+        // TextFormFieldRegister(
+        //   textInputAction: TextInputAction.next,
+        //   keyboardType: TextInputType.name,
+        //   hintText: AppLocalizations.of(context)!
+        //       .enter_the(AppLocalizations.of(context)!.password)
+        //       .toBeginningOfSentenceCase(),
+        //   labelText: Text(
+        //     "${AppLocalizations.of(context)!.password}(*)",
+        //     style: theme.textTheme.bodyMedium!.copyWith(
+        //       fontWeight: FontWeight.w400,
+        //     ),
+        //   ),
+        //   isobscureText: true,
+        //   prefixIcon: SvgPicture.asset(
+        //     "assets/icons/lock.svg",
+        //     fit: BoxFit.scaleDown,
+        //   ),
+        //   onChanged: (value) =>
+        //       FillingOutInformationPersonalCpn.data["password"] = value,
+        // ),
+        // const SizedBox(height: 15.0),
+        // TextFormFieldRegister(
+        //   keyboardType: TextInputType.name,
+        //   textInputAction: TextInputAction.done,
+        //   hintText: AppLocalizations.of(context)!
+        //       .enter_the(AppLocalizations.of(context)!.confirmPassword)
+        //       .toBeginningOfSentenceCase(),
+        //   labelText: Text(
+        //     "${AppLocalizations.of(context)!.confirmPassword}(*)",
+        //     style: theme.textTheme.bodyMedium!.copyWith(
+        //       fontWeight: FontWeight.w400,
+        //     ),
+        //   ),
+        //   isobscureText: true,
+        //   prefixIcon: SvgPicture.asset(
+        //     "assets/icons/lock.svg",
+        //     fit: BoxFit.scaleDown,
+        //   ),
+        //   onChanged: (value) =>
+        //       FillingOutInformationPersonalCpn.data["confirm"] = value,
+        // ),
       ],
     );
   }

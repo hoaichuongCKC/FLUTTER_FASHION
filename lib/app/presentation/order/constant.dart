@@ -50,7 +50,7 @@ class ChoiceChipCustom extends Equatable {
           prefixIcon: Icon(
             Icons.local_shipping,
             size: 22.0,
-            color: primaryColor,
+            color: secondaryColor,
           ),
         ),
         const ChoiceChipCustom(
@@ -58,7 +58,7 @@ class ChoiceChipCustom extends Equatable {
           label: completed,
           prefixIcon: Icon(
             Icons.check_circle,
-            color: primaryColor,
+            color: secondaryColor,
           ),
         ),
         const ChoiceChipCustom(
@@ -67,7 +67,7 @@ class ChoiceChipCustom extends Equatable {
           prefixIcon: Icon(
             Icons.cancel,
             size: 22.0,
-            color: primaryColor,
+            color: secondaryColor,
           ),
         ),
       ];

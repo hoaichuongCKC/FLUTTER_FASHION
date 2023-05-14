@@ -8,8 +8,47 @@ class AddressPaymentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final applocalization = AppLocalizations.of(context)!;
+
+    final theme = Theme.of(context);
+
     return BlocBuilder<AddressUserCubit, AddressUserState>(
       builder: (context, state) {
+        final bool isNoAddress = state.usingAddress.isEmpty;
+
+        if (isNoAddress) {
+          return Container(
+            padding: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              color: disablePrimaryColor.withAlpha(100),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(radiusBtn / 2),
+              ),
+            ),
+            child: ListTile(
+              onTap: () => AppRoutes.router
+                  .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
+              dense: true,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+              title: Text(
+                applocalization.shipping_address,
+                style: theme.textTheme.bodySmall,
+              ),
+              subtitle: Text(
+                applocalization.please_set_up_your_address,
+                style: theme.textTheme.bodySmall,
+              ),
+              trailing: const Icon(
+                Icons.add_circle_outline,
+                size: 20.0,
+                color: darkColor,
+              ),
+            ),
+          );
+        }
+
+        final addressName = state.usingAddress[0].name;
+
         return DecoratedBox(
           decoration: BoxDecoration(
             color: !ThemeDataApp.instance.isLight
@@ -18,52 +57,38 @@ class AddressPaymentView extends StatelessWidget {
             borderRadius: const BorderRadius.all(
               Radius.circular(5.0),
             ),
-            boxShadow: !ThemeDataApp.instance.isLight
-                ? null
-                : [
-                    BoxShadow(
-                      color: primaryColor.withOpacity(0.2),
-                      blurRadius: 8.0,
-                    )
-                  ],
+            boxShadow: !ThemeDataApp.instance.isLight ? null : [shadowBox],
           ),
           child: ListTile(
-              leading: SvgPicture.asset(
-                "assets/icons/map_address.svg",
-                width: 24.0,
-                height: 24.0,
-                color: primaryColor,
+            leading: SvgPicture.asset(
+              "assets/icons/map_address.svg",
+              width: 24.0,
+              height: 24.0,
+              color: secondaryColor,
+            ),
+            dense: true,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+            minLeadingWidth: 0.0,
+            title: Text(
+              applocalization.shipping_address,
+              style: theme.textTheme.bodyMedium,
+            ),
+            subtitle: Text(
+              addressName,
+              style: theme.textTheme.bodySmall!.copyWith(
+                color: disableDarkColor.withOpacity(0.1),
               ),
-              dense: true,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-              minLeadingWidth: 0.0,
-              title: Text(
-                AppLocalizations.of(context)!.shipping_address,
-                style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: InkWell(
+              onTap: () => AppRoutes.router
+                  .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
+              child: SvgPicture.asset(
+                "assets/icons/edit.svg",
+                color: secondaryColor,
               ),
-              subtitle: Text(
-                state.usingAddress.isEmpty
-                    ? AppLocalizations.of(context)!.please_set_up_your_address
-                    : state.usingAddress[0].name,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: state.usingAddress.isEmpty ? errorColor : null,
-                    ),
-              ),
-              trailing: InkWell(
-                onTap: () => AppRoutes.router
-                    .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
-                child: state.usingAddress.isEmpty
-                    ? const Icon(
-                        Icons.add_circle_outline,
-                        color: primaryColor,
-                        size: 24.0,
-                      )
-                    : SvgPicture.asset(
-                        "assets/icons/edit.svg",
-                        color: primaryColor,
-                      ),
-              )),
+            ),
+          ),
         );
       },
     );

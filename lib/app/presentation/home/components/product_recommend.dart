@@ -14,15 +14,16 @@ class ProductRecommend extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             ListTile(
               dense: true,
               minVerticalPadding: 0,
               contentPadding: EdgeInsets.zero,
               title: Text(
                 AppLocalizations.of(context)!.recommed_product,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w800,
                     ),
               ),
             ),

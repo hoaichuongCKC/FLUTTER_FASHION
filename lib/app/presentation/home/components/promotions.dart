@@ -14,7 +14,7 @@ class PromotionList extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
@@ -24,26 +24,10 @@ class PromotionList extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               title: Text(
                 AppLocalizations.of(context)!.promotions,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
-              ),
-              trailing: InkWell(
-                onTap: () => AppRoutes.router.push(Routes.PROMOTION),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.view_all,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 12.0,
-                        color: primaryColor,
-                      ),
-                    ),
-                    const Icon(Icons.arrow_right,
-                        size: 25.0, color: primaryColor),
-                  ],
-                ),
               ),
             ),
           ),
@@ -57,12 +41,50 @@ class PromotionList extends StatelessWidget {
                   success: (promotions) => ListView.separated(
                     separatorBuilder: (context, index) =>
                         const SizedBox(width: 15.0),
-                    itemCount: promotions.length,
+                    itemCount: promotions.length + 1,
                     scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
                         horizontal: horizontalPadding - 4),
                     cacheExtent: _maxHeightCardPromotion,
                     itemBuilder: (context, index) {
+                      if (index == promotions.length) {
+                        return InkWell(
+                          onTap: () {
+                            AppRoutes.router.pushNamed(Names.PROMOTION);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              DecoratedBox(
+                                decoration: const BoxDecoration(
+                                  color: lightColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SizedBox(
+                                  width: 60,
+                                  height: 60,
+                                  child: SvgPicture.asset(
+                                    "assets/icons/all.svg",
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 4.0),
+                              Text(
+                                AppLocalizations.of(context)!.view_all,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontSize: 12.0),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
                       final promotion = promotions[index];
 
                       return LimitedBox(
@@ -70,6 +92,8 @@ class PromotionList extends StatelessWidget {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width * .75,
                           child: PromotionWidget(
+                            colorBGLeft: lightColor,
+                            colorBGRight: lightColor,
                             promotion: promotion,
                           ),
                         ),

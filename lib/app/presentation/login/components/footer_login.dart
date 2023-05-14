@@ -6,6 +6,7 @@ class FooterLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -17,10 +18,7 @@ class FooterLogin extends StatelessWidget {
               child: Align(
                 child: Text(
                   AppLocalizations.of(context)!.or,
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 14.0,
-                    color: lightColor,
-                  ),
+                  style: theme.bodySmall,
                 ),
               ),
             ),
@@ -29,21 +27,11 @@ class FooterLogin extends StatelessWidget {
         ),
         const SizedBox(height: 20.0),
         ButtonWidget(
-          animate: true,
           height: 45.0,
+          background: lightColor,
+          elevation: 0.0,
           onPressed: () => context.read<AuthCubit>().authGoogle(context),
-          btnColor: lightColor,
-          radius: radiusBtn,
-          boxShadow: !ThemeDataApp.instance.isLight
-              ? null
-              : [
-                  BoxShadow(
-                    color: darkColor.withOpacity(0.3),
-                    offset: const Offset(2, 4),
-                    blurRadius: 8,
-                  ),
-                ],
-          labelWidget: Row(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

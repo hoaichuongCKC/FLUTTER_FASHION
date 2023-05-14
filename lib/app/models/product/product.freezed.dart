@@ -35,6 +35,7 @@ mixin _$ProductModel {
   Category? get category => throw _privateConstructorUsedError;
   List<ProductDetailModel>? get product_detail =>
       throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,7 +63,8 @@ abstract class $ProductModelCopyWith<$Res> {
       int? sold,
       bool? is_popular,
       Category? category,
-      List<ProductDetailModel>? product_detail});
+      List<ProductDetailModel>? product_detail,
+      DateTime? created_at});
 
   $PropertiesCopyWith<$Res>? get properties;
   $CategoryCopyWith<$Res>? get category;
@@ -95,6 +97,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? is_popular = freezed,
     Object? category = freezed,
     Object? product_detail = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -153,6 +156,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.product_detail
           : product_detail // ignore: cast_nullable_to_non_nullable
               as List<ProductDetailModel>?,
+      created_at: freezed == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 
@@ -203,7 +210,8 @@ abstract class _$$_ProductModelCopyWith<$Res>
       int? sold,
       bool? is_popular,
       Category? category,
-      List<ProductDetailModel>? product_detail});
+      List<ProductDetailModel>? product_detail,
+      DateTime? created_at});
 
   @override
   $PropertiesCopyWith<$Res>? get properties;
@@ -236,6 +244,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
     Object? is_popular = freezed,
     Object? category = freezed,
     Object? product_detail = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_$_ProductModel(
       id: freezed == id
@@ -294,6 +303,10 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value._product_detail
           : product_detail // ignore: cast_nullable_to_non_nullable
               as List<ProductDetailModel>?,
+      created_at: freezed == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -316,7 +329,8 @@ class _$_ProductModel implements _ProductModel {
       this.sold,
       this.is_popular,
       this.category,
-      final List<ProductDetailModel>? product_detail})
+      final List<ProductDetailModel>? product_detail,
+      this.created_at})
       : _product_detail = product_detail;
 
   factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -359,8 +373,11 @@ class _$_ProductModel implements _ProductModel {
   }
 
   @override
+  final DateTime? created_at;
+
+  @override
   String toString() {
-    return 'ProductModel(id: $id, code: $code, name: $name, regular_price: $regular_price, discount: $discount, sale_price: $sale_price, properties: $properties, desc: $desc, view: $view, star: $star, sold: $sold, is_popular: $is_popular, category: $category, product_detail: $product_detail)';
+    return 'ProductModel(id: $id, code: $code, name: $name, regular_price: $regular_price, discount: $discount, sale_price: $sale_price, properties: $properties, desc: $desc, view: $view, star: $star, sold: $sold, is_popular: $is_popular, category: $category, product_detail: $product_detail, created_at: $created_at)';
   }
 
   @override
@@ -388,7 +405,9 @@ class _$_ProductModel implements _ProductModel {
             (identical(other.category, category) ||
                 other.category == category) &&
             const DeepCollectionEquality()
-                .equals(other._product_detail, _product_detail));
+                .equals(other._product_detail, _product_detail) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at));
   }
 
   @JsonKey(ignore: true)
@@ -408,7 +427,8 @@ class _$_ProductModel implements _ProductModel {
       sold,
       is_popular,
       category,
-      const DeepCollectionEquality().hash(_product_detail));
+      const DeepCollectionEquality().hash(_product_detail),
+      created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -439,7 +459,8 @@ abstract class _ProductModel implements ProductModel {
       final int? sold,
       final bool? is_popular,
       final Category? category,
-      final List<ProductDetailModel>? product_detail}) = _$_ProductModel;
+      final List<ProductDetailModel>? product_detail,
+      final DateTime? created_at}) = _$_ProductModel;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
@@ -472,6 +493,8 @@ abstract class _ProductModel implements ProductModel {
   Category? get category;
   @override
   List<ProductDetailModel>? get product_detail;
+  @override
+  DateTime? get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>

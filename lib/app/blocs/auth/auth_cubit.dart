@@ -8,6 +8,7 @@ import 'package:flutter_fashion/core/firebase/firebase_service.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
@@ -60,6 +61,10 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     }
   }
 
+  void reset() {
+    emit(state.copyWith(phoneNumber: "", password: ""));
+  }
+
   void _onSubmitLogin(BuildContext context) async {
     emit(state.copyWith(status: AppStatus.loading));
     loadingAlert(context: context);
@@ -73,7 +78,12 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        errorAlert(context: context, message: error);
+        showCustomDialog(
+          context,
+          content: error,
+          title: AppLocalizations.of(context)!.login,
+          icon: SvgPicture.asset("assets/icons/error.svg"),
+        );
       },
       (dataReposonse) {
         if (dataReposonse.status) {
@@ -108,11 +118,13 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
 
   void accountRegister(RegisterParams? param, BuildContext context) async {
     emit(state.copyWith(status: AppStatus.loading));
+
     loadingAlert(context: context);
 
     final result = await _authRepositoryImpl.register(param!);
 
     AppRoutes.router.pop();
+
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
@@ -121,7 +133,12 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
       (dataReposonse) async {
         if (dataReposonse.message == "Email already exists") {
           emit(state.copyWith(status: AppStatus.error));
-          errorAlert(context: context, message: dataReposonse.message);
+          showCustomDialog(
+            context,
+            content: dataReposonse.message,
+            title: AppLocalizations.of(context)!.signUp,
+            icon: SvgPicture.asset("assets/icons/error.svg"),
+          );
         } else {
           await successAlert(context: context, message: dataReposonse.message);
           AppRoutes.router.go(Routes.LOGIN);
@@ -166,7 +183,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
   void forgotPassword(
       BuildContext context, String phone, String newPass) async {
     loadingAlert(context: context);
-    final result = await _authRepositoryImpl.forgotPassword(phone, newPass);
+    final result = await _authRepositoryImpl.forgotPassword(newPass, phone);
 
     //remove poup loading
     AppRoutes.router.pop();

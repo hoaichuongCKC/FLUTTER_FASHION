@@ -113,14 +113,16 @@ class AuthProviderImpl extends AuthProvider {
       ApiEndpoint.forgotPassword,
       isRequestHeader: false,
       body: {
-        "new_password": newPassword,
         "phone": phone,
+        "new_password": newPassword,
       },
     );
     if (response.statusCode != 200) {
       throw ServerException();
     }
     final data = await response.stream.bytesToString();
+
+    print(data);
 
     return ResponseData.fromJson(jsonDecode(data));
   }

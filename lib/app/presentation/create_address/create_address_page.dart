@@ -34,13 +34,17 @@ class CreateAddressPage extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.data == ListBuilding.desc) {
                   return ButtonWidget(
-                    btnColor: primaryColor,
-                    label: AppLocalizations.of(context)!.create,
-                    radius: 5.0,
                     height: 45.0,
-                    animate: true,
                     onPressed: () => getIt<AddressManagementBloc>()
                         .submitCreateAddress(context),
+                    child: Text(
+                      AppLocalizations.of(context)!.create,
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 14.0,
+                        color: lightColor,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   );
                 }
                 return const SizedBox();
@@ -60,23 +64,15 @@ class CreateAddressPage extends StatelessWidget {
               builder: (context, snapshot) {
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return ButtonWidget(
-                    btnColor: Theme.of(context).cardColor,
-                    animate: true,
                     height: 45.0,
-                    radius: radiusBtn,
                     onPressed: () => getIt<AddressManagementBloc>()
                         .getCurrentLocation(context),
-                    boxShadow: [
-                      BoxShadow(
-                          color: primaryColor.withOpacity(0.2),
-                          blurRadius: 8.0),
-                    ],
-                    labelWidget: Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           "assets/icons/location.svg",
-                          color: primaryColor,
+                          color: lightColor,
                         ),
                         const SizedBox(width: 8.0),
                         Text(
@@ -84,6 +80,7 @@ class CreateAddressPage extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontSize: 14.0,
+                                    color: lightColor,
                                   ),
                         ),
                       ],

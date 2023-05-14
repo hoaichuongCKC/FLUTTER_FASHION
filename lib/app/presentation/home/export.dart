@@ -21,7 +21,6 @@ export 'package:flutter_fashion/app/presentation/home/components/banner.dart';
 export 'package:flutter_fashion/app/presentation/home/components/popular_product.dart';
 export 'package:flutter_fashion/app/presentation/home/components/product_categories.dart';
 export 'package:flutter_fashion/app/presentation/home/components/product_recommend.dart';
-export 'package:flutter_fashion/app/presentation/home/components/sale_area_home.dart';
 export 'package:flutter_fashion/app/presentation/home/components/top_header.dart';
 export 'package:flutter_fashion/app/presentation/home/blocs/loadmore_bloc.dart';
 export 'package:flutter_fashion/app/presentation/login/export.dart';

@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
+import 'package:flutter_fashion/utils/alert/error.dart';
 part 'favorite_state.dart';
 
 class FavoriteCubit extends HydratedCubit<FavoriteState> {
@@ -53,8 +54,14 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
     emit(state.copyWith(listProduct: updatedList));
   }
 
-  void removeListFavorite() {
+  void removeListFavorite(context) {
     final state = this.state;
+
+    if (!_checkExistsList()) {
+      errorAlert(context: context, message: "Vui lòng chọn sản phẩm");
+      return;
+    }
+
     final list = state.listProduct;
 
     for (int id in state.chooseItemsDelete) {
@@ -66,6 +73,11 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
       emit(state.copyWith(listProduct: updatedList));
     }
     showCheckBox();
+  }
+
+  bool _checkExistsList() {
+    final state = this.state;
+    return state.chooseItemsDelete.isNotEmpty;
   }
 
   bool _checkExistIndex(int index) {

@@ -25,6 +25,7 @@ class ItemSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
       dense: true,
       onTap: isHasToggled ? null : excute,
@@ -59,15 +60,12 @@ class ItemSetting extends StatelessWidget {
                 !(titleTrailing == "")
                     ? Text(
                         titleTrailing!,
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              fontSize: 12.0,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .color!
-                                  .withOpacity(0.6),
-                              fontWeight: FontWeight.w300,
-                            ),
+                        style: theme.textTheme.bodySmall!.copyWith(
+                          fontSize: 12.0,
+                          color: theme.textTheme.bodySmall!.color!
+                              .withOpacity(0.6),
+                          fontWeight: FontWeight.w300,
+                        ),
                       )
                     : const SizedBox(),
                 !(titleTrailing == "")
@@ -82,9 +80,9 @@ class ItemSetting extends StatelessWidget {
                         onChanged: (value) {
                           excute();
                         },
-                        activeColor: primaryColor,
-                        activeTrackColor: disablePrimaryColor,
-                        inactiveThumbColor: disablePrimaryColor,
+                        activeColor: secondaryColor,
+                        activeTrackColor: lightColor,
+                        inactiveThumbColor: secondaryColor.withAlpha(100),
                         inactiveTrackColor: scaffoldBackgroundColor,
                       ),
               ],
@@ -92,15 +90,11 @@ class ItemSetting extends StatelessWidget {
       subtitle: subtitle != null
           ? Text(
               subtitle!,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    fontSize: 10.0,
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .color!
-                        .withOpacity(0.6),
-                    fontWeight: FontWeight.w300,
-                  ),
+              style: theme.textTheme.bodySmall!.copyWith(
+                fontSize: 10.0,
+                color: theme.textTheme.bodySmall!.color!.withOpacity(0.6),
+                fontWeight: FontWeight.w300,
+              ),
             )
           : null,
     );

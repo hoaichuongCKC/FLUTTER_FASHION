@@ -176,8 +176,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "theAboveTextHasBeenEdited": "The above text has been edited.",
-  "@theAboveTextHasBeenEdited": {
+  "changed_information": "Changed information",
+  "@information_changed": {
     "description": "Không hiểu gì cả"
   },
 
@@ -412,8 +412,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "the_product_is_currently_out_of_stock": "The product is currently out of stock",
-  "@the_product_is_currently_out_of_stock": {
+  "no_products": "No products",
+  "@no_products": {
     "description": "Không hiểu gì cả"
   },
  
@@ -790,6 +790,26 @@
 
   "the_number_of_photos_exceeds_the_limit" : "The number of photos exceeds the limit",
   "@the_number_of_photos_exceeds_the_limit": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "new_product" : "New",
+  "@new_product": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_carefully_read_the" : "Please carefully read the",
+  "@please_carefully_read_the": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "the_terms_and_conditions" : "terms and conditions",
+  "@the_terms_and_conditions": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "of_the_store_is_return_policy" : "of the store is return policy",
+  "@of_the_store_is_return_policy": {
     "description": "nó là chỉnh sửa"
   }
 

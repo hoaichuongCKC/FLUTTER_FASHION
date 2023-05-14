@@ -61,8 +61,8 @@ class BottomNavigationBarApp extends StatelessWidget {
                         width: 20,
                         height: 20,
                         color: currentPage == index
-                            ? primaryColor
-                            : theme.iconTheme.color,
+                            ? secondaryColor
+                            : theme.iconTheme.color!.withOpacity(0.5),
                       ),
                     ),
                     routes: bottomData[index].path,
@@ -80,13 +80,13 @@ class BottomNavigationBarApp extends StatelessWidget {
             child: Container(
               height: 1.5,
               width: size.width * .4,
-              decoration: const BoxDecoration(
-                color: primaryColor,
+              decoration: BoxDecoration(
+                color: secondaryColor,
                 gradient: LinearGradient(
                   colors: [
-                    disablePrimaryColor,
-                    primaryColor,
-                    disablePrimaryColor,
+                    secondaryColor.withOpacity(0.2),
+                    secondaryColor,
+                    secondaryColor.withOpacity(0.2),
                   ],
                 ),
               ),
@@ -127,7 +127,7 @@ class ItemNavigationBar extends StatelessWidget {
               style: PrimaryFont.instance.copyWith(
                 fontSize: 10.0,
                 color: isSelected
-                    ? primaryColor
+                    ? secondaryColor
                     : theme.textTheme.bodySmall!.color,
                 fontWeight: isSelected ? FontWeight.w400 : FontWeight.w300,
               ),

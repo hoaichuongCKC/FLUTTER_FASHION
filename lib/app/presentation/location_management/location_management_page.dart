@@ -13,33 +13,41 @@ class LocationManagementPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
       title: AppLocalizations.of(context)!.address_management,
-      floatingActionButton: Builder(builder: (context) {
-        return InkWell(
-          onTap: () async {
-            final result = await Navigator.of(context).push<ItemAddress?>(
-              MaterialPageRoute(
-                builder: (context) => const CreateAddressPage(),
+      floatingActionButton: Builder(
+        builder: (context) {
+          return InkWell(
+            onTap: () async {
+              final result = await Navigator.of(context).push<ItemAddress?>(
+                MaterialPageRoute(
+                  builder: (context) => const CreateAddressPage(),
+                ),
+              );
+              if (result != null) {
+                context.read<AddressUserCubit>().createNew(result);
+              }
+            },
+            borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
+            customBorder: const CircleBorder(),
+            child: SizedBox(
+              width: 65,
+              height: 65,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/profile/float_btn.svg",
+                    colorFilter: const ColorFilter.mode(
+                      secondaryColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  const Align(child: Icon(Icons.add_card, color: lightColor)),
+                ],
               ),
-            );
-            if (result != null) {
-              context.read<AddressUserCubit>().createNew(result);
-            }
-          },
-          borderRadius: const BorderRadius.all(Radius.circular(radiusBtn)),
-          customBorder: const CircleBorder(),
-          child: SizedBox(
-            width: 65,
-            height: 65,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                SvgPicture.asset("assets/icons/profile/float_btn.svg"),
-                const Align(child: Icon(Icons.add_card, color: lightColor)),
-              ],
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
       child: BlocBuilder<AddressUserCubit, AddressUserState>(
         builder: (context, state) {
           if (state.storageList.isEmpty) {

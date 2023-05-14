@@ -26,6 +26,7 @@ class ThemeDataApp {
   static ThemeData appThemeLight = ThemeData.light(useMaterial3: true).copyWith(
     scaffoldBackgroundColor: scaffoldBackgroundColor,
     cardColor: lightColor.withOpacity(0.9),
+    indicatorColor: secondaryColor,
     dividerColor: scaffoldBackgroundColor,
     iconTheme: const IconThemeData(size: 18.0, color: darkColor),
     cardTheme: const CardTheme(
@@ -34,6 +35,11 @@ class ThemeDataApp {
           Radius.circular(radiusBtn),
         ),
       ),
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: scaffoldBackgroundColor,
+      surfaceTintColor: scaffoldBackgroundColor,
+      centerTitle: true,
     ),
     textTheme: TextTheme(
       titleSmall: font.copyWith(
@@ -55,9 +61,9 @@ class ThemeDataApp {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       isDense: true,
-      iconColor: primaryColor.withOpacity(0.7),
+      iconColor: secondaryColor.withOpacity(0.7),
       hintStyle: PrimaryFont.instance.copyWith(
-        fontSize: 14.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w300,
         color: darkColor.withOpacity(0.65),
       ),
@@ -73,9 +79,15 @@ class ThemeDataApp {
 
   static ThemeData appThemeDark = ThemeData.dark(useMaterial3: true).copyWith(
     scaffoldBackgroundColor: darkColor,
+    indicatorColor: lightColor.withOpacity(0.75),
     cardColor: lightColor.withOpacity(0.1),
     dividerColor: scaffoldBackgroundColor.withOpacity(0.4),
     iconTheme: IconThemeData(size: 18.0, color: lightColor.withOpacity(0.75)),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: darkColor,
+      surfaceTintColor: darkColor,
+      centerTitle: true,
+    ),
     textTheme: TextTheme(
       titleSmall: font.copyWith(
         color: lightColor.withOpacity(0.75),
@@ -103,7 +115,7 @@ class ThemeDataApp {
       iconColor: primaryColor.withOpacity(0.7),
       fillColor: lightColor.withOpacity(0.1),
       hintStyle: PrimaryFont.instance.copyWith(
-        fontSize: 14.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w300,
         color: lightColor.withOpacity(0.8),
       ),

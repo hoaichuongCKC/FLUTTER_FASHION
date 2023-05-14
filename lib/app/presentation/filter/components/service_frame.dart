@@ -1,5 +1,7 @@
 import 'package:flutter_fashion/app/presentation/filter/components/title_frame.dart';
 import 'package:flutter_fashion/app/presentation/filter/cubit/filter_cubit.dart';
+import 'package:flutter_fashion/common/widgets/flash_sale_widget.dart';
+import 'package:flutter_fashion/common/widgets/popular.dart';
 import '../../../../export.dart';
 
 class ServiceFrame extends StatelessWidget {
@@ -26,13 +28,13 @@ class ServiceFrame extends StatelessWidget {
                 children: [
                   _buildItem(
                     context,
-                    title: AppLocalizations.of(context)!.popular,
+                    tag: const PopularWidget(),
                     isSelected: isPopular,
                     onTap: () => filterCubit.selectPopular(!isPopular),
                   ),
                   _buildItem(
                     context,
-                    title: AppLocalizations.of(context)!.sale,
+                    tag: const FlashSaleWidget(),
                     isSelected: isSale,
                     onTap: () => filterCubit.selectSale(!isSale),
                   ),
@@ -46,9 +48,7 @@ class ServiceFrame extends StatelessWidget {
   }
 
   InkWell _buildItem(context,
-      {String title = "",
-      bool isSelected = false,
-      required VoidCallback onTap}) {
+      {Widget? tag, bool isSelected = false, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -60,7 +60,7 @@ class ServiceFrame extends StatelessWidget {
             DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: primaryColor),
+                border: Border.all(color: secondaryColor),
               ),
               child: AnimatedCrossFade(
                 duration: const Duration(milliseconds: 450),
@@ -76,7 +76,7 @@ class ServiceFrame extends StatelessWidget {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: primaryColor,
+                      color: secondaryColor,
                     ),
                     child: SizedBox(
                       width: 15,
@@ -92,10 +92,7 @@ class ServiceFrame extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8.0),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            tag!,
           ],
         ),
       ),

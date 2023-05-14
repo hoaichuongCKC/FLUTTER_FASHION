@@ -54,8 +54,14 @@ class _ProductListState extends State<ProductList> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(AppLocalizations.of(context)!
-                            .the_product_is_currently_out_of_stock),
+                        Text(
+                          AppLocalizations.of(context)!.no_products,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                        ),
                       ],
                     ),
                   ),

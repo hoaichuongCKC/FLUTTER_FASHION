@@ -70,6 +70,7 @@ class _BannerHomeState extends State<BannerHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 20),
             SizedBox(
               width: double.maxFinite,
               height: 180.0,
@@ -172,11 +173,9 @@ class BannerErrorHome extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             ButtonWidget(
-              height: 40.0,
               width: 100.0,
               onPressed: () => context.read<BannerCubit>().fetchData(context),
-              btnColor: primaryColor,
-              labelWidget: Text(
+              child: Text(
                 "Try reload",
                 style: PrimaryFont.instance.copyWith(
                   fontSize: 14.0,

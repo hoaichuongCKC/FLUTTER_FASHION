@@ -16,6 +16,8 @@ class ToPayShipReceiveDetail extends StatelessWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
       child: Material(
+        surfaceTintColor: Colors.transparent,
+        color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -171,19 +173,24 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15.0),
                     child: ButtonWidget(
-                        onPressed: () {
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (context) =>
-                                ShowDialogTimer(orderId: order.id!),
-                          );
-                        },
-                        height: 40,
-                        radius: radiusBtn,
-                        btnColor: primaryColor,
-                        animate: true,
-                        label: AppLocalizations.of(context)!.cancel),
+                      onPressed: () {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) =>
+                              ShowDialogTimer(orderId: order.id!),
+                        );
+                      },
+                      height: 40,
+                      child: Text(
+                        AppLocalizations.of(context)!.cancel,
+                        style: PrimaryFont.instance.copyWith(
+                          color: lightColor,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
                   )
                 : const SizedBox()
           ],

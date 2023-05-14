@@ -6,6 +6,7 @@ import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -42,20 +43,25 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
         if (payload == Names.REGISTER) {
           if (statusCode != 201) {
             AppRoutes.router.pop();
-            errorAlert(
-              context: context,
-              message: AppLocalizations.of(context)!
+            showCustomDialog(
+              context,
+              title: "Authentication phone",
+              content: AppLocalizations.of(context)!
                   .registerd_phone_number_in_the_system,
             );
+            return;
           }
         } else {
           if (statusCode != 200) {
             AppRoutes.router.pop();
-            errorAlert(
-              context: context,
-              message: AppLocalizations.of(context)!
+            showCustomDialog(
+              context,
+              icon: SvgPicture.asset("assets/icons/error.svg"),
+              title: AppLocalizations.of(context)!.notificationPage,
+              content: AppLocalizations.of(context)!
                   .phone_number_not_registered_in_the_system,
             );
+            return;
           }
         }
         await _handleAuthPhoneFirebase(
@@ -83,7 +89,12 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
         // remove loading popup
         if (!isResend) AppRoutes.router.pop();
 
-        errorAlert(context: context, message: exception.message!);
+        showCustomDialog(
+          context,
+          icon: SvgPicture.asset("assets/icons/error.svg"),
+          title: AppLocalizations.of(context)!.notificationPage,
+          content: exception.message!,
+        );
 
         emit(const AuthPhoneState.error());
       },
@@ -129,7 +140,12 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
     result.fold(
       (errorFirebase) {
         emit(const AuthPhoneState.error());
-        errorAlert(context: context, message: errorFirebase);
+        showCustomDialog(
+          context,
+          icon: SvgPicture.asset("assets/icons/error.svg"),
+          title: AppLocalizations.of(context)!.notificationPage,
+          content: errorFirebase,
+        );
       },
       (userCredential) {
         emit(const AuthPhoneState.verifyOtpSuccess());

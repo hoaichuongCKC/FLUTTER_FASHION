@@ -57,7 +57,7 @@ class RangePriceFrame extends StatelessWidget {
       leading: DecoratedBox(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: primaryColor),
+          border: Border.all(color: secondaryColor),
         ),
         child: AnimatedCrossFade(
           duration: const Duration(milliseconds: 450),
@@ -73,7 +73,7 @@ class RangePriceFrame extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: primaryColor,
+                color: secondaryColor,
               ),
               child: SizedBox(
                 width: 15,

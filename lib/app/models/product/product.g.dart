@@ -28,6 +28,9 @@ _$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
       product_detail: (json['product_detail'] as List<dynamic>?)
           ?.map((e) => ProductDetailModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      created_at: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
@@ -47,6 +50,7 @@ Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
       'category': instance.category?.toJson(),
       'product_detail':
           instance.product_detail?.map((e) => e.toJson()).toList(),
+      'created_at': instance.created_at?.toIso8601String(),
     };
 
 _$_Category _$$_CategoryFromJson(Map<String, dynamic> json) => _$_Category(

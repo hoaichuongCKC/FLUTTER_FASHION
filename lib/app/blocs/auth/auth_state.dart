@@ -9,7 +9,7 @@ class AuthState extends Equatable {
   final AppStatus status;
   const AuthState({
     this.phoneNumber = "",
-    this.password = " ",
+    this.password = "",
     this.status = AppStatus.init,
   });
 

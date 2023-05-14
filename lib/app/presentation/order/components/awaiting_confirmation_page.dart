@@ -141,28 +141,38 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ButtonWidget(
-                      btnColor: disableDarkColor,
                       onPressed: () {
                         timer.cancel();
                         AppRoutes.router.pop();
                       },
                       height: 30,
-                      radius: 2,
                       width: 55,
-                      label: "Bỏ",
+                      child: Text(
+                        "bỏ",
+                        style: PrimaryFont.instance.copyWith(
+                          color: lightColor,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 8.0),
                     ButtonWidget(
-                      btnColor: primaryColor,
                       onPressed: _counter == 0
                           ? () => context
                               .read<OrderCubit>()
                               .delete(widget.orderId, context)
-                          : null,
+                          : () {},
                       height: 30,
-                      radius: 2,
                       width: 55,
-                      label: _counter == 0 ? "Ok" : "00:0$_counter",
+                      child: Text(
+                        _counter == 0 ? "Ok" : "00:0$_counter",
+                        style: PrimaryFont.instance.copyWith(
+                          color: lightColor,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   ],
                 )

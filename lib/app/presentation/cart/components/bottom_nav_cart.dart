@@ -21,15 +21,7 @@ class BottomNavigationBarCart extends StatelessWidget {
               topLeft: Radius.circular(5.0),
               topRight: Radius.circular(5.0),
             ),
-            boxShadow: !ThemeDataApp.instance.isLight
-                ? null
-                : [
-                    const BoxShadow(
-                      color: disablePrimaryColor,
-                      offset: Offset(0, -1),
-                      blurRadius: 10.0,
-                    )
-                  ],
+            boxShadow: !ThemeDataApp.instance.isLight ? null : [shadowBox],
           ),
           child: ConstrainedBoxWidget(
             currentHeight: 0.1,
@@ -65,10 +57,16 @@ class BottomNavigationBarCart extends StatelessWidget {
                   Expanded(
                     child: ButtonWidget(
                       height: 40.0,
-                      btnColor: primaryColor,
-                      label: AppLocalizations.of(context)!.order,
                       onPressed: () =>
                           AppRoutes.router.pushNamed(Names.PAYMENT),
+                      child: Text(
+                        AppLocalizations.of(context)!.check_it_out,
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 14.0,
+                          color: lightColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   )
                 ],

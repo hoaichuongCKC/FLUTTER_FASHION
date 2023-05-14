@@ -22,13 +22,14 @@ class InfoUserOrderView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 16.0),
         ListTile(
           dense: true,
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 0.0,
           leading: SvgPicture.asset(
             "assets/icons/user1.svg",
-            color: primaryColor,
+            color: secondaryColor,
           ),
           title: Text(
             AppLocalizations.of(context)!.recipient_informatio,
@@ -43,14 +44,7 @@ class InfoUserOrderView extends StatelessWidget {
             borderRadius: const BorderRadius.all(
               Radius.circular(5.0),
             ),
-            boxShadow: !ThemeDataApp.instance.isLight
-                ? null
-                : [
-                    BoxShadow(
-                      color: primaryColor.withOpacity(0.2),
-                      blurRadius: 8.0,
-                    )
-                  ],
+            boxShadow: !ThemeDataApp.instance.isLight ? null : [shadowBox],
           ),
           child: Builder(builder: (context) {
             return Padding(
@@ -128,7 +122,7 @@ class _ItemInforUserOrderState extends State<ItemInforUserOrder> {
         Text(
           widget.title,
           style: theme.textTheme.bodyMedium!.copyWith(
-            fontSize: 14.0,
+            fontSize: 12.0,
           ),
         ),
         const SizedBox(width: 10.0),
@@ -137,9 +131,7 @@ class _ItemInforUserOrderState extends State<ItemInforUserOrder> {
             onChanged: widget.onChanged,
             textAlign: TextAlign.end,
             controller: widget.controller,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontSize: 14.0,
-            ),
+            style: theme.textTheme.bodySmall,
             decoration: InputDecoration.collapsed(
               hintText: widget.hintText ?? "",
               hintStyle: theme.textTheme.bodySmall!.copyWith(

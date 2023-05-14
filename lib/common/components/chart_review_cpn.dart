@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
 import 'package:flutter_fashion/export.dart';
+import 'package:flutter_fashion/utils/extensions/double.dart';
 
 class ChartReviewCpn extends StatelessWidget {
   const ChartReviewCpn({super.key, required this.data});
@@ -12,13 +13,13 @@ class ChartReviewCpn extends StatelessWidget {
     final ProductModel product =
         InheritedDataApp.of<ProductModel>(context)!.data;
 
-    final star = product.star!.toDouble();
+    final star = product.star!;
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
-            star.toString(),
+            star.viewStar(),
             style: theme.textTheme.titleSmall!.copyWith(
               fontSize: 30.0,
               fontWeight: FontWeight.w500,

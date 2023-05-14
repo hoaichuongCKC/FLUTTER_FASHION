@@ -164,11 +164,8 @@ class ItemOrder extends StatelessWidget {
                             ),
                           )
                         : ButtonWidget(
-                            btnColor: primaryColor,
                             height: 40.0,
                             width: 130.0,
-                            animate: true,
-                            outlineButton: true,
                             onPressed: () {
                               AppRoutes.router.pushNamed(
                                 Names.RATING_PRODUCT,
@@ -178,10 +175,11 @@ class ItemOrder extends StatelessWidget {
                                 },
                               );
                             },
-                            labelWidget: Text(
+                            child: Text(
                               AppLocalizations.of(context)!.rate_now,
                               style: PrimaryFont.instance.copyWith(
                                 fontSize: 14.0,
+                                color: lightColor,
                               ),
                             ),
                           ),

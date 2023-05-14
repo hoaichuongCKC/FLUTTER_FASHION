@@ -1,41 +1,40 @@
+import 'package:flutter_fashion/app/blocs/product_new/product_new_cubit.dart';
+import 'package:flutter_fashion/app/blocs/product_sale/product_sale_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/app/presentation/home/components/product_new_month.dart';
+import 'package:flutter_fashion/app/presentation/home/components/product_sale_area.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/config/loadmore_data.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ScrollStateful {
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  late ScrollController _scrollController;
+class _HomePageState extends ScrollState<HomePage> {
+  @override
+  void scrollListen(ScrollController controller) {
+    getIt.get<LoadMoreProductBloc>().handleScrollNotification(controller);
+  }
 
   @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()
-      ..addListener(
-        () {
-          getIt
-              .get<LoadMoreProductBloc>()
-              .handleScrollNotification(_scrollController, context);
-        },
-      );
+  void destroy(ScrollController controller) {
+    controller.removeListener(() =>
+        getIt.get<LoadMoreProductBloc>().handleScrollNotification(controller));
+  }
+
+  @override
+  void init() {
     context.read<UserCubit>().fetchUser();
     context.read<BannerCubit>().fetchData(context);
     context.read<CategoryCubit>().fetchData();
     context.read<ProductCubit>().fetchData();
-    context.read<PopularSearchCubit>().fetchData();
-    context.read<PromotionCubit>().fetchPromotion(null);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(() => getIt
-        .get<LoadMoreProductBloc>()
-        .handleScrollNotification(_scrollController, context));
-    super.dispose();
+    context.read<PopularProductCubit>().fetchData();
+    context.read<PromotionCubit>().fetchPromotion();
+    context.read<ProductNewCubit>().fetchData();
+    context.read<ProductSaleCubit>().fetchData();
   }
 
   @override
@@ -46,11 +45,12 @@ class _HomePageState extends State<HomePage> {
           context.read<BannerCubit>().onRefresh(context);
           context.read<CategoryCubit>().onRefresh();
           context.read<ProductCubit>().onRefresh();
-          context.read<PopularSearchCubit>().onRefresh();
+          context.read<PopularProductCubit>().onRefresh();
           context.read<PromotionCubit>().onRefresh();
+          context.read<ProductNewCubit>().onRefresh();
         },
         child: CustomScrollView(
-          controller: _scrollController,
+          controller: scrollController,
           slivers: [
             const TopHeaderHome(),
             const AddressUserHome(),
@@ -88,8 +88,9 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            const SaleAreaHome(),
-            BlocBuilder<PopularSearchCubit, PopularSearchState>(
+            const ProductSaleArea(),
+            const ProductNewMonth(),
+            BlocBuilder<PopularProductCubit, PopularSearchState>(
               builder: (context, state) {
                 return state.when(
                   initial: () => const SliverToBoxAdapter(),

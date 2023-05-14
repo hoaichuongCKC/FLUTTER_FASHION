@@ -4,7 +4,9 @@ import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
+import 'package:flutter_fashion/app/blocs/product_new/product_new_cubit.dart';
+import 'package:flutter_fashion/app/blocs/product_sale/product_sale_cubit.dart';
+import 'package:flutter_fashion/app/blocs/reviews/review_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
@@ -27,7 +29,7 @@ Future<void> main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
-  //HydratedBloc.storage.clear();
+  // HydratedBloc.storage.clear();
 
   await PusherBeamsApp.instance.getStarted();
 
@@ -48,7 +50,7 @@ Future<void> main() async {
           create: (context) => getIt<ProductCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<PopularSearchCubit>(),
+          create: (context) => getIt<PopularProductCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<CategoryTabCubit>(),
@@ -61,6 +63,12 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => getIt<PromotionCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ProductNewCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ProductSaleCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<SettingsCubit>(),

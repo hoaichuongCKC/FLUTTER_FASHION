@@ -23,6 +23,8 @@ class PaymentPage extends StatelessWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           appBar: AppBar(
+            surfaceTintColor: scaffoldBackgroundColor,
+            backgroundColor: scaffoldBackgroundColor,
             title: Text(
               AppLocalizations.of(context)!.order,
               style: theme.textTheme.titleSmall,

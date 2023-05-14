@@ -7,74 +7,90 @@ class AddressUserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final trailing = SvgPicture.asset(
+      "assets/icons/arrow_right.svg",
+      colorFilter: ColorFilter.mode(
+        Theme.of(context).iconTheme.color!,
+        BlendMode.srcIn,
+      ),
+    );
     return SliverToBoxAdapter(
-      child: ListTile(
-        dense: true,
-        onTap: () => AppRoutes.router
-            .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
-        contentPadding: const EdgeInsets.fromLTRB(
-            horizontalPadding - 4, 0, horizontalPadding - 4.0, 10),
-        leading: SvgPicture.asset(
-          "assets/icons/map_address.svg",
-          width: 24.0,
-          height: 24.0,
-          fit: BoxFit.cover,
-          colorFilter: const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-        ),
-        horizontalTitleGap: 0.0,
-        title: BlocBuilder<UserCubit, UserState>(
-          builder: (context, state) {
-            return state.when(
-              initial: () => const SizedBox(),
-              loading: () => ColoredBox(
-                color: skeletonColor,
-                child: const SizedBox(
-                  height: 35.0,
-                  width: double.infinity,
-                ),
+      child: BlocBuilder<UserCubit, UserState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const SizedBox(),
+            failure: (error) => const SizedBox(),
+            loading: () => ColoredBox(
+              color: skeletonColor,
+              child: const SizedBox(
+                height: 35.0,
+                width: double.infinity,
               ),
-              fetchCompleted: (user) {
-                return BlocBuilder<AddressUserCubit, AddressUserState>(
-                  builder: (context, state) {
-                    final isCheckAddress = state.usingAddress.isNotEmpty;
-                    if (isCheckAddress) {
-                      final address = state.usingAddress[0].name;
-                      return Text(
+            ),
+            fetchCompleted: (user) {
+              return BlocBuilder<AddressUserCubit, AddressUserState>(
+                builder: (context, state) {
+                  final isCheckAddress = state.usingAddress.isNotEmpty;
+
+                  if (isCheckAddress) {
+                    final address = state.usingAddress[0].name;
+
+                    return ListTile(
+                      dense: true,
+                      onTap: () => AppRoutes.router.push(
+                          "${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          horizontalPadding - 4,
+                          0,
+                          horizontalPadding - 4.0,
+                          10),
+                      leading: SvgPicture.asset(
+                        "assets/icons/map_address.svg",
+                        width: 24.0,
+                        height: 24.0,
+                        fit: BoxFit.cover,
+                        colorFilter: const ColorFilter.mode(
+                            secondaryColor, BlendMode.srcIn),
+                      ),
+                      horizontalTitleGap: 0.0,
+                      title: Text(
                         address,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               fontSize: 14.0,
                             ),
-                      );
-                    }
-                    return ColoredBox(
-                      color: ThemeDataApp.instance.isLight
-                          ? warningColor.withOpacity(0.2)
-                          : Colors.teal,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          AppLocalizations.of(context)!.update_your_address,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 14.0,
-                                  ),
-                        ),
                       ),
+                      trailing: trailing,
                     );
-                  },
-                );
-              },
-              failure: (e) => Text(e),
-            );
-          },
-        ),
-        trailing: SvgPicture.asset(
-          "assets/icons/arrow_right.svg",
-          colorFilter: ColorFilter.mode(
-            Theme.of(context).iconTheme.color!,
-            BlendMode.srcIn,
-          ),
-        ),
+                  }
+                  return Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: horizontalPadding - 4),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: horizontalPadding - 4),
+                    decoration: BoxDecoration(
+                      color: disablePrimaryColor.withAlpha(80),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(radiusBtn / 2),
+                      ),
+                    ),
+                    child: ListTile(
+                      onTap: () => AppRoutes.router.push(
+                          "${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        AppLocalizations.of(context)!
+                            .please_set_up_your_address,
+                        style: Theme.of(context).textTheme.bodySmall!,
+                      ),
+                      trailing: trailing,
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }

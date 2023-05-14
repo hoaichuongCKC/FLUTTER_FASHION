@@ -61,19 +61,15 @@ warningAlert(
                         child: ButtonWidget(
                           height: 40,
                           width: 60,
-                          animate: false,
                           onPressed: () {
                             AppRoutes.router.pop();
                             onPressed();
                           },
-                          btnColor: primaryColor,
-                          labelWidget: Align(
-                            child: Text(
-                              AppLocalizations.of(context)!.gotIt,
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 12.0,
-                                color: lightColor,
-                              ),
+                          child: Text(
+                            AppLocalizations.of(context)!.gotIt,
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 12.0,
+                              color: lightColor,
                             ),
                           ),
                         ),

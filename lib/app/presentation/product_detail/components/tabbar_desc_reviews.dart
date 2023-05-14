@@ -1,4 +1,4 @@
-import 'package:flutter_fashion/app/blocs/review/review_cubit.dart';
+import 'package:flutter_fashion/app/blocs/reviews/review_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/export_detail.dart';

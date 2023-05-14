@@ -26,8 +26,15 @@ class AppBackgroundBlur extends StatelessWidget {
 
   bool? autoLeading;
 
+  Widget? _floatingActionButon;
+
+  bool? resizeToAvoidBottomInset;
+
+  bool? unfocus;
+
   AppBackgroundBlur.normal({
     super.key,
+    this.unfocus,
     this.leading,
     this.actions,
     this.title = "",
@@ -38,9 +45,8 @@ class AppBackgroundBlur extends StatelessWidget {
     this.actionsSecond,
     this.backgroundAppbar,
     this.isHasBackground = true,
+    this.resizeToAvoidBottomInset,
   }) : _floatingActionButon = floatingActionButton;
-
-  Widget? _floatingActionButon;
 
   AppBackgroundBlur.scroll({
     super.key,
@@ -134,8 +140,14 @@ class AppBackgroundBlur extends StatelessWidget {
       required Size size,
       required BuildContext context}) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        if (unfocus != null && !unfocus!) {
+          return;
+        }
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         floatingActionButton: _floatingActionButon,
         bottomNavigationBar: bottomNavigationBar,
         extendBody: true,

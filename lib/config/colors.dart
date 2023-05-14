@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 const Color scaffoldBackgroundColor = Color.fromARGB(255, 240, 240, 240);
 
 /// Defining the color variable.
-const Color primaryColor = Color(0xFF8E8EEB);
+const Color primaryColor = Color(0xFFDB3022);
 
-Color? primaryNullColor = const Color(0xFF8E8EEB);
+const Color secondaryColor = Color(0xFF8E8EEB);
 
 const Color darkColor = Color(0xFF1A1A1A);
 
-const Color disablePrimaryColor = Color(0xFFE4EBF5);
+const Color disablePrimaryColor = Color(0xFFff7979);
 
 const Color lightColor = Color(0xFFFFFFFF);
 
@@ -23,3 +23,5 @@ const Color errorColor = Colors.red;
 const Color warningColor = Colors.yellowAccent;
 
 Color skeletonColor = Colors.grey.shade300;
+
+Color textDisable = Colors.grey.shade500;

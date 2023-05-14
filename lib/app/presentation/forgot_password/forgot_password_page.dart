@@ -7,6 +7,8 @@ import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import '../sign_up/components/enter_the_otp_cpn.dart';
 import '../sign_up/components/enter_the_phone_cpn.dart';
+import '../sign_up/cubit/sign_up_cubit.dart';
+import 'components/button_submit_fg.dart';
 import 'components/setup_new_password.dart';
 
 const stepForgotFirstVn = "1. Vui lòng nhập số điện thoại của bạn";
@@ -37,12 +39,6 @@ class ForgotPasswordPage extends StatefulWidget {
 
   static String verificationId = "";
 
-  static final ValueNotifier<int> currentStep = ValueNotifier<int>(0);
-
-  static void dispose() {
-    currentStep.value = 0;
-  }
-
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
@@ -53,16 +49,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _totalStep = 3;
 
   @override
-  void dispose() {
-    ForgotPasswordPage.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final size = MediaQuery.of(context).size;
 
     const duration = Duration(milliseconds: 500);
 
@@ -83,134 +71,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         BlocProvider(
           create: (context) => getIt<AuthCubit>(),
         ),
-      ],
-      child: AuroraBackgroundPage(
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: ValueListenableBuilder<int>(
-            valueListenable: ForgotPasswordPage.currentStep,
-            builder: (context, int currentStep, child) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Builder(
-                    builder: (context) {
-                      return ButtonWidget(
-                        width: size.width - 15,
-                        onPressed: () {
-                          if (!validateSignUp) return;
-                          final bloc = context.read<AuthPhoneCubit>();
-                          switch (ForgotPasswordPage.currentStep.value) {
-                            case 0:
-                              bloc.phoneAuth(ForgotPasswordPage.phoneNumber,
-                                  context, Names.FORGOT_PASSWORD);
-                              break;
-                            case 1:
-                              bloc.verifyOtp(
-                                  ForgotPasswordPage.phoneNumber,
-                                  ForgotPasswordPage.codeOTP,
-                                  context,
-                                  ForgotPasswordPage.verificationId);
-                              break;
-
-                            case 2:
-                              if (SetupNewPasswordCpn.validate) {
-                                final phone = (ForgotPasswordPage.phoneNumber);
-                                final newPass = (SetupNewPasswordCpn.password);
-                                final bloc = context.read<AuthCubit>();
-                                bloc.forgotPassword(context, phone, newPass);
-                                return;
-                              }
-                              errorAlert(
-                                context: context,
-                                message: AppLocalizations.of(context)!
-                                    .password_not_match,
-                              );
-
-                              break;
-                            default:
-                          }
-                        },
-                        btnColor: ThemeDataApp.instance.isLight
-                            ? primaryColor
-                            : theme.cardColor,
-                        labelWidget: currentStep == _totalStep - 1
-                            ? Text(
-                                AppLocalizations.of(context)!.update,
-                                style: theme.textTheme.bodyMedium!.copyWith(
-                                  fontSize: 14.0,
-                                  color: lightColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.continue_r,
-                                    style: theme.textTheme.bodyMedium!.copyWith(
-                                      fontSize: 14.0,
-                                      color: lightColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5.0),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    size: 18.0,
-                                    color: lightColor.withOpacity(0.75),
-                                  ),
-                                ],
-                              ),
-                      );
-                    },
-                  ),
-                  (currentStep == 0)
-                      ? const SizedBox()
-                      : const SizedBox(height: 10.00),
-                  (currentStep == 0)
-                      ? const SizedBox()
-                      : ButtonWidget(
-                          width: size.width - 15,
-                          onPressed: () async {
-                            await popupAlert(
-                                context: context,
-                                onPressed: () {
-                                  ForgotPasswordPage.currentStep.value = 1;
-                                },
-                                onCancel: () {
-                                  AppRoutes.router.pop();
-                                },
-                                message: "Bạn muốn huỷ tất cả các bước trên?");
-                          },
-                          btnColor: ThemeDataApp.instance.isLight
-                              ? primaryColor
-                              : theme.cardColor,
-                          labelWidget: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.cancel,
-                                style: theme.textTheme.bodyMedium!.copyWith(
-                                  fontSize: 14.0,
-                                  color: lightColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                ],
-              );
-            },
-          ),
+        BlocProvider(
+          create: (context) => SignUpUICubit(0),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
-            child: Form(
-              key: formKeySignUp,
+      ],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -234,11 +105,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           child: LayoutBuilder(
                             builder: (context, constraints) {
                               final double maxWidth = constraints.biggest.width;
-                              return ValueListenableBuilder<int>(
-                                valueListenable: ForgotPasswordPage.currentStep,
-                                builder: (context, int currentStep, child) {
-                                  final width = (maxWidth / _totalStep) *
-                                      (currentStep + 1);
+                              return BlocBuilder<SignUpUICubit, int>(
+                                builder: (context, step) {
+                                  final width =
+                                      (maxWidth / _totalStep) * (step + 1);
                                   return Stack(
                                     children: [
                                       DecoratedBox(
@@ -282,10 +152,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: verticalPadding * 2),
-                    child: ValueListenableBuilder<int>(
-                      valueListenable: ForgotPasswordPage.currentStep,
-                      builder: (context, int currentStep, child) {
-                        final text = _stepTitles[currentStep];
+                    child: BlocBuilder<SignUpUICubit, int>(
+                      builder: (context, step) {
+                        final text = _stepTitles[step];
                         return Text(
                           text,
                           style: Theme.of(context).textTheme.titleSmall,
@@ -293,10 +162,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       },
                     ),
                   ),
-                  ValueListenableBuilder<int>(
-                    valueListenable: ForgotPasswordPage.currentStep,
-                    builder: (context, int currentStep, child) {
-                      switch (currentStep) {
+                  BlocBuilder<SignUpUICubit, int>(
+                    builder: (context, step) {
+                      switch (step) {
                         case 0:
                           return const EnterThePhoneCpn(
                               payload: Names.FORGOT_PASSWORD);
@@ -309,6 +177,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       return const SizedBox();
                     },
                   ),
+                  const Spacer(),
+                  const ButtonSubmitForgot(),
+                  const SizedBox(height: 15.0),
+                  // const SubmitSignUp(),
                 ],
               ),
             ),

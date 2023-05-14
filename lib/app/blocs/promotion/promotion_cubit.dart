@@ -22,7 +22,7 @@ class PromotionCubit extends Cubit<PromotionState> {
 
   void incrementPage() => _page++;
 
-  void fetchPromotion(bool? getAll) async {
+  void fetchPromotion([bool? getAll]) async {
     if (!_isFirstLoad) {
       emit(const PromotionState.loading());
 

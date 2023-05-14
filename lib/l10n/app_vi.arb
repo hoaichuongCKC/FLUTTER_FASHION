@@ -176,8 +176,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "theAboveTextHasBeenEdited": "Văn bản trên đã được chỉnh sửa.",
-  "@theAboveTextHasBeenEdited": {
+  "changed_information": "Thông tin thay đổi",
+  "@information_changed": {
     "description": "Không hiểu gì cả"
   },
 
@@ -411,8 +411,8 @@
     "description": "Không hiểu gì cả"
   },
 
-  "the_product_is_currently_out_of_stock": "Sản phẩm hiện đang hết hàng",
-  "@the_product_is_currently_out_of_stock": {
+  "no_products": "Không có sản phẩm nào",
+  "@no_products": {
     "description": "Không hiểu gì cả"
   },
 
@@ -788,7 +788,26 @@
   "the_number_of_photos_exceeds_the_limit" : "Số ảnh vượt quá giới hạn",
   "@the_number_of_photos_exceeds_the_limit": {
     "description": "nó là chỉnh sửa"
+  },
+
+  "new_product" : "Mới nhất",
+  "@new_product": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_carefully_read_the" : "Vui lòng đọc kĩ các",
+  "@please_carefully_read_the": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "the_terms_and_conditions" : "điều khoản và điều kiện",
+  "@the_terms_and_conditions": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "of_the_store_is_return_policy" : "trong chính sách đổi trả của cửa hàng",
+  "@of_the_store_is_return_policy": {
+    "description": "nó là chỉnh sửa"
   }
-
-
+  
 }

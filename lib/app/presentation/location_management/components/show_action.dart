@@ -26,12 +26,8 @@ void showAction(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ButtonWidget(
-              btnColor: lightColor,
-              height: 45.0,
-              animate: true,
               onPressed: onUse,
-              radius: radiusBtn,
-              labelWidget: Text(
+              child: Text(
                 isSelected
                     ? AppLocalizations.of(context)!.not_use
                     : AppLocalizations.of(context)!.use,
@@ -42,12 +38,8 @@ void showAction(
             ),
             const SizedBox(height: 8.0),
             ButtonWidget(
-              btnColor: lightColor,
-              height: 45.0,
-              animate: true,
               onPressed: onDelete,
-              radius: radiusBtn,
-              labelWidget: Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

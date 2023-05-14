@@ -24,105 +24,117 @@ popupAlert({
     barrierLabel: "popup - Alert",
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       return AnimatedOpacity(
-          opacity: animation.value,
-          duration: const Duration(milliseconds: 450),
-          curve: Curves.easeIn,
-          child: child);
+        opacity: animation.value,
+        duration: const Duration(milliseconds: 450),
+        curve: Curves.easeIn,
+        child: child,
+      );
     },
     pageBuilder: (newCtx, a1, a2) {
-      final width = MediaQuery.of(context).size.width * .8;
+      final size = MediaQuery.of(context).size;
       final theme = Theme.of(context);
+      final applocalizations = AppLocalizations.of(context)!;
       return Center(
         child: Material(
-          borderRadius: const BorderRadius.all(Radius.circular(14.0)),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(radiusBtn),
+            ),
+          ),
           child: SizedBox(
-            width: width,
+            width: size.width * .8,
+            height: size.height * .15,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 DecoratedBox(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(radiusBtn),
                         topRight: Radius.circular(radiusBtn)),
-                    color: primaryColor,
+                    color: secondaryColor,
                   ),
                   child: SizedBox(
-                    width: width,
+                    width: size.width * .8,
                     height: 14.0,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: verticalPadding - 4,
-                      horizontal: horizontalPadding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 10.0),
-                      Align(
-                        child: Text(
-                          message,
-                          style: theme.textTheme.bodyMedium!
-                              .copyWith(fontSize: 14.0),
-                          textAlign: TextAlign.center,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: horizontalPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 10.0),
+                        Align(
+                          child: Text(
+                            message,
+                            style: theme.textTheme.bodyMedium!.copyWith(
+                              fontSize: 14.0,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                      hasTimer
-                          ? const SizedBox()
-                          : const SizedBox(height: 15.0),
-                      hasTimer
-                          ? const SizedBox()
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                noButtonCancle
-                                    ? const SizedBox()
-                                    : InkWell(
-                                        onTap: onCancel ??
-                                            () {
-                                              AppRoutes.router.pop();
-                                              AppRoutes.router.pop();
-                                            },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Align(
-                                            child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .cancel,
-                                              style: theme.textTheme.bodySmall!
-                                                  .copyWith(
-                                                color: primaryColor
-                                                    .withOpacity(0.5),
-                                                fontWeight: FontWeight.w600,
+                        hasTimer
+                            ? const SizedBox()
+                            : const SizedBox(height: 15.0),
+                        hasTimer
+                            ? const SizedBox()
+                            : Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    noButtonCancle
+                                        ? const SizedBox()
+                                        : InkWell(
+                                            onTap: onCancel ??
+                                                () {
+                                                  AppRoutes.router.pop();
+                                                  AppRoutes.router.pop();
+                                                },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                child: Text(
+                                                  applocalizations.cancel,
+                                                  style: theme
+                                                      .textTheme.bodySmall!
+                                                      .copyWith(
+                                                    color: secondaryColor
+                                                        .withOpacity(80),
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
                                               ),
+                                            ),
+                                          ),
+                                    noButtonCancle
+                                        ? const SizedBox()
+                                        : const SizedBox(width: 15.0),
+                                    InkWell(
+                                      onTap: onPressed,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Align(
+                                          child: Text(
+                                            applocalizations.ok,
+                                            style: theme.textTheme.bodySmall!
+                                                .copyWith(
+                                              color: secondaryColor,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ),
                                         ),
                                       ),
-                                noButtonCancle
-                                    ? const SizedBox()
-                                    : const SizedBox(width: 15.0),
-                                InkWell(
-                                  onTap: onPressed,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Align(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.ok,
-                                        style:
-                                            theme.textTheme.bodySmall!.copyWith(
-                                          color: primaryColor,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            )
-                    ],
+                              )
+                      ],
+                    ),
                   ),
                 ),
               ],

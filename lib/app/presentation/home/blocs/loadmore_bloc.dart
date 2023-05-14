@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/product/product_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -23,8 +22,7 @@ class LoadMoreProductBloc {
     _isLoadingSubject.close();
   }
 
-  void handleScrollNotification(
-      ScrollController scrollController, BuildContext context) async {
+  void handleScrollNotification(ScrollController scrollController) async {
     if (_isLoadingSubject.value || !_hasMoreData) return;
 
     final scrollLimit =
@@ -35,7 +33,7 @@ class LoadMoreProductBloc {
 
       _page++;
 
-      final data = await getIt<ProductCubit>().loadMoreProducts(_page);
+      final data = await getIt.get<ProductCubit>().loadMoreProducts(_page);
 
       _isLoadingSubject.add(false);
 
@@ -44,8 +42,7 @@ class LoadMoreProductBloc {
         return;
       }
 
-      // ignore: use_build_context_synchronously
-      context.read<ProductCubit>().addProduct(data);
+      getIt.get<ProductCubit>().addProduct(data);
     }
   }
 }

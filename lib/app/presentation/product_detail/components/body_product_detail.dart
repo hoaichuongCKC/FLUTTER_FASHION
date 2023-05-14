@@ -240,7 +240,7 @@ class BodyProductDetail extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    product.star!.toDouble().toString(),
+                                    product.star!.viewStar(),
                                     style: theme.textTheme.bodySmall!.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),

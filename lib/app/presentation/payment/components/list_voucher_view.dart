@@ -14,6 +14,7 @@ class ListVoucherView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 16.0),
         ListTile(
           dense: true,
           contentPadding: EdgeInsets.zero,
@@ -21,7 +22,7 @@ class ListVoucherView extends StatelessWidget {
           leading: SvgPicture.asset(
             "assets/icons/voucher.svg",
             colorFilter: const ColorFilter.mode(
-              primaryColor,
+              secondaryColor,
               BlendMode.srcIn,
             ),
           ),
@@ -36,7 +37,7 @@ class ListVoucherView extends StatelessWidget {
           decoration: BoxDecoration(
             color: !ThemeDataApp.instance.isLight
                 ? theme.cardColor
-                : disablePrimaryColor,
+                : secondaryColor.withOpacity(0.2),
             borderRadius: const BorderRadius.all(
               Radius.circular(radiusBtn),
             ),
@@ -110,13 +111,17 @@ class ListVoucherView extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
                   cacheExtent: 150.0,
                   itemCount: promotionBloc.promotions.length,
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 15.0),
                   itemBuilder: (context, index) {
                     final promotion = promotionBloc.promotions[index];
-                    return PromotionWidget(promotion: promotion);
+                    return SizedBox(
+                      height: 150.0,
+                      child: PromotionWidget(promotion: promotion),
+                    );
                   },
                 ),
               )

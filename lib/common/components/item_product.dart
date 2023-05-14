@@ -1,8 +1,11 @@
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/common/widgets/flash_sale_widget.dart';
+import 'package:flutter_fashion/common/widgets/new_widget.dart';
 import 'package:flutter_fashion/common/widgets/popular.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
+import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 import '../../export.dart';
@@ -23,7 +26,10 @@ class ItemProduct extends StatelessWidget {
 
     final isSale = product.sale_price != null;
 
+    final isNew = product.created_at!.checkNewProduct;
+
     final theme = Theme.of(context);
+
     return InkWell(
       onTap: onTap,
       child: LayoutBuilder(
@@ -37,20 +43,40 @@ class ItemProduct extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     fit: FlexFit.tight,
-                    child: AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child: CachedNetworkImage(
-                        imageUrl: ApiService.imageUrl + image,
-                        fit: BoxFit.fitWidth,
-                        httpHeaders: getIt<ApiService>().headers,
-                        cacheKey: image,
-                        placeholder: (context, url) {
-                          return ColoredBox(
-                            color: skeletonColor,
-                            child: const SizedBox(),
-                          );
-                        },
-                      ),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 4 / 3,
+                          child: CachedNetworkImage(
+                            imageUrl: ApiService.imageUrl + image,
+                            fit: BoxFit.fitWidth,
+                            httpHeaders: getIt<ApiService>().headers,
+                            cacheKey: image,
+                            placeholder: (context, url) {
+                              return ColoredBox(
+                                color: skeletonColor,
+                                child: const SizedBox(),
+                              );
+                            },
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 3,
+                          left: 0,
+                          child: Row(
+                            children: [
+                              isSale
+                                  ? const FlashSaleWidget()
+                                  : const SizedBox(),
+                              isSale
+                                  ? const SizedBox(width: 2)
+                                  : const SizedBox(),
+                              isNew ? const NewWidget() : const SizedBox()
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Flexible(

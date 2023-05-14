@@ -14,8 +14,8 @@ class PromotionWidget extends StatelessWidget {
   const PromotionWidget({
     super.key,
     required this.promotion,
-    this.colorBGLeft = primaryColor,
-    this.colorBGRight = disablePrimaryColor,
+    this.colorBGLeft = lightColor,
+    this.colorBGRight = lightColor,
     this.withPercent = 0.4,
   });
 
@@ -61,8 +61,8 @@ class PromotionWidget extends StatelessWidget {
                         "OFF ${promotion.discount_price}%",
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
-                          color: lightColor,
-                          fontWeight: FontWeight.w300,
+                          color: darkColor,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],

@@ -32,13 +32,8 @@ class CategoryCubit extends Cubit<CategoryState> {
         (categories) {
           _isLoaded = true;
           //create tab all
-          const tabAll = CategoryModel(
-            id: -1,
-            name: "All",
-            name_vi: "Tất cả",
-          );
-          final updatedList = [...categories, tabAll];
-          emit(CategoryState.fetchCompleted(updatedList));
+
+          emit(CategoryState.fetchCompleted(categories));
         },
       );
     }

@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/common/widgets/new_widget.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
 class ProductCategoriesHome extends StatelessWidget {
@@ -27,8 +28,9 @@ class ProductCategoriesHome extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   AppLocalizations.of(context)!.categories,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w800,
                       ),
                 ),
               ),
@@ -47,12 +49,10 @@ class ProductCategoriesHome extends StatelessWidget {
                       mainAxisExtent: constraints.biggest.height / 2,
                     ),
                     padding: EdgeInsets.zero,
-                    itemCount: categoryList.length,
+                    itemCount: categoryList.length + 1,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      final item = categoryList[index];
-
-                      if (item.id == -1) {
+                      if (index == categoryList.length) {
                         return InkWell(
                           onTap: () {
                             AppRoutes.router.pushNamed(
@@ -92,7 +92,7 @@ class ProductCategoriesHome extends StatelessWidget {
                           ),
                         );
                       }
-
+                      final item = categoryList[index];
                       final subtitle = isVietnamese ? item.name_vi : item.name;
 
                       return InkWell(
@@ -145,24 +145,10 @@ class ProductCategoriesHome extends StatelessWidget {
                             ),
                             !item.created_at!.checkNewProduct
                                 ? const SizedBox()
-                                : Positioned(
+                                : const Positioned(
                                     top: 0,
                                     right: 5,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(3.0),
-                                      color: errorColor,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "New",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              fontSize: 7.0,
-                                              color: lightColor,
-                                            ),
-                                      ),
-                                    ),
+                                    child: NewWidget(),
                                   ),
                           ],
                         ),

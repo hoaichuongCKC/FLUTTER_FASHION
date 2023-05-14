@@ -21,16 +21,20 @@ class FilterPage extends StatelessWidget {
           child: Builder(
             builder: (context) {
               return ButtonWidget(
-                btnColor: primaryColor,
-                animate: true,
                 height: 45.0,
                 width: MediaQuery.of(context).size.width * 0.8,
-                label: AppLocalizations.of(context)!.apply,
+                child: Text(
+                  AppLocalizations.of(context)!.apply,
+                  style: PrimaryFont.instance.copyWith(
+                    color: lightColor,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 onPressed: () {
                   final filterCubit = context.read<FilterCubit>();
                   filterCubit.filter();
                 },
-                radius: radiusBtn,
               );
             },
           ),

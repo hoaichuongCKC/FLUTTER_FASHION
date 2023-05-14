@@ -133,7 +133,8 @@ class _BodyIntroState extends State<BodyIntro> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            padding: const EdgeInsets.symmetric(
+                vertical: 10.0, horizontal: horizontalPadding - 4),
             child: BlocBuilder<IntroCubit, IntroState>(
               builder: (context, state) {
                 final isLastPage =
@@ -157,7 +158,7 @@ class _BodyIntroState extends State<BodyIntro> {
                                   style: PrimaryFont.instance.copyWith(
                                     fontSize: 14,
                                     color: theme.textTheme.bodySmall!.color,
-                                    fontWeight: FontWeight.w300,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
@@ -184,7 +185,7 @@ class _BodyIntroState extends State<BodyIntro> {
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 14,
                               color: theme.textTheme.bodySmall!.color,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),

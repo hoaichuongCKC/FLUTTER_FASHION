@@ -23,14 +23,7 @@ class ItemCart extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(5.0),
         ),
-        boxShadow: !ThemeDataApp.instance.isLight
-            ? null
-            : [
-                const BoxShadow(
-                  color: disablePrimaryColor,
-                  blurRadius: 8.0,
-                )
-              ],
+        boxShadow: !ThemeDataApp.instance.isLight ? null : [shadowBox],
       ),
       child: SizedBox(
         height: 120.0,
@@ -184,7 +177,7 @@ class ItemCart extends StatelessWidget {
                           TextSpan(
                             text: "${AppLocalizations.of(context)!.detail}: ",
                             style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
@@ -192,7 +185,7 @@ class ItemCart extends StatelessWidget {
                           TextSpan(
                             text: item.size,
                             style: PrimaryFont.instance.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.w300,
                             ),
                           ),

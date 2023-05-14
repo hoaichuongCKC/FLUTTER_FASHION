@@ -1,6 +1,8 @@
 import 'package:flutter_fashion/app/blocs/auth_phone/auth_phone_cubit.dart';
 import 'package:flutter_fashion/app/presentation/forgot_password/forgot_password_page.dart';
+import 'package:flutter_fashion/app/presentation/sign_up/cubit/sign_up_cubit.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
+import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 
 import '../../../../export.dart';
 
@@ -15,6 +17,8 @@ class EnterTheOtpCpn extends StatelessWidget {
         ? SignUpPage.phoneNumber
         : ForgotPasswordPage.phoneNumber;
 
+    final bloc = context.read<SignUpUICubit>();
+
     return BlocListener<AuthPhoneCubit, AuthPhoneState>(
       listener: (context, state) {
         state.when(
@@ -24,10 +28,10 @@ class EnterTheOtpCpn extends StatelessWidget {
           authPhoneSuccess: () {},
           verifyOtpSuccess: () {
             if (payload == Names.REGISTER) {
-              SignUpPage.currentStep.value++;
+              bloc.nextStep(SignUpUIState.fillingInfor);
               return;
             }
-            ForgotPasswordPage.currentStep.value++;
+            bloc.nextStep(SignUpUIState.fillingInfor);
           },
         );
       },
@@ -42,13 +46,20 @@ class EnterTheOtpCpn extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15.0),
-          TextFormField(
+          TextFormFieldApp(
+            title: "OTP code",
             textInputAction: TextInputAction.done,
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(6),
+            inputFormatter: [
+              LengthLimitingTextInputFormatter(10),
             ],
+            keyboardType: TextInputType.number,
+            hintText: "",
+            prefixIcon: SvgPicture.asset(
+              "assets/icons/confirm_pass.svg",
+              fit: BoxFit.scaleDown,
+              width: 12,
+              height: 12.0,
+            ),
             onChanged: (value) {
               if (payload == Names.FORGOT_PASSWORD) {
                 ForgotPasswordPage.codeOTP = value;
@@ -56,27 +67,6 @@ class EnterTheOtpCpn extends StatelessWidget {
               }
               SignUpPage.codeOTP = value;
             },
-            onFieldSubmitted: (code) {
-              if (validateSignUp) {
-                final bloc = context.read<AuthPhoneCubit>();
-
-                bloc.verifyOtp(
-                  SignUpPage.phoneNumber,
-                  code,
-                  context,
-                  SignUpPage.verificationId,
-                );
-              }
-            },
-            style: theme.textTheme.bodyMedium,
-            decoration: InputDecoration(
-              hintText: "code",
-              isDense: true,
-              prefixIcon: SvgPicture.asset(
-                "assets/icons/confirm_pass.svg",
-                fit: BoxFit.scaleDown,
-              ),
-            ),
           ),
         ],
       ),

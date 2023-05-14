@@ -5,7 +5,7 @@ import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/widgets/choose_image_widget.dart';
 
-const size = 140.0;
+const size = 130.0;
 
 class EditAvatarCpn extends StatelessWidget {
   const EditAvatarCpn({super.key});
@@ -32,7 +32,7 @@ class EditAvatarCpn extends StatelessWidget {
                       height: size,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(
-                          Radius.circular(radiusBtn * 8),
+                          Radius.circular(radiusBtn * 9),
                         ),
                         child: Image.file(
                           File(state.image!.path),
@@ -64,7 +64,7 @@ class EditAvatarCpn extends StatelessWidget {
                 child: SvgPicture.asset(
                   "assets/icons/edit.svg",
                   colorFilter: const ColorFilter.mode(
-                    darkColor,
+                    secondaryColor,
                     BlendMode.srcIn,
                   ),
                 ),

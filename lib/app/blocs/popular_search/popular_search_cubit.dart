@@ -7,9 +7,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'popular_search_state.dart';
 part 'popular_search_cubit.freezed.dart';
 
-class PopularSearchCubit extends Cubit<PopularSearchState> {
+class PopularProductCubit extends Cubit<PopularSearchState> {
   final ProductRepositoryImpl _productRepositoryImpl;
-  PopularSearchCubit({required ProductRepositoryImpl productRepositoryImpl})
+  PopularProductCubit({required ProductRepositoryImpl productRepositoryImpl})
       : _productRepositoryImpl = productRepositoryImpl,
         super(const PopularSearchState.initial());
   bool _isFirstLoaded = false;
@@ -17,7 +17,7 @@ class PopularSearchCubit extends Cubit<PopularSearchState> {
     if (!_isFirstLoaded) {
       emit(const PopularSearchState.loading());
 
-      final result = await _productRepositoryImpl.fetchPopularSearch();
+      final result = await _productRepositoryImpl.fetchPopularProduct();
 
       result.fold(
         (error) {
@@ -36,7 +36,7 @@ class PopularSearchCubit extends Cubit<PopularSearchState> {
 
   onRefresh() async {
     emit(const PopularSearchState.loading());
-    final result = await _productRepositoryImpl.fetchPopularSearch();
+    final result = await _productRepositoryImpl.fetchPopularProduct();
 
     result.fold((error) => emit(PopularSearchState.error(error)),
         (listPopularSearch) {

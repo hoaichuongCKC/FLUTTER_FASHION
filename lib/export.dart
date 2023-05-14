@@ -25,3 +25,4 @@ export 'package:flutter_fashion/common/widgets/button.dart';
 export 'package:flutter_fashion/config/constant.dart';
 export 'package:flutter_fashion/common/widgets/constrained_box.dart';
 export 'package:flutter_fashion/core/inherited/inherited_app.dart';
+export 'package:flutter_fashion/config/style_widget.dart';

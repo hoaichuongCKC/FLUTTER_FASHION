@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
+import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
@@ -26,6 +29,14 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       emit(state.copyWith(confirmPass: value));
 
   void submitForm(BuildContext context) async {
+    if (!_checkPassword(context)) {
+      errorAlert(
+        context: context,
+        message: AppLocalizations.of(context)!.password_not_match,
+      );
+      return;
+    }
+
     emit(state.copyWith(status: AppStatus.loading));
 
     loadingAlert(context: context);
@@ -52,6 +63,15 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
         }
       },
     );
+  }
+
+  bool _checkPassword(BuildContext context) {
+    final state = this.state;
+
+    if (state.confirmPass != state.newPass) {
+      return false;
+    }
+    return true;
   }
 
   @override

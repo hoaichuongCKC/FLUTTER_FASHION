@@ -23,6 +23,7 @@ class ProductModel with _$ProductModel {
     bool? is_popular,
     Category? category,
     List<ProductDetailModel>? product_detail,
+    DateTime? created_at,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

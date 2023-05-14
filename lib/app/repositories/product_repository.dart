@@ -13,7 +13,11 @@ abstract class ProductRepository {
 
   Future<List<ProductModel>> fetchListMoreProduct(int page);
 
-  Future<Either<String, List<ProductModel>>> fetchPopularSearch();
+  Future<Either<String, List<ProductModel>>> fetchPopularProduct();
+
+  Future<Either<String, List<ProductModel>>> fetchNewProduct(int page);
+
+  Future<Either<String, List<ProductModel>>> fetchSaleProduct(int page);
 
   Future<Either<String, ReviewsModel>> fetchReviewProduct(
       int page, int idProduct);
@@ -49,16 +53,14 @@ class ProductRepositoryImpl extends BaseRepository
 
   @override
   Future<List<ProductModel>> fetchListMoreProduct(int page) async {
-    return await _productProviderImpl.fetchListProduct(
-      page,
-    );
+    return await _productProviderImpl.fetchListProduct(page);
   }
 
   @override
-  Future<Either<String, List<ProductModel>>> fetchPopularSearch() async {
+  Future<Either<String, List<ProductModel>>> fetchPopularProduct() async {
     final result = await baseRepo<List<ProductModel>>(
       excuteFunction: () async {
-        return await _productProviderImpl.fetchPopularSearch();
+        return await _productProviderImpl.fetchPopularProduct();
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));
@@ -106,12 +108,34 @@ class ProductRepositoryImpl extends BaseRepository
     return result.fold((error) => Left(error), (data) => Right(data));
   }
 
+  ///search product by keyword name product
   @override
   Future<Either<String, List<ProductModel>>> search(
       {required int page, required String keyword}) async {
     final result = await baseRepo<List<ProductModel>>(
       excuteFunction: () async {
         return await _productProviderImpl.search(page, keyword);
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  //fetch new products form server
+  @override
+  Future<Either<String, List<ProductModel>>> fetchNewProduct(int page) async {
+    final result = await baseRepo<List<ProductModel>>(
+      excuteFunction: () async {
+        return await _productProviderImpl.fetchNewProduct(page);
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, List<ProductModel>>> fetchSaleProduct(int page) async {
+    final result = await baseRepo<List<ProductModel>>(
+      excuteFunction: () async {
+        return await _productProviderImpl.fetchSaleProduct(page);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

@@ -43,7 +43,7 @@ class ActionAppBarFavorite extends StatelessWidget {
               icon: SvgPicture.asset(
                 "assets/icons/edit.svg",
                 colorFilter: const ColorFilter.mode(
-                  primaryColor,
+                  secondaryColor,
                   BlendMode.srcIn,
                 ),
               ),

@@ -20,19 +20,29 @@ class BottomNavigationBarFavorite extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ButtonWidget(
-                animate: true,
-                btnColor: primaryColor,
-                radius: radiusBtn,
-                onPressed: () => bloc.removeListFavorite(),
-                label: AppLocalizations.of(context)!.remove_all.substring(0, 3),
+                background: primaryColor,
+                onPressed: () => bloc.removeListFavorite(context),
+                child: Text(
+                  AppLocalizations.of(context)!.remove_all.substring(0, 3),
+                  style: PrimaryFont.instance.copyWith(
+                    color: lightColor,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
               const SizedBox(height: 8.0),
               ButtonWidget(
-                animate: true,
-                btnColor: primaryColor,
-                radius: radiusBtn,
+                background: disablePrimaryColor,
                 onPressed: () => bloc.showCheckBox(),
-                label: AppLocalizations.of(context)!.cancel,
+                child: Text(
+                  AppLocalizations.of(context)!.cancel,
+                  style: PrimaryFont.instance.copyWith(
+                    color: lightColor,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             ],
           ),

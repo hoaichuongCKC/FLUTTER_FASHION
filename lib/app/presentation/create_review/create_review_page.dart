@@ -11,6 +11,7 @@ class CreateReviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return BlocProvider(
       create: (context) => getIt<CreateReviewCubit>()..changedOrderId(orderId),
       child: AppBackgroundBlur.normal(
@@ -20,16 +21,21 @@ class CreateReviewPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
               vertical: horizontalPadding - 4,
               horizontal: horizontalPadding - 4),
-          child: Builder(builder: (context) {
-            return ButtonWidget(
-              btnColor: primaryColor,
-              onPressed: () =>
-                  context.read<CreateReviewCubit>().rating(context, orderId),
-              height: 45.0,
-              animate: true,
-              label: AppLocalizations.of(context)!.rate_now,
-            );
-          }),
+          child: Builder(
+            builder: (context) {
+              return ButtonWidget(
+                onPressed: () =>
+                    context.read<CreateReviewCubit>().rating(context, orderId),
+                height: 45.0,
+                child: Text(
+                  AppLocalizations.of(context)!.rate_now,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 14.0,
+                      ),
+                ),
+              );
+            },
+          ),
         ),
         child: Builder(builder: (context) {
           return SingleChildScrollView(

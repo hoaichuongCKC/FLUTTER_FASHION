@@ -1,4 +1,5 @@
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
+import 'package:flutter_fashion/config/style_widget.dart';
 
 class BuildFrameFeature extends StatelessWidget {
   const BuildFrameFeature({super.key});
@@ -21,15 +22,7 @@ class BuildFrameFeature extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(radiusBtn),
         ),
-        boxShadow: !isLight
-            ? null
-            : [
-                BoxShadow(
-                  color: primaryColor.withOpacity(0.5),
-                  offset: const Offset(0.5, 2),
-                  blurRadius: 3.0,
-                )
-              ],
+        boxShadow: !isLight ? null : [shadowBox],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

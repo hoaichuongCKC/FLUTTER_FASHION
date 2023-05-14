@@ -24,17 +24,20 @@ class BottomNavigationbarDetail extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
       child: ButtonWidget(
-        height: 40.0,
-        animate: true,
-        radius: radiusBtn,
-        btnColor: primaryColor,
         onPressed: () =>
             BlocProvider.of<ProductDetailUiCubit>(context).addToCart(
           context,
           product,
           (photo, quantity) => handleAnimation(quantity, photo, context),
         ),
-        label: AppLocalizations.of(context)!.add_to_cart,
+        child: Text(
+          AppLocalizations.of(context)!.add_to_cart,
+          style: PrimaryFont.instance.copyWith(
+            color: lightColor,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
       ),
     );
   }
