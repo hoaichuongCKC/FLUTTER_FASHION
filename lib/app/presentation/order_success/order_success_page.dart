@@ -33,7 +33,7 @@ class OrderSuccessPage extends StatelessWidget {
                   SvgPicture.asset(
                     "assets/icons/home.svg",
                     colorFilter:
-                        const ColorFilter.mode(primaryColor, BlendMode.srcIn),
+                        const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                   ),
                   const SizedBox(width: 5.0),
                   Text(

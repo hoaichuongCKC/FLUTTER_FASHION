@@ -2,9 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
 import 'package:image_picker/image_picker.dart';
 part 'edit_information_state.dart';
@@ -45,15 +44,19 @@ class EditInformationCubit extends Cubit<EditInformationState> {
   void checkWhenPopScreen(BuildContext context) {
     final state = this.state;
     if (state.status != EditStatus.init) {
-      popupAlert(
-        context: context,
-        onPressed: () {
+      showCustomDialog(
+        context,
+        content:
+            AppLocalizations.of(context)!.doYouWantToSaveChangedInformation,
+        title: AppLocalizations.of(context)!.editInformation,
+        submitNameFirst: AppLocalizations.of(context)!.cancel,
+        submitNameSecond: AppLocalizations.of(context)!.ok,
+        onFirst: () {},
+        onSecond: () {
           willPop = true;
           AppRoutes.router.pop();
           onSubmit(context);
         },
-        message:
-            AppLocalizations.of(context)!.doYouWantToSaveChangedInformation,
       );
     } else {
       AppRoutes.router.pop();
@@ -68,7 +71,11 @@ class EditInformationCubit extends Cubit<EditInformationState> {
     AppRoutes.router.pop();
 
     result.fold(
-      (error) => errorAlert(context: context, message: error),
+      (error) => showCustomDialog(
+        context,
+        content: error,
+        title: "Request Api",
+      ),
       (data) async {
         //reset
         context.read<UserCubit>().updateUser(data);

@@ -5,11 +5,4 @@ extension DoubleX on double {
     var formatter = NumberFormat.currency(locale: 'vi_VN', symbol: 'VNĐ');
     return formatter.format(this);
   }
-
-  String viewStar() {
-    if (this == this + 0.5) {
-      return "$this";
-    }
-    return "${round().toDouble()}";
-  }
 }

@@ -23,9 +23,7 @@ class ItemOrder extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(5.0),
         ),
-        boxShadow: [
-          BoxShadow(color: primaryColor.withOpacity(0.3), blurRadius: 8.0)
-        ],
+        boxShadow: [shadowBox],
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -45,11 +43,11 @@ class ItemOrder extends StatelessWidget {
                         style: PrimaryFont.instance.copyWith(fontSize: 16.0),
                       ),
                       ColoredBox(
-                        color: primaryColor.withOpacity(0.5),
+                        color: secondaryColor.withOpacity(0.5),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           child: Text(
-                            order.status!.getOrderStatus(context),
+                            order.status_id!.getOrderStatus(context),
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 9.0,
                               color: lightColor,
@@ -67,7 +65,7 @@ class ItemOrder extends StatelessWidget {
                         SvgPicture.asset(
                           "assets/icons/location.svg",
                           colorFilter: const ColorFilter.mode(
-                              primaryColor, BlendMode.srcIn),
+                              secondaryColor, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Expanded(
@@ -93,7 +91,7 @@ class ItemOrder extends StatelessWidget {
                           child: SvgPicture.asset(
                             "assets/icons/calendar.svg",
                             colorFilter: const ColorFilter.mode(
-                                primaryColor, BlendMode.srcIn),
+                                secondaryColor, BlendMode.srcIn),
                           ),
                         ),
                       ),
@@ -119,7 +117,7 @@ class ItemOrder extends StatelessWidget {
                             child: SvgPicture.asset(
                               "assets/icons/wallet.svg",
                               colorFilter: const ColorFilter.mode(
-                                  primaryColor, BlendMode.srcIn),
+                                  secondaryColor, BlendMode.srcIn),
                               width: 18.0,
                               height: 19.0,
                             ),
@@ -140,7 +138,7 @@ class ItemOrder extends StatelessWidget {
                 ],
               ),
             ),
-            order.status == deliveredStatus
+            order.status_id == deliveredStatus
                 ? Align(
                     alignment: Alignment.centerRight,
                     child: order.evaluated!

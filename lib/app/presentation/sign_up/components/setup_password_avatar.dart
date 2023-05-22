@@ -36,49 +36,8 @@ class SetupPasswordAvatarCpn extends StatelessWidget {
           keyboardType: TextInputType.visiblePassword,
           hintText: applocalization.confirmPassword,
           onChanged: (p0) =>
-              FillingOutInformationPersonalCpn.data["password"] = p0,
+              FillingOutInformationPersonalCpn.data["confirm"] = p0,
         ),
-        // TextFormFieldRegister(
-        //   textInputAction: TextInputAction.next,
-        //   keyboardType: TextInputType.name,
-        //   hintText: AppLocalizations.of(context)!
-        //       .enter_the(AppLocalizations.of(context)!.password)
-        //       .toBeginningOfSentenceCase(),
-        //   labelText: Text(
-        //     "${AppLocalizations.of(context)!.password}(*)",
-        //     style: theme.textTheme.bodyMedium!.copyWith(
-        //       fontWeight: FontWeight.w400,
-        //     ),
-        //   ),
-        //   isobscureText: true,
-        //   prefixIcon: SvgPicture.asset(
-        //     "assets/icons/lock.svg",
-        //     fit: BoxFit.scaleDown,
-        //   ),
-        //   onChanged: (value) =>
-        //       FillingOutInformationPersonalCpn.data["password"] = value,
-        // ),
-        // const SizedBox(height: 15.0),
-        // TextFormFieldRegister(
-        //   keyboardType: TextInputType.name,
-        //   textInputAction: TextInputAction.done,
-        //   hintText: AppLocalizations.of(context)!
-        //       .enter_the(AppLocalizations.of(context)!.confirmPassword)
-        //       .toBeginningOfSentenceCase(),
-        //   labelText: Text(
-        //     "${AppLocalizations.of(context)!.confirmPassword}(*)",
-        //     style: theme.textTheme.bodyMedium!.copyWith(
-        //       fontWeight: FontWeight.w400,
-        //     ),
-        //   ),
-        //   isobscureText: true,
-        //   prefixIcon: SvgPicture.asset(
-        //     "assets/icons/lock.svg",
-        //     fit: BoxFit.scaleDown,
-        //   ),
-        //   onChanged: (value) =>
-        //       FillingOutInformationPersonalCpn.data["confirm"] = value,
-        // ),
       ],
     );
   }

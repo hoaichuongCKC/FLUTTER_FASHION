@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/di_injection_home.dart';
@@ -29,6 +30,8 @@ Future<void> init() async {
   //bloc storage
   getIt.registerLazySingleton(() => SearchCubit(getIt()));
 
+  getIt.registerLazySingleton(() => OrderCancelCubit());
+
   getIt.registerLazySingleton(() => Connectivity());
 
   getIt.registerLazySingleton(() => ImagePicker());
@@ -38,7 +41,7 @@ Future<void> init() async {
   //internal app
   getIt.registerLazySingleton(() => NetworkInfoImpl(getIt()));
 
-  getIt.registerLazySingleton(() => PusherOrderApp(apiService: getIt()));
+  getIt.registerLazySingleton(() => PusherUserApp(apiService: getIt()));
 
   getIt.registerLazySingleton(() => BaseRepository(networkInfoImpl: getIt()));
 

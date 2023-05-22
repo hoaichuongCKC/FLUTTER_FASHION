@@ -14,9 +14,9 @@ extension IntX on int {
 
   String getOrderStatus(BuildContext context) {
     switch (this) {
-      case processingStatus:
+      case toShipStatus:
         return AppLocalizations.of(context)!.to_ship;
-      case shippingStatus:
+      case toReceive:
         return AppLocalizations.of(context)!.to_receive;
       case deliveredStatus:
         return AppLocalizations.of(context)!.completed;

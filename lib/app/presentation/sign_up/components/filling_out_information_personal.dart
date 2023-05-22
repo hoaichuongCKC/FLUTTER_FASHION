@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../export.dart';
 
@@ -15,6 +16,12 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
         image: data["avatar"],
       );
   static bool get checkMatchPassword => data["password"] == data["confirm"];
+
+  static String get password => data["password"];
+
+  static String get confirm => data["confirm"];
+
+  static XFile? get image => data["avatar"];
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +41,35 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
             fit: BoxFit.scaleDown,
             width: 12,
             height: 12.0,
+            color: secondaryColor,
           ),
           hintText: applocalization.enter_the(applocalization.fullname),
           onChanged: (p0) => data["fullname"] = p0,
         ),
-        const SizedBox(height: 15.0),
+        const SizedBox(height: 10.0),
         TextFormFieldApp(
           readOnly: true,
           title: "${applocalization.phoneNumber} (không thể chỉnh sửa)",
           hintText: data["phone"],
           onChanged: (p0) => data["phone"] = p0,
+          prefixIcon: const Icon(
+            Icons.phone,
+            size: 12.0,
+            color: secondaryColor,
+          ),
         ),
-        const SizedBox(height: 15.0),
+        const SizedBox(height: 10.0),
         TextFormFieldApp(
           title: "Email",
           textInputAction: TextInputAction.done,
           keyboardType: TextInputType.emailAddress,
           hintText: applocalization.enter_the("email"),
           onChanged: (p0) => data["email"] = p0,
+          prefixIcon: const Icon(
+            Icons.email,
+            size: 12.0,
+            color: secondaryColor,
+          ),
         ),
       ],
     );

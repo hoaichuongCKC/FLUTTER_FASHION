@@ -8,8 +8,8 @@ import 'package:flutter_fashion/core/models/response_data.dart';
 abstract class OrderRepository {
   Future<Either<String, OrderModel>> create(OrderParams params);
   Future<Either<String, Map<String, dynamic>>> fetchOrder();
-  Future<Either<String, ResponseData>> updatedLimitPromotion(int idPromo);
   Future<Either<String, int>> delete(int orderId);
+  Future<Either<String, ResponseData>> checkPromotion(int idPromotion);
 }
 
 class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
@@ -50,11 +50,10 @@ class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
   }
 
   @override
-  Future<Either<String, ResponseData>> updatedLimitPromotion(
-      int idPromo) async {
+  Future<Either<String, ResponseData>> checkPromotion(int idPromotion) async {
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
-        return await _orderProviderImpl.updatedLimitPromotion(idPromo);
+        return await _orderProviderImpl.checkPromotion(idPromotion);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

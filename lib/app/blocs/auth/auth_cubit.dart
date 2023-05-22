@@ -9,7 +9,6 @@ import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
 part 'auth_state.dart';
@@ -61,10 +60,6 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     }
   }
 
-  void reset() {
-    emit(state.copyWith(phoneNumber: "", password: ""));
-  }
-
   void _onSubmitLogin(BuildContext context) async {
     emit(state.copyWith(status: AppStatus.loading));
     loadingAlert(context: context);
@@ -100,7 +95,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        errorAlert(context: context, message: error);
+        showCustomDialog(context, content: error, title: "Request Api");
       },
       (dataReposonse) {
         if (dataReposonse.status) {
@@ -128,7 +123,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        errorAlert(context: context, message: error);
+        showCustomDialog(context, content: error, title: "Request Api");
       },
       (dataReposonse) async {
         if (dataReposonse.message == "Email already exists") {
@@ -140,7 +135,13 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
             icon: SvgPicture.asset("assets/icons/error.svg"),
           );
         } else {
-          await successAlert(context: context, message: dataReposonse.message);
+          await showCustomDialog(
+            context,
+            title: AppLocalizations.of(context)!.signUp,
+            content: AppLocalizations.of(context)!.sign_up_success,
+            icon: SvgPicture.asset("assets/icons/oke.svg"),
+          );
+
           AppRoutes.router.go(Routes.LOGIN);
           emit(const AuthState());
         }
@@ -158,7 +159,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         //remove poup loading
         AppRoutes.router.pop();
         if (error.isNotEmpty) {
-          errorAlert(context: context, message: error);
+          showCustomDialog(context, content: error, title: "Request Api");
           emit(state.copyWith(status: AppStatus.error));
         }
       },
@@ -170,7 +171,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         AppRoutes.router.pop();
 
         resultSecond.fold((error) {
-          errorAlert(context: context, message: error);
+          showCustomDialog(context, content: error, title: "Request Api");
           emit(state.copyWith(status: AppStatus.error));
         }, (dataReponse) {
           AppRoutes.router.go(Routes.HOME);
@@ -190,7 +191,12 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         if (error.isNotEmpty) {
-          errorAlert(context: context, message: error);
+          showCustomDialog(
+            context,
+            content: error,
+            title: AppLocalizations.of(context)!.signUp,
+            icon: SvgPicture.asset("assets/icons/error.svg"),
+          );
           emit(state.copyWith(status: AppStatus.error));
         }
       },

@@ -4,6 +4,7 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
+import 'package:flutter_fashion/utils/extensions/list.dart';
 
 import '../../../../export.dart';
 
@@ -55,9 +56,11 @@ class AppBarProductDetail extends StatelessWidget {
                         if (favorites.isEmpty) {
                           return false;
                         }
-                        final bool isCheck = favorites
-                            .any((element) => element.id == product.id);
-                        return isCheck;
+
+                        final ischeck = List<ProductModel>.from(favorites)
+                            .checkExistsFavorite(state.idList, product.id!);
+
+                        return ischeck != -1;
                       },
                       builder: (context, check) {
                         return _buildIconFavorite(context, product, check);

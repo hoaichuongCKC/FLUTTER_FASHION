@@ -19,11 +19,11 @@ const googleProvider = "google";
 
 const int toPayStatus = 1;
 
-const int processingStatus = 2;
+const int toShipStatus = 2;
 
-const int shippingStatus = 3;
+const int toReceive = 3;
 
-const int deliveredStatus = -1;
+const int deliveredStatus = 4;
 
 //key change password
 final formkeyChangePassword = GlobalKey<FormState>();

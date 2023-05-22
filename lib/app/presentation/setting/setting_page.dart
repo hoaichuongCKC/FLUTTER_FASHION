@@ -59,25 +59,7 @@ class SettingPage extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 15.0),
-                  BlocBuilder<SettingsCubit, SettingsState>(
-                    buildWhen: (p, c) => p.isPlaySound != c.isPlaySound,
-                    builder: (context, settings) {
-                      return ItemSetting(
-                        isToggled: settings.isPlaySound,
-                        title: applocalizations.notificationPage,
-                        titleTrailing: applocalizations.sound,
-                        excute: () =>
-                            context.read<SettingsCubit>().changePlaySound(),
-                        color: const Color(0xFFFF7043),
-                        icon: SvgPicture.asset(
-                          "assets/icons/notification.svg",
-                          // ignore: deprecated_member_use
-                          color: const Color(0xFFFF7043),
-                        ),
-                      );
-                    },
-                  ),
+                
                   user.login_provider == googleProvider
                       ? const SizedBox()
                       : const SizedBox(height: 15.0),

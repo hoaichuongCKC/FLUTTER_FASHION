@@ -122,8 +122,6 @@ class AuthProviderImpl extends AuthProvider {
     }
     final data = await response.stream.bytesToString();
 
-    print(data);
-
     return ResponseData.fromJson(jsonDecode(data));
   }
 }

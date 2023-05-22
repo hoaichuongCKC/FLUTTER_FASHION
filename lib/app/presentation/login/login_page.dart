@@ -10,6 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final applocalization = AppLocalizations.of(context)!;
+
     return BlocProvider(
       create: (context) => getIt<AuthCubit>(),
       child: GestureDetector(
@@ -20,21 +21,21 @@ class LoginPage extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(),
             body: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+              padding: EdgeInsets.fromLTRB(horizontalPadding - 4, 0, 10,
+                  MediaQuery.of(context).viewPadding.bottom),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    applocalization.login,
-                    style: Theme.of(context).textTheme.titleSmall!,
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      applocalization.login,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontSize: 25.0,
+                          ),
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/logo.png",
-                    width: 150.0,
-                    height: 150.0,
-                    fit: BoxFit.cover,
-                  ),
+                  const SizedBox(height: 30),
                   TextFormFieldApp(
                     title: applocalization.phoneNumber,
                     textInputAction: TextInputAction.next,
@@ -76,8 +77,7 @@ class LoginPage extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        context.read<AuthCubit>().reset();
-                        AppRoutes.router.push(Routes.FORGOT_PASSWORD);
+                        AppRoutes.router.go(Routes.FORGOT_PASSWORD);
                       },
                       child: Text(
                         "${applocalization.forgot_password}?",
@@ -118,8 +118,7 @@ class LoginPage extends StatelessWidget {
                     alignment: Alignment.center,
                     child: TextButton(
                       onPressed: () {
-                        context.read<AuthCubit>().reset();
-                        AppRoutes.router.push(Routes.SIGNUP);
+                        AppRoutes.router.go(Routes.SIGNUP);
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

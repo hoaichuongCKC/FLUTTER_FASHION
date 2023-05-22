@@ -4,8 +4,6 @@ import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
-import '../../export.dart';
-
 class PromotionWidget extends StatelessWidget {
   static double _maxWidth = 0.0;
 
@@ -17,9 +15,14 @@ class PromotionWidget extends StatelessWidget {
     this.colorBGLeft = lightColor,
     this.colorBGRight = lightColor,
     this.withPercent = 0.4,
+    this.openSelected = false,
+    this.checkStatus,
+    this.onSelected,
   });
 
   final PromotionModel promotion;
+
+  final void Function(PromotionModel)? onSelected;
 
   final Color colorBGLeft;
 
@@ -27,8 +30,13 @@ class PromotionWidget extends StatelessWidget {
 
   final double withPercent;
 
+  final bool openSelected;
+
+  final bool? checkStatus;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return LayoutBuilder(
       builder: (context, constraints) {
         _maxWidth = constraints.biggest.width;
@@ -58,13 +66,51 @@ class PromotionWidget extends StatelessWidget {
                         child: Image.asset("assets/images/logo.png"),
                       ),
                       Text(
-                        "OFF ${promotion.discount_price}%",
+                        "OFF -${promotion.discount_price}%",
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
                           color: darkColor,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
+                      openSelected
+                          ? Text.rich(
+                              TextSpan(
+                                text: "Điều kiện: ",
+                                children: [
+                                  TextSpan(
+                                    text: "đơn hàng đạt",
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        " ${promotion.order_price_conditions.toVndCurrency()} ",
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 8.0,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "trở lên",
+                                    style: PrimaryFont.instance.copyWith(
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ],
+                                style: PrimaryFont.instance.copyWith(
+                                  fontSize: 8.0,
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              textAlign: TextAlign.center,
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -88,15 +134,58 @@ class PromotionWidget extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.expired_date(promotion
-                            .created_at
-                            .formatDateTime(isGetPM: false, isGetTime: false)),
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                      openSelected
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                checkStatus != null && !checkStatus!
+                                    ? Container(
+                                        padding: const EdgeInsets.all(3.0),
+                                        color: errorColor.withAlpha(150),
+                                        child: Text(
+                                          "Không thể sử dụng",
+                                          style: theme.bodySmall!.copyWith(
+                                            color: lightColor,
+                                            fontSize: 8.0,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(
+                                        padding: const EdgeInsets.all(3.0),
+                                        color: successfullyColor.withAlpha(200),
+                                        child: Text(
+                                          "Được sử dụng",
+                                          style: theme.bodySmall!.copyWith(
+                                            color: lightColor,
+                                            fontSize: 8.0,
+                                          ),
+                                        ),
+                                      ),
+                                const SizedBox(width: 8.0),
+                                checkStatus != null && !checkStatus!
+                                    ? const SizedBox()
+                                    : ButtonWidget(
+                                        height: 30,
+                                        width: 100,
+                                        onPressed: () => onSelected!(promotion),
+                                        child: Text(
+                                          AppLocalizations.of(context)!.use,
+                                          style: theme.bodySmall!
+                                              .copyWith(color: lightColor),
+                                        ),
+                                      ),
+                              ],
+                            )
+                          : Text(
+                              AppLocalizations.of(context)!.expired_date(
+                                  promotion.created_at.formatDateTime(
+                                      isGetPM: false, isGetTime: false)),
+                              style: PrimaryFont.instance.copyWith(
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
                     ],
                   ),
                 ),

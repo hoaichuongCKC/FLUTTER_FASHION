@@ -2,17 +2,13 @@
 part of 'notification_cubit.dart';
 
 class NotificationState extends Equatable {
-  final List<NotificationModel> notificationsChat;
-  final List<NotificationModel> notificationsDaily;
-  final List<NotificationModel> notificationsOrder;
+  final List<NotificationModel> notifications;
   final bool isLoading;
   final int page;
   final double scrollThresold;
   final AppStatus status;
   const NotificationState({
-    this.notificationsChat = const [],
-    this.notificationsDaily = const [],
-    this.notificationsOrder = const [],
+    this.notifications = const [],
     this.isLoading = false,
     this.page = 1,
     this.scrollThresold = 150.0,
@@ -21,9 +17,7 @@ class NotificationState extends Equatable {
   @override
   List<Object> get props {
     return [
-      notificationsChat,
-      notificationsOrder,
-      notificationsDaily,
+      notifications,
       isLoading,
       page,
       scrollThresold,
@@ -32,34 +26,18 @@ class NotificationState extends Equatable {
   }
 
   NotificationState copyWith({
-    List<NotificationModel>? notificationsChat,
-    List<NotificationModel>? notificationsOrder,
-    List<NotificationModel>? notificationsDaily,
+    List<NotificationModel>? notifications,
     bool? isLoading,
     int? page,
     double? scrollThresold,
     AppStatus? status,
   }) {
     return NotificationState(
-      notificationsChat: notificationsChat ?? this.notificationsChat,
-      notificationsOrder: notificationsOrder ?? this.notificationsOrder,
-      notificationsDaily: notificationsDaily ?? this.notificationsDaily,
+      notifications: notifications ?? this.notifications,
       isLoading: isLoading ?? this.isLoading,
       page: page ?? this.page,
       scrollThresold: scrollThresold ?? this.scrollThresold,
       status: status ?? this.status,
     );
   }
-
-  List<NotificationModel> get chatDonotRead =>
-      notificationsChat.where((element) => element.is_read == 0).toList();
-
-  List<NotificationModel> get orderDonotRead =>
-      notificationsOrder.where((element) => element.is_read == 0).toList();
-
-  List<NotificationModel> get dailyDonotRead => notificationsDaily.where(
-        (element) {
-          return element.detail == null;
-        },
-      ).toList();
 }

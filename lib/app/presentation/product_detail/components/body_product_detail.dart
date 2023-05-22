@@ -89,7 +89,7 @@ class BodyProductDetail extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(radiusBtn)),
-                                      border: Border.all(color: primaryColor),
+                                      border: Border.all(color: secondaryColor),
                                     ),
                                     child: imageWidget,
                                   ),
@@ -240,7 +240,9 @@ class BodyProductDetail extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    product.star!.viewStar(),
+                                    double.parse(
+                                            product.star!.toStringAsFixed(1))
+                                        .toString(),
                                     style: theme.textTheme.bodySmall!.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),

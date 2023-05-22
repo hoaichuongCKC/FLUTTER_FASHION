@@ -42,7 +42,7 @@ class _ListImageRatingState extends State<ListImageRating> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Hình ảnh đánh giá',
+                        AppLocalizations.of(context)!.rating_images,
                         style: theme.textTheme.bodyMedium!.copyWith(
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
@@ -56,12 +56,13 @@ class _ListImageRatingState extends State<ListImageRating> {
                               : AppLocalizations.of(context)!.delete;
                           return GestureDetector(
                             onTap: () => _removeNotifier.value = !isRemove,
-                            child: Text(
-                              text,
-                              style: theme.textTheme.bodyMedium!.copyWith(
-                                color: primaryColor,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
+                            child: SvgPicture.asset(
+                              "assets/icons/trash.svg",
+                              width: 20,
+                              height: 20,
+                              colorFilter: const ColorFilter.mode(
+                                primaryColor,
+                                BlendMode.srcIn,
                               ),
                             ),
                           );

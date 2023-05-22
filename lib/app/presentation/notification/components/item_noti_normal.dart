@@ -1,6 +1,4 @@
-import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
-import 'package:flutter_fashion/config/notification.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
 import '../../../../export.dart';
@@ -12,63 +10,63 @@ class ItemNotiNormal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor =
-        notification.detail != null ? lightColor : darkColor.withOpacity(0.05);
     return InkWell(
-      onTap: () {
-        if (notification.detail == null) {
-          context
-              .read<NotificationCubit>()
-              .readNotiLocal(notification.id, typeDaily, context);
-        }
-      },
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(5.0),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: horizontalPadding - 6, vertical: verticalPadding - 6),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Image.asset(
-                  "assets/images/logo.png",
-                  fit: BoxFit.cover,
-                  width: 70,
-                  height: 70,
-                ),
-              ),
-              const SizedBox(width: 8.0),
-              Column(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: horizontalPadding - 4, vertical: verticalPadding - 6),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            notification.is_read! == 0
+                ? Container(
+                    width: 8.0,
+                    height: 8.0,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: secondaryColor,
+                    ),
+                  )
+                : const SizedBox(),
+            notification.is_read! != 0
+                ? const SizedBox()
+                : const SizedBox(width: 15.0),
+            Expanded(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     notification.title,
                     style: PrimaryFont.instance.copyWith(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      height: 1.0,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 10.0),
-                  Text.rich(
-                    TextSpan(
-                      text: notification.subtitle,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 12.0,
-                        color: darkColor.withOpacity(0.6),
-                        fontWeight: FontWeight.w300,
+                  Row(
+                    children: [
+                      Image.asset(
+                        "assets/images/loudspeaker.png",
+                        width: 18.0,
+                        height: 18.0,
                       ),
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          notification.subtitle,
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 12.0,
+                            color: darkColor.withOpacity(0.6),
+                            fontWeight: FontWeight.w300,
+                          ),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8.0),
                   Row(
@@ -79,8 +77,8 @@ class ItemNotiNormal extends StatelessWidget {
                         "assets/icons/calendar.svg",
                         width: 18.0,
                         height: 18.0,
-                        colorFilter: const ColorFilter.mode(
-                            primaryColor, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(
+                            darkColor.withAlpha(150), BlendMode.srcIn),
                       ),
                       const SizedBox(width: 8.0),
                       Text(
@@ -95,9 +93,9 @@ class ItemNotiNormal extends StatelessWidget {
                     ],
                   ),
                 ],
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -129,11 +129,11 @@ class ProductProviderImpl extends ProductProvider {
     var response =
         await _apiService.post("${ApiEndpoint.fetchPromotion}?page=$page");
 
-    final data = await response.stream.bytesToString();
-
     if (response.statusCode != 200) {
       throw ServerException();
     }
+    final data = await response.stream.bytesToString();
+
     final dataConvert = jsonDecode(data)["data"];
 
     return PromotionModel.promotionModelFromJson(dataConvert);

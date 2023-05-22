@@ -84,6 +84,7 @@ class _ProductListState extends State<ProductList> {
                   itemBuilder: (context, index) {
                     final product = products[index];
                     return ItemProduct(
+                      key: ValueKey(product),
                       product: product,
                       onTap: () {
                         final bloc =

@@ -1,6 +1,7 @@
-import 'package:flutter_fashion/app/blocs/category/category_cubit.dart';
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
+import 'package:flutter_fashion/common/widgets/new_widget.dart';
+import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import '../../../../export.dart';
 
 class MenuList extends StatelessWidget {
@@ -35,10 +36,10 @@ class MenuList extends StatelessWidget {
           bloc.changeTab(categories[index].id);
         },
         indicator: const BoxDecoration(
-          color: primaryColor,
+          color: secondaryColor,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              radiusBtn,
+              radiusBtn * 3,
             ),
           ),
         ),
@@ -46,8 +47,15 @@ class MenuList extends StatelessWidget {
           (e) {
             final subtitle = isVietnamese ? e.name_vi : e.name;
 
+            final isNew = (e.id != -1) ? e.created_at?.checkNewProduct : false;
+
             return Tab(
+              height: 45.0,
               text: subtitle,
+              icon: isNew != null && !isNew ? null : const NewWidget(),
+              iconMargin: isNew != null && !isNew
+                  ? const EdgeInsets.only(bottom: 10.0)
+                  : EdgeInsets.zero,
             );
           },
         ).toList(),

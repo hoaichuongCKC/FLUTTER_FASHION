@@ -27,6 +27,7 @@ void showAction(
           children: [
             ButtonWidget(
               onPressed: onUse,
+              background: lightColor,
               child: Text(
                 isSelected
                     ? AppLocalizations.of(context)!.not_use
@@ -39,6 +40,7 @@ void showAction(
             const SizedBox(height: 8.0),
             ButtonWidget(
               onPressed: onDelete,
+              background: lightColor,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,

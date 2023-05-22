@@ -72,12 +72,14 @@ class AddressPaymentView extends StatelessWidget {
             minLeadingWidth: 0.0,
             title: Text(
               applocalization.shipping_address,
-              style: theme.textTheme.bodyMedium,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontSize: 14.0,
+              ),
             ),
             subtitle: Text(
               addressName,
               style: theme.textTheme.bodySmall!.copyWith(
-                color: disableDarkColor.withOpacity(0.1),
+                color: textDisable,
               ),
             ),
             trailing: InkWell(

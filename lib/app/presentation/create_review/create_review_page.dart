@@ -31,6 +31,7 @@ class CreateReviewPage extends StatelessWidget {
                   AppLocalizations.of(context)!.rate_now,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 14.0,
+                        color: lightColor,
                       ),
                 ),
               );
@@ -64,13 +65,13 @@ class CreateReviewPage extends StatelessWidget {
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 14.0, vertical: 10.0),
                     enabledBorder: theme.inputDecorationTheme.border!.copyWith(
-                      borderSide: const BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: secondaryColor),
                     ),
                     border: theme.inputDecorationTheme.border!.copyWith(
-                      borderSide: const BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: secondaryColor),
                     ),
                     focusedBorder: theme.inputDecorationTheme.border!.copyWith(
-                      borderSide: const BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: secondaryColor),
                     ),
                   ),
                 ),

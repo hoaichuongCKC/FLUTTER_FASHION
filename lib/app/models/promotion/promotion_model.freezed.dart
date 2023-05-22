@@ -26,7 +26,7 @@ mixin _$PromotionModel {
   String get desc => throw _privateConstructorUsedError;
   double get order_price_conditions => throw _privateConstructorUsedError;
   int get discount_price => throw _privateConstructorUsedError;
-  double get litmit => throw _privateConstructorUsedError;
+  double get limit => throw _privateConstructorUsedError;
   DateTime get end_date => throw _privateConstructorUsedError;
   DateTime get created_at => throw _privateConstructorUsedError;
 
@@ -49,7 +49,7 @@ abstract class $PromotionModelCopyWith<$Res> {
       String desc,
       double order_price_conditions,
       int discount_price,
-      double litmit,
+      double limit,
       DateTime end_date,
       DateTime created_at});
 }
@@ -73,7 +73,7 @@ class _$PromotionModelCopyWithImpl<$Res, $Val extends PromotionModel>
     Object? desc = null,
     Object? order_price_conditions = null,
     Object? discount_price = null,
-    Object? litmit = null,
+    Object? limit = null,
     Object? end_date = null,
     Object? created_at = null,
   }) {
@@ -102,9 +102,9 @@ class _$PromotionModelCopyWithImpl<$Res, $Val extends PromotionModel>
           ? _value.discount_price
           : discount_price // ignore: cast_nullable_to_non_nullable
               as int,
-      litmit: null == litmit
-          ? _value.litmit
-          : litmit // ignore: cast_nullable_to_non_nullable
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
               as double,
       end_date: null == end_date
           ? _value.end_date
@@ -133,7 +133,7 @@ abstract class _$$_PromotionModelCopyWith<$Res>
       String desc,
       double order_price_conditions,
       int discount_price,
-      double litmit,
+      double limit,
       DateTime end_date,
       DateTime created_at});
 }
@@ -155,7 +155,7 @@ class __$$_PromotionModelCopyWithImpl<$Res>
     Object? desc = null,
     Object? order_price_conditions = null,
     Object? discount_price = null,
-    Object? litmit = null,
+    Object? limit = null,
     Object? end_date = null,
     Object? created_at = null,
   }) {
@@ -184,9 +184,9 @@ class __$$_PromotionModelCopyWithImpl<$Res>
           ? _value.discount_price
           : discount_price // ignore: cast_nullable_to_non_nullable
               as int,
-      litmit: null == litmit
-          ? _value.litmit
-          : litmit // ignore: cast_nullable_to_non_nullable
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
               as double,
       end_date: null == end_date
           ? _value.end_date
@@ -211,7 +211,7 @@ class _$_PromotionModel implements _PromotionModel {
       required this.desc,
       required this.order_price_conditions,
       required this.discount_price,
-      required this.litmit,
+      required this.limit,
       required this.end_date,
       required this.created_at});
 
@@ -231,7 +231,7 @@ class _$_PromotionModel implements _PromotionModel {
   @override
   final int discount_price;
   @override
-  final double litmit;
+  final double limit;
   @override
   final DateTime end_date;
   @override
@@ -239,7 +239,7 @@ class _$_PromotionModel implements _PromotionModel {
 
   @override
   String toString() {
-    return 'PromotionModel(id: $id, code: $code, product_id: $product_id, desc: $desc, order_price_conditions: $order_price_conditions, discount_price: $discount_price, litmit: $litmit, end_date: $end_date, created_at: $created_at)';
+    return 'PromotionModel(id: $id, code: $code, product_id: $product_id, desc: $desc, order_price_conditions: $order_price_conditions, discount_price: $discount_price, limit: $limit, end_date: $end_date, created_at: $created_at)';
   }
 
   @override
@@ -256,7 +256,7 @@ class _$_PromotionModel implements _PromotionModel {
                 other.order_price_conditions == order_price_conditions) &&
             (identical(other.discount_price, discount_price) ||
                 other.discount_price == discount_price) &&
-            (identical(other.litmit, litmit) || other.litmit == litmit) &&
+            (identical(other.limit, limit) || other.limit == limit) &&
             (identical(other.end_date, end_date) ||
                 other.end_date == end_date) &&
             (identical(other.created_at, created_at) ||
@@ -266,7 +266,7 @@ class _$_PromotionModel implements _PromotionModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, code, product_id, desc,
-      order_price_conditions, discount_price, litmit, end_date, created_at);
+      order_price_conditions, discount_price, limit, end_date, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -290,7 +290,7 @@ abstract class _PromotionModel implements PromotionModel {
       required final String desc,
       required final double order_price_conditions,
       required final int discount_price,
-      required final double litmit,
+      required final double limit,
       required final DateTime end_date,
       required final DateTime created_at}) = _$_PromotionModel;
 
@@ -310,7 +310,7 @@ abstract class _PromotionModel implements PromotionModel {
   @override
   int get discount_price;
   @override
-  double get litmit;
+  double get limit;
   @override
   DateTime get end_date;
   @override

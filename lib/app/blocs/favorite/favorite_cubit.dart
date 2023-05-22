@@ -1,10 +1,12 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 part 'favorite_state.dart';
 
 class FavoriteCubit extends HydratedCubit<FavoriteState> {
@@ -18,7 +20,8 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
     final state = this.state;
     final list = state.listProduct;
     final updatedList = [...list, product];
-    emit(state.copyWith(listProduct: updatedList));
+    final updatedIdList = [...state.idList, product.id]..sort();
+    emit(state.copyWith(listProduct: updatedList, idList: updatedIdList));
   }
 
   void showCheckBox() {
@@ -40,6 +43,7 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
 
   void removeId(id) {
     final state = this.state;
+
     final updatedList = List<int>.from(state.chooseItemsDelete)..remove(id);
 
     emit(state.copyWith(chooseItemsDelete: updatedList));
@@ -47,18 +51,29 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
 
   void removeFavorite(ProductModel product) {
     final state = this.state;
+
     final list = state.listProduct;
+
+    final idList = state.idList;
 
     final updatedList = List<ProductModel>.from(list)
       ..retainWhere((item) => item.id != product.id);
-    emit(state.copyWith(listProduct: updatedList));
+
+    final updatedIdList = List<int?>.from(idList)
+      ..retainWhere((item) => item != product.id);
+
+    emit(state.copyWith(listProduct: updatedList, idList: updatedIdList));
   }
 
   void removeListFavorite(context) {
     final state = this.state;
 
     if (!_checkExistsList()) {
-      errorAlert(context: context, message: "Vui lòng chọn sản phẩm");
+      showCustomDialog(
+        context,
+        content: "Vui lòng chọn sản phẩm",
+        title: AppLocalizations.of(context)!.notificationPage,
+      );
       return;
     }
 
@@ -93,7 +108,7 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
   }
 
   void removeAll() {
-    emit(state.copyWith(listProduct: []));
+    emit(state.copyWith(listProduct: [], idList: []));
   }
 
   @override
@@ -106,5 +121,11 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
   @override
   Map<String, dynamic>? toJson(FavoriteState state) {
     return state.toJson();
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    return "state: $state";
   }
 }

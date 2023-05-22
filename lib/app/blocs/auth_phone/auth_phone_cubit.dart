@@ -7,7 +7,6 @@ import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'auth_phone_state.dart';
@@ -82,7 +81,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
   ) async {
     await verifyPhoneNumber(
       phoneNumber: "+84$phoneNumber",
-      verificationCompleted: (user) {
+      verificationCompleted: (credential) {
         if (isResend) return;
       },
       verificationFailed: (FirebaseAuthException exception) {
@@ -130,6 +129,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
     String verificationId,
   ) async {
     emit(const AuthPhoneState.loading());
+
     loadingAlert(context: context);
 
     final result = await signInWithPhoneNumber(verificationId, smsCode);

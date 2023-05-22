@@ -3,6 +3,9 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../export.dart';
 
 mixin PusherMixin {
+  final String typeOrder = "order";
+  final String typeNotification = "notification";
+
   PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 }
 
@@ -15,7 +18,7 @@ abstract class PusherApp {
 
   void trigger(PusherEvent event);
 
-  void handleData(BuildContext context, dynamic data);
+  void handleData(dynamic data);
 
   Future<void> dispose();
 }

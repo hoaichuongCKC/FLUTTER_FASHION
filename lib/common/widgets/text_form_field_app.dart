@@ -171,6 +171,10 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
         heightFactor: 0.7,
         child: SvgPicture.asset(
           "assets/icons/remove-circle.svg",
+          colorFilter: ColorFilter.mode(
+            ThemeDataApp.instance.isLight ? darkColor : lightColor,
+            BlendMode.srcIn,
+          ),
         ),
       ),
     );
@@ -181,9 +185,9 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
       minHeight: 65.0,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 14.0),
-        decoration: const BoxDecoration(
-          color: lightColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: const BorderRadius.all(
             Radius.circular(radiusBtn / 2),
           ),
         ),
@@ -260,11 +264,13 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
             isDense: inputDecorationTheme.isDense,
             prefixIconColor: secondaryColor,
             hintText: hintText,
-            border: inputDecorationTheme.border,
-            enabledBorder: inputDecorationTheme.enabledBorder,
-            focusedBorder: inputDecorationTheme.focusedBorder,
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
             hintStyle: inputDecorationTheme.hintStyle,
-            contentPadding: EdgeInsets.zero,
+            contentPadding: ThemeDataApp.instance.isLight
+                ? EdgeInsets.zero
+                : const EdgeInsets.all(5.0),
             icon: _icon,
             suffixIcon: ValueListenableBuilder<bool>(
               valueListenable: _clearIcon,
@@ -296,11 +302,13 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
         isDense: inputDecorationTheme.isDense,
         prefixIconColor: secondaryColor,
         hintText: hintText,
-        border: inputDecorationTheme.border,
-        enabledBorder: inputDecorationTheme.enabledBorder,
-        focusedBorder: inputDecorationTheme.focusedBorder,
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
         hintStyle: inputDecorationTheme.hintStyle,
-        contentPadding: EdgeInsets.zero,
+        contentPadding: ThemeDataApp.instance.isLight
+            ? EdgeInsets.zero
+            : const EdgeInsets.all(5.0),
         suffixIcon: ValueListenableBuilder<bool>(
           valueListenable: _clearIcon,
           builder: (context, bool isVisibility, child) {

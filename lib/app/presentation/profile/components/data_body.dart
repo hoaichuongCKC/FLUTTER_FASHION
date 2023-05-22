@@ -1,7 +1,5 @@
 import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
-import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key});
@@ -26,17 +24,4 @@ class ProfileBody extends StatelessWidget {
       ],
     );
   }
-}
-
-showDialogNotiLogout(BuildContext context) {
-  popupAlert(
-    context: context,
-    message: AppLocalizations.of(context)!.are_you_sure_to_log_out,
-    onCancel: () => AppRoutes.router.pop(),
-    onPressed: () {
-      AppRoutes.router.pop();
-      loadingAlert(context: context);
-      context.read<AuthCubit>().call(AuthEvent.loggout, context: context);
-    },
-  );
 }

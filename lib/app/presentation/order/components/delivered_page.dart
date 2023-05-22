@@ -1,11 +1,11 @@
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
-import 'package:flutter_fashion/app/presentation/order/components/item_order.dart';
+import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
 
 import '../../../../core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
 
-class DeliveredPage extends StatelessWidget {
-  const DeliveredPage({super.key});
+class DeliveredView extends StatelessWidget {
+  const DeliveredView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -48,6 +48,7 @@ class FavoritePage extends StatelessWidget {
             itemBuilder: (context, index) {
               final product = listProduct[index];
               return Stack(
+                key: ValueKey(product.id),
                 fit: StackFit.expand,
                 children: [
                   ItemProduct(

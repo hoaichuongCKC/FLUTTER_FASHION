@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'cart.freezed.dart';

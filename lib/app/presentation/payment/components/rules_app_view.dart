@@ -32,7 +32,7 @@ class RulesAppView extends StatelessWidget {
                                 key: const ValueKey(true),
                                 decoration: BoxDecoration(
                                   color: ThemeDataApp.instance.isLight
-                                      ? primaryColor
+                                      ? secondaryColor
                                       : theme.cardColor,
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(3.0),
@@ -155,10 +155,11 @@ class _DialogOrderState extends State<DialogOrder>
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      surfaceTintColor: lightColor,
       backgroundColor: lightColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(8.0),
+          Radius.circular(radiusBtn),
         ),
       ),
       child: Padding(
@@ -168,7 +169,7 @@ class _DialogOrderState extends State<DialogOrder>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Lottie.asset(
-              "assets/json/order-received.json",
+              "assets/json/16982-shopping-loader.json",
               controller: _controller,
               onLoaded: (p0) {
                 _controller.duration = p0.duration;
@@ -177,10 +178,10 @@ class _DialogOrderState extends State<DialogOrder>
             ),
             const SizedBox(height: 10),
             Text(
-              AppLocalizations.of(context)!.loading,
+              AppLocalizations.of(context)!.please_await,
               style: PrimaryFont.instance.copyWith(
                 fontSize: 14.0,
-                color: primaryColor,
+                color: secondaryColor,
               ),
             )
           ],

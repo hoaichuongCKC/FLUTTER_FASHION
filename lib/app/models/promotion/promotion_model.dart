@@ -14,7 +14,7 @@ class PromotionModel with _$PromotionModel {
     required String desc,
     required double order_price_conditions,
     required int discount_price,
-    required double litmit,
+    required double limit,
     required DateTime end_date,
     required DateTime created_at,
   }) = _PromotionModel;

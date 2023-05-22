@@ -3,7 +3,7 @@ import 'package:flutter_fashion/app/repositories/banner_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../export.dart';
@@ -26,11 +26,12 @@ class BannerCubit extends Cubit<BannerState> {
       result.fold(
         (error) {
           if (error == AuthenticatedException.message) {
-            popupAlert(
-              context: context,
-              noButtonCancle: true,
-              message: AppLocalizations.of(context)!.login_session_has_expired,
-              onPressed: () {
+            showCustomDialog(
+              context,
+              content: error,
+              title: "Token",
+              submitNameSecond: AppLocalizations.of(context)!.ok,
+              onSecond: () {
                 HydratedBloc.storage.delete(KeyStorage.token);
                 dispose();
                 PusherBeamsApp.instance.dispose();

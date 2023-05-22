@@ -10,8 +10,8 @@ import '../../core/base/api/endpoint.dart';
 abstract class OrderProvider {
   Future<Map<String, dynamic>> fetchOrder();
   Future<OrderModel> create(OrderParams params);
-  Future<ResponseData> updatedLimitPromotion(int idPromo);
   Future<int> delete(int orderId);
+  Future<ResponseData> checkPromotion(int idPromotion);
 }
 
 class OrderProviderImpl implements OrderProvider {
@@ -31,9 +31,13 @@ class OrderProviderImpl implements OrderProvider {
     }
     final data = await response.stream.bytesToString();
 
-    final convert = jsonDecode(data)["data"] as Map<String, dynamic>;
+    print(data);
 
-    return OrderModel.fromJson(convert);
+    final convert = jsonDecode(data);
+
+    final order = ResponseData.fromJson(convert);
+
+    return OrderModel.fromJson(order.data);
   }
 
   @override
@@ -68,8 +72,13 @@ class OrderProviderImpl implements OrderProvider {
   }
 
   @override
-  Future<ResponseData> updatedLimitPromotion(int idPromo) async {
-    var response = await _apiService.post(ApiEndpoint.updateLimitOrder);
+  Future<ResponseData> checkPromotion(int idPromotion) async {
+    var response = await _apiService.post(
+      ApiEndpoint.checkPromotion,
+      body: {
+        "idPromotion": "$idPromotion",
+      },
+    );
 
     if (response.statusCode != 200) {
       throw ServerException();

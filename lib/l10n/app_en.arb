@@ -811,6 +811,79 @@
   "of_the_store_is_return_policy" : "of the store is return policy",
   "@of_the_store_is_return_policy": {
     "description": "nó là chỉnh sửa"
+  },
+
+  "please_update_your_phone_number" : "Please update your phone number",
+  "@please_update_your_phone_number": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_cancel" : "Order cancel",
+  "@order_cancel": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "are_you_sure_cancel_order" : "Are you sure to cancel order?",
+  "@are_you_sure_cancel_order": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "loadmore" : "Load more",
+  "@loadmore": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_deleted_successfully" : "Order deleted successfully",
+  "@order_deleted_successfully": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "are_you_sure_to_delete" : "Are you sure to delete?",
+  "@are_you_sure_to_delete": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "sign_up_success" : "Sign up successfully",
+  "@sign_up_success": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_await" : "Please wait",
+  "@please_await": {
+    "description": "nó là chỉnh sửa"
+  },
+
+    
+  "mua_lai" : "Buy again",
+  "@mua_lai": {
+    "description": "nó là chỉnh sửa"
+  },
+
+     
+  "temp_price" : "Temp price",
+  "@temp_price": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "promotion_applied" : "Promotion applied",
+  "@promotion_applied": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_successful" : "Order successful",
+  "@order_successful": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  
+  "rating_images" : "Rating images",
+  "@rating_images": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "rating_slogan" : "Please help us evaluate and improve the product",
+  "@rating_slogan": {
+    "description": "nó là chỉnh sửa"
   }
 
 }

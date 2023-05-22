@@ -15,6 +15,7 @@ class PhoneUserEdit extends StatelessWidget {
     final bloc = context.read<EditInformationCubit>();
 
     final user = InheritedDataApp.of<UserModel>(context)!.data;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: verticalPadding),
       child: BlocBuilder<EditInformationCubit, EditInformationState>(
@@ -30,16 +31,41 @@ class PhoneUserEdit extends StatelessWidget {
                   ),
                 )
               : null;
-          return TextFormFieldApp(
-            title: AppLocalizations.of(context)!.phoneNumber,
-            onChanged: (value) => bloc.onChangedUsername(value),
-            prefixIcon: const Icon(
-              Icons.phone_outlined,
-              size: 12.0,
-              color: secondaryColor,
-            ),
-            titleWidget: titleWidget,
-            text: user.phone,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormFieldApp(
+                title: AppLocalizations.of(context)!.phoneNumber,
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.done,
+                onChanged: (value) => bloc.onChangedPhone(value),
+                prefixIcon: const Icon(
+                  Icons.phone_outlined,
+                  size: 12.0,
+                  color: secondaryColor,
+                ),
+                titleWidget: titleWidget,
+                text: user.phone,
+                hintText: user.phone.isEmpty
+                    ? applocalizations
+                        .enter_the(applocalizations.phoneNumber)
+                        .toLowerCase()
+                    : null,
+              ),
+              user.phone.isEmpty
+                  ? const SizedBox(height: 5.0)
+                  : const SizedBox(),
+              user.phone.isEmpty
+                  ? Text(
+                      applocalizations.please_update_your_phone_number,
+                      style: theme.textTheme.bodySmall!.copyWith(
+                        fontSize: 9.0,
+                        color: primaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
           );
         },
       ),

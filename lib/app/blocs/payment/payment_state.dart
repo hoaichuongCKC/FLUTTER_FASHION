@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_fashion/app/models/cart/cart.dart';
+import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 class PaymentState extends Equatable {
@@ -17,6 +18,8 @@ class PaymentState extends Equatable {
 
   final bool isRead;
 
+  final PromotionModel? promotion;
+
   final AppStatus status;
 
   const PaymentState({
@@ -25,6 +28,7 @@ class PaymentState extends Equatable {
     this.address = "",
     this.note = "Note",
     this.isRead = false,
+    this.promotion,
     this.status = AppStatus.init,
   });
   @override
@@ -36,6 +40,7 @@ class PaymentState extends Equatable {
       address,
       isRead,
       status,
+      promotion ?? "",
     ];
   }
 
@@ -45,6 +50,7 @@ class PaymentState extends Equatable {
     String? note,
     String? address,
     bool? isRead,
+    PromotionModel? promotion,
     AppStatus? status,
   }) {
     return PaymentState(
@@ -53,6 +59,7 @@ class PaymentState extends Equatable {
       note: note ?? this.note,
       address: address ?? this.address,
       isRead: isRead ?? this.isRead,
+      promotion: promotion ?? this.promotion,
       status: status ?? this.status,
     );
   }
@@ -67,8 +74,10 @@ class OrderParams extends Equatable {
   final int tempPrice;
   final int shipPrice;
   final String note;
+  final int idPromotion;
   final int total;
   const OrderParams({
+    this.idPromotion = 0,
     this.shippingAddress = "",
     this.shippingFullname = "",
     this.shippingPhone = "",
@@ -107,6 +116,7 @@ class OrderParams extends Equatable {
       'list_product': jsonEncode(listCart),
       'notes': note,
       'total_price': total.toString(),
+      'id_promotion': idPromotion.toString(),
     };
   }
 

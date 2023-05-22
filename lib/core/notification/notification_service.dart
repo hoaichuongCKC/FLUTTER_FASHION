@@ -59,6 +59,10 @@ class NotificationService {
   }
 
   Future _handlePayload(String? payload) async {
+    if (payload == Routes.NOTIFICATION) {
+      AppRoutes.router.go(payload!);
+      return;
+    }
     AppRoutes.router.push(payload!);
   }
 

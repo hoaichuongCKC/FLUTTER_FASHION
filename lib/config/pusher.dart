@@ -15,9 +15,9 @@ class PusherConfig {
   static const String PUSHER_BEAMS_SECRET_KEY =
       "9014AA80071FD3E7A6D156E18A94C377AE2AB83E20294AD586D31A7D53FBB1BA";
 
-  static const List<String> interests = ["notification", "chat"];
+  static const List<String> interests = ["notification", "order"];
 
   static String get inNotification => interests[0];
 
-  static String get inChat => interests[1];
+  static String get inOrder => interests[1];
 }

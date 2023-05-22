@@ -6,9 +6,7 @@ import 'package:flutter_fashion/app/presentation/sign_up/components/enter_the_ph
 import 'package:flutter_fashion/app/presentation/sign_up/components/filling_out_information_personal.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/components/setup_password_avatar.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
-import '../../../common/components/aurora/aurora_page.dart';
+
 import 'cubit/sign_up_cubit.dart';
 
 const stepFirstVn = "1. Vui lòng nhập số điện thoại của bạn";
@@ -86,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Scaffold(
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+              padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -95,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          AppRoutes.router.pop();
+                          AppRoutes.router.go(Routes.LOGIN);
                           // SignUpPage.reset();
                         },
                         child: Icon(
@@ -156,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: verticalPadding * 2),
+                        vertical: verticalPadding * 1.5),
                     child: BlocBuilder<SignUpUICubit, int>(
                       builder: (context, step) {
                         final text = _stepTitles[step];

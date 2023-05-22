@@ -176,12 +176,13 @@ class _TabbarDescReviewsDetailState extends State<TabbarDescReviewsDetail>
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          'Hiển thị thêm',
+                                          AppLocalizations.of(context)!
+                                              .loadmore,
                                           style: theme.textTheme.bodySmall!
                                               .copyWith(
                                             fontSize: 12.0,
-                                            fontWeight: FontWeight.w800,
-                                            color: primaryColor,
+                                            fontWeight: FontWeight.w600,
+                                            color: secondaryColor,
                                           ),
                                         ),
                                       ),

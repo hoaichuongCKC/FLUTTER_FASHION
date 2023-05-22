@@ -14,6 +14,10 @@ class ProductCubit extends Cubit<ProductState> {
         super(const ProductState.initial());
   bool _isLoaded = false;
 
+  List<ProductModel> get products => state.whenOrNull(
+        fetchCompleted: (products) => products,
+      )!;
+
   Future<void> fetchData([int? page]) async {
     if (!_isLoaded) {
       emit(const ProductState.loading());

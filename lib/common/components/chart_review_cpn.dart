@@ -1,7 +1,6 @@
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/extensions/double.dart';
 
 class ChartReviewCpn extends StatelessWidget {
   const ChartReviewCpn({super.key, required this.data});
@@ -13,13 +12,13 @@ class ChartReviewCpn extends StatelessWidget {
     final ProductModel product =
         InheritedDataApp.of<ProductModel>(context)!.data;
 
-    final star = product.star!;
+    final star = double.parse(product.star!.toStringAsFixed(1));
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
-            star.viewStar(),
+            star.toString(),
             style: theme.textTheme.titleSmall!.copyWith(
               fontSize: 30.0,
               fontWeight: FontWeight.w500,
@@ -35,6 +34,22 @@ class ChartReviewCpn extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final disable = index + 1 > star;
+
+              if (disable) {
+                final starConvert = star.toInt().toDouble();
+                if (star > starConvert && star < starConvert + 0.9) {
+                  print(star);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: SvgPicture.asset(
+                      "assets/icons/star_hafl.svg",
+                      width: 60,
+                      height: 30.0,
+                    ),
+                  );
+                }
+              }
+
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: SvgPicture.asset(

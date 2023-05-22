@@ -15,10 +15,11 @@ class SetupNewPasswordCpn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormFieldApp(
-          title: applocalizations.newPassword,
+          obscureText: true,
           textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.name,
-          hintText: applocalizations.enter_the(applocalizations.newPassword),
+          keyboardType: TextInputType.visiblePassword,
+          hintText: "******",
+          title: applocalizations.newPassword,
           prefixIcon: SvgPicture.asset(
             "assets/icons/lock.svg",
             fit: BoxFit.scaleDown,
@@ -29,9 +30,10 @@ class SetupNewPasswordCpn extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextFormFieldApp(
-          title: applocalizations.confirmPassword,
+          obscureText: true,
           textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.name,
+          keyboardType: TextInputType.visiblePassword,
+          title: applocalizations.confirmPassword,
           hintText: applocalizations.confirmPassword,
           prefixIcon: SvgPicture.asset(
             "assets/icons/confirm_pass.svg",

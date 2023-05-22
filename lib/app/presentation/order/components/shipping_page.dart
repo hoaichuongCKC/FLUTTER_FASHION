@@ -1,11 +1,11 @@
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
-import 'package:flutter_fashion/app/presentation/order/components/item_order.dart';
+import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
 
 import '../../../../core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
 
-class ShippingPage extends StatelessWidget {
-  const ShippingPage({super.key});
+class ShippingView extends StatelessWidget {
+  const ShippingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class ShippingPage extends StatelessWidget {
                 Names.ORDER_DETAIL,
                 queryParams: {
                   "index": index.toString(),
-                  "status": toPayStatus.toString()
+                  "status": toReceive.toString()
                 },
               );
             },

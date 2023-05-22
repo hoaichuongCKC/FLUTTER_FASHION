@@ -8,6 +8,7 @@ import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
+import 'package:flutter_fashion/utils/extensions/list.dart';
 import '../../export.dart';
 
 class ItemProduct extends StatelessWidget {
@@ -187,9 +188,10 @@ class ItemProduct extends StatelessWidget {
                         if (favorites.isEmpty) {
                           return false;
                         }
-                        final bool isCheck = favorites
-                            .any((element) => element.id == product.id);
-                        return isCheck;
+                        final ischeck = List<ProductModel>.from(favorites)
+                            .checkExistsFavorite(state.idList, product.id!);
+
+                        return ischeck != -1;
                       },
                       builder: (context, state) {
                         if (!state) {

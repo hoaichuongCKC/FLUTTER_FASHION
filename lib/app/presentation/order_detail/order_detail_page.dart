@@ -21,10 +21,10 @@ class OrderDetailPage extends StatelessWidget {
       case toPayStatus:
         order = getIt.get<OrderCubit>().state.toPayList[intIndex];
         break;
-      case processingStatus:
+      case toShipStatus:
         order = getIt.get<OrderCubit>().state.toShipList[intIndex];
         break;
-      case shippingStatus:
+      case toReceive:
         order = getIt.get<OrderCubit>().state.toReceiveList[intIndex];
         break;
       case deliveredStatus:

@@ -23,13 +23,13 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
 
   final Map<int, dynamic> _productCache = {};
 
-  bool get _hasLoadMore => _productCache[state.currentId]?[keyLoadMore];
+  bool get _hasLoadMore => _productCache[state.currentId]?[_keyLoadMore];
 
-  String get keyProducts => "products";
+  String get _keyProducts => "products";
 
-  String get keyPage => "page";
+  String get _keyPage => "page";
 
-  String get keyLoadMore => "load_more";
+  String get _keyLoadMore => "load_more";
 
   double get _scrollLimit =>
       _scrollController.position.maxScrollExtent - _scrollThresold;
@@ -40,6 +40,11 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
     if (!_productCache.containsKey(idCategory)) {
       emit(state.copyWith(status: AppStatus.loading));
 
+      if (_checkIdAll(idCategory)) {
+        _loadProductAll(idCategory);
+        return;
+      }
+
       final result = await _categoryRepo.fetchProductByCate(idCategory, 1);
 
       result.fold(
@@ -47,15 +52,35 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
         (products) {
           emit(state.copyWith(products: products, status: AppStatus.success));
           _productCache[idCategory] = {
-            keyPage: 1,
-            keyProducts: products,
-            keyLoadMore: true,
+            _keyPage: 1,
+            _keyProducts: products,
+            _keyLoadMore: true,
           };
         },
       );
     } else {
-      emit(state.copyWith(products: _productCache[idCategory][keyProducts]));
+      emit(state.copyWith(products: _productCache[idCategory][_keyProducts]));
     }
+  }
+
+  bool _checkIdAll(int idCategory) {
+    return idCategory == -1;
+  }
+
+  void _loadProductAll(int idCategory) {
+    final products = getIt.get<ProductCubit>().products;
+
+    if (products.isEmpty) {
+      return;
+    }
+
+    emit(state.copyWith(products: products, status: AppStatus.success));
+
+    _productCache[idCategory] = {
+      _keyPage: LoadMoreProductBloc.page,
+      _keyProducts: products,
+      _keyLoadMore: LoadMoreProductBloc.hasMoreData,
+    };
   }
 
   void initScroll() {
@@ -70,7 +95,9 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
 
       emit(state.copyWith(loading: true));
 
-      final page = ++_productCache[idCategory]?[keyPage];
+      final page = ++_productCache[idCategory]?[_keyPage];
+
+      _updatePageProductHome(idCategory, page);
 
       final result = await _categoryRepo.fetchProductByCate(idCategory, page);
 
@@ -78,8 +105,8 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
         (error) => emit(state.copyWith(status: AppStatus.error)),
         (products) {
           if (products.isEmpty) {
-            _productCache[idCategory]?[keyLoadMore] = false;
-
+            _productCache[idCategory]?[_keyLoadMore] = false;
+            _updateHasloadmoreProductHome(idCategory);
             emit(state.copyWith(loading: false));
             return;
           }
@@ -88,9 +115,28 @@ class CategoryTabCubit extends Cubit<CategoryTabState> {
 
           emit(state.copyWith(products: updatedList, loading: false));
 
-          _productCache[idCategory][keyProducts] = updatedList;
+          _updateProductsHome(products);
+
+          _productCache[idCategory][_keyProducts] = updatedList;
         },
       );
+    }
+  }
+
+  //update list product home
+  _updateProductsHome(List<ProductModel> products) {
+    getIt.get<ProductCubit>().addProduct(products);
+  }
+
+  _updateHasloadmoreProductHome(idCategory) {
+    if (_checkIdAll(idCategory)) {
+      LoadMoreProductBloc.hasMoreData = false;
+    }
+  }
+
+  _updatePageProductHome(idCategory, int page) {
+    if (_checkIdAll(idCategory)) {
+      LoadMoreProductBloc.page = page;
     }
   }
 

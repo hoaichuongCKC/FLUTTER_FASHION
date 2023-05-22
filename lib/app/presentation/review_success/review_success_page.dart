@@ -38,14 +38,17 @@ class ReviewSuccessPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List<Widget>.generate(
                     5,
-                    (index) => SvgPicture.asset("assets/icons/star.svg",
-                        width: 30,
-                        height: 30.0,
-                        colorFilter: indexParam + 1 <= index
-                            ? ColorFilter.mode(
-                                darkColor.withOpacity(0.2), BlendMode.srcIn)
-                            : const ColorFilter.mode(
-                                Colors.yellow, BlendMode.srcIn)),
+                    (index) => Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: SvgPicture.asset("assets/icons/star.svg",
+                          width: 30,
+                          height: 30.0,
+                          colorFilter: indexParam + 1 <= index
+                              ? ColorFilter.mode(
+                                  darkColor.withOpacity(0.2), BlendMode.srcIn)
+                              : ColorFilter.mode(
+                                  Colors.yellow.shade700, BlendMode.srcIn)),
+                    ),
                   ).toList(),
                 ),
               ),

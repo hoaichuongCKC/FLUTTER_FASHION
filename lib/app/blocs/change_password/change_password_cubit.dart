@@ -1,18 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:flutter_fashion/utils/alert/success.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../routes/app_routes.dart';
-
 part 'change_password_state.dart';
 
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
@@ -30,9 +24,15 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   void submitForm(BuildContext context) async {
     if (!_checkPassword(context)) {
-      errorAlert(
-        context: context,
-        message: AppLocalizations.of(context)!.password_not_match,
+      showCustomDialog(
+        context,
+        content: AppLocalizations.of(context)!.password_not_match,
+        title: AppLocalizations.of(context)!.password,
+        icon: SvgPicture.asset(
+          "assets/icons/error.svg",
+          width: 100,
+          height: 100,
+        ),
       );
       return;
     }
@@ -49,7 +49,16 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        errorAlert(context: context, message: error);
+        showCustomDialog(
+          context,
+          content: error,
+          title: "Request Api",
+          icon: SvgPicture.asset(
+            "assets/icons/error.svg",
+            width: 100,
+            height: 100,
+          ),
+        );
       },
       (data) {
         if (data.status) {
@@ -58,7 +67,16 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
           emit(state.copyWith(status: AppStatus.success));
           successAlert(context: context, message: data.message);
         } else {
-          errorAlert(context: context, message: data.message);
+          showCustomDialog(
+            context,
+            content: data.message,
+            icon: SvgPicture.asset(
+              "assets/icons/error.svg",
+              width: 100,
+              height: 100,
+            ),
+            title: AppLocalizations.of(context)!.notificationPage,
+          );
           emit(state.copyWith(status: AppStatus.error));
         }
       },
@@ -69,6 +87,10 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     final state = this.state;
 
     if (state.confirmPass != state.newPass) {
+      return false;
+    }
+
+    if (state.confirmPass.isEmpty || state.newPass.isEmpty) {
       return false;
     }
     return true;

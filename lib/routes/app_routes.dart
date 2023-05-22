@@ -6,7 +6,6 @@ import 'package:flutter_fashion/app/presentation/create_review/create_review_pag
 import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/location_management/location_management_page.dart';
-import 'package:flutter_fashion/app/presentation/notification_detail/notification_detail_page.dart';
 import 'package:flutter_fashion/app/presentation/order/order_page.dart';
 import 'package:flutter_fashion/app/presentation/order_success/order_success_page.dart';
 import 'package:flutter_fashion/app/presentation/payment/payment_page.dart';
@@ -314,20 +313,6 @@ class AppRoutes {
                 child: const NotificationPage(),
               );
             },
-            routes: [
-              GoRoute(
-                path: Routes.NOTIFICATION_DETAIL,
-                name: Names.NOTIFICATION_DETAIL,
-                parentNavigatorKey: Routes.navigatorKey,
-                pageBuilder: (context, state) {
-                  final map = state.extra as Map;
-                  return SlideTransitionPage<NotificationDetailPage>(
-                    key: state.pageKey,
-                    child: NotificationDetailPage(name: map["name"]),
-                  );
-                },
-              ),
-            ],
           ),
           GoRoute(
             path: Routes.PROFILE,

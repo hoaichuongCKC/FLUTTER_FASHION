@@ -25,7 +25,6 @@ mixin _$NotificationModel {
   String get title => throw _privateConstructorUsedError;
   String get subtitle => throw _privateConstructorUsedError;
   int? get is_read => throw _privateConstructorUsedError;
-  NotificationDetailModel? get detail => throw _privateConstructorUsedError;
   DateTime get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,10 +45,7 @@ abstract class $NotificationModelCopyWith<$Res> {
       String title,
       String subtitle,
       int? is_read,
-      NotificationDetailModel? detail,
       DateTime created_at});
-
-  $NotificationDetailModelCopyWith<$Res>? get detail;
 }
 
 /// @nodoc
@@ -70,7 +66,6 @@ class _$NotificationModelCopyWithImpl<$Res, $Val extends NotificationModel>
     Object? title = null,
     Object? subtitle = null,
     Object? is_read = freezed,
-    Object? detail = freezed,
     Object? created_at = null,
   }) {
     return _then(_value.copyWith(
@@ -94,27 +89,11 @@ class _$NotificationModelCopyWithImpl<$Res, $Val extends NotificationModel>
           ? _value.is_read
           : is_read // ignore: cast_nullable_to_non_nullable
               as int?,
-      detail: freezed == detail
-          ? _value.detail
-          : detail // ignore: cast_nullable_to_non_nullable
-              as NotificationDetailModel?,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $NotificationDetailModelCopyWith<$Res>? get detail {
-    if (_value.detail == null) {
-      return null;
-    }
-
-    return $NotificationDetailModelCopyWith<$Res>(_value.detail!, (value) {
-      return _then(_value.copyWith(detail: value) as $Val);
-    });
   }
 }
 
@@ -132,11 +111,7 @@ abstract class _$$_NotificationModelCopyWith<$Res>
       String title,
       String subtitle,
       int? is_read,
-      NotificationDetailModel? detail,
       DateTime created_at});
-
-  @override
-  $NotificationDetailModelCopyWith<$Res>? get detail;
 }
 
 /// @nodoc
@@ -155,7 +130,6 @@ class __$$_NotificationModelCopyWithImpl<$Res>
     Object? title = null,
     Object? subtitle = null,
     Object? is_read = freezed,
-    Object? detail = freezed,
     Object? created_at = null,
   }) {
     return _then(_$_NotificationModel(
@@ -179,10 +153,6 @@ class __$$_NotificationModelCopyWithImpl<$Res>
           ? _value.is_read
           : is_read // ignore: cast_nullable_to_non_nullable
               as int?,
-      detail: freezed == detail
-          ? _value.detail
-          : detail // ignore: cast_nullable_to_non_nullable
-              as NotificationDetailModel?,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -201,7 +171,6 @@ class _$_NotificationModel implements _NotificationModel {
       required this.title,
       required this.subtitle,
       this.is_read,
-      this.detail,
       required this.created_at});
 
   factory _$_NotificationModel.fromJson(Map<String, dynamic> json) =>
@@ -218,13 +187,11 @@ class _$_NotificationModel implements _NotificationModel {
   @override
   final int? is_read;
   @override
-  final NotificationDetailModel? detail;
-  @override
   final DateTime created_at;
 
   @override
   String toString() {
-    return 'NotificationModel(id: $id, order_id: $order_id, title: $title, subtitle: $subtitle, is_read: $is_read, detail: $detail, created_at: $created_at)';
+    return 'NotificationModel(id: $id, order_id: $order_id, title: $title, subtitle: $subtitle, is_read: $is_read, created_at: $created_at)';
   }
 
   @override
@@ -239,7 +206,6 @@ class _$_NotificationModel implements _NotificationModel {
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
             (identical(other.is_read, is_read) || other.is_read == is_read) &&
-            (identical(other.detail, detail) || other.detail == detail) &&
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at));
   }
@@ -247,7 +213,7 @@ class _$_NotificationModel implements _NotificationModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, order_id, title, subtitle, is_read, detail, created_at);
+      runtimeType, id, order_id, title, subtitle, is_read, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -271,7 +237,6 @@ abstract class _NotificationModel implements NotificationModel {
       required final String title,
       required final String subtitle,
       final int? is_read,
-      final NotificationDetailModel? detail,
       required final DateTime created_at}) = _$_NotificationModel;
 
   factory _NotificationModel.fromJson(Map<String, dynamic> json) =
@@ -288,171 +253,9 @@ abstract class _NotificationModel implements NotificationModel {
   @override
   int? get is_read;
   @override
-  NotificationDetailModel? get detail;
-  @override
   DateTime get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_NotificationModelCopyWith<_$_NotificationModel> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-NotificationDetailModel _$NotificationDetailModelFromJson(
-    Map<String, dynamic> json) {
-  return _NotificationDetailModel.fromJson(json);
-}
-
-/// @nodoc
-mixin _$NotificationDetailModel {
-  int get id => throw _privateConstructorUsedError;
-  int get is_read => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $NotificationDetailModelCopyWith<NotificationDetailModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NotificationDetailModelCopyWith<$Res> {
-  factory $NotificationDetailModelCopyWith(NotificationDetailModel value,
-          $Res Function(NotificationDetailModel) then) =
-      _$NotificationDetailModelCopyWithImpl<$Res, NotificationDetailModel>;
-  @useResult
-  $Res call({int id, int is_read});
-}
-
-/// @nodoc
-class _$NotificationDetailModelCopyWithImpl<$Res,
-        $Val extends NotificationDetailModel>
-    implements $NotificationDetailModelCopyWith<$Res> {
-  _$NotificationDetailModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? is_read = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      is_read: null == is_read
-          ? _value.is_read
-          : is_read // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_NotificationDetailModelCopyWith<$Res>
-    implements $NotificationDetailModelCopyWith<$Res> {
-  factory _$$_NotificationDetailModelCopyWith(_$_NotificationDetailModel value,
-          $Res Function(_$_NotificationDetailModel) then) =
-      __$$_NotificationDetailModelCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id, int is_read});
-}
-
-/// @nodoc
-class __$$_NotificationDetailModelCopyWithImpl<$Res>
-    extends _$NotificationDetailModelCopyWithImpl<$Res,
-        _$_NotificationDetailModel>
-    implements _$$_NotificationDetailModelCopyWith<$Res> {
-  __$$_NotificationDetailModelCopyWithImpl(_$_NotificationDetailModel _value,
-      $Res Function(_$_NotificationDetailModel) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? is_read = null,
-  }) {
-    return _then(_$_NotificationDetailModel(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      is_read: null == is_read
-          ? _value.is_read
-          : is_read // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-@JsonSerializable(explicitToJson: true)
-class _$_NotificationDetailModel implements _NotificationDetailModel {
-  const _$_NotificationDetailModel({required this.id, required this.is_read});
-
-  factory _$_NotificationDetailModel.fromJson(Map<String, dynamic> json) =>
-      _$$_NotificationDetailModelFromJson(json);
-
-  @override
-  final int id;
-  @override
-  final int is_read;
-
-  @override
-  String toString() {
-    return 'NotificationDetailModel(id: $id, is_read: $is_read)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_NotificationDetailModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.is_read, is_read) || other.is_read == is_read));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, is_read);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_NotificationDetailModelCopyWith<_$_NotificationDetailModel>
-      get copyWith =>
-          __$$_NotificationDetailModelCopyWithImpl<_$_NotificationDetailModel>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_NotificationDetailModelToJson(
-      this,
-    );
-  }
-}
-
-abstract class _NotificationDetailModel implements NotificationDetailModel {
-  const factory _NotificationDetailModel(
-      {required final int id,
-      required final int is_read}) = _$_NotificationDetailModel;
-
-  factory _NotificationDetailModel.fromJson(Map<String, dynamic> json) =
-      _$_NotificationDetailModel.fromJson;
-
-  @override
-  int get id;
-  @override
-  int get is_read;
-  @override
-  @JsonKey(ignore: true)
-  _$$_NotificationDetailModelCopyWith<_$_NotificationDetailModel>
-      get copyWith => throw _privateConstructorUsedError;
 }

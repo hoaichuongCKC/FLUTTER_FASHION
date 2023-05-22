@@ -1,4 +1,7 @@
+import 'package:flutter_fashion/app/blocs/payment/payment.dart';
+import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
+import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/common/components/promotion.dart';
 
 import '../../../../export.dart';
@@ -9,7 +12,6 @@ class ListVoucherView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartBloc = context.watch<CartCubit>().state;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,29 +35,72 @@ class ListVoucherView extends StatelessWidget {
             ),
           ),
         ),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: !ThemeDataApp.instance.isLight
-                ? theme.cardColor
-                : secondaryColor.withOpacity(0.2),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(radiusBtn),
-            ),
-          ),
-          child: ListTile(
-            dense: true,
-            onTap: () => _showOptionPromotion(context),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-            title: Text(
-              AppLocalizations.of(context)!.choose_a_promotion,
-              style: theme.textTheme.bodySmall,
-            ),
-            trailing: Icon(
-              Icons.touch_app_outlined,
-              size: 18.0,
-              color: theme.iconTheme.color!,
-            ),
-          ),
+        BlocBuilder<PaymentCubit, PaymentState>(
+          buildWhen: (p, c) => p.promotion != c.promotion,
+          builder: (context, state) {
+            final bool isApplyPromotion = state.promotion != null;
+
+            if (isApplyPromotion) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  color: !ThemeDataApp.instance.isLight
+                      ? theme.cardColor
+                      : successfullyColor.withAlpha(150),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(radiusBtn),
+                  ),
+                ),
+                child: ListTile(
+                  dense: true,
+                  horizontalTitleGap: 0.0,
+                  onTap: () => context.read<PaymentCubit>().cancelPromotion(),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  leading: const Icon(
+                    Icons.check_circle,
+                    size: 20.0,
+                    color: lightColor,
+                  ),
+                  title: Text(
+                    "Đã áp dụng khuyến mãi",
+                    style:
+                        theme.textTheme.bodySmall!.copyWith(color: lightColor),
+                  ),
+                  trailing: SvgPicture.asset(
+                    "assets/icons/remove-circle.svg",
+                    colorFilter: const ColorFilter.mode(
+                      lightColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                color: !ThemeDataApp.instance.isLight
+                    ? theme.cardColor
+                    : secondaryColor.withOpacity(0.2),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(radiusBtn),
+                ),
+              ),
+              child: ListTile(
+                dense: true,
+                onTap: () => _showOptionPromotion(context),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                title: Text(
+                  AppLocalizations.of(context)!.choose_a_promotion,
+                  style: theme.textTheme.bodySmall,
+                ),
+                trailing: Icon(
+                  Icons.touch_app_outlined,
+                  size: 18.0,
+                  color: theme.iconTheme.color!,
+                ),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -63,7 +108,7 @@ class ListVoucherView extends StatelessWidget {
 
   void _showOptionPromotion(BuildContext context) async {
     final theme = Theme.of(context);
-    final data = await showModalBottomSheet<String>(
+    final data = await showModalBottomSheet<PromotionModel?>(
       isScrollControlled: true,
       backgroundColor: lightColor,
       shape: const RoundedRectangleBorder(
@@ -76,6 +121,9 @@ class ListVoucherView extends StatelessWidget {
         final size = MediaQuery.of(context).size;
 
         final promotionBloc = context.watch<PromotionCubit>();
+
+        final cartBloc = context.watch<CartCubit>().state;
+
         return SizedBox(
           height: size.height * 0.85,
           child: Column(
@@ -98,7 +146,8 @@ class ListVoucherView extends StatelessWidget {
                       top: 0,
                       right: 5,
                       child: IconButton(
-                        onPressed: () => AppRoutes.router.pop("String"),
+                        onPressed: () =>
+                            AppRoutes.router.pop<PromotionModel?>(null),
                         icon: Icon(
                           Icons.clear,
                           size: theme.iconTheme.size,
@@ -120,7 +169,13 @@ class ListVoucherView extends StatelessWidget {
                     final promotion = promotionBloc.promotions[index];
                     return SizedBox(
                       height: 150.0,
-                      child: PromotionWidget(promotion: promotion),
+                      child: PromotionWidget(
+                        promotion: promotion,
+                        openSelected: true,
+                        onSelected: (p0) => AppRoutes.router.pop(p0),
+                        checkStatus: cartBloc.totalCart() >=
+                            promotion.order_price_conditions,
+                      ),
                     );
                   },
                 ),
@@ -131,5 +186,7 @@ class ListVoucherView extends StatelessWidget {
       },
     );
     if (data == null) return;
+
+    context.read<PaymentCubit>().checkPromotion(data, context);
   }
 }

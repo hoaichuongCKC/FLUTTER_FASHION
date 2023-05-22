@@ -31,6 +31,7 @@ class ApiEndpoint {
   static const String createOrder = "order/create";
   static const String fetchOrder = "order/fetch-order";
   static const String deleteOrder = "order/delete-order";
+  static const String checkPromotion = "order/check-promotion";
   static const String updateLimitOrder = "product/update-promotion";
 
   static const String fetchNotification = "noti/fetch";

@@ -1,5 +1,7 @@
+import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/presentation/order/components/awaiting_confirmation_page.dart';
+import 'package:flutter_fashion/app/presentation/order/components/cancel_order.dart';
 import 'package:flutter_fashion/app/presentation/order/components/delivered_page.dart';
 import 'package:flutter_fashion/app/presentation/order/components/order_processing_page.dart';
 import 'package:flutter_fashion/app/presentation/order/components/shipping_page.dart';
@@ -76,10 +78,10 @@ class _OrderPageState extends State<OrderPage>
                 controller: _tabBarController,
                 children: const [
                   ToPay(),
-                  OrderProcessingPage(),
-                  ShippingPage(),
-                  DeliveredPage(),
-                  DeliveredPage(),
+                  OrderProcessingView(),
+                  ShippingView(),
+                  DeliveredView(),
+                  CancelOrderView(),
                 ],
               ),
             ),

@@ -14,9 +14,13 @@ _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
       shipping_phone: json['shipping_phone'] as String?,
       shipping_address: json['shipping_address'] as String?,
       order_payment: json['order_payment'] as String?,
+      temp_price: json['temp_price'] as int?,
       total_price: json['total_price'] as int?,
+      promotion: json['promotion'] == null
+          ? null
+          : PromotionModel.fromJson(json['promotion'] as Map<String, dynamic>),
       notes: json['notes'] as String?,
-      status: json['status'] as int?,
+      status_id: json['status_id'] as int?,
       created_at: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -34,9 +38,11 @@ Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
       'shipping_phone': instance.shipping_phone,
       'shipping_address': instance.shipping_address,
       'order_payment': instance.order_payment,
+      'temp_price': instance.temp_price,
       'total_price': instance.total_price,
+      'promotion': instance.promotion?.toJson(),
       'notes': instance.notes,
-      'status': instance.status,
+      'status_id': instance.status_id,
       'created_at': instance.created_at?.toIso8601String(),
       'order_detail': instance.order_detail?.map((e) => e.toJson()).toList(),
       'evaluated': instance.evaluated,

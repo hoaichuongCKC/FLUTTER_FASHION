@@ -1,10 +1,6 @@
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth_phone/auth_phone_cubit.dart';
-
-import 'package:flutter_fashion/common/components/aurora/aurora_page.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/error.dart';
-import 'package:flutter_fashion/utils/alert/pop_up.dart';
 import '../sign_up/components/enter_the_otp_cpn.dart';
 import '../sign_up/components/enter_the_phone_cpn.dart';
 import '../sign_up/cubit/sign_up_cubit.dart';
@@ -90,7 +86,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          AppRoutes.router.pop();
+                          AppRoutes.router.go(Routes.LOGIN);
                           // ForgotPasswordPage.reset();
                         },
                         child: Icon(

@@ -44,27 +44,9 @@ class SearchHistory extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.search_history,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                InkWell(
-                  onTap: () => context.read<SearchCubit>().clearHistory(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.delete,
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 12.0,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ),
-                )
-              ],
+            Text(
+              AppLocalizations.of(context)!.search_history,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 10.0),
             DecoratedBox(
@@ -95,6 +77,18 @@ class SearchHistory extends StatelessWidget {
                         fontSize: 14.0,
                         color: darkColor,
                         fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        "assets/icons/trash.svg",
+                        width: 15,
+                        height: 15,
+                        colorFilter: const ColorFilter.mode(
+                          primaryColor,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   );

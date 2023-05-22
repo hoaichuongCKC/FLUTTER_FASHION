@@ -2,6 +2,7 @@ import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
 import '../../../../export.dart';
 
@@ -73,9 +74,32 @@ class ItemCart extends StatelessWidget {
                                 ),
                                 isItemCart
                                     ? InkWell(
-                                        onTap: () => context
-                                            .read<CartCubit>()
-                                            .removeFromCart(index),
+                                        onTap: () {
+                                          showCustomDialog(
+                                            context,
+                                            title: AppLocalizations.of(context)!
+                                                .notificationPage,
+                                            content:
+                                                AppLocalizations.of(context)!
+                                                    .are_you_sure_to_delete,
+                                            submitNameFirst:
+                                                AppLocalizations.of(context)!
+                                                    .cancel,
+                                            submitNameSecond:
+                                                AppLocalizations.of(context)!
+                                                    .ok,
+                                            onFirst: () {
+                                              AppRoutes.router.pop();
+                                            },
+                                            onSecond: () {
+                                              context
+                                                  .read<CartCubit>()
+                                                  .removeFromCart(
+                                                      index, context);
+                                              AppRoutes.router.pop();
+                                            },
+                                          );
+                                        },
                                         child: FractionallySizedBox(
                                           alignment: const Alignment(0, -0.8),
                                           heightFactor: 0.35,
@@ -106,7 +130,9 @@ class ItemCart extends StatelessWidget {
                                         .toVndCurrency(),
                                     style: theme.textTheme.bodySmall!.copyWith(
                                       fontSize: 10.0,
-                                      color: disableDarkColor,
+                                      color: item.product.sale_price == null
+                                          ? primaryColor
+                                          : disableDarkColor,
                                       decoration:
                                           item.product.sale_price == null
                                               ? null
@@ -169,53 +195,72 @@ class ItemCart extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              item.color.isEmpty && item.size.isEmpty
-                  ? const SizedBox()
-                  : Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "${AppLocalizations.of(context)!.detail}: ",
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          const WidgetSpan(child: SizedBox(width: 5.0)),
-                          TextSpan(
-                            text: item.size,
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          const WidgetSpan(child: SizedBox(width: 5.0)),
-                          WidgetSpan(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Color(int.parse("0xFF${item.color}")),
-                                shape: BoxShape.circle,
-                                boxShadow: item.color != "ffffff"
-                                    ? null
-                                    : const [
-                                        BoxShadow(
-                                          color: primaryColor,
-                                          blurRadius: 0.0,
-                                          spreadRadius: 2.0,
-                                          blurStyle: BlurStyle.inner,
-                                        )
-                                      ],
-                              ),
-                              child: const SizedBox(
-                                width: 20,
-                                height: 20,
-                              ),
-                            ),
-                          ),
-                          const WidgetSpan(child: SizedBox(width: 5.0)),
-                        ],
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "${AppLocalizations.of(context)!.detail}: ",
+                      style: PrimaryFont.instance.copyWith(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
+                    item.size.isEmpty
+                        ? const WidgetSpan(child: SizedBox(width: 0.0))
+                        : TextSpan(
+                            text: "size ",
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: "${item.size}, ",
+                                style: PrimaryFont.instance.copyWith(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              )
+                            ],
+                          ),
+                    item.color.isEmpty
+                        ? const WidgetSpan(child: SizedBox(width: 0.0))
+                        : TextSpan(
+                            text: "color ",
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            children: [
+                              WidgetSpan(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Color(int.parse("0xFF${item.color}")),
+                                    shape: BoxShape.circle,
+                                    boxShadow: item.color != "ffffff"
+                                        ? null
+                                        : const [
+                                            BoxShadow(
+                                              color: secondaryColor,
+                                              blurRadius: 0.0,
+                                              spreadRadius: 0.5,
+                                              blurStyle: BlurStyle.inner,
+                                            )
+                                          ],
+                                  ),
+                                  child: const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                    const WidgetSpan(child: SizedBox(width: 5.0)),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
-import 'package:flutter_fashion/app/presentation/order/components/item_order.dart';
+import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
+import 'package:flutter_fashion/app/models/order/order.dart';
+import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
 
@@ -25,7 +27,7 @@ class ToPay extends StatelessWidget {
             child: Text('Server Error'),
           );
         }
-        print("===================${state}=======================");
+
         if (state.status == AppStatus.success && state.toPayList.isEmpty) {
           return Center(
             child: Column(
@@ -72,8 +74,9 @@ class ToPay extends StatelessWidget {
 }
 
 class ShowDialogTimer extends StatefulWidget {
-  const ShowDialogTimer({super.key, required this.orderId});
-  final int orderId;
+  const ShowDialogTimer({super.key, required this.onCancel});
+
+  final VoidCallback onCancel;
   @override
   State<ShowDialogTimer> createState() => _ShowDialogTimerState();
 }
@@ -97,90 +100,68 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: lightColor,
+    final applocalizations = AppLocalizations.of(context)!;
+    return AlertDialog(
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(14.0),
-          topRight: Radius.circular(14.0),
+        borderRadius: BorderRadius.all(
+          Radius.circular(radiusBtn * 2),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DecoratedBox(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(14.0),
-                topRight: Radius.circular(14.0),
-              ),
-              color: primaryColor,
-            ),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * .8,
-              height: 14.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: horizontalPadding - 4, vertical: verticalPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Bạn muốn huỷ đơn?',
-                  style: PrimaryFont.instance.copyWith(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ButtonWidget(
-                      onPressed: () {
-                        timer.cancel();
-                        AppRoutes.router.pop();
-                      },
-                      height: 30,
-                      width: 55,
-                      child: Text(
-                        "bỏ",
-                        style: PrimaryFont.instance.copyWith(
-                          color: lightColor,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    ButtonWidget(
-                      onPressed: _counter == 0
-                          ? () => context
-                              .read<OrderCubit>()
-                              .delete(widget.orderId, context)
-                          : () {},
-                      height: 30,
-                      width: 55,
-                      child: Text(
-                        _counter == 0 ? "Ok" : "00:0$_counter",
-                        style: PrimaryFont.instance.copyWith(
-                          color: lightColor,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
+      backgroundColor: lightColor,
+      icon: Image.asset(
+        "assets/images/warning.png",
+        width: 100,
+        height: 100,
       ),
+      surfaceTintColor: lightColor,
+      title: Text(applocalizations.order_cancel),
+      titleTextStyle: PrimaryFont.instance.copyWith(
+        fontSize: 14.0,
+        color: darkColor,
+        fontWeight: FontWeight.w700,
+      ),
+      iconPadding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      contentTextStyle: PrimaryFont.instance.copyWith(
+        fontSize: 12.0,
+        color: darkColor,
+        fontWeight: FontWeight.w300,
+      ),
+      content: Text(applocalizations.are_you_sure_cancel_order,
+          textAlign: TextAlign.center),
+      contentPadding: const EdgeInsets.fromLTRB(25, 8, 25, 8),
+      actionsAlignment: MainAxisAlignment.end,
+      actionsPadding: const EdgeInsets.fromLTRB(0, 0, 8, 10),
+      actions: [
+        ButtonWidget(
+          onPressed: () {
+            timer.cancel();
+            AppRoutes.router.pop();
+          },
+          height: 30,
+          width: 80,
+          child: Text(
+            applocalizations.cancel,
+            style: PrimaryFont.instance.copyWith(
+              color: lightColor,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        ButtonWidget(
+          onPressed: _counter == 0 ? widget.onCancel : null,
+          height: 30,
+          width: 80,
+          child: Text(
+            _counter == 0 ? applocalizations.ok : "0:0$_counter",
+            style: PrimaryFont.instance.copyWith(
+              color: lightColor,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

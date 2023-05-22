@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
 
+import '../../../utils/alert/dialog.dart';
 import '../../models/cart/cart.dart';
 
 part 'cart_state.dart';
@@ -14,6 +15,13 @@ class CartCubit extends HydratedCubit<CartState> {
   @override
   String get storageToken =>
       KeyStorage.userCart + getIt.get<UserCubit>().user.id.toString();
+  void addToListCart(List<CartModel> carts) {
+    final state = this.state;
+
+    final updatedList = [...carts, ...state.items];
+
+    emit(state.copyWith(items: updatedList));
+  }
 
   void addToCart(CartModel cart) {
     final state = this.state;
@@ -53,11 +61,29 @@ class CartCubit extends HydratedCubit<CartState> {
     emit(state.copyWith(items: updatedList));
   }
 
-  void removeFromCart(int index) {
+  void removeFromCart(int index, BuildContext context) async {
     final state = this.state;
-    emit(
-      state.copyWith(items: List<CartModel>.from(state.items)..removeAt(index)),
+
+    final applocalizations = AppLocalizations.of(context)!;
+
+    //show dialog
+    final bool? isAcceptRemove = await showCustomDialog<bool>(
+      context,
+      title: applocalizations.my_shopping_cart,
+      content: applocalizations.are_you_sure_to_delete,
+      submitNameFirst: applocalizations.cancel,
+      submitNameSecond: applocalizations.ok,
+      onFirst: () => AppRoutes.router.pop<bool>(false),
+      onSecond: () => AppRoutes.router.pop<bool>(true),
     );
+
+    if (isAcceptRemove == null) return;
+
+    if (!isAcceptRemove) return;
+
+    final updatedList = List<CartModel>.from(state.items)..removeAt(index);
+
+    emit(state.copyWith(items: updatedList));
   }
 
   void removeAll() => emit(const CartState());

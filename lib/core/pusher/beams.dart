@@ -36,29 +36,40 @@ class PusherBeamsApp {
           log('Interests: $interests', name: "Beams-interest"),
         },
       );
-
+      print("=======================");
       await PusherBeams.instance
           .onMessageReceivedInTheForeground(_onMessageReceivedInTheForeground);
     }
   }
 
-  void _onMessageReceivedInTheForeground(Map<dynamic, dynamic> data) async =>
-      _handleSendNoti(data);
-
-  _handleSendNoti(Map<dynamic, dynamic> data) {
+  void _onMessageReceivedInTheForeground(Map<dynamic, dynamic> data) {
     final type = data["data"]["type"];
 
     if (type == PusherConfig.inNotification) {
       final isNoti = AppRoutes.router.location == Routes.NOTIFICATION;
 
-      if (isNoti) _handleNotificationPage(data);
+      if (!isNoti) _handleNotificationPage(data);
+    }
+
+    if (type == PusherConfig.inOrder) {
+      final isNoti = AppRoutes.router.location == Routes.NOTIFICATION;
+
+      if (!isNoti) _handleOrderPage(data);
     }
   }
+
+  _handleOrderPage(Map<dynamic, dynamic> data) =>
+      NotificationService.instance.createNotification(
+        title: data["title"].toString(),
+        body: data["body"].toString(),
+        payload: "${Routes.PROFILE}/${Routes.MY_ORDER}",
+      );
 
   _handleNotificationPage(Map<dynamic, dynamic> data) =>
       NotificationService.instance.createNotification(
         title: data["title"].toString(),
         body: data["body"].toString(),
+        payload: Routes.NOTIFICATION,
       );
 
   void dispose() async {

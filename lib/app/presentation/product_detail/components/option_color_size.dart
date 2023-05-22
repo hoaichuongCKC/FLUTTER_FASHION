@@ -177,7 +177,7 @@ class OptionColorSizeDetail extends StatelessWidget {
             e = e.toString();
             final isSelected = size == e;
 
-            final color = isSelected ? primaryColor : lightColor;
+            final color = isSelected ? secondaryColor : lightColor;
 
             final textColor = isSelected ? lightColor : darkColor;
 

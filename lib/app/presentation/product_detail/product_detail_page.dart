@@ -40,10 +40,10 @@ class ProductDetailPage extends StatelessWidget {
                       child: state.isShow
                           ? DecoratedBox(
                               key: const ValueKey("button"),
-                              decoration: const BoxDecoration(
-                                color: primaryColor,
-                                shape: BoxShape.circle,
-                              ),
+                              decoration: BoxDecoration(
+                                  color: lightColor,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [shadowBox]),
                               child: IconButton(
                                 onPressed: () => controller.animateTo(
                                   0,
@@ -53,7 +53,7 @@ class ProductDetailPage extends StatelessWidget {
                                 icon: const Icon(
                                   Icons.arrow_upward_sharp,
                                   size: 20.0,
-                                  color: lightColor,
+                                  color: darkColor,
                                 ),
                               ),
                             )

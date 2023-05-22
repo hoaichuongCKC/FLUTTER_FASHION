@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_de
 import 'package:flutter_fashion/app/presentation/product_detail/overlay_animation/product_overlay.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/export.dart';
+import 'package:flutter_fashion/utils/alert/dialog.dart';
 
 class BottomNavigationbarDetail extends StatelessWidget {
   const BottomNavigationbarDetail({super.key});
@@ -56,10 +57,15 @@ class BottomNavigationbarDetail extends StatelessWidget {
       image: imageWidget,
     );
 
-    AppSnackbarMessenger.showMessage(
-      content: "Thêm giỏ hàng thành công",
-      background: lightColor,
-      textColor: darkColor,
+    showCustomDialog(
+      context,
+      icon: SvgPicture.asset(
+        "assets/icons/oke.svg",
+        width: 100,
+        height: 100,
+      ),
+      content: AppLocalizations.of(context)!.add_to_cart,
+      title: AppLocalizations.of(context)!.notificationPage,
     );
   }
 }

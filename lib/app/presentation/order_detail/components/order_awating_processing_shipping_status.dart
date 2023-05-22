@@ -1,3 +1,5 @@
+import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/item_cart.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/order/components/awaiting_confirmation_page.dart';
@@ -22,14 +24,16 @@ class ToPayShipReceiveDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 3.0),
                   child: SvgPicture.asset(
                     "assets/icons/user1.svg",
+                    width: 18.0,
+                    height: 18,
                     colorFilter:
-                        const ColorFilter.mode(primaryColor, BlendMode.srcIn),
+                        const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(width: 8.0),
@@ -53,12 +57,14 @@ class ToPayShipReceiveDetail extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
                     "assets/icons/location.svg",
+                    width: 20.0,
+                    height: 20,
                     colorFilter:
-                        const ColorFilter.mode(primaryColor, BlendMode.srcIn),
+                        const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                   ),
                   const SizedBox(width: 8.0),
                   Expanded(
@@ -75,8 +81,10 @@ class ToPayShipReceiveDetail extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   "assets/icons/calendar.svg",
+                  width: 20.0,
+                  height: 20,
                   colorFilter:
-                      const ColorFilter.mode(primaryColor, BlendMode.srcIn),
+                      const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                 ),
                 const SizedBox(width: 8.0),
                 Expanded(
@@ -87,34 +95,29 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 15.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  dense: true,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 3.0),
-                  minLeadingWidth: 0.0,
-                  horizontalTitleGap: 8.0,
-                  leading: SvgPicture.asset("assets/icons/order_box.svg"),
-                  title: Text(
-                    AppLocalizations.of(context)!.my_order,
-                    style: theme.textTheme.bodyLarge,
-                  ),
-                ),
-                ListView.separated(
-                  itemBuilder: (context, index) => ItemCart(
-                    index: index,
-                    item: order.order_detail![index],
-                    isItemCart: false,
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10.0),
-                  itemCount: order.order_detail!.length,
-                )
-              ],
+            const SizedBox(height: 8.0),
+            ListTile(
+              dense: true,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 3.0),
+              minLeadingWidth: 0.0,
+              horizontalTitleGap: 8.0,
+              leading: SvgPicture.asset("assets/icons/order_box.svg"),
+              title: Text(
+                AppLocalizations.of(context)!.my_order,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+            ListView.separated(
+              itemBuilder: (context, index) => ItemCart(
+                index: index,
+                item: order.order_detail![index],
+                isItemCart: false,
+              ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (context, index) =>
+                  const SizedBox(height: 10.0),
+              itemCount: order.order_detail!.length,
             ),
             const SizedBox(height: 15.0),
             Align(
@@ -124,18 +127,21 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "${AppLocalizations.of(context)!.status}: ",
-                      style:
-                          theme.textTheme.bodySmall!.copyWith(fontSize: 14.0),
+                      style: theme.textTheme.bodySmall,
                     ),
                     WidgetSpan(
                       child: ColoredBox(
-                        color: primaryColor.withOpacity(0.5),
+                        color: secondaryColor.withAlpha(150),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 4.0, vertical: 3),
                           child: Text(
-                            order.status!.getOrderStatus(context),
-                            style: theme.textTheme.bodySmall,
+                            order.status_id!.getOrderStatus(context),
+                            style: theme.textTheme.bodySmall!.copyWith(
+                              color: lightColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
@@ -145,6 +151,75 @@ class ToPayShipReceiveDetail extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0),
+            order.promotion != null
+                ? Align(
+                    alignment: Alignment.centerRight,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                "${AppLocalizations.of(context)!.temp_price}: ",
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          WidgetSpan(
+                            child: Text(
+                              order.temp_price!.toDouble().toVndCurrency(),
+                              style: PrimaryFont.instance.copyWith(
+                                fontSize: 10.0,
+                                color: errorColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            order.promotion != null
+                ? const SizedBox(
+                    height: 8.0,
+                  )
+                : const SizedBox(),
+            order.promotion != null
+                ? Align(
+                    alignment: Alignment.centerRight,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                "${AppLocalizations.of(context)!.promotion_applied}: ",
+                            style: theme.textTheme.bodySmall!.copyWith(
+                              color: successfullyColor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          WidgetSpan(
+                            child: Text(
+                              (order.temp_price! *
+                                      (order.promotion!.discount_price) /
+                                      100)
+                                  .toDouble()
+                                  .toVndCurrency(),
+                              style: PrimaryFont.instance.copyWith(
+                                fontSize: 10.0,
+                                color: errorColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            order.promotion != null
+                ? const SizedBox(
+                    height: 8.0,
+                  )
+                : const SizedBox(),
             Align(
               alignment: Alignment.centerRight,
               child: Text.rich(
@@ -152,14 +227,13 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "${AppLocalizations.of(context)!.total}: ",
-                      style:
-                          theme.textTheme.bodySmall!.copyWith(fontSize: 14.0),
+                      style: theme.textTheme.bodySmall,
                     ),
                     WidgetSpan(
                       child: Text(
                         order.total_price!.toDouble().toVndCurrency(),
                         style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
+                          fontSize: 10.0,
                           color: errorColor,
                           fontWeight: FontWeight.w400,
                         ),
@@ -177,11 +251,16 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                         showDialog(
                           barrierDismissible: false,
                           context: context,
-                          builder: (context) =>
-                              ShowDialogTimer(orderId: order.id!),
+                          builder: (context) => ShowDialogTimer(
+                            onCancel: () {
+                              context
+                                  .read<OrderCubit>()
+                                  .delete(order.id!, context);
+                              context.read<OrderCancelCubit>().addOrder(order);
+                            },
+                          ),
                         );
                       },
-                      height: 40,
                       child: Text(
                         AppLocalizations.of(context)!.cancel,
                         style: PrimaryFont.instance.copyWith(

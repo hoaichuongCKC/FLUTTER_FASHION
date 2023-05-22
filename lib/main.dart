@@ -3,6 +3,7 @@ import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product_new/product_new_cubit.dart';
 import 'package:flutter_fashion/app/blocs/product_sale/product_sale_cubit.dart';
@@ -12,10 +13,11 @@ import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cub
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
+import 'package:flutter_fashion/core/pusher/order.dart';
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -29,7 +31,7 @@ Future<void> main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
-  // HydratedBloc.storage.clear();
+  //HydratedBloc.storage.clear();
 
   await PusherBeamsApp.instance.getStarted();
 
@@ -89,7 +91,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
 
-  // late PusherOrderApp _pusherOrderApp;
+  late PusherUserApp _pusherUserApp;
 
   @override
   void initState() {
@@ -119,6 +121,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           fetchCompleted: (user) {
             //register notfication with authentication userId
             PusherBeamsApp.instance.initToUser(user.id);
+
+            _pusherUserApp = getIt<PusherUserApp>()
+              ..initialize(
+                onEvent: (PusherEvent? onEvent) {
+                  if (onEvent!.data != null && onEvent.data.isNotEmpty) {
+                    print("===============${onEvent.data}===============");
+                    _pusherUserApp.handleData(onEvent.data);
+                  }
+                },
+              );
           },
           failure: (e) {},
         );
@@ -130,9 +142,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void dispose() {
     _subscription.cancel();
     WidgetsBinding.instance.removeObserver(AppLifecycleObserver());
-    // if (getIt.isRegistered<PusherOrderApp>()) {
-    //   _pusherOrderApp.dispose();
-    // }
+    if (getIt.isRegistered<PusherUserApp>()) {
+      _pusherUserApp.dispose();
+    }
     PusherBeamsApp.instance.dispose();
     super.dispose();
   }
@@ -161,6 +173,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         BlocProvider(
           create: (context) => getIt<SearchCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<OrderCancelCubit>(),
         ),
       ],
       child: MaterialApp.router(

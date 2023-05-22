@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 class TopHeaderHome extends StatelessWidget {

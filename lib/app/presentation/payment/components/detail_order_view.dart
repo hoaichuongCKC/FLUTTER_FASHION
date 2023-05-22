@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
+import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import '../../../blocs/cart/cart_cubit.dart';
+import '../../../blocs/payment/payment_state.dart';
 
 class DetailOrderView extends StatelessWidget {
   const DetailOrderView({super.key});
@@ -51,14 +53,46 @@ class DetailOrderView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                const ItemDetailOrder(
-                  title: "Giảm giá (đã áp dụng voucher)",
-                  value: "-15.000VNĐ",
+                BlocBuilder<PaymentCubit, PaymentState>(
+                  buildWhen: (p, c) => p.promotion != c.promotion,
+                  builder: (context, state) {
+                    if (state.promotion == null) {
+                      return ItemDetailOrder(
+                        title: "Chưa áp dụng khuyến mãi",
+                        value: 0.0.toVndCurrency(),
+                      );
+                    }
+                    return ItemDetailOrder(
+                      title: "Giảm giá (đã áp dụng voucher)",
+                      textStyleValue: PrimaryFont.instance.copyWith(
+                        fontSize: 12.0,
+                        color: errorColor,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      value:
+                          "-${(cartInfo.totalCart() * (state.promotion!.discount_price / 100)).toDouble().toVndCurrency()}",
+                    );
+                  },
                 ),
                 const SizedBox(height: 8.0),
-                ItemDetailOrder(
-                  title: AppLocalizations.of(context)!.total_amount,
-                  value: cartInfo.totalCart().toDouble().toVndCurrency(),
+                BlocBuilder<PaymentCubit, PaymentState>(
+                  buildWhen: (p, c) => p.promotion != c.promotion,
+                  builder: (context, state) {
+                    if (state.promotion == null) {
+                      return ItemDetailOrder(
+                        title: AppLocalizations.of(context)!.total_amount,
+                        value: cartInfo.totalCart().toDouble().toVndCurrency(),
+                      );
+                    }
+                    return ItemDetailOrder(
+                      title: AppLocalizations.of(context)!.total_amount,
+                      value: (cartInfo.totalCart() -
+                              cartInfo.totalCart() *
+                                  (state.promotion!.discount_price / 100))
+                          .toDouble()
+                          .toVndCurrency(),
+                    );
+                  },
                 ),
               ],
             ),

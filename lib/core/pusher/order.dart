@@ -1,23 +1,28 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
 import 'package:flutter_fashion/core/pusher/pusher_app.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
-class PusherOrderApp with PusherMixin implements PusherApp {
+class PusherUserApp with PusherMixin implements PusherApp {
   final ApiService apiService;
 
-  PusherOrderApp({required this.apiService});
+  PusherUserApp({required this.apiService});
 
   String get currentLocation => AppRoutes.router.location;
 
   String get orderLocation => "${Routes.PROFILE}/${Routes.MY_ORDER}";
 
   @override
-  String get eventName => "update-order";
+  String get eventName => "pusher-user";
 
   @override
-  String get channel => "order-user-${getIt.get<UserCubit>().user.id}";
+  String get channel => "pusher-user-${getIt.get<UserCubit>().user.id}";
 
   @override
   Future<void> initialize(
@@ -32,14 +37,16 @@ class PusherOrderApp with PusherMixin implements PusherApp {
         useTLS: true,
         logToConsole: true,
         onError: (message, code, error) {
-          log("onError: $message $code $error", name: "Pusher-order-OnError");
+          log("onError: $message $code $error", name: "Pusher-OnError");
         },
         onEvent: onEvent,
         onConnectionStateChange: (currentState, previousState) {
-          log("onConnectionStateChange: $currentState",
-              name: "Pusher-order-onConnectionStateChange");
+          log(
+            "onConnectionStateChange: $currentState",
+            name: "Pusher-onConnectionStateChange",
+          );
         },
-        // authEndpoint: "<Your Authendpoint>",
+        authEndpoint: ApiService.baseUrl + "",
         // onAuthorizer: onAuthorizer
       );
       await pusher.subscribe(channelName: channel);
@@ -57,12 +64,37 @@ class PusherOrderApp with PusherMixin implements PusherApp {
   }
 
   @override
-  void handleData(BuildContext context, data) async {
-    try {} catch (e) {
-      log("Error handle data Chat Pusher: $e");
+  void handleData(data) async {
+    try {
+      final dataConvert = jsonDecode(data);
+
+      if (dataConvert["type"] == typeOrder) {
+        _updateOrder(dataConvert);
+      } else if (dataConvert['type'] == typeNotification) {
+        _createNotification(dataConvert);
+      }
+    } catch (e) {
+      log("Error handle data Pusher: $e");
     }
   }
 
   @override
   void trigger(PusherEvent event) {}
+
+  void _updateOrder(data) {
+    if (getIt.isRegistered<OrderCubit>()) {
+      getIt.get<OrderCubit>().updateStatus(
+            data["data"]["order_id"],
+            data["data"]["new_status"],
+          );
+    }
+  }
+
+  void _createNotification(data) {
+    if (getIt.isRegistered<NotificationCubit>()) {
+      final notification = NotificationModel.fromJson(data["data"]);
+      print("=======================${notification}==========================");
+      getIt.get<NotificationCubit>().add(notification);
+    }
+  }
 }

@@ -38,7 +38,8 @@ class ListStarCpn extends StatelessWidget {
                             ? ColorFilter.mode(
                                 disableDarkColor.withOpacity(0.2),
                                 BlendMode.srcIn)
-                            : null,
+                            : ColorFilter.mode(
+                                Colors.yellow.shade700, BlendMode.srcIn),
                       );
                     },
                   ),
@@ -49,7 +50,7 @@ class ListStarCpn extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
         Text(
-          'Hãy đánh giá giúp chúng tôi về sản phẩm!!',
+          AppLocalizations.of(context)!.rating_slogan,
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],

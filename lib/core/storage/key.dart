@@ -15,6 +15,8 @@ class KeyStorage {
 
   static const String userSearch = "user-search-";
 
+  static const String userCancelOrder = "user-cancel-order-";
+
   static String get getToken => HydratedBloc.storage.read(token);
 }
 

@@ -101,7 +101,7 @@ class ProductCategoriesHome extends StatelessWidget {
                           AppRoutes.router.pushNamed(
                             Names.CATEGORY,
                             queryParams: {
-                              "index": "$index",
+                              "index": "${index + 1}",
                             },
                           );
                         },

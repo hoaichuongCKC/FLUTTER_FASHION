@@ -1,6 +1,6 @@
 import 'package:flutter_fashion/export.dart';
 
-showCustomDialog(
+Future<T?> showCustomDialog<T>(
   BuildContext context, {
   required String content,
   required String title,
@@ -9,8 +9,8 @@ showCustomDialog(
   VoidCallback? onFirst,
   VoidCallback? onSecond,
   Widget? icon,
-}) {
-  showDialog(
+}) async {
+  return await showDialog<T>(
     context: context,
     builder: (context) {
       final theme = Theme.of(context);
@@ -24,12 +24,17 @@ showCustomDialog(
         icon: icon,
         surfaceTintColor: lightColor,
         title: Text(title),
-        titleTextStyle: theme.textTheme.bodyMedium!.copyWith(
+        titleTextStyle: PrimaryFont.instance.copyWith(
           fontSize: 14.0,
-          fontWeight: FontWeight.w800,
+          color: darkColor,
+          fontWeight: FontWeight.w700,
         ),
         iconPadding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-        contentTextStyle: theme.textTheme.bodySmall,
+        contentTextStyle: PrimaryFont.instance.copyWith(
+          fontSize: 12.0,
+          color: darkColor,
+          fontWeight: FontWeight.w300,
+        ),
         content:
             Text(content, textAlign: icon != null ? TextAlign.center : null),
         actionsPadding: EdgeInsets.zero,

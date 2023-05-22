@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/core/notification/notification_service.dart';
 import 'package:flutter_fashion/export.dart';
 part 'settings_state.dart';
 
@@ -27,11 +26,6 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
     ThemeDataApp.instance.setLightTheme = isLight;
 
     emit(state.copyWith(isThemeLight: isLight));
-  }
-
-  void changePlaySound() {
-    NotificationService.instance.playSound = !state.isPlaySound;
-    emit(state.copyWith(isPlaySound: !state.isPlaySound));
   }
 
   @override

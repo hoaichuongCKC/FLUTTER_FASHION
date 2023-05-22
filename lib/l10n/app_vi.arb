@@ -808,6 +808,82 @@
   "of_the_store_is_return_policy" : "trong chính sách đổi trả của cửa hàng",
   "@of_the_store_is_return_policy": {
     "description": "nó là chỉnh sửa"
+  },
+
+  
+  "please_update_your_phone_number" : "Vui lòng cập nhật số điện thoại của bạn",
+  "@please_update_your_phone_number": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_cancel" : "Huỷ đơn",
+  "@order_cancel": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "are_you_sure_cancel_order" : "Bạn có chắc muốn huỷ đơn?",
+  "@are_you_sure_cancel_order": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "loadmore" : "Hiển thị thêm",
+  "@loadmore": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_deleted_successfully" : "Đơn hàng xoá thành công",
+  "@order_deleted_successfully": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "are_you_sure_to_delete" : "Bạn có chắc xoá sản phẩm này?",
+  "@are_you_sure_to_delete": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  
+  "sign_up_success" : "Đăng ký thành công",
+  "@sign_up_success": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "please_await" : "Vui lòng đợi",
+  "@please_await": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  
+  "mua_lai" : "Mua lại",
+  "@mua_lai": {
+    "description": "nó là chỉnh sửa"
+  },
+
+   
+  "temp_price" : "Tạm tính",
+  "@temp_price": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "promotion_applied" : "Đã áp dụng khuyến mãi",
+  "@promotion_applied": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "order_successful" : "Đơn hàng thành công",
+  "@order_successful": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "rating_images" : "Hình ảnh đánh giá",
+  "@rating_images": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "rating_slogan" : "Hãy giúp chúng tôi đánh giá để cải thiện sản phẩm",
+  "@rating_slogan": {
+    "description": "nó là chỉnh sửa"
   }
+
+
   
 }
