@@ -26,3 +26,4 @@ samples, guidance on mobile development, and a full API reference. -->
 [link demo: google drive](https://drive.google.com/file/d/1B4s-FCNMZO8hZ7lpWOOwSj073SugXHHE/view?usp=sharing)
 [link demo: feature rating](https://drive.google.com/file/d/1B6zJTJ-EOmxyoeUVgE_2WPDTav1y9Hml/view?usp=sharing)
 
+![346168096_193706640228660_1230436693800004419_n](https://github.com/naninani2xx1/luan_an_fashion_store/assets/104667945/031e25d8-84a8-402a-8df3-fe803af1f0bb)
