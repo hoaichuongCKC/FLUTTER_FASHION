@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/notification_repository.dart';
-import 'package:flutter_fashion/core/parse_json_isolate/notification.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 part 'notification_state.dart';
@@ -15,27 +13,55 @@ class NotificationCubit extends Cubit<NotificationState> {
       : _notificationRepositoryImpl = noti,
         super(const NotificationState());
 
-  double get scrollThresold => state.scrollThresold;
+  double get scrollThresold => 150.0;
 
-  int get currentPage => state.page;
+  int _currentPage = 1;
 
-  set setPage(int page) => state.page + page;
+  bool _isLoading = false;
 
-  void fetch() async {
+  bool _loadMore = true;
+
+  void fetch([int? page]) async {
+    _isLoading = true;
     emit(state.copyWith(status: AppStatus.loading));
 
-    final result = await _notificationRepositoryImpl.fetch(currentPage);
+    final result = await _notificationRepositoryImpl.fetch(_currentPage);
 
     result.fold(
       (error) => emit(state.copyWith(status: AppStatus.error)),
       (notifications) async {
-        final notiOrder =
-            await compute(parseJson, jsonEncode(notifications["data"]));
+        _isLoading = false;
 
-        emit(state.copyWith(
-            notifications: notiOrder, status: AppStatus.success));
+        if (notifications.isEmpty) {
+          _loadMore = false;
+          emit(state.copyWith(status: AppStatus.success, isLoading: false));
+
+          return;
+        }
+
+        _currentPage++;
+
+        emit(
+          state.copyWith(
+            notifications: [...state.notifications, ...notifications],
+            status: AppStatus.success,
+            isLoading: false,
+            isFirstLoad: true,
+          ),
+        );
       },
     );
+  }
+
+  void loadMore(ScrollController controller) {
+    if (_isLoading || !_loadMore) return;
+
+    final scrollLimit = controller.position.maxScrollExtent - scrollThresold;
+
+    if (controller.offset >= scrollLimit) {
+      emit(state.copyWith(isLoading: true));
+      fetch(_currentPage);
+    }
   }
 
   void add(NotificationModel notification) {
@@ -45,7 +71,4 @@ class NotificationCubit extends Cubit<NotificationState> {
 
     emit(state.copyWith(notifications: updatedList));
   }
-
-  @override
-  String toString() => "state: $state";
 }

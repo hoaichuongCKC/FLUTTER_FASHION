@@ -126,7 +126,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               ..initialize(
                 onEvent: (PusherEvent? onEvent) {
                   if (onEvent!.data != null && onEvent.data.isNotEmpty) {
-                    print("===============${onEvent.data}===============");
                     _pusherUserApp.handleData(onEvent.data);
                   }
                 },

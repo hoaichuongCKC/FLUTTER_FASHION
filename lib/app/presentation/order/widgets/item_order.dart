@@ -138,51 +138,51 @@ class ItemOrder extends StatelessWidget {
                 ],
               ),
             ),
-            order.status_id == deliveredStatus
-                ? Align(
-                    alignment: Alignment.centerRight,
-                    child: order.evaluated!
-                        ? DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: disableDarkColor,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(radiusBtn),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                AppLocalizations.of(context)!.rated,
-                                style: PrimaryFont.instance.copyWith(
-                                  color: lightColor,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ),
-                          )
-                        : ButtonWidget(
-                            height: 40.0,
-                            width: 130.0,
-                            onPressed: () {
-                              AppRoutes.router.pushNamed(
-                                Names.RATING_PRODUCT,
-                                queryParams: {
-                                  "order_id": order.id.toString(),
-                                  "index": index.toString(),
-                                },
-                              );
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.rate_now,
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 14.0,
-                                color: lightColor,
-                              ),
-                            ),
-                          ),
-                  )
-                : const SizedBox()
+            // order.status_id == deliveredStatus
+            //     ? Align(
+            //         alignment: Alignment.centerRight,
+            //         child: order.evaluated!
+            //             ? DecoratedBox(
+            //                 decoration: BoxDecoration(
+            //                   color: disableDarkColor,
+            //                   borderRadius: const BorderRadius.all(
+            //                     Radius.circular(radiusBtn),
+            //                   ),
+            //                 ),
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(5.0),
+            //                   child: Text(
+            //                     AppLocalizations.of(context)!.rated,
+            //                     style: PrimaryFont.instance.copyWith(
+            //                       color: lightColor,
+            //                       fontSize: 12.0,
+            //                       fontWeight: FontWeight.w300,
+            //                     ),
+            //                   ),
+            //                 ),
+            //               )
+            //             : ButtonWidget(
+            //                 height: 40.0,
+            //                 width: 130.0,
+            //                 onPressed: () {
+            //                   AppRoutes.router.pushNamed(
+            //                     Names.RATING_PRODUCT,
+            //                     queryParams: {
+            //                       "order_id": order.id.toString(),
+            //                       "index": index.toString(),
+            //                     },
+            //                   );
+            //                 },
+            //                 child: Text(
+            //                   AppLocalizations.of(context)!.rate_now,
+            //                   style: PrimaryFont.instance.copyWith(
+            //                     fontSize: 14.0,
+            //                     color: lightColor,
+            //                   ),
+            //                 ),
+            //               ),
+            //       )
+            //     : const SizedBox()
           ],
         ),
       ),

@@ -10,8 +10,8 @@ class CancelOrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCancelCubit, OrderCancelState>(
       builder: (context, state) {
-        return state.when(
-          initial: () => Center(
+        if (state.orders.isEmpty) {
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,41 +30,17 @@ class CancelOrderView extends StatelessWidget {
                 ),
               ],
             ),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: state.orders.length,
+          padding:
+              const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
+          itemBuilder: (context, index) => ItemCancel(
+            onPressed: () {},
+            order: state.orders[index],
           ),
-          success: (orders) {
-            if (orders.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/empty_list.svg",
-                      width: 80.0,
-                      height: 80.0,
-                    ),
-                    const SizedBox(height: 10.0),
-                    Text(
-                      AppLocalizations.of(context)!
-                          .you_currently_have_no_orders,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 14.0,
-                          ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return ListView.builder(
-              itemCount: orders.length,
-              padding: const EdgeInsets.only(
-                  top: 15.0, right: 10, left: 10, bottom: 15),
-              itemBuilder: (context, index) => ItemCancel(
-                onPressed: () {},
-                order: orders[index],
-              ),
-            );
-          },
         );
       },
     );

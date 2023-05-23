@@ -17,11 +17,7 @@ class OrderCubit extends Cubit<OrderState> {
       : _orderRepositoryImpl = orderRepositoryImpl,
         super(OrderState.initial());
 
-  void updateStatus(dynamic id, dynamic newStatus) {
-    final int idOrder = int.parse(id);
-
-    final int status = int.parse(newStatus);
-
+  void updateStatus(dynamic idOrder, dynamic status) {
     switch (status) {
       case toShipStatus:
         _updateToShip(idOrder, status);

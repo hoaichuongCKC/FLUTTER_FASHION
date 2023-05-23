@@ -33,12 +33,17 @@ class ChartReviewCpn extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              final disable = index + 1 > star;
+              final starInt = star.toInt();
+
+              //print(starInt);
+
+              final disable = index + 1 > starInt;
 
               if (disable) {
-                final starConvert = star.toInt().toDouble();
-                if (star > starConvert && star < starConvert + 0.9) {
-                  print(star);
+                final starConvert = starInt.toDouble();
+                if (star > starConvert &&
+                    star < starConvert + 0.9 &&
+                    index + 1 == starInt + 1) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: SvgPicture.asset(
@@ -59,8 +64,7 @@ class ChartReviewCpn extends StatelessWidget {
                   colorFilter: disable
                       ? ColorFilter.mode(
                           disableDarkColor.withOpacity(0.2), BlendMode.srcIn)
-                      : ColorFilter.mode(
-                          Colors.yellow.shade700, BlendMode.srcIn),
+                      : ColorFilter.mode(starColor, BlendMode.srcIn),
                 ),
               );
             },

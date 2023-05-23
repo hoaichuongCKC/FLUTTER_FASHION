@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
@@ -46,7 +45,7 @@ class PusherUserApp with PusherMixin implements PusherApp {
             name: "Pusher-onConnectionStateChange",
           );
         },
-        authEndpoint: ApiService.baseUrl + "",
+        //   authEndpoint: "${ApiService.baseUrl}",
         // onAuthorizer: onAuthorizer
       );
       await pusher.subscribe(channelName: channel);
@@ -93,7 +92,7 @@ class PusherUserApp with PusherMixin implements PusherApp {
   void _createNotification(data) {
     if (getIt.isRegistered<NotificationCubit>()) {
       final notification = NotificationModel.fromJson(data["data"]);
-      print("=======================${notification}==========================");
+
       getIt.get<NotificationCubit>().add(notification);
     }
   }

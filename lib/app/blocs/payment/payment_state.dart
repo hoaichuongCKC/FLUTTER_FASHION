@@ -102,6 +102,7 @@ class OrderParams extends Equatable {
       shipPrice,
       note,
       total,
+      idPromotion,
     ];
   }
 

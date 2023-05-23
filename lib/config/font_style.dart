@@ -68,6 +68,7 @@ class PrimaryFont {
     FontWeight? fontWeight,
     double? height,
     double? wordSpacing,
+    TextDecoration? decoration,
   }) {
     return GoogleFonts.robotoSlab(
       fontSize: fontSize ?? _fontSize,
@@ -75,6 +76,7 @@ class PrimaryFont {
       color: color ?? _color,
       fontWeight: fontWeight ?? _fontWeight,
       height: height ?? 1.5,
+      decoration: decoration,
     );
   }
 }

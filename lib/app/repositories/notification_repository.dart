@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/app/network_provider/notification_provider.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class NotificationRepository {
-  Future<Either<String, Map<String, dynamic>>> fetch(int page);
+  Future<Either<String, List<NotificationModel>>> fetch(int page);
   Future<Either<String, ResponseData>> updateReadNoti(int idNoti, String? type);
 }
 
@@ -18,8 +19,8 @@ class NotificationRepositoryImpl extends BaseRepository
   }) : _notificationProvider = notificationProvider;
 
   @override
-  Future<Either<String, Map<String, dynamic>>> fetch(int page) async {
-    final result = await baseRepo<Map<String, dynamic>>(
+  Future<Either<String, List<NotificationModel>>> fetch(int page) async {
+    final result = await baseRepo<List<NotificationModel>>(
       excuteFunction: () async {
         return await _notificationProvider.fetchData(page);
       },

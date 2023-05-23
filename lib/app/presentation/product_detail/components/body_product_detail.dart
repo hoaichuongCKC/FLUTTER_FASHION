@@ -250,7 +250,7 @@ class BodyProductDetail extends StatelessWidget {
                                   SvgPicture.asset(
                                     "assets/icons/star.svg",
                                     colorFilter: ColorFilter.mode(
-                                      Colors.yellow.shade700,
+                                      starColor,
                                       BlendMode.srcIn,
                                     ),
                                   ),

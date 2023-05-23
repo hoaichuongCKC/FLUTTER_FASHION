@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/presentation/profile/export.dart';
-import 'package:flutter_fashion/config/style_widget.dart';
 
 class BuildFrameFeature extends StatelessWidget {
   const BuildFrameFeature({super.key});

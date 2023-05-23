@@ -1,4 +1,5 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
@@ -210,17 +211,19 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                           applocalization.promotions,
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 12.0,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w500,
                             color: primaryColor.withAlpha(150),
+                            decoration: TextDecoration.lineThrough,
                           ),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          "-${(order.temp_price! - (order.temp_price! * order.promotion!.discount_price / 100)).toDouble().toVndCurrency()}%",
+                          "-${(order.temp_price! - order.total_price!).toDouble().toVndCurrency()}",
                           style: PrimaryFont.instance.copyWith(
                             fontSize: 12.0,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w500,
                             color: primaryColor.withAlpha(150),
+                            decoration: TextDecoration.lineThrough,
                           ),
                         ),
                       ],
@@ -243,6 +246,13 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                   ),
                   const SizedBox(width: 8.0),
                   Text(
+                    "${applocalization.total_amount}: ",
+                    style: PrimaryFont.instance.copyWith(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  Text(
                     order.total_price!.toDouble().toVndCurrency(),
                     style: PrimaryFont.instance.copyWith(
                       fontSize: 12.0,
@@ -256,6 +266,7 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
               ButtonWidget(
                 onPressed: () {
                   getIt.get<CartCubit>().addToListCart(order.order_detail!);
+                  context.read<OrderCancelCubit>().remove(order.id!);
                   AppRoutes.router.go(Routes.HOME);
                   AppRoutes.router.push(Routes.CART);
                 },

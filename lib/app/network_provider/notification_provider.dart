@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_fashion/core/base/api/api.dart';
+import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
+import '../../core/parse_json_isolate/notification.dart';
+import '../presentation/home/export.dart';
+
 abstract class NotificationProvider {
-  Future<Map<String, dynamic>> fetchData(int page);
+  Future<List<NotificationModel>> fetchData(int page);
   Future<ResponseData> updateReadNoti(int idNoti, String? type);
 }
 
@@ -17,7 +20,7 @@ class NotificationProviderImpl extends NotificationProvider {
       : _apiService = apiService;
 
   @override
-  Future<Map<String, dynamic>> fetchData(int page) async {
+  Future<List<NotificationModel>> fetchData(int page) async {
     final String uri = "${ApiEndpoint.fetchNotification}?page=$page";
 
     var response = await _apiService.post(uri);
@@ -28,13 +31,14 @@ class NotificationProviderImpl extends NotificationProvider {
 
     final data = await response.stream.bytesToString();
 
-    final convert = jsonDecode(data)["data"];
+    final convert = jsonDecode(data);
 
-    if (convert.isEmpty) {
-      return {};
-    }
+    final responseApp = ResponseData.fromJson(convert);
 
-    return convert as Map<String, dynamic>;
+    final notifications =
+        await compute(parseJson, jsonEncode(responseApp.data));
+
+    return notifications;
   }
 
   @override

@@ -25,3 +25,5 @@ const Color warningColor = Colors.yellowAccent;
 Color skeletonColor = Colors.grey.shade300;
 
 Color textDisable = Colors.grey.shade500;
+
+Color starColor = const Color(0xFFFEB220);

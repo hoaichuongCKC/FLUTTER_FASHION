@@ -4,14 +4,12 @@ part of 'notification_cubit.dart';
 class NotificationState extends Equatable {
   final List<NotificationModel> notifications;
   final bool isLoading;
-  final int page;
-  final double scrollThresold;
+  final bool isFirstLoad;
   final AppStatus status;
   const NotificationState({
     this.notifications = const [],
     this.isLoading = false,
-    this.page = 1,
-    this.scrollThresold = 150.0,
+    this.isFirstLoad = false,
     this.status = AppStatus.init,
   });
   @override
@@ -19,8 +17,7 @@ class NotificationState extends Equatable {
     return [
       notifications,
       isLoading,
-      page,
-      scrollThresold,
+      isFirstLoad,
       status,
     ];
   }
@@ -28,15 +25,13 @@ class NotificationState extends Equatable {
   NotificationState copyWith({
     List<NotificationModel>? notifications,
     bool? isLoading,
-    int? page,
-    double? scrollThresold,
+    bool? isFirstLoad,
     AppStatus? status,
   }) {
     return NotificationState(
       notifications: notifications ?? this.notifications,
       isLoading: isLoading ?? this.isLoading,
-      page: page ?? this.page,
-      scrollThresold: scrollThresold ?? this.scrollThresold,
+      isFirstLoad: isFirstLoad ?? this.isFirstLoad,
       status: status ?? this.status,
     );
   }

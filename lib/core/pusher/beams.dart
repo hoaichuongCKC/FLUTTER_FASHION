@@ -36,7 +36,7 @@ class PusherBeamsApp {
           log('Interests: $interests', name: "Beams-interest"),
         },
       );
-      print("=======================");
+
       await PusherBeams.instance
           .onMessageReceivedInTheForeground(_onMessageReceivedInTheForeground);
     }
@@ -46,9 +46,7 @@ class PusherBeamsApp {
     final type = data["data"]["type"];
 
     if (type == PusherConfig.inNotification) {
-      final isNoti = AppRoutes.router.location == Routes.NOTIFICATION;
-
-      if (!isNoti) _handleNotificationPage(data);
+      _handleNotificationPage(data);
     }
 
     if (type == PusherConfig.inOrder) {

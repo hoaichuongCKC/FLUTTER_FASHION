@@ -31,11 +31,12 @@ class OrderProviderImpl implements OrderProvider {
     }
     final data = await response.stream.bytesToString();
 
-    print(data);
-
     final convert = jsonDecode(data);
+    print("===========$convert");
 
     final order = ResponseData.fromJson(convert);
+
+    print("===========$order");
 
     return OrderModel.fromJson(order.data);
   }
