@@ -24,3 +24,5 @@ samples, guidance on mobile development, and a full API reference. -->
 ## Video demo:
 
 [link demo: google drive](https://drive.google.com/file/d/1B4s-FCNMZO8hZ7lpWOOwSj073SugXHHE/view?usp=sharing)
+[link demo: feature rating](https://drive.google.com/file/d/1B6zJTJ-EOmxyoeUVgE_2WPDTav1y9Hml/view?usp=sharing)
+
