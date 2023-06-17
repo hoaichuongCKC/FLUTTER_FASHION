@@ -7,7 +7,6 @@ import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/rules_app_view.dart';
 import 'package:flutter_fashion/app/repositories/order_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
@@ -33,6 +32,8 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   void cancelPromotion() {
+    final state = this.state;
+
     emit(state.copyWith(promotion: null));
   }
 
@@ -46,24 +47,14 @@ class PaymentCubit extends Cubit<PaymentState> {
     AppRoutes.router.pop();
     result.fold(
       (error) {
-        showCustomDialog(
-          context,
-          content: error,
-          icon: SvgPicture.asset("assets/icons/error.svg"),
-          title: "Request Api",
-        );
+        showErrorToast(error);
         emit(state.copyWith(status: AppStatus.error));
       },
       (repsonse) {
         final statusCode = repsonse.data as int;
 
         if (statusCode != 200) {
-          showCustomDialog(
-            context,
-            content: repsonse.message,
-            title: "",
-            icon: SvgPicture.asset("assets/icons/error.svg"),
-          );
+          showErrorToast(repsonse.data);
           return;
         }
 
@@ -108,11 +99,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     AppRoutes.router.pop();
     result.fold(
       (error) {
-        showCustomDialog(
-          context,
-          content: error,
-          title: "Request Api",
-        );
+        showErrorToast(error);
         emit(state.copyWith(status: AppStatus.error));
       },
       (order) {
@@ -124,40 +111,31 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   order(context) async {
-    if (await _checkRule(context)) {
-      if (await _checkInforUser(context)) {
+    if (await _checkInforUser()) {
+      if (await _checkRule()) {
         showOrder(context);
         _createOrder(context);
       }
     }
   }
 
-  Future<bool> _checkRule(context) async {
+  Future<bool> _checkRule() async {
     if (!state.isRead) {
-      showCustomDialog(
-        context,
-        icon: SvgPicture.asset("assets/icons/error.svg"),
-        title: AppLocalizations.of(context)!.check_it_out,
-        content:
-            "Vui lòng xác nhận đọc điều khoản của bên chúng tôi để tránh mất mác khi nhận hàng",
-      );
+      showErrorToast(
+          "Vui lòng xác nhận đọc điều khoản của bên chúng tôi để tránh mất mác khi nhận hàng");
 
       return false;
     }
     return true;
   }
 
-  _checkInforUser(context) async {
+  _checkInforUser() async {
     final phone = state.phone;
     final fullname = state.fullname;
     final address = getIt.get<AddressUserCubit>().state.usingAddress;
 
     if (phone.isEmpty || fullname.isEmpty || address.isEmpty) {
-      showCustomDialog(
-        context,
-        content: "Thông tin giao hàng về bạn hiện không đầy đủ",
-        title: AppLocalizations.of(context)!.check_it_out,
-      );
+      showErrorToast("Thông tin giao hàng về bạn hiện không đầy đủ");
 
       return false;
     }

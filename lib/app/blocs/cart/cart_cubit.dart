@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
-
+import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import '../../../utils/alert/dialog.dart';
 import '../../models/cart/cart.dart';
 
@@ -121,11 +121,33 @@ class CartCubit extends HydratedCubit<CartState> {
 
   @override
   CartState fromJson(Map<String, dynamic> json) {
-    return json["items"] == null ? const CartState() : CartState.fromJson(json);
+    final list = _checkExpired(json);
+
+    return list.isEmpty ? const CartState() : CartState(items: list);
   }
 
   @override
   Map<String, dynamic> toJson(CartState state) {
     return state.toJson();
+  }
+
+  List<CartModel> _checkExpired(json) {
+    if (json['items'].isEmpty) {
+      return [];
+    }
+    List<CartModel> carts = (json['items'] as List).map(
+      (itemJson) {
+        final cart = CartModel.fromJson(itemJson);
+
+        return cart;
+      },
+    ).toList();
+
+    carts = carts
+      ..retainWhere(
+        (item) => item.created_at.expiredCart,
+      );
+
+    return carts;
   }
 }

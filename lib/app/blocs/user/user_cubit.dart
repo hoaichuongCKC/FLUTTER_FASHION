@@ -34,6 +34,7 @@ class UserCubit extends Cubit<UserState> {
 
   void updateUser(UserModel user) {
     if (isLoaded) {
+      _user = user;
       emit(UserState.fetchCompleted(user));
     }
   }

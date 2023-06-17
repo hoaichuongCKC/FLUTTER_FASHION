@@ -1,12 +1,12 @@
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_new/product_new_cubit.dart';
+import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 
 import '../../../../export.dart';
 
 class ProductNewMonth extends StatelessWidget {
-  const ProductNewMonth({super.key});
-
+  const ProductNewMonth({super.key, required this.products});
+  final List<ProductModel> products;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -32,78 +32,65 @@ class ProductNewMonth extends StatelessWidget {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final size = MediaQuery.of(context).size;
-                return BlocBuilder<ProductNewCubit, ProductNewState>(
-                  builder: (context, state) {
-                    return state.when(
-                      initial: () => const SizedBox(),
-                      loading: () => const SkeletonNewProductHome(),
-                      success: (products) => ListView.separated(
-                        itemCount: products.length + 1,
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: horizontalPadding - 4),
-                        physics: const BouncingScrollPhysics(),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 20.0),
-                        itemBuilder: (context, index) {
-                          if (index == products.length) {
-                            return SizedBox(
-                              width: size.width * 0.45,
-                              height: constraints.biggest.height,
-                              child: Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    DecoratedBox(
-                                      decoration: const BoxDecoration(
-                                        color: lightColor,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: SizedBox(
-                                        width: 60,
-                                        height: 60,
-                                        child: SvgPicture.asset(
-                                          "assets/icons/all.svg",
-                                          fit: BoxFit.scaleDown,
-                                        ),
-                                      ),
+                return ListView.separated(
+                    itemCount: products.length + 1,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: horizontalPadding - 4),
+                    physics: const BouncingScrollPhysics(),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 20.0),
+                    itemBuilder: (context, index) {
+                      if (index == products.length) {
+                        return SizedBox(
+                          width: size.width * 0.45,
+                          height: constraints.biggest.height,
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                DecoratedBox(
+                                  decoration: const BoxDecoration(
+                                    color: lightColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: SizedBox(
+                                    width: 60,
+                                    height: 60,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/all.svg",
+                                      fit: BoxFit.scaleDown,
                                     ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      AppLocalizations.of(context)!.view_all,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
-                          final product = products[index];
-                          return SizedBox(
-                            width: size.width * 0.45,
-                            height: constraints.biggest.height,
-                            child: ItemProduct(
-                              product: products[index],
-                              onTap: () {
-                                final bloc =
-                                    BlocProvider.of<ProductDetailCubit>(
-                                        context);
-
-                                bloc.getProduct(product.id!);
-
-                                AppRoutes.router
-                                    .pushNamed(Names.PRODUCT_DETAIL);
-                              },
+                                const SizedBox(height: 10),
+                                Text(
+                                  AppLocalizations.of(context)!.view_all,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      ),
-                      failure: (e) => Text(e),
-                    );
-                  },
-                );
+                          ),
+                        );
+                      }
+                      final product = products[index];
+                      return SizedBox(
+                        width: size.width * 0.45,
+                        height: constraints.biggest.height,
+                        child: ItemProduct(
+                          product: products[index],
+                          onTap: () {
+                            final bloc =
+                                BlocProvider.of<ProductDetailCubit>(context);
+
+                            bloc.getProduct(product.id!);
+
+                            AppRoutes.router.pushNamed(Names.PRODUCT_DETAIL);
+                          },
+                        ),
+                      );
+                    });
               },
             ),
           ),
@@ -118,31 +105,36 @@ class SkeletonNewProductHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBoxWidget(
-      currentHeight: .4,
-      maxHeight: 250,
-      minHeight: 240,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final size = MediaQuery.of(context).size;
-          return ListView.separated(
-            itemCount: 4,
-            scrollDirection: Axis.horizontal,
-            padding:
-                const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-            physics: const BouncingScrollPhysics(),
-            separatorBuilder: (context, index) => const SizedBox(width: 20.0),
-            itemBuilder: (context, index) {
-              return ColoredBox(
-                color: skeletonColor,
-                child: SizedBox(
-                  width: size.width * 0.45,
-                  height: constraints.biggest.height,
-                ),
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        child: ConstrainedBoxWidget(
+          currentHeight: .4,
+          maxHeight: 250,
+          minHeight: 240,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final size = MediaQuery.of(context).size;
+              return ListView.separated(
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPadding - 4),
+                physics: const BouncingScrollPhysics(),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(width: 20.0),
+                itemBuilder: (context, index) {
+                  return ColoredBox(
+                    color: skeletonColor,
+                    child: SizedBox(
+                      width: size.width * 0.45,
+                      height: constraints.biggest.height,
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
+          ),
+        ),
       ),
     );
   }

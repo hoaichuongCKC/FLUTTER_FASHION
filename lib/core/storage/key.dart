@@ -17,6 +17,8 @@ class KeyStorage {
 
   static const String userCancelOrder = "user-cancel-order-";
 
+  static const String notification = "user-notification-";
+
   static String get getToken => HydratedBloc.storage.read(token);
 }
 

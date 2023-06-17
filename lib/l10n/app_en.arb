@@ -884,6 +884,22 @@
   "rating_slogan" : "Please help us evaluate and improve the product",
   "@rating_slogan": {
     "description": "nó là chỉnh sửa"
-  }
+  },
+
+  "promotion_not_yet_applied" : "Promotion not yet applied",
+  "@promotion_not_yet_applied": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "changed_password_successfully" : "Changed password successfully",
+  "@changed_password_successfully": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "current_password_is_incorrect" : "Current password is incorrect",
+  "@current_password_is_incorrect": {
+    "description": "nó là chỉnh sửa"
+  }   
+
 
 }

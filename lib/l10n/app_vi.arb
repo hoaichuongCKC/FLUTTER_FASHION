@@ -882,8 +882,21 @@
   "rating_slogan" : "Hãy giúp chúng tôi đánh giá để cải thiện sản phẩm",
   "@rating_slogan": {
     "description": "nó là chỉnh sửa"
-  }
+  },
 
-
+  "promotion_not_yet_applied" : "Chưa áp dụng khuyến mãi",
+  "@promotion_not_yet_applied": {
+    "description": "nó là chỉnh sửa"
+  } ,
   
+  "changed_password_successfully" : "Thay đổi mật khẩu thành công",
+  "@changed_password_successfully": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "current_password_is_incorrect" : "Mật khẩu hiện tại không chính xác",
+  "@current_password_is_incorrect": {
+    "description": "nó là chỉnh sửa"
+  }   
+
 }

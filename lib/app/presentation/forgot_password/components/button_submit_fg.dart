@@ -4,7 +4,6 @@ import 'package:flutter_fashion/app/presentation/forgot_password/components/setu
 import 'package:flutter_fashion/app/presentation/forgot_password/forgot_password_page.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/cubit/sign_up_cubit.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 
 class ButtonSubmitForgot extends StatelessWidget {
   const ButtonSubmitForgot({super.key});
@@ -36,28 +35,14 @@ class ButtonSubmitForgot extends StatelessWidget {
         if (blocListen.state == 2) {
           if (SetupNewPasswordCpn.validate) {
             if (SetupNewPasswordCpn.password.isValidPassword) {
-              print(
-                  "====================${ForgotPasswordPage.phoneNumber}==========");
-              print(
-                  "====================${SetupNewPasswordCpn.password}==========");
               authBloc.forgotPassword(context, ForgotPasswordPage.phoneNumber,
                   SetupNewPasswordCpn.password);
             } else {
-              showCustomDialog(
-                context,
-                title: applocalization.notificationPage,
-                content: applocalization.text_validate_valid_pass,
-                icon: SvgPicture.asset("assets/icons/error.svg"),
-              );
+              showErrorToast(applocalization.text_validate_valid_pass);
             }
             return;
           }
-          showCustomDialog(
-            context,
-            title: applocalization.notificationPage,
-            content: applocalization.password_not_match,
-            icon: SvgPicture.asset("assets/icons/error.svg"),
-          );
+          showErrorToast(applocalization.password_not_match);
         }
       },
       child: Text(

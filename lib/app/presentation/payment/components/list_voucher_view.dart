@@ -45,7 +45,7 @@ class ListVoucherView extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: !ThemeDataApp.instance.isLight
                       ? theme.cardColor
-                      : successfullyColor.withAlpha(150),
+                      : Colors.green  ,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(radiusBtn),
                   ),
@@ -53,7 +53,7 @@ class ListVoucherView extends StatelessWidget {
                 child: ListTile(
                   dense: true,
                   horizontalTitleGap: 0.0,
-                  onTap: () => context.read<PaymentCubit>().cancelPromotion(),
+                  onTap: () => _showOptionPromotion(context),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                   leading: const Icon(
                     Icons.check_circle,
@@ -61,7 +61,7 @@ class ListVoucherView extends StatelessWidget {
                     color: lightColor,
                   ),
                   title: Text(
-                    "Đã áp dụng khuyến mãi",
+                    AppLocalizations.of(context)!.promotion_applied,
                     style:
                         theme.textTheme.bodySmall!.copyWith(color: lightColor),
                   ),
@@ -124,63 +124,77 @@ class ListVoucherView extends StatelessWidget {
 
         final cartBloc = context.watch<CartCubit>().state;
 
-        return SizedBox(
-          height: size.height * 0.85,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 45.0,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocalizations.of(context)!.promotions,
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
+        return ColoredBox(
+          color: lightColor,
+          child: SizedBox(
+            height: size.height * 0.85,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 45.0,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          AppLocalizations.of(context)!.promotions,
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      right: 5,
-                      child: IconButton(
-                        onPressed: () =>
-                            AppRoutes.router.pop<PromotionModel?>(null),
-                        icon: Icon(
-                          Icons.clear,
-                          size: theme.iconTheme.size,
-                          color: theme.iconTheme.color,
+                      Positioned(
+                        top: 0,
+                        right: 5,
+                        child: IconButton(
+                          onPressed: () =>
+                              AppRoutes.router.pop<PromotionModel?>(null),
+                          icon: Icon(
+                            Icons.clear,
+                            size: theme.iconTheme.size,
+                            color: theme.iconTheme.color,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
-                  cacheExtent: 150.0,
-                  itemCount: promotionBloc.promotions.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 15.0),
-                  itemBuilder: (context, index) {
-                    final promotion = promotionBloc.promotions[index];
-                    return SizedBox(
-                      height: 150.0,
-                      child: PromotionWidget(
-                        promotion: promotion,
-                        openSelected: true,
-                        onSelected: (p0) => AppRoutes.router.pop(p0),
-                        checkStatus: cartBloc.totalCart() >=
-                            promotion.order_price_conditions,
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
+                    cacheExtent: 150.0,
+                    itemCount: promotionBloc.promotions.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 15.0),
+                    itemBuilder: (context, index) {
+                      final promotion = promotionBloc.promotions[index];
+                      final bool isChecked = cartBloc.totalCart() >=
+                          promotion.order_price_conditions;
+
+                      return SizedBox(
+                        height: 150.0,
+                        child: PromotionWidget(
+                          promotion: promotion,
+                          openSelected: true,
+                          onSelected: (p0) {
+                            if (isChecked) {
+                              AppRoutes.router.pop(p0);
+                            }
+                          },
+                          colorBGLeft: isChecked
+                              ? successfullyColor.withAlpha(100)
+                              : Colors.grey.shade200,
+                          colorBGRight: isChecked
+                              ? successfullyColor.withAlpha(100)
+                              : Colors.grey.shade200,
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },

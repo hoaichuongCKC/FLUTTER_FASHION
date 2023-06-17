@@ -85,7 +85,16 @@ class ChartReviewCpn extends StatelessWidget {
             children: List<Widget>.generate(
               ReviewChartModel.charts.length,
               (index) {
+                final isVN = context.watch<SettingsCubit>().state.isVietnamese;
+
+                late String text;
                 final chart = ReviewChartModel.charts[index];
+
+                if (isVN) {
+                  text = chart.label;
+                } else {
+                  text = chart.labelEn;
+                }
 
                 final percent =
                     ((data.star_group![index].count / data.length!) * 100) /
@@ -98,7 +107,7 @@ class ChartReviewCpn extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          chart.label,
+                          text,
                           style: theme.textTheme.bodySmall!.copyWith(
                             fontSize: 10.0,
                           ),

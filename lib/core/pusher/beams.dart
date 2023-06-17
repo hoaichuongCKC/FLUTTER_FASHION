@@ -43,16 +43,21 @@ class PusherBeamsApp {
   }
 
   void _onMessageReceivedInTheForeground(Map<dynamic, dynamic> data) {
-    final type = data["data"]["type"];
+    try {
+      final type = data["data"]["type"];
 
-    if (type == PusherConfig.inNotification) {
-      _handleNotificationPage(data);
-    }
+      if (type == PusherConfig.inNotification) {
+        _handleNotificationPage(data);
+      }
 
-    if (type == PusherConfig.inOrder) {
-      final isNoti = AppRoutes.router.location == Routes.NOTIFICATION;
+      if (type == PusherConfig.inOrder) {
+        final isNoti =
+            AppRoutes.router.location == "${Routes.PROFILE}/${Routes.MY_ORDER}";
 
-      if (!isNoti) _handleOrderPage(data);
+        if (!isNoti) _handleOrderPage(data);
+      }
+    } catch (e) {
+      print("==== == $e==== ===");
     }
   }
 

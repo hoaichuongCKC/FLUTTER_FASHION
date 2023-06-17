@@ -67,8 +67,23 @@ class BuildFrameFeature extends StatelessWidget {
               children: listFeatureSecond
                   .map(
                     (e) => InkWell(
-                      onTap: () => AppRoutes.router.pushNamed(
-                          listFeatureSecond[listFeatureSecond.indexOf(e)].path),
+                      onTap: () {
+                        if (e.path == Routes.MESSENGER) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => const AlertDialog(
+                                    backgroundColor: lightColor,
+                                    content: Text(
+                                      'Hiện tại chưa phát triển chức năng này',
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ));
+                          return;
+                        }
+                        AppRoutes.router.pushNamed(e.path);
+                      },
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
                           minHeight: 50,

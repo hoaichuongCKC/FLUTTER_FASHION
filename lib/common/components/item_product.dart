@@ -189,7 +189,7 @@ class ItemProduct extends StatelessWidget {
                           return false;
                         }
                         final ischeck = List<ProductModel>.from(favorites)
-                            .checkExistsFavorite(state.idList, product.id!);
+                            .checkExistsId(state.idList, product.id!);
 
                         return ischeck != -1;
                       },
@@ -213,17 +213,24 @@ class ItemProduct extends StatelessWidget {
                       right: 0,
                       top: 0,
                       child: Container(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         decoration: const BoxDecoration(
                           color: Colors.amber,
-                          shape: BoxShape.circle,
+                          shape: BoxShape.rectangle,
                         ),
-                        child: Text(
-                          "-${product.discount!.toInt()}%",
-                          style: theme.textTheme.bodySmall!.copyWith(
-                            fontSize: 12,
-                            color: lightColor,
-                          ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset("assets/icons/tag.svg"),
+                            const SizedBox(width: 3.0),
+                            Text(
+                              "-${product.discount!.toInt()}%",
+                              style: theme.textTheme.bodySmall!.copyWith(
+                                fontSize: 12,
+                                color: darkColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

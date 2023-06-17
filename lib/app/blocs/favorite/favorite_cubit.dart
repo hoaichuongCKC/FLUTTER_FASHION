@@ -6,7 +6,7 @@ import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 part 'favorite_state.dart';
 
 class FavoriteCubit extends HydratedCubit<FavoriteState> {
@@ -65,28 +65,40 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
     emit(state.copyWith(listProduct: updatedList, idList: updatedIdList));
   }
 
-  void removeListFavorite(context) {
-    final state = this.state;
-
+  void removeListFavorite() {
     if (!_checkExistsList()) {
-      showCustomDialog(
-        context,
-        content: "Vui lòng chọn sản phẩm",
-        title: AppLocalizations.of(context)!.notificationPage,
-      );
+      showErrorToast("Vui lòng chọn sản phẩm", toastLength: Toast.LENGTH_SHORT);
       return;
     }
+
+    if (state.chooseItemsDelete.length == state.listProduct.length) {
+      emit(state.copyWith(listProduct: [], idList: [], chooseItemsDelete: []));
+      showCheckBox();
+      return;
+    }
+
+    late List<ProductModel> updatedList;
+
+    late List<int> updatedListId;
 
     final list = state.listProduct;
 
     for (int id in state.chooseItemsDelete) {
-      final updatedList = List<ProductModel>.from(list)
-        ..retainWhere(
-          (item) => item.id != id,
+      updatedList = List<ProductModel>.from(list)
+        ..removeWhere(
+          (item) => item.id == id,
         );
 
-      emit(state.copyWith(listProduct: updatedList));
+      updatedListId = List<int>.from(state.idList)
+        ..removeWhere(
+          (item) => item == id,
+        );
     }
+    emit(state.copyWith(
+        listProduct: updatedList,
+        idList: updatedListId,
+        chooseItemsDelete: []));
+
     showCheckBox();
   }
 
@@ -121,11 +133,5 @@ class FavoriteCubit extends HydratedCubit<FavoriteState> {
   @override
   Map<String, dynamic>? toJson(FavoriteState state) {
     return state.toJson();
-  }
-
-  @override
-  String toString() {
-    super.toString();
-    return "state: $state";
   }
 }

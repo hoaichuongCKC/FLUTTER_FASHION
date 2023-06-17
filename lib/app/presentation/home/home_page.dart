@@ -88,8 +88,32 @@ class _HomePageState extends ScrollState<HomePage> {
                 );
               },
             ),
-            const ProductSaleArea(),
-            const ProductNewMonth(),
+            BlocBuilder<ProductSaleCubit, ProductSaleState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => const SizedBox(),
+                  loading: () => const SkeletonNewProductHome(),
+                  success: (products) {
+                    if (products.isEmpty) return const SliverToBoxAdapter();
+                    return ProductSaleArea(products: products);
+                  },
+                  failure: (e) => Text(e),
+                );
+              },
+            ),
+            BlocBuilder<ProductNewCubit, ProductNewState>(
+              builder: (context, state) {
+                return state.when(
+                    initial: () => const SliverToBoxAdapter(),
+                    loading: () => const SkeletonNewProductHome(),
+                    failure: (String error) =>
+                        SliverToBoxAdapter(child: Text(error)),
+                    success: (List<ProductModel> products) {
+                      if (products.isEmpty) return const SliverToBoxAdapter();
+                      return ProductNewMonth(products: products);
+                    });
+              },
+            ),
             BlocBuilder<PopularProductCubit, PopularSearchState>(
               builder: (context, state) {
                 return state.when(

@@ -1,19 +1,23 @@
+import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
+import 'package:flutter_fashion/utils/extensions/list.dart';
 
 import '../../../../export.dart';
 
 class ItemNotiNormal extends StatelessWidget {
-  const ItemNotiNormal({super.key, required this.notification});
+  const ItemNotiNormal(
+      {super.key, required this.notification, required this.isRead});
 
   final NotificationModel notification;
+  final bool isRead;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () => context.read<NotificationCubit>().read(notification.id),
           child: Container(
             padding: const EdgeInsets.symmetric(
                 horizontal: horizontalPadding - 4,
@@ -21,25 +25,27 @@ class ItemNotiNormal extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                notification.is_read! == 0
-                    ? Container(
+                (isRead)
+                    ? const SizedBox()
+                    : Container(
                         width: 8.0,
                         height: 8.0,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: secondaryColor,
                         ),
-                      )
-                    : const SizedBox(),
-                notification.is_read! != 0
+                      ),
+                (isRead)
                     ? const SizedBox()
-                    : const SizedBox(width: 15.0),
+                    : const SizedBox(
+                        width: 15.0,
+                      ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        notification.title + notification.id.toString(),
+                        notification.title,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
@@ -102,7 +108,7 @@ class ItemNotiNormal extends StatelessWidget {
             ),
           ),
         ),
-        const Divider(),
+        Divider(color: skeletonColor),
       ],
     );
   }

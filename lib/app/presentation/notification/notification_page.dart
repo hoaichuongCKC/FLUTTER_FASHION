@@ -5,6 +5,7 @@ import 'package:flutter_fashion/app/presentation/notification/components/skeleto
 import 'package:flutter_fashion/common/components/app/background_app.dart';
 import 'package:flutter_fashion/config/loadmore_data.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
+import 'package:flutter_fashion/utils/extensions/list.dart';
 
 import 'components/item_noti_normal.dart';
 
@@ -28,7 +29,8 @@ class _NotificationPageState extends ScrollState<NotificationPage> {
       child: BlocBuilder<NotificationCubit, NotificationState>(
         buildWhen: (p, c) =>
             p.isFirstLoad != c.isFirstLoad ||
-            c.notifications != p.notifications,
+            c.notifications != p.notifications ||
+            p.reads != c.reads,
         builder: (context, state) {
           final status = state.status;
 
@@ -64,9 +66,20 @@ class _NotificationPageState extends ScrollState<NotificationPage> {
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10.0),
                   itemBuilder: (context, index) {
+                    bool isRead = true;
                     final notification = state.notifications[index];
+                    if (state.reads.isEmpty) {
+                      isRead = !isRead;
+                    }
+
+                    final isCheck = List<int>.from(state.reads)
+                        .checkExistsId(state.reads, notification.id);
+
+                    isRead = isCheck != -1;
+
                     return ItemNotiNormal(
                       notification: notification,
+                      isRead: isRead,
                     );
                   },
                 ),

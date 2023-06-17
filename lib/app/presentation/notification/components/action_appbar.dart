@@ -1,4 +1,5 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 
@@ -9,15 +10,23 @@ class ActionAppbarNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
-          onTap: () {},
-          borderRadius: const BorderRadius.all(
-            Radius.circular(radiusBtn),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: SvgPicture.asset("assets/icons/tick-double.svg"),
-          ),
+        BlocSelector<NotificationCubit, NotificationState, bool>(
+          selector: (state) {
+            return state.reads.length == state.notifications.length;
+          },
+          builder: (context, state) {
+            if (state) return const SizedBox();
+            return InkWell(
+              onTap: () {},
+              borderRadius: const BorderRadius.all(
+                Radius.circular(radiusBtn),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: SvgPicture.asset("assets/icons/tick-double.svg"),
+              ),
+            );
+          },
         ),
         const SizedBox(width: 5.0),
         InkWell(

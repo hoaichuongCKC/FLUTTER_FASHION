@@ -130,20 +130,28 @@ class BodyProductDetail extends StatelessWidget {
                           : Positioned(
                               top: 0,
                               right: 0,
-                              width: constraints.biggest.width * .15,
-                              height: constraints.biggest.height * .25,
+                              width: constraints.biggest.width * .25,
+                              height: constraints.biggest.height * .15,
                               child: Container(
                                 padding: const EdgeInsets.all(5.0),
                                 decoration: const BoxDecoration(
                                   color: Colors.amber,
-                                  shape: BoxShape.circle,
+                                  shape: BoxShape.rectangle,
                                 ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "-${product.discount!.toInt()}%",
-                                  style: theme.textTheme.bodySmall!.copyWith(
-                                    color: lightColor,
-                                  ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset("assets/icons/tag.svg"),
+                                    const SizedBox(width: 3.0),
+                                    Text(
+                                      "-${product.discount!.toInt()}%",
+                                      style:
+                                          theme.textTheme.bodySmall!.copyWith(
+                                        fontSize: 12,
+                                        color: darkColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

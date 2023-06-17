@@ -10,7 +10,7 @@ extension ListX on List {
     );
   }
 
-  int checkExistsFavorite(List<int?> sortedList, int target) {
+  int checkExistsId(List<int?> sortedList, int target) {
     int left = 0;
     int right = sortedList.length - 1;
 

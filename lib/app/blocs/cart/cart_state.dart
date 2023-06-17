@@ -6,11 +6,6 @@ class CartState extends Equatable {
 
   const CartState({this.items = const []});
 
-  CartState.fromJson(Map<String, dynamic> json)
-      : items = (json['items'] as List)
-            .map((itemJson) => CartModel.fromJson(itemJson))
-            .toList();
-
   Map<String, dynamic> toJson() => {
         'items': items.map((item) => item.toJson()).toList(),
       };

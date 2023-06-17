@@ -26,17 +26,17 @@ class OrderProviderImpl implements OrderProvider {
       ApiEndpoint.createOrder,
       body: params.toMap(),
     );
+
+    //print(await response.stream.bytesToString());
+
     if (response.statusCode != 200) {
       throw ServerException();
     }
     final data = await response.stream.bytesToString();
 
     final convert = jsonDecode(data);
-    print("===========$convert");
 
     final order = ResponseData.fromJson(convert);
-
-    print("===========$order");
 
     return OrderModel.fromJson(order.data);
   }
@@ -64,7 +64,7 @@ class OrderProviderImpl implements OrderProvider {
   Future<int> delete(int orderId) async {
     var response =
         await _apiService.post("${ApiEndpoint.deleteOrder}?order_id=$orderId");
-
+    print(await response.stream.bytesToString());
     if (response.statusCode != 200) {
       throw ServerException();
     }

@@ -36,12 +36,11 @@ class NetworkInfoImpl implements NetworkInfo {
 
   @override
   void listenChangeNetwork(ConnectivityResult result) {
-    log("$result", name: "Connectivity");
     if (result != ConnectivityResult.none) {
       _status = NetWorkStatus.successfully;
     } else {
       _status = NetWorkStatus.noInternet;
-      AppSnackbarMessenger.showMessage(content: "No Internet!!!");
+      showErrorToast("No internet connection");
     }
   }
 }

@@ -41,7 +41,10 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
             fit: BoxFit.scaleDown,
             width: 12,
             height: 12.0,
-            color: secondaryColor,
+            colorFilter: const ColorFilter.mode(
+              secondaryColor,
+              BlendMode.srcIn,
+            ),
           ),
           hintText: applocalization.enter_the(applocalization.fullname),
           onChanged: (p0) => data["fullname"] = p0,

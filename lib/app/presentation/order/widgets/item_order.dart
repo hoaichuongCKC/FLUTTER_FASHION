@@ -176,7 +176,7 @@ class ItemOrder extends StatelessWidget {
                             child: Text(
                               AppLocalizations.of(context)!.rate_now,
                               style: PrimaryFont.instance.copyWith(
-                                fontSize: 14.0,
+                                fontSize: 12.0,
                                 color: lightColor,
                               ),
                             ),

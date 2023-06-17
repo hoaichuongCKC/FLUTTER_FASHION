@@ -2,7 +2,6 @@ import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
 import '../../../../export.dart';
 
@@ -75,30 +74,9 @@ class ItemCart extends StatelessWidget {
                                 isItemCart
                                     ? InkWell(
                                         onTap: () {
-                                          showCustomDialog(
-                                            context,
-                                            title: AppLocalizations.of(context)!
-                                                .notificationPage,
-                                            content:
-                                                AppLocalizations.of(context)!
-                                                    .are_you_sure_to_delete,
-                                            submitNameFirst:
-                                                AppLocalizations.of(context)!
-                                                    .cancel,
-                                            submitNameSecond:
-                                                AppLocalizations.of(context)!
-                                                    .ok,
-                                            onFirst: () {
-                                              AppRoutes.router.pop();
-                                            },
-                                            onSecond: () {
-                                              context
-                                                  .read<CartCubit>()
-                                                  .removeFromCart(
-                                                      index, context);
-                                              AppRoutes.router.pop();
-                                            },
-                                          );
+                                          context
+                                              .read<CartCubit>()
+                                              .removeFromCart(index, context);
                                         },
                                         child: FractionallySizedBox(
                                           alignment: const Alignment(0, -0.8),
@@ -235,8 +213,8 @@ class ItemCart extends StatelessWidget {
                               WidgetSpan(
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
-                                    color:
-                                        Color(int.parse("0xFF${item.color}")),
+                                    color: Color(int.parse(
+                                        "0xFF${item.color.substring(1)}")),
                                     shape: BoxShape.circle,
                                     boxShadow: item.color != "ffffff"
                                         ? null

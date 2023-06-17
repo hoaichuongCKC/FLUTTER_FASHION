@@ -54,4 +54,15 @@ extension DatetimeX on DateTime {
     }
     return false;
   }
+
+  bool get expiredCart {
+    DateTime currentDate = DateTime.now();
+
+    int differenceInDays = currentDate.difference(this).inDays;
+
+    if (differenceInDays <= 14) {
+      return true;
+    }
+    return false;
+  }
 }

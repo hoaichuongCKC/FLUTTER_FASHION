@@ -107,8 +107,8 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
       backgroundColor: lightColor,
       icon: Image.asset(
         "assets/images/warning.png",
-        width: 100,
-        height: 100,
+        width: 60,
+        height: 60,
       ),
       surfaceTintColor: lightColor,
       title: Text(applocalizations.order_cancel),
@@ -126,8 +126,7 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
       content: Text(applocalizations.are_you_sure_cancel_order,
           textAlign: TextAlign.center),
       contentPadding: const EdgeInsets.fromLTRB(25, 8, 25, 8),
-      actionsAlignment: MainAxisAlignment.end,
-      actionsPadding: const EdgeInsets.fromLTRB(0, 0, 8, 10),
+      actionsAlignment: MainAxisAlignment.spaceEvenly,
       actions: [
         ButtonWidget(
           onPressed: () {

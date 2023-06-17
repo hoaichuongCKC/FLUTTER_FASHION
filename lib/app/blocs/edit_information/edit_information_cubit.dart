@@ -4,7 +4,6 @@ import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:flutter_fashion/utils/alert/success.dart';
 import 'package:image_picker/image_picker.dart';
 part 'edit_information_state.dart';
 
@@ -71,22 +70,16 @@ class EditInformationCubit extends Cubit<EditInformationState> {
     AppRoutes.router.pop();
 
     result.fold(
-      (error) => showCustomDialog(
-        context,
-        content: error,
-        title: "Request Api",
-      ),
+      (error) => showErrorToast(error),
       (data) async {
         //reset
         context.read<UserCubit>().updateUser(data);
         if (willPop) {
           AppRoutes.router.pop();
         } else {
-          successAlert(
-            context: context,
-            message:
-                AppLocalizations.of(context)!.updated_information_successfully,
-          );
+          final text =
+              AppLocalizations.of(context)!.updated_information_successfully;
+          showSuccessToast(text);
         }
         emit(const EditInformationState());
       },

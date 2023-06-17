@@ -51,9 +51,6 @@ class _ListImageRatingState extends State<ListImageRating> {
                       ValueListenableBuilder<bool>(
                         valueListenable: _removeNotifier,
                         builder: (context, bool isRemove, child) {
-                          final text = isRemove
-                              ? AppLocalizations.of(context)!.cancel
-                              : AppLocalizations.of(context)!.delete;
                           return GestureDetector(
                             onTap: () => _removeNotifier.value = !isRemove,
                             child: SvgPicture.asset(

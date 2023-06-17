@@ -3,7 +3,6 @@ import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/export_detail.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 part 'product_detail_ui_state.dart';
 
 class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
@@ -45,30 +44,14 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
         InheritedDataApp.of<ProductModel>(context)!.data;
 
     if (state.color.isEmpty) {
-      showCustomDialog(
-        context,
-        icon: SvgPicture.asset(
-          "assets/icons/error.svg",
-          width: 100,
-          height: 100,
-        ),
-        content: AppLocalizations.of(context)!.please_choose_color,
-        title: AppLocalizations.of(context)!.notificationPage,
-      );
+      showErrorToast(AppLocalizations.of(context)!.please_choose_color);
+
       return;
     }
     if (product.properties!.sizes!.isNotEmpty) {
       if (state.size.isEmpty) {
-        showCustomDialog(
-          context,
-          icon: SvgPicture.asset(
-            "assets/icons/error.svg",
-            width: 100,
-            height: 100,
-          ),
-          content: AppLocalizations.of(context)!.please_choose_size,
-          title: AppLocalizations.of(context)!.notificationPage,
-        );
+        showErrorToast(AppLocalizations.of(context)!.please_choose_size);
+
         return;
       }
     }

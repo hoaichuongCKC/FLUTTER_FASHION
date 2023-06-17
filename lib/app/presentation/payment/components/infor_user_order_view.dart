@@ -12,6 +12,7 @@ class InfoUserOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = getIt.get<UserCubit>().user;
+    print(user);
     final fullnameController = TextEditingController(text: user.fullName);
     final phoneController = TextEditingController(text: user.phone);
     final theme = Theme.of(context);

@@ -18,6 +18,8 @@ class OrderCubit extends Cubit<OrderState> {
         super(OrderState.initial());
 
   void updateStatus(dynamic idOrder, dynamic status) {
+    print(idOrder);
+    print(status);
     switch (status) {
       case toShipStatus:
         _updateToShip(idOrder, status);
@@ -42,8 +44,7 @@ class OrderCubit extends Cubit<OrderState> {
   ///   status (int): The "status" parameter is an integer value representing the updated status of an
   /// order. It is used to update the "status_id" field of an order in the "toPayList" list.
   void _updateToShip(int id, int status) {
-    final state = this.state;
-
+    print('_updateToShip');
     OrderModel getOrder = List<OrderModel>.from(state.toPayList)
         .firstWhere((element) => element.id == id);
 
@@ -69,8 +70,7 @@ class OrderCubit extends Cubit<OrderState> {
   ///   status (int): The "status" parameter is an integer representing the updated status of an order.
   /// It is used to update the "status_id" field of an order in the "getOrder" variable.
   void _updateToReceive(int id, int status) {
-    final state = this.state;
-
+    print('updateToReceive');
     OrderModel getOrder = List<OrderModel>.from(state.toShipList)
         .firstWhere((element) => element.id == id);
 
@@ -94,12 +94,11 @@ class OrderCubit extends Cubit<OrderState> {
   ///   status (int): The "status" parameter is an integer representing the new status ID that the order
   /// should be updated to.
   void _updateToCompleted(int id, int status) {
-    final state = this.state;
-
+    print('_updateToCompleted');
     OrderModel getOrder = List<OrderModel>.from(state.toReceiveList)
         .firstWhere((element) => element.id == id);
 
-    getOrder = getOrder.copyWith(status_id: status);
+    getOrder = getOrder.copyWith(status_id: status, evaluated: true);
 
     final updatedTocompleted = [getOrder, ...state.completedList];
 
@@ -161,11 +160,9 @@ class OrderCubit extends Cubit<OrderState> {
         emit(state.copyWith(
             toPayList: List<OrderModel>.from(state.toPayList)
               ..removeWhere((e) => e.id == orderId)));
-        AppSnackbarMessenger.showMessage(
-          textColor: darkColor,
-          background: lightColor,
-          content: AppLocalizations.of(context)!.order_deleted_successfully,
-        );
+
+        showSuccessToast(
+            AppLocalizations.of(context)!.order_deleted_successfully);
       },
     );
   }

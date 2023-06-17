@@ -58,7 +58,7 @@ class AppBarProductDetail extends StatelessWidget {
                         }
 
                         final ischeck = List<ProductModel>.from(favorites)
-                            .checkExistsFavorite(state.idList, product.id!);
+                            .checkExistsId(state.idList, product.id!);
 
                         return ischeck != -1;
                       },
@@ -133,14 +133,10 @@ class AppBarProductDetail extends StatelessWidget {
           context.read<FavoriteCubit>().addFavorite(product);
         }
       },
-      child: SvgPicture.asset(
-        "assets/icons/favorite.svg",
-        colorFilter: isFavorite
-            ? null
-            : ColorFilter.mode(
-                Theme.of(context).iconTheme.color!,
-                BlendMode.srcIn,
-              ),
+      child: Icon(
+        Icons.favorite,
+        size: 24,
+        color: isFavorite ? secondaryColor : Colors.black54,
       ),
     );
   }

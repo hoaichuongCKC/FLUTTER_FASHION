@@ -71,7 +71,9 @@ class OptionColorSizeDetail extends StatelessWidget {
           children: options.map((e) {
             final isSelected = colorCode == e.color;
 
-            final color = int.parse("0xFF${e.color}");
+            final hex = "0xFF${e.color!.substring(1)}";
+
+            final color = int.parse(hex);
 
             final index = options.indexOf(e);
 

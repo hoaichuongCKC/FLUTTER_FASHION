@@ -16,7 +16,6 @@ class PromotionWidget extends StatelessWidget {
     this.colorBGRight = lightColor,
     this.withPercent = 0.4,
     this.openSelected = false,
-    this.checkStatus,
     this.onSelected,
   });
 
@@ -32,11 +31,8 @@ class PromotionWidget extends StatelessWidget {
 
   final bool openSelected;
 
-  final bool? checkStatus;
-
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
     return LayoutBuilder(
       builder: (context, constraints) {
         _maxWidth = constraints.biggest.width;
@@ -51,146 +47,108 @@ class PromotionWidget extends StatelessWidget {
             colorBGRight,
             widthPercent: withPercent,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: flex,
-                child: Container(
-                  margin: EdgeInsets.all((_maxWidth * withPercent) * 0.1),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Image.asset("assets/images/logo.png"),
-                      ),
-                      Text(
-                        "OFF -${promotion.discount_price}%",
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          color: darkColor,
-                          fontWeight: FontWeight.w400,
+          child: InkWell(
+            onTap: () => onSelected!(promotion),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: flex,
+                  child: Container(
+                    margin: EdgeInsets.all((_maxWidth * withPercent) * 0.1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Image.asset("assets/images/logo.png"),
                         ),
-                      ),
-                      openSelected
-                          ? Text.rich(
-                              TextSpan(
-                                text: "Điều kiện: ",
-                                children: [
-                                  TextSpan(
-                                    text: "đơn hàng đạt",
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w300,
+                        Text(
+                          "OFF -${promotion.discount_price}%",
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 14.0,
+                            color: darkColor,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        openSelected
+                            ? Text.rich(
+                                TextSpan(
+                                  text: "Điều kiện: ",
+                                  children: [
+                                    TextSpan(
+                                      text: "đơn hàng đạt",
+                                      style: PrimaryFont.instance.copyWith(
+                                        fontSize: 8.0,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                                     ),
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        " ${promotion.order_price_conditions.toVndCurrency()} ",
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 8.0,
-                                      color: primaryColor,
-                                      fontWeight: FontWeight.w500,
+                                    TextSpan(
+                                      text:
+                                          " ${promotion.order_price_conditions.toVndCurrency()} ",
+                                      style: PrimaryFont.instance.copyWith(
+                                        fontSize: 8.0,
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  TextSpan(
-                                    text: "trở lên",
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w300,
+                                    TextSpan(
+                                      text: "trở lên",
+                                      style: PrimaryFont.instance.copyWith(
+                                        fontSize: 8.0,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                                     ),
+                                  ],
+                                  style: PrimaryFont.instance.copyWith(
+                                    fontSize: 8.0,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.w300,
                                   ),
-                                ],
+                                ),
+                                textAlign: TextAlign.center,
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 10 - flex,
+                  child: Container(
+                    margin: EdgeInsets.all((_maxWidth * withPercent) * 0.1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            promotion.desc,
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        openSelected
+                            ? const SizedBox()
+                            : Text(
+                                AppLocalizations.of(context)!.expired_date(
+                                    promotion.created_at.formatDateTime(
+                                        isGetPM: false, isGetTime: false)),
                                 style: PrimaryFont.instance.copyWith(
-                                  fontSize: 8.0,
-                                  color: primaryColor,
+                                  fontSize: 10.0,
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
-                              textAlign: TextAlign.center,
-                            )
-                          : const SizedBox(),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 10 - flex,
-                child: Container(
-                  margin: EdgeInsets.all((_maxWidth * withPercent) * 0.1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          promotion.desc,
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w300,
-                          ),
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      openSelected
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                checkStatus != null && !checkStatus!
-                                    ? Container(
-                                        padding: const EdgeInsets.all(3.0),
-                                        color: errorColor.withAlpha(150),
-                                        child: Text(
-                                          "Không thể sử dụng",
-                                          style: theme.bodySmall!.copyWith(
-                                            color: lightColor,
-                                            fontSize: 8.0,
-                                          ),
-                                        ),
-                                      )
-                                    : Container(
-                                        padding: const EdgeInsets.all(3.0),
-                                        color: successfullyColor.withAlpha(200),
-                                        child: Text(
-                                          "Được sử dụng",
-                                          style: theme.bodySmall!.copyWith(
-                                            color: lightColor,
-                                            fontSize: 8.0,
-                                          ),
-                                        ),
-                                      ),
-                                const SizedBox(width: 8.0),
-                                checkStatus != null && !checkStatus!
-                                    ? const SizedBox()
-                                    : ButtonWidget(
-                                        height: 30,
-                                        width: 100,
-                                        onPressed: () => onSelected!(promotion),
-                                        child: Text(
-                                          AppLocalizations.of(context)!.use,
-                                          style: theme.bodySmall!
-                                              .copyWith(color: lightColor),
-                                        ),
-                                      ),
-                              ],
-                            )
-                          : Text(
-                              AppLocalizations.of(context)!.expired_date(
-                                  promotion.created_at.formatDateTime(
-                                      isGetPM: false, isGetTime: false)),
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

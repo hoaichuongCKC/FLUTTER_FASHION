@@ -58,12 +58,14 @@ class DetailOrderView extends StatelessWidget {
                   builder: (context, state) {
                     if (state.promotion == null) {
                       return ItemDetailOrder(
-                        title: "Chưa áp dụng khuyến mãi",
+                        title: AppLocalizations.of(context)!
+                            .promotion_not_yet_applied,
                         value: 0.0.toVndCurrency(),
                       );
                     }
                     return ItemDetailOrder(
-                      title: "Giảm giá (đã áp dụng voucher)",
+                      title:
+                          "${AppLocalizations.of(context)!.promotions} (${AppLocalizations.of(context)!.promotion_applied})",
                       textStyleValue: PrimaryFont.instance.copyWith(
                         fontSize: 12.0,
                         color: errorColor,

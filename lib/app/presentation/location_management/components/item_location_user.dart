@@ -53,7 +53,7 @@ class ItemLocationUser extends StatelessWidget {
                     "assets/icons/map_address.svg",
                     width: 20.0,
                     height: 20.0,
-                    color: primaryColor,
+                    color: secondaryColor,
                     fit: BoxFit.contain,
                     placeholderBuilder: (context) => ColoredBox(
                       color: skeletonColor,

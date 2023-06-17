@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
@@ -31,7 +30,7 @@ class OrderCancelCubit extends HydratedCubit<OrderCancelState> {
   OrderCancelState? fromJson(Map<String, dynamic> json) {
     final convert = (json["state"]);
 
-    if (convert.isEmpty) return const OrderCancelState();
+    if (convert == null) return const OrderCancelState();
 
     final list = OrderModel.orderListFromJson(convert);
 

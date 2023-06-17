@@ -54,7 +54,7 @@ class ChangePasswordPage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 TextFormFieldApp(
                   obscureText: true,
-                  title: applocalization.newPassword,
+                  title: applocalization.confirmPassword,
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.visiblePassword,
                   hintText: "******",

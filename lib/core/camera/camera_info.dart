@@ -67,7 +67,9 @@ class CameraInfo {
       );
 
       return result;
-    } catch (e) {}
+    } catch (e) {
+      print('convert file image $e');
+    }
     return null;
   }
 

@@ -3,9 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:flutter_fashion/utils/alert/success.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'change_password_state.dart';
 
@@ -24,16 +22,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   void submitForm(BuildContext context) async {
     if (!_checkPassword(context)) {
-      showCustomDialog(
-        context,
-        content: AppLocalizations.of(context)!.password_not_match,
-        title: AppLocalizations.of(context)!.password,
-        icon: SvgPicture.asset(
-          "assets/icons/error.svg",
-          width: 100,
-          height: 100,
-        ),
-      );
+      showErrorToast(AppLocalizations.of(context)!.password_not_match);
       return;
     }
 
@@ -49,34 +38,20 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        showCustomDialog(
-          context,
-          content: error,
-          title: "Request Api",
-          icon: SvgPicture.asset(
-            "assets/icons/error.svg",
-            width: 100,
-            height: 100,
-          ),
-        );
+        showErrorToast(error);
       },
       (data) {
-        if (data.status) {
+        final status = data.data[0] as int;
+        if (status == 200) {
           //dispose dialog showform Password
           AppRoutes.router.pop();
           emit(state.copyWith(status: AppStatus.success));
-          successAlert(context: context, message: data.message);
+          showSuccessToast(
+              AppLocalizations.of(context)!.changed_password_successfully);
         } else {
-          showCustomDialog(
-            context,
-            content: data.message,
-            icon: SvgPicture.asset(
-              "assets/icons/error.svg",
-              width: 100,
-              height: 100,
-            ),
-            title: AppLocalizations.of(context)!.notificationPage,
-          );
+          showErrorToast(
+              AppLocalizations.of(context)!.current_password_is_incorrect);
+
           emit(state.copyWith(status: AppStatus.error));
         }
       },

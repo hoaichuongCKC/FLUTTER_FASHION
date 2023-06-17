@@ -101,19 +101,15 @@ class ItemCancel extends StatelessWidget {
                                 e.product.regular_price!
                                     .toDouble()
                                     .toVndCurrency(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      fontSize: 10.0,
-                                      color: !(e.product.sale_price != null)
-                                          ? const Color(0xFFFF7262)
-                                          : disableDarkColor,
-                                      decoration:
-                                          !(e.product.sale_price != null)
-                                              ? null
-                                              : TextDecoration.lineThrough,
-                                    ),
+                                style: PrimaryFont.instance.copyWith(
+                                  fontSize: 10.0,
+                                  color: !(e.product.sale_price != null)
+                                      ? const Color(0xFFFF7262)
+                                      : disableDarkColor,
+                                  decoration: !(e.product.sale_price != null)
+                                      ? null
+                                      : TextDecoration.lineThrough,
+                                ),
                               ),
                               e.product.sale_price != null
                                   ? ColoredBox(
@@ -141,14 +137,11 @@ class ItemCancel extends StatelessWidget {
                                       e.product.sale_price!
                                           .toDouble()
                                           .toVndCurrency(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                            fontSize: 10.0,
-                                            height: 1.0,
-                                            color: const Color(0xFFFF7262),
-                                          ),
+                                      style: PrimaryFont.instance.copyWith(
+                                        fontSize: 10.0,
+                                        height: 1.0,
+                                        color: const Color(0xFFFF7262),
+                                      ),
                                     ),
                             ],
                           ),

@@ -41,13 +41,17 @@ class ReviewListCpn extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: review.images!
                     .map(
-                      (e) => AspectRatio(
-                        aspectRatio: 1.0,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(radiusBtn)),
-                          child: CachedNetworkImage(
-                            imageUrl: ApiService.imageUrl + e.photo,
+                      (e) => Padding( 
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(radiusBtn)),
+                            child: CachedNetworkImage(
+                              imageUrl: ApiService.imageUrl + e.photo,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

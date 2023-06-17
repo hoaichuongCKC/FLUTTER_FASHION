@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-class BannerHome extends StatefulWidget {
+class BannerHome extends StatelessWidget {
   const BannerHome({
     super.key,
     this.bannerList = const [],
@@ -9,108 +10,80 @@ class BannerHome extends StatefulWidget {
   final List<SliderModel> bannerList;
 
   @override
-  State<BannerHome> createState() => _BannerHomeState();
-}
-
-class _BannerHomeState extends State<BannerHome> {
-  int _currentPage = 0;
-
-  late PageController _pageController;
-
-  late Timer _timer;
-
-  Duration slideDuration = const Duration(milliseconds: 500);
-  Duration slideIntervel = const Duration(seconds: 5);
-
-  @override
-  void initState() {
-    super.initState();
-
-    _pageController = PageController(initialPage: _currentPage);
-    _pageController.addListener(_listenChangePage);
-    _timer = Timer.periodic(slideIntervel, _handleAutoSlide);
-  }
-
-  @override
-  void dispose() {
-    _pageController.removeListener(_listenChangePage);
-    _timer.cancel();
-    super.dispose();
-  }
-
-  void _handleAutoSlide(timer) {
-    if (_currentPage == widget.bannerList.length - 1) {
-      _currentPage = 0;
-      _pageController.jumpToPage(0);
-    } else {
-      _currentPage++;
-      _pageController.animateToPage(
-        _currentPage,
-        duration: slideDuration,
-        curve: Curves.easeIn,
-      );
-    }
-    setState(() {});
-  }
-
-  void _listenChangePage() {
-    _currentPage = _pageController.page!.round();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return _buildBody();
-  }
-
-  Widget _buildBody() {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
-      sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.maxFinite,
-              height: 180.0,
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: widget.bannerList.length,
-                itemBuilder: (ctx, index) {
-                  return AnimatedOpacity(
-                    opacity: _currentPage == index ? 1.0 : 0.3,
-                    duration: slideDuration,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(radiusBtn),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: ApiService.imageUrl +
-                            widget.bannerList[index].photo,
-                        fit: BoxFit.fill,
-                        key: ValueKey(ApiService.imageUrl +
-                            widget.bannerList[index].photo),
-                        httpHeaders: getIt<ApiService>().headers,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            DotPage(
-              length: widget.bannerList.length,
-              currentDot: _currentPage,
-              disableDot: !ThemeDataApp.instance.isLight
-                  ? Theme.of(context).indicatorColor
-                  : darkColor,
-            ),
-          ],
-        ),
+    return SliverToBoxAdapter(
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 32, top: 16),
+        child: CarouselSlider(
+            items: bannerList.map((e) {
+              return ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(radiusBtn),
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: ApiService.imageUrl + e.photo,
+                  fit: BoxFit.fill,
+                  key: ValueKey(ApiService.imageUrl + e.photo),
+                  httpHeaders: getIt<ApiService>().headers,
+                ),
+              );
+            }).toList(),
+            options: CarouselOptions(
+              height: 180,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 6),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              enlargeFactor: 0.3,
+              // onPageChanged: callbackFunction,
+              scrollDirection: Axis.horizontal,
+            )),
       ),
     );
   }
+
+  // Widget _buildBody() {
+  //   return SliverPadding(
+  //     padding: const EdgeInsets.symmetric(horizontal: horizontalPadding - 4),
+  //     sliver: SliverToBoxAdapter(
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         children: [
+  //           const SizedBox(height: 20),
+  //           SizedBox(
+  //             width: double.maxFinite,
+  //             height: 180.0,
+  //             child: PageView.builder(
+  //               controller: _pageController,
+  //               itemCount: widget.bannerList.length,
+  //               itemBuilder: (ctx, index) {
+  //                 return AnimatedOpacity(
+  //                   opacity: _currentPage == index ? 1.0 : 0.3,
+  //                   duration: slideDuration,
+  //                   child:
+  //                 );
+  //               },
+  //             ),
+  //           ),
+  //           const SizedBox(height: 8.0),
+  //           DotPage(
+  //             length: widget.bannerList.length,
+  //             currentDot: _currentPage,
+  //             disableDot: !ThemeDataApp.instance.isLight
+  //                 ? Theme.of(context).indicatorColor
+  //                 : darkColor,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  //}
 }
 
 class BannerSkeletonHome extends StatelessWidget {

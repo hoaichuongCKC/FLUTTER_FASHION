@@ -5,7 +5,6 @@ import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -31,11 +30,7 @@ class CreateReviewCubit extends Cubit<CreateReviewState> {
 
     if (state.files.length + files.length > 5) {
       // ignore: use_build_context_synchronously
-      showCustomDialog(
-        context,
-        content: "Số ảnh chọn vượt quá qui định",
-        title: "",
-      );
+      showErrorToast("Số ảnh vượt quá qui định");
 
       return;
     }
@@ -69,11 +64,7 @@ class CreateReviewCubit extends Cubit<CreateReviewState> {
 
     result.fold(
       (erorr) {
-        showCustomDialog(
-          context,
-          content: erorr,
-          title: "Request Api",
-        );
+        showErrorToast(erorr);
         emit(state.copyWith(status: AppStatus.error));
       },
       (responseData) async {

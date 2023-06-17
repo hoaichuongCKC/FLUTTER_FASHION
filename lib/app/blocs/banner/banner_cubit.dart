@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/models/slider/slider.dart';
 import 'package:flutter_fashion/app/repositories/banner_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
+import 'package:flutter_fashion/core/handler/error_cubit.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
@@ -11,7 +12,8 @@ import '../../../export.dart';
 part 'banner_state.dart';
 part 'banner_cubit.freezed.dart';
 
-class BannerCubit extends Cubit<BannerState> {
+class BannerCubit extends Cubit<BannerState>
+    with HandlerErrorCubit<BannerState> {
   final BannerRepositoryImpl _bannerRepositoryImpl;
   BannerCubit({required BannerRepositoryImpl bannerRepositoryImpl})
       : _bannerRepositoryImpl = bannerRepositoryImpl,
@@ -25,6 +27,7 @@ class BannerCubit extends Cubit<BannerState> {
 
       result.fold(
         (error) {
+          handlerError(context, error, BannerState.error(error));
           if (error == AuthenticatedException.message) {
             showCustomDialog(
               context,

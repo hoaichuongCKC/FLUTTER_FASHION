@@ -6,6 +6,7 @@ import 'package:flutter_fashion/app/models/notification/notification_model.dart'
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
 import 'package:flutter_fashion/core/pusher/pusher_app.dart';
+import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 class PusherUserApp with PusherMixin implements PusherApp {
@@ -66,11 +67,10 @@ class PusherUserApp with PusherMixin implements PusherApp {
   void handleData(data) async {
     try {
       final dataConvert = jsonDecode(data);
-
       if (dataConvert["type"] == typeOrder) {
         _updateOrder(dataConvert);
       } else if (dataConvert['type'] == typeNotification) {
-        _createNotification(dataConvert);
+        _addNotification(dataConvert);
       }
     } catch (e) {
       log("Error handle data Pusher: $e");
@@ -81,19 +81,21 @@ class PusherUserApp with PusherMixin implements PusherApp {
   void trigger(PusherEvent event) {}
 
   void _updateOrder(data) {
-    if (getIt.isRegistered<OrderCubit>()) {
-      getIt.get<OrderCubit>().updateStatus(
-            data["data"]["order_id"],
-            data["data"]["new_status"],
-          );
+    final orderCubit = getIt.get<OrderCubit>();
+    if (orderCubit.state.status == AppStatus.success) {
+      orderCubit.updateStatus(
+        data["data"]["order_id"],
+        data["data"]["new_status"],
+      );
     }
   }
 
-  void _createNotification(data) {
-    if (getIt.isRegistered<NotificationCubit>()) {
+  void _addNotification(data) {
+    final notifitionCubit = getIt.get<NotificationCubit>();
+    if (notifitionCubit.state.isFirstLoad) {
       final notification = NotificationModel.fromJson(data["data"]);
 
-      getIt.get<NotificationCubit>().add(notification);
+      notifitionCubit.add(notification);
     }
   }
 }

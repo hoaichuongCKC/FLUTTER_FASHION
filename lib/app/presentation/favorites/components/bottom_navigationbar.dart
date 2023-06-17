@@ -21,7 +21,7 @@ class BottomNavigationBarFavorite extends StatelessWidget {
             children: [
               ButtonWidget(
                 background: secondaryColor,
-                onPressed: () => bloc.removeListFavorite(context),
+                onPressed: () => bloc.removeListFavorite(),
                 child: Text(
                   AppLocalizations.of(context)!.remove_all.substring(0, 3),
                   style: PrimaryFont.instance.copyWith(

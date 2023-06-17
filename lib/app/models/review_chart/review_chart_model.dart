@@ -25,19 +25,33 @@ class ReviewChartModel extends Equatable {
   final int id;
   final Color color;
   final String label;
+  final String labelEn;
   const ReviewChartModel({
     required this.id,
     required this.color,
     required this.label,
+    required this.labelEn,
   });
   static List<ReviewChartModel> get charts => [
         ReviewChartModel(
-            id: 5, color: Colors.green.shade700, label: "Excellent"),
-        ReviewChartModel(id: 4, color: Colors.green.shade400, label: "Good"),
-        const ReviewChartModel(id: 3, color: Colors.yellow, label: "Average"),
+            id: 5,
+            color: Colors.green.shade700,
+            labelEn: "Excellent",
+            label: "Xuất sắc"),
+        ReviewChartModel(
+            id: 4, color: Colors.green.shade400, labelEn: "Good", label: "Tốt"),
         const ReviewChartModel(
-            id: 2, color: Colors.orange, label: "Below Average"),
-        const ReviewChartModel(id: 1, color: Colors.red, label: "Poor"),
+            id: 3,
+            color: Colors.yellow,
+            labelEn: "Average",
+            label: "Trung bình"),
+        const ReviewChartModel(
+            id: 2,
+            color: Colors.orange,
+            labelEn: "Below Average",
+            label: "Dưới trung bình"),
+        const ReviewChartModel(
+            id: 1, color: Colors.red, label: "", labelEn: "Kém"),
       ];
 
   @override

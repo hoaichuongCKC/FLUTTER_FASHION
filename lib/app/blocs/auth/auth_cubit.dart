@@ -8,9 +8,7 @@ import 'package:flutter_fashion/core/firebase/firebase_service.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-import 'package:flutter_fashion/utils/alert/success.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
@@ -73,12 +71,8 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        showCustomDialog(
-          context,
-          content: error,
-          title: AppLocalizations.of(context)!.login,
-          icon: SvgPicture.asset("assets/icons/error.svg"),
-        );
+
+        showErrorToast(error);
       },
       (dataReposonse) {
         if (dataReposonse.status) {
@@ -95,7 +89,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        showCustomDialog(context, content: error, title: "Request Api");
+        showErrorToast(error);
       },
       (dataReposonse) {
         if (dataReposonse.status) {
@@ -123,26 +117,17 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         emit(state.copyWith(status: AppStatus.error));
-        showCustomDialog(context, content: error, title: "Request Api");
+        showErrorToast(error);
       },
       (dataReposonse) async {
         if (dataReposonse.message == "Email already exists") {
           emit(state.copyWith(status: AppStatus.error));
-          showCustomDialog(
-            context,
-            content: dataReposonse.message,
-            title: AppLocalizations.of(context)!.signUp,
-            icon: SvgPicture.asset("assets/icons/error.svg"),
-          );
+          showErrorToast(dataReposonse.message);
         } else {
-          await showCustomDialog(
-            context,
-            title: AppLocalizations.of(context)!.signUp,
-            content: AppLocalizations.of(context)!.sign_up_success,
-            icon: SvgPicture.asset("assets/icons/oke.svg"),
-          );
+          showSuccessToast(AppLocalizations.of(context)!.sign_up_success);
 
           AppRoutes.router.go(Routes.LOGIN);
+
           emit(const AuthState());
         }
       },
@@ -159,7 +144,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         //remove poup loading
         AppRoutes.router.pop();
         if (error.isNotEmpty) {
-          showCustomDialog(context, content: error, title: "Request Api");
+          showErrorToast(error);
           emit(state.copyWith(status: AppStatus.error));
         }
       },
@@ -171,7 +156,7 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         AppRoutes.router.pop();
 
         resultSecond.fold((error) {
-          showCustomDialog(context, content: error, title: "Request Api");
+          showErrorToast(error);
           emit(state.copyWith(status: AppStatus.error));
         }, (dataReponse) {
           AppRoutes.router.go(Routes.HOME);
@@ -191,17 +176,12 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
     result.fold(
       (error) {
         if (error.isNotEmpty) {
-          showCustomDialog(
-            context,
-            content: error,
-            title: AppLocalizations.of(context)!.signUp,
-            icon: SvgPicture.asset("assets/icons/error.svg"),
-          );
+          showErrorToast(error);
           emit(state.copyWith(status: AppStatus.error));
         }
       },
       (data) async {
-        await successAlert(context: context, message: data.message);
+        showSuccessToast(data.message);
         AppRoutes.router.go(Routes.LOGIN);
       },
     );

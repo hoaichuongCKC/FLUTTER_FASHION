@@ -46,14 +46,17 @@ class DeliveredView extends StatelessWidget {
             ),
           );
         }
-        return ListView.builder(
+        return ListView.separated(
           itemCount: state.completedList.length,
           padding:
               const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 15.0,
+          ),
           itemBuilder: (context, index) => ItemOrder(
             index: index,
             onPressed: () {
-              AppRoutes.router.pushNamed(
+              AppRoutes.router.pushNamed( 
                 Names.ORDER_DETAIL,
                 queryParams: {
                   "index": index.toString(),

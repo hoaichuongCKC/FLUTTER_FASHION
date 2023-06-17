@@ -1,18 +1,24 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/notification_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
+import 'package:flutter_fashion/core/storage/key.dart';
+import 'package:flutter_fashion/utils/extensions/list.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 part 'notification_state.dart';
 
-class NotificationCubit extends Cubit<NotificationState> {
+class NotificationCubit extends HydratedCubit<NotificationState> {
   final NotificationRepositoryImpl _notificationRepositoryImpl;
 
   NotificationCubit({required NotificationRepositoryImpl noti})
       : _notificationRepositoryImpl = noti,
         super(const NotificationState());
-
+  @override
+  String get storageToken =>
+      KeyStorage.userCancelOrder + getIt.get<UserCubit>().user.id.toString();
   double get scrollThresold => 150.0;
 
   int _currentPage = 1;
@@ -23,7 +29,8 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   void fetch([int? page]) async {
     _isLoading = true;
-    emit(state.copyWith(status: AppStatus.loading));
+
+    if (_currentPage == 1) emit(state.copyWith(status: AppStatus.loading));
 
     final result = await _notificationRepositoryImpl.fetch(_currentPage);
 
@@ -34,7 +41,11 @@ class NotificationCubit extends Cubit<NotificationState> {
 
         if (notifications.isEmpty) {
           _loadMore = false;
-          emit(state.copyWith(status: AppStatus.success, isLoading: false));
+          emit(state.copyWith(
+            status: AppStatus.success,
+            isLoading: false,
+            isFirstLoad: true,
+          ));
 
           return;
         }
@@ -70,5 +81,42 @@ class NotificationCubit extends Cubit<NotificationState> {
     final updatedList = [notification, ...state.notifications];
 
     emit(state.copyWith(notifications: updatedList));
+  }
+
+  void read(int id) async {
+    final state = this.state;
+
+    bool isCheck = await _checkExists(id) != -1;
+
+    if (isCheck) return;
+
+    final updatedList = [...state.reads, id]..sort();
+
+    emit(state.copyWith(reads: updatedList));
+
+    showSuccessToast("Đã đọc thông báo", toastLength: Toast.LENGTH_SHORT);
+  }
+
+  Future<int> _checkExists(int id) async {
+    final state = this.state;
+
+    final int check = state.reads.checkExistsId(state.reads, id);
+
+    return check;
+  }
+
+  @override
+  NotificationState? fromJson(Map<String, dynamic> json) {
+    if (json["ids"] == null) {
+      return const NotificationState();
+    }
+    return NotificationState(reads: json["ids"]);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(NotificationState state) {
+    return {
+      "ids": state.reads,
+    };
   }
 }
