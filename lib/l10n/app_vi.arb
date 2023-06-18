@@ -897,6 +897,11 @@
   "current_password_is_incorrect" : "Mật khẩu hiện tại không chính xác",
   "@current_password_is_incorrect": {
     "description": "nó là chỉnh sửa"
+  },
+  
+  "delete_all" : "Xoá tất cả",
+  "@delete_all": {
+    "description": "nó là chỉnh sửa"
   }   
 
 }

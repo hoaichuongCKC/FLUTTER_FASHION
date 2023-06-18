@@ -51,10 +51,7 @@ class PusherBeamsApp {
       }
 
       if (type == PusherConfig.inOrder) {
-        final isNoti =
-            AppRoutes.router.location == "${Routes.PROFILE}/${Routes.MY_ORDER}";
-
-        if (!isNoti) _handleOrderPage(data);
+        _handleOrderPage(data);
       }
     } catch (e) {
       print("==== == $e==== ===");

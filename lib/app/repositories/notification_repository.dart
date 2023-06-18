@@ -6,7 +6,7 @@ import 'package:flutter_fashion/core/models/response_data.dart';
 
 abstract class NotificationRepository {
   Future<Either<String, List<NotificationModel>>> fetch(int page);
-  Future<Either<String, ResponseData>> updateReadNoti(int idNoti, String? type);
+  Future<Either<String, ResponseData>> delete(int idNoti);
 }
 
 class NotificationRepositoryImpl extends BaseRepository
@@ -29,11 +29,10 @@ class NotificationRepositoryImpl extends BaseRepository
   }
 
   @override
-  Future<Either<String, ResponseData>> updateReadNoti(
-      int idNoti, String? type) async {
+  Future<Either<String, ResponseData>> delete(int idNoti) async {
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
-        return await _notificationProvider.updateReadNoti(idNoti, type);
+        return await _notificationProvider.delete(idNoti);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

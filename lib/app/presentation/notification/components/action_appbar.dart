@@ -10,14 +10,15 @@ class ActionAppbarNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        BlocSelector<NotificationCubit, NotificationState, bool>(
-          selector: (state) {
-            return state.reads.length == state.notifications.length;
-          },
+        BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
-            if (state) return const SizedBox();
+            final isVisibility =
+                state.reads.length == state.notifications.length;
+
+            if (isVisibility) return const SizedBox();
+
             return InkWell(
-              onTap: () {},
+              onTap: () => context.read<NotificationCubit>().readAll(),
               borderRadius: const BorderRadius.all(
                 Radius.circular(radiusBtn),
               ),

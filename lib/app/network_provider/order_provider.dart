@@ -9,8 +9,11 @@ import '../../core/base/api/endpoint.dart';
 
 abstract class OrderProvider {
   Future<Map<String, dynamic>> fetchOrder();
+
   Future<OrderModel> create(OrderParams params);
+
   Future<int> delete(int orderId);
+
   Future<ResponseData> checkPromotion(int idPromotion);
 }
 

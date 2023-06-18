@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
@@ -10,7 +9,7 @@ import '../presentation/home/export.dart';
 
 abstract class NotificationProvider {
   Future<List<NotificationModel>> fetchData(int page);
-  Future<ResponseData> updateReadNoti(int idNoti, String? type);
+  Future<ResponseData> delete(int idNoti);
 }
 
 class NotificationProviderImpl extends NotificationProvider {
@@ -42,23 +41,21 @@ class NotificationProviderImpl extends NotificationProvider {
   }
 
   @override
-  Future<ResponseData> updateReadNoti(int idNoti, String? type) async {
-    var response = await _apiService.post(
-      ApiEndpoint.updateRead,
-      body: {
-        'idNoti': "$idNoti",
-        'type': type ??= "",
-      },
-    );
+  Future<ResponseData> delete(int idNoti) async {
+    final String uri = "${ApiEndpoint.deleteNoti}?id=$idNoti";
 
-    if (response.statusCode == 401) {
-      throw AuthenticatedException();
-    } else if (response.statusCode != 200) {
+    var response = await _apiService.post(uri);
+
+    final data = await response.stream.bytesToString();
+
+    if (response.statusCode != 200) {
       throw ServerException();
     }
 
-    final data = await response.stream.bytesToString();
-    log("message: $data ");
-    return ResponseData.fromJson(jsonDecode(data));
+    final convert = jsonDecode(data);
+
+    final responseApp = ResponseData.fromJson(convert);
+
+    return responseApp;
   }
 }

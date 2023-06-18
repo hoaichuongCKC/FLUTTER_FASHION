@@ -16,9 +16,17 @@ import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/pusher/order.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:workmanager/workmanager.dart';
+
+import 'core/task_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Workmanager().initialize(
+    callbackDispatcher, // The top level function, aka callbackDispatcher
+    isInDebugMode: true,
+  );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

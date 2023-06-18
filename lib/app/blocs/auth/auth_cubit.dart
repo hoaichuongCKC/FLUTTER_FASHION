@@ -181,7 +181,8 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         }
       },
       (data) async {
-        showSuccessToast(data.message);
+        showSuccessToast(
+            AppLocalizations.of(context)!.changed_password_successfully);
         AppRoutes.router.go(Routes.LOGIN);
       },
     );

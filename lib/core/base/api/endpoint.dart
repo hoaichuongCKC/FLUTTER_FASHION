@@ -35,7 +35,7 @@ class ApiEndpoint {
   static const String updateLimitOrder = "product/update-promotion";
 
   static const String fetchNotification = "noti/fetch";
-  static const String updateRead = "noti/update-read-noti";
+  static const String deleteNoti = "noti/delete";
 
   static const String fetchPromotion = "product/get-promotion";
 }

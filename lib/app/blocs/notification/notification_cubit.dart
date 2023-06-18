@@ -97,6 +97,67 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
     showSuccessToast("Đã đọc thông báo", toastLength: Toast.LENGTH_SHORT);
   }
 
+  void readAll() {
+    final state = this.state;
+
+    for (var item in state.notifications) {
+      if (state.reads.checkExistsId(state.reads, item.id) == -1) {
+        final updatedList = [...state.reads, item.id]..sort();
+
+        emit(state.copyWith(reads: updatedList));
+      }
+    }
+    showSuccessToast("Đã đọc thông báo", toastLength: Toast.LENGTH_SHORT);
+  }
+
+  void delete(int id) async {
+    final state = this.state;
+    final result = await _notificationRepositoryImpl.delete(id);
+
+    result.fold(
+      (error) {
+        print(
+            '-----------------------------------$error --------------------------');
+      },
+      (response) {
+        print(response);
+        final updatedList = state.notifications
+          ..retainWhere((element) => element.id != id);
+        emit(state.copyWith(notifications: updatedList));
+
+        _deleteIdReads(id);
+      },
+    );
+  }
+
+  void deleteAll() async {
+    final state = this.state;
+
+    final result = await _notificationRepositoryImpl.delete(-1);
+
+    result.fold(
+      (error) {
+        print(
+            '-----------------------------------$error --------------------------');
+      },
+      (response) {
+        emit(state.copyWith(notifications: []));
+        emit(state.copyWith(reads: []));
+      },
+    );
+  }
+
+  void _deleteIdReads(int id) {
+    final state = this.state;
+    final index = state.reads.checkExistsId(state.reads, id);
+
+    if (index == -1) return;
+
+    final updatedList = state.reads..removeAt(index);
+
+    emit(state.copyWith(reads: updatedList));
+  }
+
   Future<int> _checkExists(int id) async {
     final state = this.state;
 

@@ -1,7 +1,6 @@
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
-import 'package:flutter_fashion/utils/extensions/list.dart';
 
 import '../../../../export.dart';
 
@@ -17,7 +16,9 @@ class ItemNotiNormal extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () => context.read<NotificationCubit>().read(notification.id),
+          onTap: isRead
+              ? null
+              : () => context.read<NotificationCubit>().read(notification.id),
           child: Container(
             padding: const EdgeInsets.symmetric(
                 horizontal: horizontalPadding - 4,
@@ -44,15 +45,93 @@ class ItemNotiNormal extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        notification.title,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          height: 1.0,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            notification.title,
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400,
+                              height: 1.0,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                elevation: 0.0,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15.0, horizontal: 14.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ButtonWidget(
+                                          onPressed: () => context
+                                              .read<NotificationCubit>()
+                                              .deleteAll(),
+                                          background: lightColor,
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .delete_all,
+                                            style:
+                                                PrimaryFont.instance.copyWith(
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8.0),
+                                        ButtonWidget(
+                                          onPressed: () => context
+                                              .read<NotificationCubit>()
+                                              .delete(notification.id),
+                                          background: lightColor,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/icons/trash.svg",
+                                                width: 18,
+                                                height: 18,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                  primaryColor,
+                                                  BlendMode.srcIn,
+                                                ),
+                                                fit: BoxFit.contain,
+                                              ),
+                                              const SizedBox(width: 8.0),
+                                              Text(
+                                                AppLocalizations.of(context)!
+                                                    .delete,
+                                                style: PrimaryFont.instance
+                                                    .copyWith(
+                                                  fontSize: 14.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: const Icon(Icons.more_horiz, size: 18.0),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10.0),
                       Row(

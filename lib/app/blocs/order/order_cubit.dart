@@ -18,8 +18,6 @@ class OrderCubit extends Cubit<OrderState> {
         super(OrderState.initial());
 
   void updateStatus(dynamic idOrder, dynamic status) {
-    print(idOrder);
-    print(status);
     switch (status) {
       case toShipStatus:
         _updateToShip(idOrder, status);
