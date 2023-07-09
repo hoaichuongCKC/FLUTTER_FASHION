@@ -27,7 +27,7 @@ class LocationListTile extends StatelessWidget {
         Divider(
           height: 2,
           thickness: 2,
-          color: darkColor.withOpacity(0.5),
+          color: blackColor.withOpacity(0.5),
         ),
       ],
     );

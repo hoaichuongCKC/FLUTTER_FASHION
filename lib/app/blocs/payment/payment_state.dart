@@ -18,7 +18,7 @@ class PaymentState extends Equatable {
 
   final bool isRead;
 
-  final PromotionModel? promotion;
+  final PromotionModel promotion;
 
   final AppStatus status;
 
@@ -28,7 +28,15 @@ class PaymentState extends Equatable {
     this.address = "",
     this.note = "Note",
     this.isRead = false,
-    this.promotion,
+    this.promotion = const  PromotionModel(
+      id: 0,
+      code: '',
+      desc: '',
+      order_price_conditions: 0,
+      discount_price: 0,
+      limit: 0,
+      end_date: null,
+      created_at: null),
     this.status = AppStatus.init,
   });
   @override
@@ -40,7 +48,7 @@ class PaymentState extends Equatable {
       address,
       isRead,
       status,
-      promotion ?? "",
+      promotion
     ];
   }
 

@@ -37,7 +37,7 @@ class CartPage extends StatelessWidget {
                       AppLocalizations.of(context)!.buy_now,
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
-                        color: secondaryColor,
+                        color: darkColor,
                       ),
                     ),
                   ),

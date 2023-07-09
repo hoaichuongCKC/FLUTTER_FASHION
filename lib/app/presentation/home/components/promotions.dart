@@ -1,5 +1,7 @@
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/common/components/promotion.dart';
+import 'package:flutter_fashion/config/svg_files.dart';
+
+import '../../../../common/components/promotion.dart';
 
 const double _maxHeightCardPromotion = 130.0;
 const double _maxWidthCardPromotion = 280.0;
@@ -67,7 +69,7 @@ class PromotionList extends StatelessWidget {
                                   width: 60,
                                   height: 60,
                                   child: SvgPicture.asset(
-                                    "assets/icons/all.svg",
+                                    Assets.allSVG,
                                     fit: BoxFit.scaleDown,
                                   ),
                                 ),
@@ -87,17 +89,7 @@ class PromotionList extends StatelessWidget {
 
                       final promotion = promotions[index];
 
-                      return LimitedBox(
-                        maxWidth: _maxWidthCardPromotion,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * .75,
-                          child: PromotionWidget(
-                            colorBGLeft: lightColor,
-                            colorBGRight: lightColor,
-                            promotion: promotion,
-                          ),
-                        ),
-                      );
+                      return PromotionWidget(promotion: promotion);
                     },
                   ),
                   failure: (e) => Text(

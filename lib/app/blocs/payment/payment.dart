@@ -32,9 +32,17 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   void cancelPromotion() {
-    final state = this.state;
-
-    emit(state.copyWith(promotion: null));
+    emit(state.copyWith(
+      promotion: const PromotionModel(
+          id: 0,
+          code: '',
+          desc: '',
+          order_price_conditions: 0,
+          discount_price: 0,
+          limit: 0,
+          end_date: null,
+          created_at: null),
+    ));
   }
 
   void checkPromotion(PromotionModel promotion, context) async {
@@ -77,7 +85,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     if (state.promotion != null) {
       tempPrice = cartTotal;
 
-      total = (cartTotal - cartTotal * (state.promotion!.discount_price / 100))
+      total = (cartTotal - cartTotal * (state.promotion.discount_price / 100))
           .toInt();
     } else {
       total = cartCubit.totalCart();
@@ -91,7 +99,7 @@ class PaymentCubit extends Cubit<PaymentState> {
       shippingPhone: state.phone,
       total: total,
       tempPrice: tempPrice,
-      idPromotion: state.promotion != null ? state.promotion!.id : 0,
+      idPromotion: state.promotion != null ? state.promotion.id : 0,
     );
 
     final result = await _orderRepositoryImpl.create(params);

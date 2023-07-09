@@ -80,9 +80,9 @@ class ItemSetting extends StatelessWidget {
                         onChanged: (value) {
                           excute();
                         },
-                        activeColor: secondaryColor,
+                        activeColor: darkColor,
                         activeTrackColor: lightColor,
-                        inactiveThumbColor: secondaryColor.withAlpha(100),
+                        inactiveThumbColor: darkColor.withAlpha(100),
                         inactiveTrackColor: scaffoldBackgroundColor,
                       ),
               ],

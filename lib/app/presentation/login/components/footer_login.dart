@@ -1,6 +1,8 @@
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 
+import '../../../../config/svg_files.dart';
+
 class FooterLogin extends StatelessWidget {
   const FooterLogin({super.key});
 
@@ -38,7 +40,7 @@ class FooterLogin extends StatelessWidget {
               FractionallySizedBox(
                 heightFactor: 0.8,
                 child: SvgPicture.asset(
-                  "assets/icons/google.svg",
+                  Assets.googleSVG,
                   width: 35.0,
                   height: 35.0,
                 ),
@@ -49,7 +51,7 @@ class FooterLogin extends StatelessWidget {
                   AppLocalizations.of(context)!.continueWithGoogle,
                   style: PrimaryFont.instance.copyWith(
                     fontSize: 14.0,
-                    color: darkColor,
+                    color: blackColor,
                     fontWeight: FontWeight.w300,
                   ),
                 ),

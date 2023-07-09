@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/presentation/sign_up/cubit/sign_up_cubit.dar
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class EnterThePhoneCpn extends StatelessWidget {
@@ -40,7 +41,7 @@ class EnterThePhoneCpn extends StatelessWidget {
         keyboardType: TextInputType.phone,
         hintText: "VD: 0918.....",
         prefixIcon: SvgPicture.asset(
-          "assets/icons/phone.svg",
+          Assets.phoneSVG,
           fit: BoxFit.scaleDown,
           width: 12,
           height: 12.0,

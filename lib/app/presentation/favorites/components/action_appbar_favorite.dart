@@ -1,13 +1,15 @@
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
+import 'package:flutter_fashion/app/presentation/notification/overylay_menu.dart';
+import 'package:flutter_fashion/config/svg_files.dart';
 
 import '../../../../export.dart';
 
 class ActionAppBarFavorite extends StatelessWidget {
   const ActionAppBarFavorite({super.key});
-
+  static GlobalKey keyOption = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<FavoriteCubit>();
+    MenuOverlay.instance.remove();
     final theme = Theme.of(context);
     return BlocSelector<FavoriteCubit, FavoriteState, bool>(
       selector: (state) {
@@ -26,7 +28,7 @@ class ActionAppBarFavorite extends StatelessWidget {
             if (state.isShowCheckBox) {
               return Text.rich(
                 TextSpan(
-                  text: "Đã chọn ",
+                  text: "${AppLocalizations.of(context)!.selected}: ",
                   style: theme.textTheme.bodySmall!,
                   children: [
                     TextSpan(
@@ -37,15 +39,56 @@ class ActionAppBarFavorite extends StatelessWidget {
                 ),
               );
             }
-            return IconButton(
-              padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
-              onPressed: () => bloc.showCheckBox(),
-              icon: SvgPicture.asset(
-                "assets/icons/edit.svg",
-                colorFilter: const ColorFilter.mode(
-                  secondaryColor,
-                  BlendMode.srcIn,
-                ),
+            return InkWell(
+              onTap: () {
+                // final notificationCubit =
+                //     BlocProvider.of<NotificationCubit>(context);
+
+                // final quantity = notificationCubit.state.notifications.length -
+                //     notificationCubit.state.reads.length;
+                MenuOverlay.instance.showOverlay(
+                  context,
+                  key: keyOption,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        onTap: () {
+                          context.read<FavoriteCubit>().showCheckBox();
+                          MenuOverlay.instance.remove();
+                        },
+                        title: Text(
+                          AppLocalizations.of(context)!.edit,
+                          style: const TextStyle(
+                            color: blackColor,
+                          ),
+                        ),
+                        dense: true,
+                      ),
+                      ListTile(
+                        onTap: () {
+                          context.read<FavoriteCubit>().removeAll();
+                          MenuOverlay.instance.remove();
+                        },
+                        title: Text(
+                          AppLocalizations.of(context)!.delete_all,
+                          style: const TextStyle(
+                            color: blackColor,
+                          ),
+                        ),
+                        dense: true,
+                      ),
+                    ],
+                  ),
+                );
+              },
+              borderRadius: const BorderRadius.all(
+                Radius.circular(radiusBtn),
+              ),
+              child: Padding(
+                key: keyOption,
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(Assets.moreVerticalSVG),
               ),
             );
           },

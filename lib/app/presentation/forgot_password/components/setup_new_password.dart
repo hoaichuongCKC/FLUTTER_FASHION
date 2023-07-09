@@ -1,6 +1,8 @@
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/export.dart';
 
+import '../../../../config/svg_files.dart';
+
 class SetupNewPasswordCpn extends StatelessWidget {
   const SetupNewPasswordCpn({super.key});
   static final Map<String, dynamic> data = {};
@@ -21,7 +23,7 @@ class SetupNewPasswordCpn extends StatelessWidget {
           hintText: "******",
           title: applocalizations.newPassword,
           prefixIcon: SvgPicture.asset(
-            "assets/icons/lock.svg",
+            Assets.lockSVG,
             fit: BoxFit.scaleDown,
             width: 12,
             height: 12.0,
@@ -36,7 +38,7 @@ class SetupNewPasswordCpn extends StatelessWidget {
           title: applocalizations.confirmPassword,
           hintText: applocalizations.confirmPassword,
           prefixIcon: SvgPicture.asset(
-            "assets/icons/confirm_pass.svg",
+            Assets.confirmPassSVG,
             fit: BoxFit.scaleDown,
             width: 12,
             height: 12.0,

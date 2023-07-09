@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/common/components/promotion.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 
@@ -22,7 +23,7 @@ class ListVoucherView extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 0.0,
           leading: SvgPicture.asset(
-            "assets/icons/voucher.svg",
+            Assets.voucherSVG,
             colorFilter: const ColorFilter.mode(
               secondaryColor,
               BlendMode.srcIn,
@@ -36,16 +37,16 @@ class ListVoucherView extends StatelessWidget {
           ),
         ),
         BlocBuilder<PaymentCubit, PaymentState>(
-          buildWhen: (p, c) => p.promotion != c.promotion,
           builder: (context, state) {
-            final bool isApplyPromotion = state.promotion != null;
+            print('builder');
+            final bool isApplyPromotion = state.promotion.id != 0;
 
             if (isApplyPromotion) {
               return DecoratedBox(
                 decoration: BoxDecoration(
                   color: !ThemeDataApp.instance.isLight
                       ? theme.cardColor
-                      : Colors.green  ,
+                      : Colors.green,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(radiusBtn),
                   ),
@@ -53,7 +54,7 @@ class ListVoucherView extends StatelessWidget {
                 child: ListTile(
                   dense: true,
                   horizontalTitleGap: 0.0,
-                  onTap: () => _showOptionPromotion(context),
+                  //  onTap: () => _showOptionPromotion(context),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                   leading: const Icon(
                     Icons.check_circle,
@@ -65,11 +66,16 @@ class ListVoucherView extends StatelessWidget {
                     style:
                         theme.textTheme.bodySmall!.copyWith(color: lightColor),
                   ),
-                  trailing: SvgPicture.asset(
-                    "assets/icons/remove-circle.svg",
-                    colorFilter: const ColorFilter.mode(
-                      lightColor,
-                      BlendMode.srcIn,
+                  trailing: InkWell(
+                    onTap: () {
+                      BlocProvider.of<PaymentCubit>(context).cancelPromotion();
+                    },
+                    child: SvgPicture.asset(
+                      Assets.removeCircleSVG,
+                      colorFilter: const ColorFilter.mode(
+                        lightColor,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ),
@@ -169,25 +175,17 @@ class ListVoucherView extends StatelessWidget {
                         const SizedBox(height: 15.0),
                     itemBuilder: (context, index) {
                       final promotion = promotionBloc.promotions[index];
+
                       final bool isChecked = cartBloc.totalCart() >=
-                          promotion.order_price_conditions;
+                          promotion.order_price_conditions.toInt();
 
                       return SizedBox(
                         height: 150.0,
                         child: PromotionWidget(
                           promotion: promotion,
-                          openSelected: true,
-                          onSelected: (p0) {
-                            if (isChecked) {
-                              AppRoutes.router.pop(p0);
-                            }
-                          },
-                          colorBGLeft: isChecked
-                              ? successfullyColor.withAlpha(100)
-                              : Colors.grey.shade200,
-                          colorBGRight: isChecked
-                              ? successfullyColor.withAlpha(100)
-                              : Colors.grey.shade200,
+                          openSelected: isChecked,
+                          isAcceptSelect: true,
+                          onSelected: (p0) => AppRoutes.router.pop(p0),
                         ),
                       );
                     },

@@ -23,13 +23,7 @@ class PromotionPage extends StatelessWidget {
           final promotion = promotions[i];
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: SizedBox(
-              height: _maxHeightCardPromotion,
-              child: PromotionWidget(
-                promotion: promotion,
-                withPercent: 0.3,
-              ),
-            ),
+            child: PromotionWidget(promotion: promotion),
           );
         },
       ),

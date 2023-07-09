@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/item_cart.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class ListOrderView extends StatelessWidget {
@@ -18,7 +19,9 @@ class ListOrderView extends StatelessWidget {
           dense: true,
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 0.0,
-          leading: SvgPicture.asset("assets/icons/order_box.svg"),
+          leading: SvgPicture.asset(
+            Assets.orderBoxSVG,
+          ),
           title: Text(
             AppLocalizations.of(context)!.my_order,
             style: theme.textTheme.bodyMedium!.copyWith(

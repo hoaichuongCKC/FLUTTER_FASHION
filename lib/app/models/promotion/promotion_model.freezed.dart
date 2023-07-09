@@ -27,8 +27,8 @@ mixin _$PromotionModel {
   double get order_price_conditions => throw _privateConstructorUsedError;
   int get discount_price => throw _privateConstructorUsedError;
   double get limit => throw _privateConstructorUsedError;
-  DateTime get end_date => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
+  DateTime? get end_date => throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,8 +50,8 @@ abstract class $PromotionModelCopyWith<$Res> {
       double order_price_conditions,
       int discount_price,
       double limit,
-      DateTime end_date,
-      DateTime created_at});
+      DateTime? end_date,
+      DateTime? created_at});
 }
 
 /// @nodoc
@@ -74,8 +74,8 @@ class _$PromotionModelCopyWithImpl<$Res, $Val extends PromotionModel>
     Object? order_price_conditions = null,
     Object? discount_price = null,
     Object? limit = null,
-    Object? end_date = null,
-    Object? created_at = null,
+    Object? end_date = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -106,14 +106,14 @@ class _$PromotionModelCopyWithImpl<$Res, $Val extends PromotionModel>
           ? _value.limit
           : limit // ignore: cast_nullable_to_non_nullable
               as double,
-      end_date: null == end_date
+      end_date: freezed == end_date
           ? _value.end_date
           : end_date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: null == created_at
+              as DateTime?,
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -134,8 +134,8 @@ abstract class _$$_PromotionModelCopyWith<$Res>
       double order_price_conditions,
       int discount_price,
       double limit,
-      DateTime end_date,
-      DateTime created_at});
+      DateTime? end_date,
+      DateTime? created_at});
 }
 
 /// @nodoc
@@ -156,8 +156,8 @@ class __$$_PromotionModelCopyWithImpl<$Res>
     Object? order_price_conditions = null,
     Object? discount_price = null,
     Object? limit = null,
-    Object? end_date = null,
-    Object? created_at = null,
+    Object? end_date = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_$_PromotionModel(
       id: null == id
@@ -188,14 +188,14 @@ class __$$_PromotionModelCopyWithImpl<$Res>
           ? _value.limit
           : limit // ignore: cast_nullable_to_non_nullable
               as double,
-      end_date: null == end_date
+      end_date: freezed == end_date
           ? _value.end_date
           : end_date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: null == created_at
+              as DateTime?,
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -212,8 +212,8 @@ class _$_PromotionModel implements _PromotionModel {
       required this.order_price_conditions,
       required this.discount_price,
       required this.limit,
-      required this.end_date,
-      required this.created_at});
+      this.end_date,
+      this.created_at});
 
   factory _$_PromotionModel.fromJson(Map<String, dynamic> json) =>
       _$$_PromotionModelFromJson(json);
@@ -233,9 +233,9 @@ class _$_PromotionModel implements _PromotionModel {
   @override
   final double limit;
   @override
-  final DateTime end_date;
+  final DateTime? end_date;
   @override
-  final DateTime created_at;
+  final DateTime? created_at;
 
   @override
   String toString() {
@@ -291,8 +291,8 @@ abstract class _PromotionModel implements PromotionModel {
       required final double order_price_conditions,
       required final int discount_price,
       required final double limit,
-      required final DateTime end_date,
-      required final DateTime created_at}) = _$_PromotionModel;
+      final DateTime? end_date,
+      final DateTime? created_at}) = _$_PromotionModel;
 
   factory _PromotionModel.fromJson(Map<String, dynamic> json) =
       _$_PromotionModel.fromJson;
@@ -312,9 +312,9 @@ abstract class _PromotionModel implements PromotionModel {
   @override
   double get limit;
   @override
-  DateTime get end_date;
+  DateTime? get end_date;
   @override
-  DateTime get created_at;
+  DateTime? get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_PromotionModelCopyWith<_$_PromotionModel> get copyWith =>

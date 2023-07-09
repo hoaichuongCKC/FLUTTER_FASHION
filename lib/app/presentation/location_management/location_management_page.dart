@@ -7,6 +7,8 @@ import 'package:flutter_fashion/app/presentation/location_management/components/
 import 'package:flutter_fashion/core/models/address.dart';
 import 'package:flutter_fashion/export.dart';
 
+import '../../../config/svg_files.dart';
+
 class LocationManagementPage extends StatelessWidget {
   const LocationManagementPage({Key? key}) : super(key: key);
   @override
@@ -35,7 +37,7 @@ class LocationManagementPage extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   SvgPicture.asset(
-                    "assets/icons/profile/float_btn.svg",
+                    Assets.floatProfileSVG,
                     colorFilter: const ColorFilter.mode(
                       secondaryColor,
                       BlendMode.srcIn,

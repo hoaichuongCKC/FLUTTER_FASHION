@@ -30,7 +30,7 @@ class RangePriceFrame extends StatelessWidget {
                     from100kTo500k: (priceFirst, piceSendcond) =>
                         "${priceFirst.toDouble().toVndCurrency()} - ${piceSendcond.toDouble().toVndCurrency()}",
                     from500kAbove: (priceFirst, piceSendcond) =>
-                        "${priceFirst.toDouble().toVndCurrency()} trở lên",
+                        "${priceFirst.toDouble().toVndCurrency()} ${AppLocalizations.of(context)!.up_to}",
                     initial: () => "",
                   );
                   return _buildItem<RangePriceModel>(
@@ -57,7 +57,7 @@ class RangePriceFrame extends StatelessWidget {
       leading: DecoratedBox(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: secondaryColor),
+          border: Border.all(color: darkColor),
         ),
         child: AnimatedCrossFade(
           duration: const Duration(milliseconds: 450),
@@ -73,7 +73,7 @@ class RangePriceFrame extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: secondaryColor,
+                color: darkColor,
               ),
               child: SizedBox(
                 width: 15,

@@ -1,5 +1,6 @@
 import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 import '../widgets/item_cancel.dart';
 
@@ -17,7 +18,7 @@ class CancelOrderView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  "assets/icons/empty_list.svg",
+                  Assets.emptyListSVG,
                   width: 80.0,
                   height: 80.0,
                 ),
@@ -32,15 +33,17 @@ class CancelOrderView extends StatelessWidget {
             ),
           );
         }
+        // return Text(state.orders.length.toString());
 
-        return ListView.builder(
+        return ListView.separated(
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 15.0,
+          ),
           itemCount: state.orders.length,
           padding:
               const EdgeInsets.only(top: 15.0, right: 10, left: 10, bottom: 15),
-          itemBuilder: (context, index) => ItemCancel(
-            onPressed: () {},
-            order: state.orders[index],
-          ),
+          itemBuilder: (context, index) =>
+              ItemCancel(order: state.orders[index], onPressed: () {}),
         );
       },
     );

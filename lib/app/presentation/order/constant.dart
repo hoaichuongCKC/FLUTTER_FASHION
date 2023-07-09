@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../config/svg_files.dart';
 import '../../../export.dart';
 
 enum OrderStatus {
@@ -34,14 +35,14 @@ class ChoiceChipCustom extends Equatable {
           id: 1,
           label: toPay,
           prefixIcon: SvgPicture.asset(
-            "assets/icons/wallet.svg",
+            Assets.walletSVG,
           ),
         ),
         ChoiceChipCustom(
           id: 2,
           label: toShip,
           prefixIcon: SvgPicture.asset(
-            "assets/icons/order_box.svg",
+            Assets.orderBoxSVG,
           ),
         ),
         const ChoiceChipCustom(
@@ -67,7 +68,7 @@ class ChoiceChipCustom extends Equatable {
           prefixIcon: Icon(
             Icons.cancel,
             size: 22.0,
-            color: secondaryColor,
+            color: secondaryColor ,
           ),
         ),
       ];

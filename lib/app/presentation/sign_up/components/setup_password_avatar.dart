@@ -8,8 +8,6 @@ class SetupPasswordAvatarCpn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final applocalization = AppLocalizations.of(context)!;
     return Column(
       children: [

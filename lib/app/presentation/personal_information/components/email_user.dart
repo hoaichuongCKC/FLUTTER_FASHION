@@ -25,7 +25,7 @@ class EmailUserEdit extends StatelessWidget {
                 "(${applocalizations.changed_information})",
                 style: theme.textTheme.bodySmall!.copyWith(
                   fontSize: 10.0,
-                  color: successfullyColor,
+                  color: secondaryColor,
                 ),
               )
             : null;
@@ -34,7 +34,7 @@ class EmailUserEdit extends StatelessWidget {
           onChanged: (value) => bloc.onChangedEmail(value),
           titleWidget: titleWidget,
           prefixIcon: const Icon(
-            Icons.email_outlined,
+            Icons.email,
             size: 12.0,
             color: secondaryColor,
           ),

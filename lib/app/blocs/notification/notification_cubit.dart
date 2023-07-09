@@ -27,7 +27,12 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
 
   bool _loadMore = true;
 
+  bool _isFirstLoading = false;
+
+  bool get isFirstLoading => _isFirstLoading;
+
   void fetch([int? page]) async {
+    final state = this.state;
     _isLoading = true;
 
     if (_currentPage == 1) emit(state.copyWith(status: AppStatus.loading));
@@ -39,13 +44,11 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
       (notifications) async {
         _isLoading = false;
 
+        if (!_isFirstLoading) _isFirstLoading = !_isFirstLoading;
+
         if (notifications.isEmpty) {
           _loadMore = false;
-          emit(state.copyWith(
-            status: AppStatus.success,
-            isLoading: false,
-            isFirstLoad: true,
-          ));
+          emit(state.copyWith(status: AppStatus.success));
 
           return;
         }
@@ -54,11 +57,9 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
 
         emit(
           state.copyWith(
-            notifications: [...state.notifications, ...notifications],
-            status: AppStatus.success,
-            isLoading: false,
-            isFirstLoad: true,
-          ),
+              notifications: [...state.notifications, ...notifications],
+              status: AppStatus.success,
+              isLoading: false),
         );
       },
     );
@@ -70,7 +71,6 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
     final scrollLimit = controller.position.maxScrollExtent - scrollThresold;
 
     if (controller.offset >= scrollLimit) {
-      emit(state.copyWith(isLoading: true));
       fetch(_currentPage);
     }
   }
@@ -98,8 +98,6 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
   }
 
   void readAll() {
-    final state = this.state;
-
     for (var item in state.notifications) {
       if (state.reads.checkExistsId(state.reads, item.id) == -1) {
         final updatedList = [...state.reads, item.id]..sort();
@@ -110,8 +108,15 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
     showSuccessToast("Đã đọc thông báo", toastLength: Toast.LENGTH_SHORT);
   }
 
-  void delete(int id) async {
-    final state = this.state;
+  void delete(int id, String smg) async {
+    Fluttertoast.cancel();
+    final updatedList = List<NotificationModel>.from(state.notifications)
+      ..removeWhere((element) => element.id == id);
+
+    emit(state.copyWith(notifications: updatedList));
+
+    showSuccessToast(smg);
+
     final result = await _notificationRepositoryImpl.delete(id);
 
     result.fold(
@@ -120,18 +125,13 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
             '-----------------------------------$error --------------------------');
       },
       (response) {
-        print(response);
-        final updatedList = state.notifications
-          ..retainWhere((element) => element.id != id);
-        emit(state.copyWith(notifications: updatedList));
-
         _deleteIdReads(id);
       },
     );
   }
 
   void deleteAll() async {
-    final state = this.state;
+    emit(state.copyWith(notifications: []));
 
     final result = await _notificationRepositoryImpl.delete(-1);
 
@@ -141,14 +141,14 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
             '-----------------------------------$error --------------------------');
       },
       (response) {
-        emit(state.copyWith(notifications: []));
         emit(state.copyWith(reads: []));
+        print(
+            '-----------------------------------$response --------------------------');
       },
     );
   }
 
   void _deleteIdReads(int id) {
-    final state = this.state;
     final index = state.reads.checkExistsId(state.reads, id);
 
     if (index == -1) return;

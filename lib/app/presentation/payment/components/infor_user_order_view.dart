@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class InfoUserOrderView extends StatelessWidget {
@@ -12,7 +13,6 @@ class InfoUserOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = getIt.get<UserCubit>().user;
-    print(user);
     final fullnameController = TextEditingController(text: user.fullName);
     final phoneController = TextEditingController(text: user.phone);
     final theme = Theme.of(context);
@@ -29,7 +29,7 @@ class InfoUserOrderView extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 0.0,
           leading: SvgPicture.asset(
-            "assets/icons/user1.svg",
+            Assets.userSVG,
             color: secondaryColor,
           ),
           title: Text(
@@ -68,7 +68,7 @@ class InfoUserOrderView extends StatelessWidget {
                         title: AppLocalizations.of(context)!.phoneNumber,
                         controller: phoneController,
                         hintText: state.phone.isEmpty
-                            ? "Vui lòng nhập số điện thoại"
+                            ? AppLocalizations.of(context)!.please_enter_phone
                             : "",
                         onChanged: (value) =>
                             context.read<PaymentCubit>().changedPhone(value),

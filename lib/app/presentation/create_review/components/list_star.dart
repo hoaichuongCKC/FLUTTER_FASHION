@@ -1,6 +1,8 @@
 import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
+import '../../../../config/svg_files.dart';
+
 class ListStarCpn extends StatelessWidget {
   const ListStarCpn({super.key});
 
@@ -31,7 +33,7 @@ class ListStarCpn extends StatelessWidget {
                       final currentStar = state.stars;
                       final disableStar = currentStar < index;
                       return SvgPicture.asset(
-                        "assets/icons/star.svg",
+                        Assets.starSVG,
                         width: 60,
                         height: 30.0,
                         colorFilter: disableStar

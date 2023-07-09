@@ -162,7 +162,7 @@ class ItemProduct extends StatelessWidget {
                               "assets/icons/shipping_delivery.svg",
                               colorFilter: ColorFilter.mode(
                                 ThemeDataApp.instance.isLight
-                                    ? darkColor
+                                    ? blackColor
                                     : lightColor,
                                 BlendMode.srcIn,
                               ),
@@ -227,7 +227,7 @@ class ItemProduct extends StatelessWidget {
                               "-${product.discount!.toInt()}%",
                               style: theme.textTheme.bodySmall!.copyWith(
                                 fontSize: 12,
-                                color: darkColor,
+                                color: blackColor,
                               ),
                             ),
                           ],

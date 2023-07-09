@@ -3,6 +3,7 @@ import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class ItemCart extends StatelessWidget {
@@ -48,6 +49,7 @@ class ItemCart extends StatelessWidget {
                               child: const SizedBox(),
                             );
                           },
+                          cacheKey: item.photo,
                         ),
                       ),
                     ),
@@ -82,9 +84,9 @@ class ItemCart extends StatelessWidget {
                                           alignment: const Alignment(0, -0.8),
                                           heightFactor: 0.35,
                                           child: SvgPicture.asset(
-                                            "assets/icons/trash.svg",
-                                            colorFilter: const ColorFilter.mode(
-                                              primaryColor,
+                                            Assets.trashSVG,
+                                            colorFilter: ColorFilter.mode(
+                                              textDisable,
                                               BlendMode.srcIn,
                                             ),
                                             fit: BoxFit.scaleDown,
@@ -145,7 +147,7 @@ class ItemCart extends StatelessWidget {
                                       style: PrimaryFont.instance.copyWith(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w300,
-                                        color: darkColor.withOpacity(0.5),
+                                        color: blackColor.withOpacity(0.5),
                                       ),
                                     )
                             ],
@@ -204,7 +206,7 @@ class ItemCart extends StatelessWidget {
                     item.color.isEmpty
                         ? const WidgetSpan(child: SizedBox(width: 0.0))
                         : TextSpan(
-                            text: "color ",
+                            text: "${AppLocalizations.of(context)!.color}: ",
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w300,
@@ -220,7 +222,7 @@ class ItemCart extends StatelessWidget {
                                         ? null
                                         : const [
                                             BoxShadow(
-                                              color: secondaryColor,
+                                              color: darkColor,
                                               blurRadius: 0.0,
                                               spreadRadius: 0.5,
                                               blurStyle: BlurStyle.inner,

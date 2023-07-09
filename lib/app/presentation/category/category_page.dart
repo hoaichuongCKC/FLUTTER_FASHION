@@ -5,6 +5,8 @@ import 'package:flutter_fashion/app/presentation/category/components/product_lis
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
 
+import '../../../config/svg_files.dart';
+
 class CategoryPage extends StatefulWidget {
   const CategoryPage({
     super.key,
@@ -77,7 +79,7 @@ class _CategoryPageState extends State<CategoryPage>
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: darkColor.withOpacity(0.05),
+                            color: blackColor.withOpacity(0.05),
                             blurRadius: 8.0,
                             offset: const Offset(0, 1),
                           )
@@ -89,7 +91,7 @@ class _CategoryPageState extends State<CategoryPage>
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: SvgPicture.asset(
-                              "assets/icons/search.svg",
+                              Assets.searchSVG,
                               width: 20.0,
                               height: 20.0,
                               colorFilter: ColorFilter.mode(

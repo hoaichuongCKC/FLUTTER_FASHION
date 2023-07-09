@@ -49,9 +49,10 @@ class _OrderPageState extends State<OrderPage>
           children: [
             TabBar(
               splashBorderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              unselectedLabelColor: darkColor.withOpacity(0.5),
+              unselectedLabelColor: blackColor.withOpacity(0.5),
               indicatorSize: TabBarIndicatorSize.label,
               controller: _tabBarController,
+              indicatorColor: secondaryColor,
               isScrollable: true,
               tabs: ChoiceChipCustom.listData
                   .map(

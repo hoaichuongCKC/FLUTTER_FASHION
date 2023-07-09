@@ -3,6 +3,8 @@
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
+import '../../../../config/svg_files.dart';
+
 class AddressPaymentView extends StatelessWidget {
   const AddressPaymentView({super.key});
 
@@ -41,7 +43,7 @@ class AddressPaymentView extends StatelessWidget {
               trailing: const Icon(
                 Icons.add_circle_outline,
                 size: 20.0,
-                color: darkColor,
+                color: blackColor,
               ),
             ),
           );
@@ -61,7 +63,7 @@ class AddressPaymentView extends StatelessWidget {
           ),
           child: ListTile(
             leading: SvgPicture.asset(
-              "assets/icons/map_address.svg",
+              Assets.mapAddressSVG,
               width: 24.0,
               height: 24.0,
               color: secondaryColor,
@@ -86,7 +88,7 @@ class AddressPaymentView extends StatelessWidget {
               onTap: () => AppRoutes.router
                   .push("${Routes.PROFILE}/${Routes.ADDRESS_MANAGEMENT}"),
               child: SvgPicture.asset(
-                "assets/icons/edit.svg",
+                Assets.editSVG,
                 color: secondaryColor,
               ),
             ),

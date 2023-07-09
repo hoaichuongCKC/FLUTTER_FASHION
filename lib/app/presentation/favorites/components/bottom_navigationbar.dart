@@ -20,7 +20,7 @@ class BottomNavigationBarFavorite extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ButtonWidget(
-                background: secondaryColor,
+                background: darkColor,
                 onPressed: () => bloc.removeListFavorite(),
                 child: Text(
                   AppLocalizations.of(context)!.remove_all.substring(0, 3),
@@ -33,7 +33,7 @@ class BottomNavigationBarFavorite extends StatelessWidget {
               ),
               const SizedBox(height: 8.0),
               ButtonWidget(
-                background: secondaryColor,
+                background: darkColor,
                 onPressed: () => bloc.showCheckBox(),
                 child: Text(
                   AppLocalizations.of(context)!.cancel,

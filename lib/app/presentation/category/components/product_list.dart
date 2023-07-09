@@ -110,8 +110,9 @@ class _ProductListState extends State<ProductList> {
                   child: Text(
                     AppLocalizations.of(context)!.loading,
                     style: PrimaryFont.instance.copyWith(
-                      fontSize: 12.0,
-                      color: primaryColor,
+                      fontSize: 14.0,
+                      color: textDisable,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 );

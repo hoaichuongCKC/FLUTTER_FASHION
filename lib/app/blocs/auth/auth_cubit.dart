@@ -70,9 +70,12 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
 
     result.fold(
       (error) {
-        emit(state.copyWith(status: AppStatus.error));
-
+        if (error == InternetException.message) {
+          showErrorToast(error);
+          return;
+        }
         showErrorToast(error);
+        emit(state.copyWith(status: AppStatus.error));
       },
       (dataReposonse) {
         if (dataReposonse.status) {
@@ -88,6 +91,10 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
 
     result.fold(
       (error) {
+        if (error == InternetException.message) {
+          showErrorToast(error);
+          return;
+        }
         emit(state.copyWith(status: AppStatus.error));
         showErrorToast(error);
       },
@@ -116,6 +123,10 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
 
     result.fold(
       (error) {
+        if (error == InternetException.message) {
+          showErrorToast(error);
+          return;
+        }
         emit(state.copyWith(status: AppStatus.error));
         showErrorToast(error);
       },
@@ -144,6 +155,10 @@ class AuthCubit extends Cubit<AuthState> with FirebaseMixin {
         //remove poup loading
         AppRoutes.router.pop();
         if (error.isNotEmpty) {
+          if (error == InternetException.message) {
+            showErrorToast(error);
+            return;
+          }
           showErrorToast(error);
           emit(state.copyWith(status: AppStatus.error));
         }

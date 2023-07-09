@@ -6,6 +6,7 @@ import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/utils/extensions/list.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class AppBarProductDetail extends StatelessWidget {
@@ -77,7 +78,7 @@ class AppBarProductDetail extends StatelessWidget {
                         clipBehavior: Clip.none,
                         children: [
                           SvgPicture.asset(
-                            "assets/icons/cart.svg",
+                            Assets.cartSVG,
                             colorFilter: ColorFilter.mode(
                               Theme.of(context).iconTheme.color!,
                               BlendMode.srcIn,
@@ -136,7 +137,7 @@ class AppBarProductDetail extends StatelessWidget {
       child: Icon(
         Icons.favorite,
         size: 24,
-        color: isFavorite ? secondaryColor : Colors.black54,
+        color: isFavorite ? darkColor : Colors.black54,
       ),
     );
   }

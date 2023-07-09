@@ -4,6 +4,8 @@ import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
+import '../../../config/svg_files.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -40,7 +42,7 @@ class LoginPage extends StatelessWidget {
                     title: applocalization.phoneNumber,
                     textInputAction: TextInputAction.next,
                     prefixIcon: SvgPicture.asset(
-                      "assets/icons/phone.svg",
+                      Assets.phoneSVG,
                       fit: BoxFit.scaleDown,
                       width: 12,
                       height: 12.0,
@@ -63,7 +65,7 @@ class LoginPage extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                     hintText: "******",
                     prefixIcon: SvgPicture.asset(
-                      "assets/icons/lock.svg",
+                      Assets.lockSVG,
                       fit: BoxFit.scaleDown,
                       width: 12,
                       height: 12.0,
@@ -103,7 +105,7 @@ class LoginPage extends StatelessWidget {
                       return ButtonWidget(
                         onPressed: onPressed,
                         background:
-                            isNotDisable ? null : secondaryColor.withAlpha(100),
+                            isNotDisable ? null : darkColor.withAlpha(100),
                         child: Text(
                           AppLocalizations.of(context)!.login.toUpperCase(),
                           style: PrimaryFont.instance.copyWith(

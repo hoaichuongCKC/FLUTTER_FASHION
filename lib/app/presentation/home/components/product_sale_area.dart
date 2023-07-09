@@ -1,10 +1,7 @@
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_sale/product_sale_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
-import 'package:flutter_fashion/app/presentation/home/components/product_new_month.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 import 'package:flutter_fashion/export.dart';
-import 'package:slide_countdown/slide_countdown.dart';
 
 const defaultDuration = Duration(days: 2, hours: 2, minutes: 30);
 const defaultPadding = EdgeInsets.symmetric(horizontal: 10, vertical: 5);
@@ -23,33 +20,12 @@ class ProductSaleArea extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30.0),
-            Row(
-              children: [
-                Text(
-                  "Sale",
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                SlideCountdownSeparated(
-                  duration: defaultDuration,
-                  padding: defaultPadding,
-                  textDirection: TextDirection.ltr,
-                  separatorType: SeparatorType.symbol,
-                  slideDirection: SlideDirection.up,
-                  separator: ":",
-                  durationTitle: DurationTitle.en(),
-                  textStyle: theme.textTheme.bodySmall!.copyWith(
-                    color: lightColor,
-                  ),
-                  separatorStyle: theme.textTheme.bodySmall!.copyWith(
-                    color: darkColor,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ],
+            Text(
+              "Sale",
+              style: theme.textTheme.bodyLarge!.copyWith(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w800,
+              ),
             ),
             const SizedBox(height: 10.0),
             ConstrainedBoxWidget(
@@ -69,34 +45,43 @@ class ProductSaleArea extends StatelessWidget {
                         const SizedBox(width: 20.0),
                     itemBuilder: (context, index) {
                       if (index == products.length) {
-                        return SizedBox(
-                          width: size.width * 0.45,
-                          height: constraints.biggest.height,
-                          child: Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: lightColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: SizedBox(
-                                    width: 60,
-                                    height: 60,
-                                    child: SvgPicture.asset(
-                                      "assets/icons/all.svg",
-                                      fit: BoxFit.scaleDown,
+                        return GestureDetector(
+                          onTap: () => AppRoutes.router.pushNamed(
+                            Names.CATEGORY,
+                            queryParams: {
+                              "index": "0",
+                            },
+                          ),
+                          child: SizedBox(
+                            width: size.width * 0.45,
+                            height: constraints.biggest.height,
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  DecoratedBox(
+                                    decoration: const BoxDecoration(
+                                      color: lightColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: SvgPicture.asset(
+                                        "assets/icons/all.svg",
+                                        fit: BoxFit.scaleDown,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  AppLocalizations.of(context)!.view_all,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    AppLocalizations.of(context)!.view_all,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

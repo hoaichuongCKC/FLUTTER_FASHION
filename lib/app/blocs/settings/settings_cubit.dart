@@ -18,7 +18,7 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
       ));
     } else {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: darkColor,
+        statusBarColor: blackColor,
         statusBarIconBrightness: Brightness.light,
       ));
     }

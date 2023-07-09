@@ -20,6 +20,21 @@ class AddressUserCubit extends HydratedCubit<AddressUserState> {
         storageList: List<ItemAddress>.from(state.storageList)..add(data)));
   }
 
+  void edit(ItemAddress address, String newAddress) {
+    final state = this.state;
+
+    final list = state.storageList;
+
+    final updatedList = list.map((element) {
+      if (element.name == address.name) {
+        return element.copyWith(name: newAddress);
+      }
+      return element;
+    }).toList();
+
+    emit(state.copyWith(storageList: updatedList));
+  }
+
   void delete(ItemAddress item) {
     final state = this.state;
 

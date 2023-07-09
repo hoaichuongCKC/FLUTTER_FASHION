@@ -3,11 +3,14 @@
 import 'package:flutter_fashion/core/models/item_bottom_nav.dart';
 import "package:flutter_fashion/export.dart";
 
+import '../../app/presentation/notification/overylay_menu.dart';
+import '../../config/svg_files.dart';
+
 final bottomData = [
-  ItemBottomNavModel(path: Routes.HOME, urlIcon: "assets/icons/home.svg"),
+  ItemBottomNavModel(path: Routes.HOME, urlIcon: Assets.homeSVG),
   ItemBottomNavModel(
-      path: Routes.NOTIFICATION, urlIcon: "assets/icons/notification.svg"),
-  ItemBottomNavModel(path: Routes.PROFILE, urlIcon: "assets/icons/user1.svg"),
+      path: Routes.NOTIFICATION, urlIcon: Assets.notificationSVG),
+  ItemBottomNavModel(path: Routes.PROFILE, urlIcon: Assets.userSVG),
 ];
 
 class BottomNavigationBarApp extends StatelessWidget {
@@ -67,6 +70,7 @@ class BottomNavigationBarApp extends StatelessWidget {
                     ),
                     routes: bottomData[index].path,
                     onPressed: () {
+                      MenuOverlay.instance.remove();
                       currentPage = index;
                       AppRoutes.router.go(bottomData[index].path);
                     },
@@ -81,12 +85,12 @@ class BottomNavigationBarApp extends StatelessWidget {
               height: 1.5,
               width: size.width * .4,
               decoration: BoxDecoration(
-                color: secondaryColor,
+                color: darkColor,
                 gradient: LinearGradient(
                   colors: [
-                    secondaryColor.withOpacity(0.2),
-                    secondaryColor,
-                    secondaryColor.withOpacity(0.2),
+                    darkColor.withOpacity(0.2),
+                    darkColor,
+                    darkColor.withOpacity(0.2),
                   ],
                 ),
               ),
@@ -126,9 +130,8 @@ class ItemNavigationBar extends StatelessWidget {
               routes.translateLabelBottomNavigationBar(context),
               style: PrimaryFont.instance.copyWith(
                 fontSize: 10.0,
-                color: isSelected
-                    ? secondaryColor
-                    : theme.textTheme.bodySmall!.color,
+                color:
+                    isSelected ? darkColor : theme.textTheme.bodySmall!.color,
                 fontWeight: isSelected ? FontWeight.w400 : FontWeight.w300,
               ),
             ),

@@ -16,7 +16,7 @@ class CheckBoxFavorite extends StatelessWidget {
           return const SizedBox();
         }
         return ColoredBox(
-          color: darkColor.withOpacity(0.85),
+          color: blackColor.withOpacity(0.85),
           child: BlocSelector<FavoriteCubit, FavoriteState, bool>(
             selector: (state) {
               return state.chooseItemsDelete.contains(product.id);
@@ -24,12 +24,13 @@ class CheckBoxFavorite extends StatelessWidget {
             builder: (context, hasContaints) {
               return Checkbox(
                 value: hasContaints,
+                checkColor: blackColor,
                 fillColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
                     if (states.contains(MaterialState.disabled)) {
                       return Colors.orange.withOpacity(.32);
                     }
-                    return primaryColor;
+                    return lightColor;
                   },
                 ),
                 onChanged: (value) {

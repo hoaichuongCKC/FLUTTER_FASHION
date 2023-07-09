@@ -12,7 +12,7 @@ class TitleFilterFrame extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: ThemeDataApp.instance.isLight
-              ? secondaryColor.withAlpha(50)
+              ? darkColor.withAlpha(50)
               : Theme.of(context).cardColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(8.0),
@@ -24,7 +24,7 @@ class TitleFilterFrame extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
           ),
         ),

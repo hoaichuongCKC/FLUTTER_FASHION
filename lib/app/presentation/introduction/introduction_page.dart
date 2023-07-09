@@ -170,7 +170,7 @@ class _BodyIntroState extends State<BodyIntro> {
                         length: state.intros.length,
                         disableDot: theme.brightness == Brightness.dark
                             ? theme.indicatorColor
-                            : darkColor,
+                            : secondaryColor,
                       ),
                     ),
                     Expanded(

@@ -1,35 +1,20 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/export.dart';
+
+import '../overylay_menu.dart';
 
 class ActionAppbarNotification extends StatelessWidget {
   const ActionAppbarNotification({super.key});
+
+  static GlobalKey keyOption = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        BlocBuilder<NotificationCubit, NotificationState>(
-          builder: (context, state) {
-            final isVisibility =
-                state.reads.length == state.notifications.length;
-
-            if (isVisibility) return const SizedBox();
-
-            return InkWell(
-              onTap: () => context.read<NotificationCubit>().readAll(),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(radiusBtn),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: SvgPicture.asset("assets/icons/tick-double.svg"),
-              ),
-            );
-          },
-        ),
-        const SizedBox(width: 5.0),
         InkWell(
           onTap: () => AppRoutes.router.push(Routes.CART),
           child: BlocBuilder<UserCubit, UserState>(
@@ -53,7 +38,7 @@ class ActionAppbarNotification extends StatelessWidget {
                       clipBehavior: Clip.none,
                       children: [
                         SvgPicture.asset(
-                          "assets/icons/cart.svg",
+                          Assets.cartSVG,
                           color: Theme.of(context).iconTheme.color,
                         ),
                         Positioned(
@@ -91,7 +76,62 @@ class ActionAppbarNotification extends StatelessWidget {
             },
           ),
         ),
+        const SizedBox(width: 5.0),
+        InkWell(
+          onTap: () {
+            final notificationCubit =
+                BlocProvider.of<NotificationCubit>(context);
+
+            final quantity = notificationCubit.state.notifications.length -
+                notificationCubit.state.reads.length;
+            MenuOverlay.instance.showOverlay(
+              context,
+              key: keyOption,
+              child: child(context, quantity),
+            );
+          },
+          borderRadius: const BorderRadius.all(
+            Radius.circular(radiusBtn),
+          ),
+          child: Padding(
+            key: keyOption,
+            padding: const EdgeInsets.all(8.0),
+            child: SvgPicture.asset(Assets.moreVerticalSVG),
+          ),
+        ),
       ],
     );
   }
+
+  Widget child(BuildContext context, quantity) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            onTap: () {
+              context.read<NotificationCubit>().readAll();
+              MenuOverlay.instance.remove();
+            },
+            title: Text(
+              AppLocalizations.of(context)!.read_all(quantity),
+              style: const TextStyle(
+                color: blackColor,
+              ),
+            ),
+            dense: true,
+          ),
+          ListTile(
+            onTap: () {
+              context.read<NotificationCubit>().deleteAll();
+              MenuOverlay.instance.remove();
+            },
+            title: Text(
+              AppLocalizations.of(context)!.delete_all,
+              style: const TextStyle(
+                color: blackColor,
+              ),
+            ),
+            dense: true,
+          )
+        ],
+      );
 }

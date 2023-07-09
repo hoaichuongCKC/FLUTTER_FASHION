@@ -92,7 +92,7 @@ class PusherUserApp with PusherMixin implements PusherApp {
 
   void _addNotification(data) {
     final notifitionCubit = getIt.get<NotificationCubit>();
-    if (notifitionCubit.state.isFirstLoad) {
+    if (notifitionCubit.isFirstLoading) {
       final notification = NotificationModel.fromJson(data["data"]);
 
       notifitionCubit.add(notification);

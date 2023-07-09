@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class MethodPaymentView extends StatelessWidget {
@@ -7,6 +8,7 @@ class MethodPaymentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isVN = context.watch<SettingsCubit>().state.isVietnamese;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,7 +19,7 @@ class MethodPaymentView extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 0.0,
           leading: SvgPicture.asset(
-            "assets/icons/wallet.svg",
+            Assets.walletSVG,
             color: secondaryColor,
           ),
           title: Text(
@@ -40,11 +42,11 @@ class MethodPaymentView extends StatelessWidget {
             dense: true,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
             title: Text(
-              'Phương thức COD (mặc định)',
+              isVN ? 'Phương thức COD (mặc định)' : 'COD (default)',
               style: theme.textTheme.bodySmall,
             ),
             trailing: SvgPicture.asset(
-              "assets/icons/arrow_right.svg",
+              Assets.arrowRightSVG,
               colorFilter:
                   ColorFilter.mode(theme.iconTheme.color!, BlendMode.srcIn),
             ),

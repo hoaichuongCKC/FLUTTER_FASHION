@@ -1,5 +1,6 @@
 import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/widgets/choose_image_widget.dart';
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class ListImageRating extends StatefulWidget {
@@ -30,7 +31,7 @@ class _ListImageRatingState extends State<ListImageRating> {
             final buttonChooseImage = ChooseImageWidget(
               isChooseMultipleImage: true,
               size: 100.0,
-              color: darkColor.withOpacity(0.25),
+              color: blackColor.withOpacity(0.25),
               onListen: (files) => bloc.onSelectImage(context, files),
             );
 
@@ -54,7 +55,7 @@ class _ListImageRatingState extends State<ListImageRating> {
                           return GestureDetector(
                             onTap: () => _removeNotifier.value = !isRemove,
                             child: SvgPicture.asset(
-                              "assets/icons/trash.svg",
+                             Assets.trashSVG,
                               width: 20,
                               height: 20,
                               colorFilter: const ColorFilter.mode(
@@ -107,7 +108,7 @@ class _ListImageRatingState extends State<ListImageRating> {
                                   Radius.circular(radiusBtn),
                                 ),
                                 child: ColoredBox(
-                                  color: darkColor.withOpacity(0.25),
+                                  color: blackColor.withOpacity(0.25),
                                   child: IconButton(
                                     onPressed: () => bloc.deleteImage(index),
                                     icon: SvgPicture.asset(

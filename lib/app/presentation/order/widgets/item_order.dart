@@ -2,6 +2,7 @@ import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import 'package:flutter_fashion/utils/extensions/double.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 import '../../../models/order/order.dart';
 
@@ -39,18 +40,19 @@ class ItemOrder extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'You&Me',
+                        'FC665',
                         style: PrimaryFont.instance.copyWith(fontSize: 16.0),
                       ),
                       ColoredBox(
-                        color: secondaryColor.withOpacity(0.5),
+                        color: darkColor.withOpacity(0.5),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           child: Text(
                             order.status_id!.getOrderStatus(context),
                             style: PrimaryFont.instance.copyWith(
-                              fontSize: 9.0,
+                              fontSize: 10.0,
                               color: lightColor,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
@@ -63,7 +65,7 @@ class ItemOrder extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SvgPicture.asset(
-                          "assets/icons/location.svg",
+                          Assets.locationSVG,
                           colorFilter: const ColorFilter.mode(
                               secondaryColor, BlendMode.srcIn),
                         ),
@@ -74,7 +76,7 @@ class ItemOrder extends StatelessWidget {
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w300,
-                              color: darkColor.withOpacity(0.5),
+                              color: blackColor.withOpacity(0.5),
                             ),
                           ),
                         ),
@@ -89,7 +91,7 @@ class ItemOrder extends StatelessWidget {
                         child: Hero(
                           tag: "calendar${order.id}",
                           child: SvgPicture.asset(
-                            "assets/icons/calendar.svg",
+                            Assets.calendarSVG,
                             colorFilter: const ColorFilter.mode(
                                 secondaryColor, BlendMode.srcIn),
                           ),
@@ -101,7 +103,7 @@ class ItemOrder extends StatelessWidget {
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w300,
-                          color: darkColor.withOpacity(0.5),
+                          color: blackColor.withOpacity(0.5),
                         ),
                       ),
                     ],
@@ -115,7 +117,7 @@ class ItemOrder extends StatelessWidget {
                           child: Hero(
                             tag: "wallet${order.id}",
                             child: SvgPicture.asset(
-                              "assets/icons/wallet.svg",
+                              Assets.walletSVG,
                               colorFilter: const ColorFilter.mode(
                                   secondaryColor, BlendMode.srcIn),
                               width: 18.0,

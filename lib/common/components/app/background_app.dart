@@ -32,10 +32,13 @@ class AppBackgroundBlur extends StatelessWidget {
 
   bool? unfocus;
 
+  VoidCallback? onTap;
+
   AppBackgroundBlur.normal({
     super.key,
     this.unfocus,
     this.leading,
+    this.onTap,
     this.actions,
     this.title = "",
     required this.child,
@@ -75,6 +78,7 @@ class AppBackgroundBlur extends StatelessWidget {
     this.actionsSecond,
     this.autoLeading = true,
     this.isHasBackground = true,
+    this.onTap,
   });
 
   @override
@@ -82,15 +86,22 @@ class AppBackgroundBlur extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     if (type == ScreenType.normal) {
       return _buildBody(
-        child: SafeArea(
-          child: SizedBox.expand(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildAppBar(context),
-                const SizedBox(height: 5.0),
-                Expanded(child: child),
-              ],
+        child: GestureDetector(
+          onTap: () {
+            if (onTap != null) {
+              onTap!();
+            }
+          },
+          child: SafeArea(
+            child: SizedBox.expand(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildAppBar(context),
+                  const SizedBox(height: 5.0),
+                  Expanded(child: child),
+                ],
+              ),
             ),
           ),
         ),
@@ -99,14 +110,21 @@ class AppBackgroundBlur extends StatelessWidget {
       );
     } else if (type == ScreenType.withAppBar) {
       return _buildBody(
-        child: SafeArea(
-          child: SizedBox.expand(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildAppBar(context),
-                Expanded(child: child),
-              ],
+        child: GestureDetector(
+          onTap: () {
+            if (onTap != null) {
+              onTap!();
+            }
+          },
+          child: SafeArea(
+            child: SizedBox.expand(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildAppBar(context),
+                  Expanded(child: child),
+                ],
+              ),
             ),
           ),
         ),

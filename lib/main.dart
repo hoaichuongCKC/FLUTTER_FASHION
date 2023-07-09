@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
@@ -15,10 +19,16 @@ import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/pusher/order.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'core/task_manager.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  log('Handling a background message ${message.notification!.body}');
+  log('Handling a background message ${message.notification!.title}');
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,10 +40,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  await FirebaseAppCheck.instance.activate(
-    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -89,19 +96,19 @@ Future<void> main() async {
           create: (context) => getIt<SettingsCubit>(),
         ),
       ],
-      child: const Phoenix(child: MyApp()),
+      child: const Phoenix(child: FashionApp()),
     ),
   );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class FashionApp extends StatefulWidget {
+  const FashionApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<FashionApp> createState() => _FashionAppState();
 }
 
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+class _FashionAppState extends State<FashionApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
 
   late PusherUserApp _pusherUserApp;
@@ -109,22 +116,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    // FirebaseAppCheck.instance.onTokenChange.listen(
+    //   (token) {
+    //     print('Appcheck: $token');
+    //   },
+    // );
+    // getAppCheckToken();
     //listen connect internet
     _subscription = getIt.get<Connectivity>().onConnectivityChanged.listen(
       (ConnectivityResult result) {
         getIt.get<NetworkInfoImpl>().listenChangeNetwork(result);
       },
     );
-
-    //register
-    WidgetsBinding.instance.addObserver(AppLifecycleObserver());
-
-    PusherBeamsApp.instance.onMessageReceivedInTheForeground();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
 
     getIt.get<UserCubit>().stream.listen(
       (event) {
@@ -148,6 +151,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         );
       },
     );
+
+    //register
+    WidgetsBinding.instance.addObserver(AppLifecycleObserver());
+
+    PusherBeamsApp.instance.onMessageReceivedInTheForeground();
   }
 
   @override

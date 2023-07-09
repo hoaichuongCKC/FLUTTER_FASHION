@@ -14,7 +14,7 @@ class AppSnackbarMessenger {
         SnackBar(
           behavior: SnackBarBehavior.floating,
           dismissDirection: DismissDirection.startToEnd,
-          backgroundColor: background ?? darkColor,
+          backgroundColor: background ?? blackColor,
           content: Row(
             children: [
               SvgPicture.asset("assets/icons/check_sucessfully.svg",
@@ -30,7 +30,7 @@ class AppSnackbarMessenger {
             ],
           ),
           showCloseIcon: true,
-          closeIconColor: background == lightColor ? darkColor : lightColor,
+          closeIconColor: background == lightColor ? blackColor : lightColor,
         ),
       );
   }

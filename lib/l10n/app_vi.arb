@@ -902,6 +902,101 @@
   "delete_all" : "Xoá tất cả",
   "@delete_all": {
     "description": "nó là chỉnh sửa"
-  }   
+  }   ,
+
+  "edit_address" : "Chỉnh sửa địa chỉ",
+  "@edit_address": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "deleted_successful" : "Xoá thành công",
+  "@deleted_successful": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "selected" : "Đã chọn",
+  "@selected": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "select_district" : "Chọn quận huyện",
+  "@select_district": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "select_commnue" : "Chọn phường xã",
+  "@select_commnue": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "description" : "Mô tả cụ thể",
+  "@description": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "discount" : "Giảm",
+  "@discount": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  
+  "please_enter_phone" : "Vui lòng nhập số điện thoại",
+  "@please_enter_phone": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "limit_turn_left" : "Còn {limit} lượt",
+  "@limit_turn_left": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "limit": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+
+  "not_eligible" : "Không đạt điều kiện",
+  "@not_eligible": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "readonly" : "Chỉ đọc",
+  "@readonly": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "orders_placed" : "Đơn hàng đã đặt",
+  "@orders_placed": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "color" : "Màu sắc",
+  "@color": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  
+  "up_to" : "trở lên",
+  "@up_to": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "no_review" : "Không có đánh giá nào",
+  "@no_review": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "based_on_review" : "Dựa trên {num} đánh giá",
+  "@based_on_review": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "num": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  }
+
 
 }

@@ -15,8 +15,8 @@ class PromotionModel with _$PromotionModel {
     required double order_price_conditions,
     required int discount_price,
     required double limit,
-    required DateTime end_date,
-    required DateTime created_at,
+    DateTime? end_date,
+    DateTime? created_at,
   }) = _PromotionModel;
 
   factory PromotionModel.fromJson(Map<String, dynamic> json) =>

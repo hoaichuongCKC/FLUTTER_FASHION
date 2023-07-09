@@ -48,21 +48,21 @@ class ViewSelectedAddress extends StatelessWidget {
 
                 if (snapshot.data! == ListBuilding.province) {
                   return const BuildSelectedAddress(
-                    name: "Chọn tỉnh thành phố",
+                    name: "",
                     isInfoNextStep: true,
                   );
                 }
 
                 if (snapshot.data! == ListBuilding.district) {
-                  return const BuildSelectedAddress(
-                    name: "Chọn Quận huyện",
+                  return BuildSelectedAddress(
+                    name: AppLocalizations.of(context)!.select_district,
                     isInfoNextStep: true,
                   );
                 }
 
                 if (snapshot.data! == ListBuilding.commnue) {
-                  return const BuildSelectedAddress(
-                    name: "Chọn phường xã",
+                  return BuildSelectedAddress(
+                    name: AppLocalizations.of(context)!.select_commnue,
                     isInfoNextStep: true,
                   );
                 }
@@ -87,7 +87,7 @@ class BuildSelectedAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = ThemeDataApp.instance.isLight
-        ? darkColor.withOpacity(0.5)
+        ? blackColor.withOpacity(0.5)
         : lightColor.withOpacity(0.7);
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -96,7 +96,7 @@ class BuildSelectedAddress extends StatelessWidget {
             : const BorderRadius.all(
                 Radius.circular(5.0),
               ),
-        border: !isInfoNextStep ? null : Border.all(color: color),
+        border: !isInfoNextStep ? null : Border.all(color: darkColor),
       ),
       child: Padding(
         padding: !isInfoNextStep
@@ -114,9 +114,8 @@ class BuildSelectedAddress extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: isInfoNextStep ? null : color,
-                    border: !isInfoNextStep
-                        ? null
-                        : Border.all(color: successfullyColor),
+                    border:
+                        !isInfoNextStep ? null : Border.all(color: darkColor),
                   ),
                   child: isInfoNextStep
                       ? const Padding(
@@ -124,7 +123,7 @@ class BuildSelectedAddress extends StatelessWidget {
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: successfullyColor,
+                              color: darkColor,
                             ),
                             child: SizedBox(
                               width: 8.0,
@@ -139,9 +138,7 @@ class BuildSelectedAddress extends StatelessWidget {
                 ),
                 const SizedBox(height: 1.5),
                 ColoredBox(
-                  color: isInfoNextStep
-                      ? successfullyColor.withOpacity(0.7)
-                      : color,
+                  color: isInfoNextStep ? darkColor.withOpacity(0.7) : color,
                   child: const SizedBox(
                     width: 1,
                     height: 15,
@@ -156,7 +153,7 @@ class BuildSelectedAddress extends StatelessWidget {
                 fontSize: 12.0,
                 height: 1.0,
                 color: isInfoNextStep
-                    ? successfullyColor
+                    ? darkColor
                     : ThemeDataApp.instance.isLight
                         ? disableDarkColor
                         : lightColor.withOpacity(0.7),

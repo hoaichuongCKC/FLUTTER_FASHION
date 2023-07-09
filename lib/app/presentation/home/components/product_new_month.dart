@@ -42,34 +42,43 @@ class ProductNewMonth extends StatelessWidget {
                         const SizedBox(width: 20.0),
                     itemBuilder: (context, index) {
                       if (index == products.length) {
-                        return SizedBox(
-                          width: size.width * 0.45,
-                          height: constraints.biggest.height,
-                          child: Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: lightColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: SizedBox(
-                                    width: 60,
-                                    height: 60,
-                                    child: SvgPicture.asset(
-                                      "assets/icons/all.svg",
-                                      fit: BoxFit.scaleDown,
+                        return GestureDetector(
+                          onTap: () => AppRoutes.router.pushNamed(
+                            Names.CATEGORY,
+                            queryParams: {
+                              "index": "0",
+                            },
+                          ),
+                          child: SizedBox(
+                            width: size.width * 0.45,
+                            height: constraints.biggest.height,
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  DecoratedBox(
+                                    decoration: const BoxDecoration(
+                                      color: lightColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: SvgPicture.asset(
+                                        "assets/icons/all.svg",
+                                        fit: BoxFit.scaleDown,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  AppLocalizations.of(context)!.view_all,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    AppLocalizations.of(context)!.view_all,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

@@ -67,7 +67,7 @@ class OrderProviderImpl implements OrderProvider {
   Future<int> delete(int orderId) async {
     var response =
         await _apiService.post("${ApiEndpoint.deleteOrder}?order_id=$orderId");
-    print(await response.stream.bytesToString());
+
     if (response.statusCode != 200) {
       throw ServerException();
     }

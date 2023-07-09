@@ -26,11 +26,9 @@ class ButtonWidget extends StatelessWidget {
         style: ButtonStyle(
           overlayColor:
               MaterialStatePropertyAll(skeletonColor.withOpacity(0.1)),
-          shadowColor:
-              MaterialStatePropertyAll(secondaryColor.withOpacity(0.1)),
+          shadowColor: MaterialStatePropertyAll(darkColor.withOpacity(0.1)),
           elevation: MaterialStatePropertyAll(elevation),
-          backgroundColor:
-              MaterialStatePropertyAll(background ?? secondaryColor),
+          backgroundColor: MaterialStatePropertyAll(background ?? blackColor),
         ),
         child: child,
       ),

@@ -46,11 +46,10 @@ class NotificationProviderImpl extends NotificationProvider {
 
     var response = await _apiService.post(uri);
 
-    final data = await response.stream.bytesToString();
-
     if (response.statusCode != 200) {
       throw ServerException();
     }
+    final data = await response.stream.bytesToString();
 
     final convert = jsonDecode(data);
 

@@ -1,8 +1,8 @@
 /// Represents the app routes and their paths.
 enum TaskManager {
-  delNotification(
-    uniqueName: 'del-notification-unique',
-    taskName: 'del-notification-task',
+  updateBadgeNoti(
+    uniqueName: 'update-badge-noti-unique',
+    taskName: 'update-badge-noti-task',
   );
 
   const TaskManager({

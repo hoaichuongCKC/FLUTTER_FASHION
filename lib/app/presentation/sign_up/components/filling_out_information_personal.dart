@@ -3,6 +3,7 @@ import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class FillingOutInformationPersonalCpn extends StatelessWidget {
@@ -37,12 +38,12 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.name,
           prefixIcon: SvgPicture.asset(
-            "assets/icons/user1.svg",
+            Assets.userSVG,
             fit: BoxFit.scaleDown,
             width: 12,
             height: 12.0,
             colorFilter: const ColorFilter.mode(
-              secondaryColor,
+              darkColor,
               BlendMode.srcIn,
             ),
           ),
@@ -52,13 +53,14 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
         const SizedBox(height: 10.0),
         TextFormFieldApp(
           readOnly: true,
-          title: "${applocalization.phoneNumber} (không thể chỉnh sửa)",
+          title:
+              "${applocalization.phoneNumber} (${AppLocalizations.of(context)!.readonly})",
           hintText: data["phone"],
           onChanged: (p0) => data["phone"] = p0,
           prefixIcon: const Icon(
             Icons.phone,
             size: 12.0,
-            color: secondaryColor,
+            color: darkColor,
           ),
         ),
         const SizedBox(height: 10.0),
@@ -71,7 +73,7 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
           prefixIcon: const Icon(
             Icons.email,
             size: 12.0,
-            color: secondaryColor,
+            color: darkColor,
           ),
         ),
       ],

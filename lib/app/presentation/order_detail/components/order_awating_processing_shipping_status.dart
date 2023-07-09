@@ -7,6 +7,8 @@ import 'package:flutter_fashion/app/presentation/order_detail/inherited.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 
+import '../../../../config/svg_files.dart';
+
 class ToPayShipReceiveDetail extends StatelessWidget {
   const ToPayShipReceiveDetail({super.key});
 
@@ -29,7 +31,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3.0),
                   child: SvgPicture.asset(
-                    "assets/icons/user1.svg",
+                    Assets.userSVG,
                     width: 18.0,
                     height: 18,
                     colorFilter:
@@ -60,7 +62,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    "assets/icons/location.svg",
+                    Assets.locationSVG,
                     width: 20.0,
                     height: 20,
                     colorFilter:
@@ -80,7 +82,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  "assets/icons/calendar.svg",
+                  Assets.calendarSVG,
                   width: 20.0,
                   height: 20,
                   colorFilter:
@@ -101,7 +103,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
               contentPadding: const EdgeInsets.symmetric(horizontal: 3.0),
               minLeadingWidth: 0.0,
               horizontalTitleGap: 8.0,
-              leading: SvgPicture.asset("assets/icons/order_box.svg"),
+              leading: SvgPicture.asset(Assets.orderBoxSVG),
               title: Text(
                 AppLocalizations.of(context)!.my_order,
                 style: theme.textTheme.bodyMedium,
@@ -131,16 +133,14 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                     ),
                     WidgetSpan(
                       child: ColoredBox(
-                        color: secondaryColor.withAlpha(150),
+                        color: darkColor.withOpacity(0.5),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4.0, vertical: 3),
+                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           child: Text(
                             order.status_id!.getOrderStatus(context),
-                            style: theme.textTheme.bodySmall!.copyWith(
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 10.0,
                               color: lightColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),

@@ -6,7 +6,7 @@ class DotPage extends StatelessWidget {
       {super.key,
       required this.length,
       this.activeColor = secondaryColor,
-      this.disableDot = darkColor,
+      this.disableDot = blackColor,
       required this.currentDot});
   final int length;
   final Color? activeColor;

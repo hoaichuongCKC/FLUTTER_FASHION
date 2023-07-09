@@ -6,6 +6,7 @@ import 'package:flutter_fashion/app/presentation/create_address/components/distr
 import 'package:flutter_fashion/app/presentation/create_address/components/province_list.dart';
 import 'package:flutter_fashion/app/presentation/create_address/components/view_seleted_address.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
+import '../../../config/svg_files.dart';
 import '../../../export.dart';
 
 class CreateAddressPage extends StatelessWidget {
@@ -71,7 +72,7 @@ class CreateAddressPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
-                          "assets/icons/location.svg",
+                          Assets.locationSVG,
                           color: lightColor,
                         ),
                         const SizedBox(width: 8.0),
@@ -94,16 +95,19 @@ class CreateAddressPage extends StatelessWidget {
                       AppLocalizations.of(context)!.seleted_address,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
+                            fontSize: 14.0,
                           ),
                     ),
                     InkWell(
                       onTap: () => bloc.reset(),
-                      child: Text(
-                        AppLocalizations.of(context)!.delete,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 14.0,
-                          color: primaryColor,
+                      child: SvgPicture.asset(
+                        Assets.trashSVG,
+                        fit: BoxFit.contain,
+                        width: 18,
+                        height: 18,
+                        colorFilter: ColorFilter.mode(
+                          textDisable,
+                          BlendMode.srcIn,
                         ),
                       ),
                     ),

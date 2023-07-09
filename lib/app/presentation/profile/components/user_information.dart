@@ -44,7 +44,7 @@ class UserInformation extends StatelessWidget {
                                   .copyWith(
                                     fontSize: 12.0,
                                     color: isLight
-                                        ? darkColor
+                                        ? blackColor
                                         : lightColor.withOpacity(0.75),
                                   ),
                             ),

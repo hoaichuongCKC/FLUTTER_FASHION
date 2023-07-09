@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter_fashion/export.dart';
 
+import '../../config/svg_files.dart';
+
 class TextFormFieldApp extends StatefulWidget {
   const TextFormFieldApp({
     super.key,
@@ -140,12 +142,10 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
               _eyeIcon?.value = !isVisibility;
             },
             child: SvgPicture.asset(
-              isVisibility
-                  ? "assets/icons/eye.svg"
-                  : "assets/icons/eye_off.svg",
+              isVisibility ? Assets.eyeSVG : Assets.eyeOffSVG,
               fit: BoxFit.scaleDown,
-              width: 24.0,
-              height: 24.0,
+              width: 20.0,
+              height: 20.0,
               colorFilter: const ColorFilter.mode(
                 secondaryColor,
                 BlendMode.srcIn,
@@ -170,9 +170,9 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
       child: FractionallySizedBox(
         heightFactor: 0.7,
         child: SvgPicture.asset(
-          "assets/icons/remove-circle.svg",
+          Assets.removeCircleSVG,
           colorFilter: ColorFilter.mode(
-            ThemeDataApp.instance.isLight ? darkColor : lightColor,
+            ThemeDataApp.instance.isLight ? blackColor : lightColor,
             BlendMode.srcIn,
           ),
         ),
@@ -210,9 +210,9 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
                       style: textTheme.bodySmall!.copyWith(
                         fontSize: 10,
                         color: isVisibility
-                            ? secondaryColor
+                            ? darkColor
                             : _readOnly
-                                ? secondaryColor
+                                ? darkColor
                                 : textDisable,
                         fontWeight: isVisibility
                             ? FontWeight.w600
@@ -262,7 +262,7 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
           ),
           decoration: InputDecoration(
             isDense: inputDecorationTheme.isDense,
-            prefixIconColor: secondaryColor,
+            prefixIconColor: darkColor,
             hintText: hintText,
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
@@ -300,7 +300,7 @@ class _TextFormFieldAppState extends State<TextFormFieldApp> {
       ),
       decoration: InputDecoration(
         isDense: inputDecorationTheme.isDense,
-        prefixIconColor: secondaryColor,
+        prefixIconColor: darkColor,
         hintText: hintText,
         border: InputBorder.none,
         enabledBorder: InputBorder.none,

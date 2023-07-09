@@ -2,6 +2,8 @@ import 'package:flutter_fashion/app/blocs/change_password/change_password_cubit.
 import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 
+import '../../../config/svg_files.dart';
+
 class ChangePasswordPage extends StatelessWidget {
   const ChangePasswordPage({super.key});
 
@@ -29,7 +31,7 @@ class ChangePasswordPage extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword,
                   hintText: "******",
                   prefixIcon: SvgPicture.asset(
-                    "assets/icons/lock.svg",
+                    Assets.lockSVG,
                     fit: BoxFit.scaleDown,
                     width: 12,
                     height: 12.0,
@@ -44,7 +46,7 @@ class ChangePasswordPage extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword,
                   hintText: "******",
                   prefixIcon: SvgPicture.asset(
-                    "assets/icons/lock.svg",
+                    Assets.lockSVG,
                     fit: BoxFit.scaleDown,
                     width: 12,
                     height: 12.0,
@@ -59,7 +61,7 @@ class ChangePasswordPage extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword,
                   hintText: "******",
                   prefixIcon: SvgPicture.asset(
-                    "assets/icons/lock.svg",
+                    Assets.lockSVG,
                     fit: BoxFit.scaleDown,
                     width: 12,
                     height: 12.0,

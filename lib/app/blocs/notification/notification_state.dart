@@ -8,15 +8,12 @@ class NotificationState extends Equatable {
 
   final bool isLoading;
 
-  final bool isFirstLoad;
-
   final AppStatus status;
 
   const NotificationState({
     this.notifications = const [],
     this.reads = const [],
     this.isLoading = false,
-    this.isFirstLoad = false,
     this.status = AppStatus.init,
   });
 
@@ -25,7 +22,6 @@ class NotificationState extends Equatable {
     return [
       notifications,
       isLoading,
-      isFirstLoad,
       reads,
       status,
     ];
@@ -35,14 +31,12 @@ class NotificationState extends Equatable {
     List<NotificationModel>? notifications,
     List<int>? reads,
     bool? isLoading,
-    bool? isFirstLoad,
     AppStatus? status,
   }) {
     return NotificationState(
       notifications: notifications ?? this.notifications,
       reads: reads ?? this.reads,
       isLoading: isLoading ?? this.isLoading,
-      isFirstLoad: isFirstLoad ?? this.isFirstLoad,
       status: status ?? this.status,
     );
   }

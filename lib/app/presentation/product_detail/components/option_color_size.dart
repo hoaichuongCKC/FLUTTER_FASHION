@@ -89,8 +89,7 @@ class OptionColorSizeDetail extends StatelessWidget {
                 customBorder: const CircleBorder(),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border:
-                        isSelected ? Border.all(color: secondaryColor) : null,
+                    border: isSelected ? Border.all(color: darkColor) : null,
                     shape: BoxShape.circle,
                   ),
                   child: Padding(
@@ -179,9 +178,9 @@ class OptionColorSizeDetail extends StatelessWidget {
             e = e.toString();
             final isSelected = size == e;
 
-            final color = isSelected ? secondaryColor : lightColor;
+            final color = isSelected ? darkColor : lightColor;
 
-            final textColor = isSelected ? lightColor : darkColor;
+            final textColor = isSelected ? lightColor : blackColor;
 
             return InkWell(
               onTap: () => onPressed(e),
@@ -189,7 +188,7 @@ class OptionColorSizeDetail extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius:
-                      const BorderRadius.all(Radius.circular(radiusBtn)),
+                      const BorderRadius.all(Radius.circular(radiusBtn / 2)),
                   boxShadow:
                       !ThemeDataApp.instance.isLight ? null : [shadowBox],
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
+import 'package:flutter_fashion/app/blocs/reviews/review_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/app_bar_product_detail.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/body_product_detail.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/tabbar_desc_reviews.dart';
@@ -53,7 +54,7 @@ class ProductDetailPage extends StatelessWidget {
                                 icon: const Icon(
                                   Icons.arrow_upward_sharp,
                                   size: 20.0,
-                                  color: darkColor,
+                                  color: blackColor,
                                 ),
                               ),
                             )
@@ -64,27 +65,33 @@ class ProductDetailPage extends StatelessWidget {
                 bottomNavigationBar: const BottomNavigationbarDetail(),
                 body: Builder(
                   builder: (context) {
+                    final bloc = context.read<ProductDetailUiCubit>();
+
                     return NotificationListener<ScrollNotification>(
                       onNotification: (ScrollNotification notification) {
                         final currentOffset = (notification.metrics.pixels);
                         final offset =
                             TabbarDescReviewsDetail.offsetTabbarReview!.dy;
-                        final bloc = context.read<ProductDetailUiCubit>();
 
                         bloc.changeShowFloatingAction(currentOffset > offset);
 
                         return true;
                       },
-                      child: SafeArea(
-                        child: SingleChildScrollView(
-                          controller: controller,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: horizontalPadding - 4),
-                          child: Column(
-                            children: const [
-                              AppBarProductDetail(),
-                              BodyProductDetail(),
-                            ],
+                      child: RefreshIndicator(
+                        onRefresh: () async => context
+                            .read<ReviewCubit>()
+                            .onRefresh(product.id!, bloc),
+                        child: SafeArea(
+                          child: SingleChildScrollView(
+                            controller: controller,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: horizontalPadding - 4),
+                            child: Column(
+                              children: const [
+                                AppBarProductDetail(),
+                                BodyProductDetail(),
+                              ],
+                            ),
                           ),
                         ),
                       ),

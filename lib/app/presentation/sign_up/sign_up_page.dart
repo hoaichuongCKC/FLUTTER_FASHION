@@ -79,110 +79,121 @@ class _SignUpPageState extends State<SignUpPage> {
           create: (context) => SignUpUICubit(0),
         ),
       ],
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          AppRoutes.router.go(Routes.LOGIN);
-                          // SignUpPage.reset();
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 24.0,
-                          color: theme.iconTheme.color,
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              final double maxWidth = constraints.biggest.width;
-                              return BlocBuilder<SignUpUICubit, int>(
-                                builder: (context, step) {
-                                  final width =
-                                      (maxWidth / _totalStep) * (step + 1);
-                                  return Stack(
-                                    children: [
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: theme.cardColor,
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(
-                                              radiusBtn,
-                                            ),
-                                          ),
-                                        ),
-                                        child: SizedBox(
-                                          height: 10.0,
-                                          width: maxWidth,
-                                        ),
-                                      ),
-                                      AnimatedContainer(
-                                        duration: duration,
-                                        width: width,
-                                        height: 10.0,
-                                        curve: curve,
-                                        decoration: const BoxDecoration(
-                                          color: successfullyColor,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                              radiusBtn,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+      child: BlocListener<AuthPhoneCubit, AuthPhoneState>(
+        listener: (context, state) {
+          if (state == const AuthPhoneState.error()) {
+            const String msg = "SOMETHING WRONG";
+
+            showErrorToast(msg);
+          }
+        },
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            AppRoutes.router.go(Routes.LOGIN);
+                            // SignUpPage.reset();
+                          },
+                          child: Icon(
+                            Icons.arrow_back,
+                            size: 24.0,
+                            color: theme.iconTheme.color,
                           ),
                         ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final double maxWidth =
+                                    constraints.biggest.width;
+                                return BlocBuilder<SignUpUICubit, int>(
+                                  builder: (context, step) {
+                                    final width =
+                                        (maxWidth / _totalStep) * (step + 1);
+                                    return Stack(
+                                      children: [
+                                        DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            color: theme.cardColor,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(
+                                                radiusBtn,
+                                              ),
+                                            ),
+                                          ),
+                                          child: SizedBox(
+                                            height: 10.0,
+                                            width: maxWidth,
+                                          ),
+                                        ),
+                                        AnimatedContainer(
+                                          duration: duration,
+                                          width: width,
+                                          height: 10.0,
+                                          curve: curve,
+                                          decoration: const BoxDecoration(
+                                            color: successfullyColor,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                radiusBtn,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: verticalPadding * 1.5),
+                      child: BlocBuilder<SignUpUICubit, int>(
+                        builder: (context, step) {
+                          final text = _stepTitles[step];
+                          return Text(
+                            text,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          );
+                        },
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: verticalPadding * 1.5),
-                    child: BlocBuilder<SignUpUICubit, int>(
+                    ),
+                    BlocBuilder<SignUpUICubit, int>(
                       builder: (context, step) {
-                        final text = _stepTitles[step];
-                        return Text(
-                          text,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        );
+                        switch (step) {
+                          case 0:
+                            return const EnterThePhoneCpn();
+                          case 1:
+                            return const EnterTheOtpCpn();
+                          case 2:
+                            return const FillingOutInformationPersonalCpn();
+                          case 3:
+                            return const SetupPasswordAvatarCpn();
+                        }
+                        return const SizedBox();
                       },
                     ),
-                  ),
-                  BlocBuilder<SignUpUICubit, int>(
-                    builder: (context, step) {
-                      switch (step) {
-                        case 0:
-                          return const EnterThePhoneCpn();
-                        case 1:
-                          return const EnterTheOtpCpn();
-                        case 2:
-                          return const FillingOutInformationPersonalCpn();
-                        case 3:
-                          return const SetupPasswordAvatarCpn();
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                  const Spacer(),
-                  const SubmitSignUp(),
-                ],
+                    const Spacer(),
+                    const SubmitSignUp(),
+                  ],
+                ),
               ),
             ),
           ),

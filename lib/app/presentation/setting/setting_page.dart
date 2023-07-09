@@ -2,6 +2,7 @@ import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 import 'package:flutter_fashion/app/presentation/setting/export.dart';
+import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 
@@ -39,8 +40,7 @@ class SettingPage extends StatelessWidget {
                         excute: () =>
                             context.read<SettingsCubit>().changeLanguage(),
                         color: const Color(0xFFFF9F43),
-                        icon: SvgPicture.asset(
-                            "assets/icons/setting/language.svg"),
+                        icon: SvgPicture.asset(Assets.languageSVG),
                       );
                     },
                   ),
@@ -55,11 +55,10 @@ class SettingPage extends StatelessWidget {
                         excute: () =>
                             context.read<SettingsCubit>().changeTheme(),
                         color: const Color(0xFF8E8EEB),
-                        icon: SvgPicture.asset("assets/icons/setting/moon.svg"),
+                        icon: SvgPicture.asset(Assets.moonSVG),
                       );
                     },
                   ),
-                
                   user.login_provider == googleProvider
                       ? const SizedBox()
                       : const SizedBox(height: 15.0),
@@ -69,7 +68,7 @@ class SettingPage extends StatelessWidget {
                           isHasToggled: false,
                           title: applocalizations.changePassword,
                           trailing: SvgPicture.asset(
-                            "assets/icons/arrow_right.svg",
+                            Assets.arrowRightSVG,
                             colorFilter: ColorFilter.mode(
                               theme.iconTheme.color!,
                               BlendMode.srcIn,
@@ -89,7 +88,7 @@ class SettingPage extends StatelessWidget {
                     isHasToggled: false,
                     title: applocalizations.logout,
                     trailing: SvgPicture.asset(
-                      "assets/icons/arrow_right.svg",
+                      Assets.arrowRightSVG,
                       colorFilter: ColorFilter.mode(
                         theme.iconTheme.color!,
                         BlendMode.srcIn,

@@ -8,7 +8,9 @@ const Color primaryColor = Color(0xFFDB3022);
 
 const Color secondaryColor = Color(0xFF8E8EEB);
 
-const Color darkColor = Color(0xFF1A1A1A);
+const Color blackColor = Color.fromARGB(255, 29, 29, 29);
+
+const Color darkColor = blackColor;
 
 const Color disablePrimaryColor = Color(0xFFff7979);
 
@@ -16,7 +18,7 @@ const Color lightColor = Color(0xFFFFFFFF);
 
 const Color successfullyColor = Color(0xFF2ecc71);
 
-Color disableDarkColor = darkColor.withOpacity(0.3);
+Color disableDarkColor = blackColor.withOpacity(0.3);
 
 const Color errorColor = Colors.red;
 

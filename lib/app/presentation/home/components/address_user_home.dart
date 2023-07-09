@@ -1,5 +1,6 @@
 import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/export.dart';
 
 class AddressUserHome extends StatelessWidget {
@@ -8,7 +9,7 @@ class AddressUserHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final trailing = SvgPicture.asset(
-      "assets/icons/arrow_right.svg",
+      Assets.arrowRightSVG,
       colorFilter: ColorFilter.mode(
         Theme.of(context).iconTheme.color!,
         BlendMode.srcIn,
@@ -45,10 +46,10 @@ class AddressUserHome extends StatelessWidget {
                           horizontalPadding - 4.0,
                           10),
                       leading: SvgPicture.asset(
-                        "assets/icons/map_address.svg",
-                        width: 24.0,
-                        height: 24.0,
-                        fit: BoxFit.cover,
+                        Assets.mapAddressSVG,
+                        width: 18.0,
+                        height: 18.0,
+                        fit: BoxFit.scaleDown,
                         colorFilter: const ColorFilter.mode(
                             secondaryColor, BlendMode.srcIn),
                       ),

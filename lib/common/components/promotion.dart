@@ -2,156 +2,175 @@
 /// background.
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/utils/extensions/datetime.dart';
+import '../../config/svg_files.dart';
+
+const double _maxHeightCardPromotion = 130.0;
+const double _maxWidthCardPromotion = 280.0;
 
 class PromotionWidget extends StatelessWidget {
-  static double _maxWidth = 0.0;
-
-  static double _maxHeight = 0.0;
-
   const PromotionWidget({
     super.key,
     required this.promotion,
-    this.colorBGLeft = lightColor,
-    this.colorBGRight = lightColor,
-    this.withPercent = 0.4,
     this.openSelected = false,
     this.onSelected,
+    this.isAcceptSelect = false,
   });
 
   final PromotionModel promotion;
 
   final void Function(PromotionModel)? onSelected;
 
-  final Color colorBGLeft;
-
-  final Color colorBGRight;
-
-  final double withPercent;
-
   final bool openSelected;
 
+  final bool isAcceptSelect;
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        _maxWidth = constraints.biggest.width;
-        _maxHeight = constraints.biggest.height;
-
-        final flex = int.parse(withPercent.toString().substring(2));
-
-        return CustomPaint(
-          size: Size(_maxWidth, _maxHeight),
-          painter: _PromotionCardPainter(
-            colorBGLeft,
-            colorBGRight,
-            widthPercent: withPercent,
-          ),
-          child: InkWell(
-            onTap: () => onSelected!(promotion),
-            child: Row(
+    return LimitedBox(
+      maxWidth: _maxWidthCardPromotion,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * .7,
+        height: _maxHeightCardPromotion,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              Assets.voucherPNG,
+              fit: BoxFit.cover,
+            ),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: flex,
+                  flex: 7,
                   child: Container(
-                    margin: EdgeInsets.all((_maxWidth * withPercent) * 0.1),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
                       children: [
                         Expanded(
-                          child: Image.asset("assets/images/logo.png"),
-                        ),
-                        Text(
-                          "OFF -${promotion.discount_price}%",
-                          style: PrimaryFont.instance.copyWith(
-                            fontSize: 14.0,
-                            color: darkColor,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        openSelected
-                            ? Text.rich(
-                                TextSpan(
-                                  text: "Điều kiện: ",
-                                  children: [
-                                    TextSpan(
-                                      text: "đơn hàng đạt",
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 8.0,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          " ${promotion.order_price_conditions.toVndCurrency()} ",
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 8.0,
-                                        color: primaryColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: "trở lên",
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 8.0,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                  ],
-                                  style: PrimaryFont.instance.copyWith(
-                                    fontSize: 8.0,
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.w300,
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '(${AppLocalizations.of(context)!.limit_turn_left(promotion.limit.toInt())})',
+                                style: const TextStyle(
+                                  fontSize: 8.0,
+                                  color: lightColor,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!.discount,
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    color: lightColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  "${promotion.discount_price}%",
+                                  style: const TextStyle(
+                                    fontSize: 18.0,
+                                    color: lightColor,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                textAlign: TextAlign.center,
-                              )
-                            : const SizedBox(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  promotion.desc,
+                                  style: const TextStyle(
+                                    fontSize: 12.0,
+                                    color: lightColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 10 - flex,
-                  child: Container(
-                    margin: EdgeInsets.all((_maxWidth * withPercent) * 0.1),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 5, right: 8, bottom: 8, left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
-                          child: Text(
-                            promotion.desc,
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
+                        Text(
+                          AppLocalizations.of(context)!.expired_date(
+                            promotion.end_date.toString().substring(0, 10),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 12.0,
+                            color: blackColor,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        openSelected
+                        const Spacer(flex: 2),
+                        !isAcceptSelect
                             ? const SizedBox()
-                            : Text(
-                                AppLocalizations.of(context)!.expired_date(
-                                    promotion.created_at.formatDateTime(
-                                        isGetPM: false, isGetTime: false)),
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 10.0,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
+                            : !openSelected
+                                ? ColoredBox(
+                                    color: primaryColor,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 3.0, horizontal: 4.0),
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .not_eligible,
+                                        style: const TextStyle(
+                                          fontSize: 8.0,
+                                          color: lightColor,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Flexible(
+                                    flex: 2,
+                                    child: ButtonWidget(
+                                      onPressed: () => onSelected!(promotion),
+                                      background: blackColor,
+                                      child: Text(
+                                        AppLocalizations.of(context)!.use,
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          color: lightColor,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                       ],
                     ),
                   ),
                 ),
               ],
-            ),
-          ),
-        );
-      },
+            )
+          ],
+        ),
+      ),
     );
   }
 }

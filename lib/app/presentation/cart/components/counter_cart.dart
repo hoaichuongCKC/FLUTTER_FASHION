@@ -67,7 +67,7 @@ class _CounterCartState extends State<CounterCart> {
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontSize: 10.0,
                   color:
-                      ThemeDataApp.instance.isLight ? darkColor : primaryColor,
+                      ThemeDataApp.instance.isLight ? blackColor : primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
           ),

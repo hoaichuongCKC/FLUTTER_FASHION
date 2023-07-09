@@ -7,6 +7,8 @@ import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_de
 import 'package:flutter_fashion/common/widgets/popular.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/svg_files.dart';
+
 class BodyProductDetail extends StatelessWidget {
   const BodyProductDetail({super.key});
 
@@ -37,7 +39,7 @@ class BodyProductDetail extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: darkColor.withOpacity(0.03),
+                    color: blackColor.withOpacity(0.03),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(radiusBtn / 2),
                     ),
@@ -89,7 +91,7 @@ class BodyProductDetail extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(radiusBtn)),
-                                      border: Border.all(color: secondaryColor),
+                                      border: Border.all(color: darkColor),
                                     ),
                                     child: imageWidget,
                                   ),
@@ -141,14 +143,14 @@ class BodyProductDetail extends StatelessWidget {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    SvgPicture.asset("assets/icons/tag.svg"),
+                                    SvgPicture.asset(Assets.tagSVG),
                                     const SizedBox(width: 3.0),
                                     Text(
                                       "-${product.discount!.toInt()}%",
                                       style:
                                           theme.textTheme.bodySmall!.copyWith(
                                         fontSize: 12,
-                                        color: darkColor,
+                                        color: blackColor,
                                       ),
                                     ),
                                   ],
@@ -256,7 +258,7 @@ class BodyProductDetail extends StatelessWidget {
                                     ),
                                   ),
                                   SvgPicture.asset(
-                                    "assets/icons/star.svg",
+                                    Assets.starSVG,
                                     colorFilter: ColorFilter.mode(
                                       starColor,
                                       BlendMode.srcIn,

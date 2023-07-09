@@ -5,6 +5,8 @@ import 'package:flutter_fashion/app/presentation/product_detail/export_detail.da
 import 'package:flutter_fashion/common/components/chart_review_cpn.dart';
 import 'package:flutter_fashion/common/components/review_list.dart';
 
+import '../../../../config/svg_files.dart';
+
 class TabbarDescReviewsDetail extends StatefulWidget {
   const TabbarDescReviewsDetail({super.key});
   static GlobalKey tabbarReviewKey = GlobalKey();
@@ -133,14 +135,14 @@ class _TabbarDescReviewsDetailState extends State<TabbarDescReviewsDetail>
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15.0),
                                 child: Image.asset(
-                                  "assets/images/review_empty.png",
+                                  Assets.reviewEmptyPNG,
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.contain,
                                 ),
                               ),
                               Text(
-                                'No Reviews',
+                                AppLocalizations.of(context)!.no_review,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -165,26 +167,36 @@ class _TabbarDescReviewsDetailState extends State<TabbarDescReviewsDetail>
                                   p.hasLoadMore != c.hasLoadMore,
                               builder: (context, state) {
                                 if (state.hasLoadMore) {
-                                  return Align(
-                                    child: InkWell(
-                                      onTap: () =>
-                                          bloc.loadMore(product.id!, context),
-                                      radius: radiusBtn,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(radiusBtn),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .loadmore,
-                                          style: theme.textTheme.bodySmall!
-                                              .copyWith(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: secondaryColor,
+                                  return InkWell(
+                                    onTap: () =>
+                                        bloc.loadMore(product.id!, context),
+                                    radius: radiusBtn,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(radiusBtn),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .loadmore,
+                                            style: theme.textTheme.bodySmall!
+                                                .copyWith(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: darkColor,
+                                            ),
                                           ),
-                                        ),
+                                          const SizedBox(width: 5.0),
+                                          const Icon(Icons.arrow_drop_down,
+                                              size: 18.0, color: primaryColor),
+                                        ],
                                       ),
                                     ),
                                   );

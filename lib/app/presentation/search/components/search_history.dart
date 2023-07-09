@@ -1,5 +1,6 @@
 import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 class SearchHistory extends StatelessWidget {
@@ -75,14 +76,14 @@ class SearchHistory extends StatelessWidget {
                       data,
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
-                        color: darkColor,
+                        color: blackColor,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
                     trailing: IconButton(
                       onPressed: () {},
                       icon: SvgPicture.asset(
-                        "assets/icons/trash.svg",
+                        Assets.trashSVG,
                         width: 15,
                         height: 15,
                         colorFilter: const ColorFilter.mode(

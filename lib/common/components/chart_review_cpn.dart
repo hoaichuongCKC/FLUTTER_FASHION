@@ -2,6 +2,8 @@ import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
 import 'package:flutter_fashion/export.dart';
 
+import '../../config/svg_files.dart';
+
 class ChartReviewCpn extends StatelessWidget {
   const ChartReviewCpn({super.key, required this.data});
   final ReviewsModel data;
@@ -47,7 +49,7 @@ class ChartReviewCpn extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: SvgPicture.asset(
-                      "assets/icons/star_hafl.svg",
+                      Assets.starHaflSVG,
                       width: 60,
                       height: 30.0,
                     ),
@@ -58,7 +60,7 @@ class ChartReviewCpn extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: SvgPicture.asset(
-                  "assets/icons/star.svg",
+                  Assets.starSVG,
                   width: 60,
                   height: 30.0,
                   colorFilter: disable
@@ -72,7 +74,7 @@ class ChartReviewCpn extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
         Text(
-          'based on ${data.length} reviews',
+          AppLocalizations.of(context)!.based_on_review(data.length ?? 0),
           style: theme.textTheme.bodyMedium!.copyWith(
             fontWeight: FontWeight.w400,
           ),

@@ -104,4 +104,13 @@ class ReviewCubit extends Cubit<ReviewState> {
       },
     );
   }
+
+  void onRefresh(int idProduct, ProductDetailUiCubit bloc) {
+    print('danh sách review với idProduct: $idProduct');
+
+    _reviewsCache.remove(idProduct);
+    print('My list: ${_reviewsCache.containsKey(idProduct)}');
+
+    fetchData(idProduct, bloc);
+  }
 }

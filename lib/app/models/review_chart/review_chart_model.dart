@@ -51,7 +51,7 @@ class ReviewChartModel extends Equatable {
             labelEn: "Below Average",
             label: "Dưới trung bình"),
         const ReviewChartModel(
-            id: 1, color: Colors.red, label: "", labelEn: "Kém"),
+            id: 1, color: Colors.red, label: "Kém", labelEn: "Poor"),
       ];
 
   @override

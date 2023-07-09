@@ -3,10 +3,10 @@ import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.da
 import 'package:flutter_fashion/app/presentation/favorites/components/action_appbar_favorite.dart';
 import 'package:flutter_fashion/app/presentation/favorites/components/bottom_navigationbar.dart';
 import 'package:flutter_fashion/app/presentation/favorites/components/checkbox_favorite.dart';
-import 'package:flutter_fashion/app/presentation/favorites/components/floating_action_favorite.dart';
 import 'package:flutter_fashion/export.dart';
 import '../../../common/components/app/background_app.dart';
 import '../../../common/components/item_product.dart';
+import '../notification/overylay_menu.dart';
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
@@ -14,12 +14,14 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.normal(
+      onTap: () {
+        MenuOverlay.instance.remove();
+      },
       title: AppLocalizations.of(context)!.favorite,
       actionsSecond: const [
         ActionAppBarFavorite(),
       ],
       isHasBackground: false,
-      floatingActionButton: const FloatingActionFavorite(),
       bottomNavigationBar: const BottomNavigationBarFavorite(),
       child: BlocBuilder<FavoriteCubit, FavoriteState>(
         builder: (context, state) {
@@ -53,7 +55,8 @@ class FavoritePage extends StatelessWidget {
                 children: [
                   ItemProduct(
                     onTap: () {
-                      final bloc = BlocProvider.of<ProductDetailCubit>(context);
+                      final bloc =
+                          BlocProvider.of<ProductDetailCubit>(context);
 
                       bloc.getProduct(product.id!);
 

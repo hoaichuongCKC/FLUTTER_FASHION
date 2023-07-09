@@ -17,7 +17,7 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="com.example.flutter_fashion.permission.C2D_MESSAGE" /> -->
     <application
-        android:label="You me"
+        android:label="FC665"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">

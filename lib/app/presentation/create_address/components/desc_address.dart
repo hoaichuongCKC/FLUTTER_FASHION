@@ -11,9 +11,10 @@ class DescAddress extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Mô tả cụ thể',
+          AppLocalizations.of(context)!.description,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.bold,
+                fontSize: 14.0,
               ),
         ),
         const SizedBox(height: 8.0),

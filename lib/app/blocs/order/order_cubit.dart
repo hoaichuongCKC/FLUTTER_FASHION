@@ -96,7 +96,7 @@ class OrderCubit extends Cubit<OrderState> {
     OrderModel getOrder = List<OrderModel>.from(state.toReceiveList)
         .firstWhere((element) => element.id == id);
 
-    getOrder = getOrder.copyWith(status_id: status, evaluated: true);
+    getOrder = getOrder.copyWith(status_id: status, evaluated: false);
 
     final updatedTocompleted = [getOrder, ...state.completedList];
 

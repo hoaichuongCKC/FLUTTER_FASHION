@@ -44,7 +44,7 @@ class UserAvatarApp extends StatelessWidget {
                           "assets/icons/user1.svg",
                           fit: BoxFit.contain,
                           color: isLight
-                              ? darkColor.withOpacity(0.7)
+                              ? blackColor.withOpacity(0.7)
                               : lightColor.withOpacity(0.7),
                           width: 40,
                           height: 40,
@@ -92,7 +92,7 @@ class UserAvatarDefault extends StatelessWidget {
                         fit: BoxFit.contain,
                         width: 60,
                         height: 60,
-                        color: darkColor,
+                        color: blackColor,
                       ),
                     ),
                     !isCamera

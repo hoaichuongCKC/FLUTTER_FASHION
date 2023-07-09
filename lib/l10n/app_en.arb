@@ -904,8 +904,97 @@
   "delete_all" : "Delete all",
   "@delete_all": {
     "description": "nó là chỉnh sửa"
-  }   
+  }   ,
 
+  "edit_address" : "Edit address",
+  "@edit_address": {
+    "description": "nó là chỉnh sửa"
+  },
 
+  "deleted_successful" : "Deleted successful",
+  "@deleted_successful": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "selected" : "Selected",
+  "@selected": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "select_district" : "Select district",
+  "@select_district": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "select_commune" : "Select commune",
+  "@select_commune": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "description" : "Description",
+  "@description": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "discount" : "Discount",
+  "@discount": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "limit_turn_left" : "{limit} turn left",
+  "@limit_turn_left": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "limit": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+
+  "please_enter_phone" : "Please enter phone",
+  "@please_enter_phone": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "not_eligible" : "Not eligible",
+  "@not_eligible": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "readonly" : "Read only",
+  "@readonly": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "orders_placed" : "Orders placed",
+  "@orders_placed": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "color" : "Color",
+  "@color": {
+    "description": "nó là chỉnh sửa"
+  },
+  "up_to" : "up to",
+  "@up_to": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "no_review" : "No reivews",
+  "@no_review": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "based_on_review" : "Based on {num} reviews",
+  "@based_on_review": {
+    "description": "Không hiểu gì cả",
+    "placeholders": {
+      "num": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  }
 
 }

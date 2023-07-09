@@ -1,6 +1,7 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unnecessary_null_comparison
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
+import '../../../../config/svg_files.dart';
 import '../../../blocs/cart/cart_cubit.dart';
 import '../../../blocs/payment/payment_state.dart';
 
@@ -20,7 +21,7 @@ class DetailOrderView extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 0.0,
           leading: SvgPicture.asset(
-            "assets/icons/receipt.svg",
+            Assets.receiptSVG,
             color: secondaryColor,
           ),
           title: Text(
@@ -56,7 +57,7 @@ class DetailOrderView extends StatelessWidget {
                 BlocBuilder<PaymentCubit, PaymentState>(
                   buildWhen: (p, c) => p.promotion != c.promotion,
                   builder: (context, state) {
-                    if (state.promotion == null) {
+                    if (state.promotion.id == 0) {
                       return ItemDetailOrder(
                         title: AppLocalizations.of(context)!
                             .promotion_not_yet_applied,
@@ -72,7 +73,7 @@ class DetailOrderView extends StatelessWidget {
                         fontWeight: FontWeight.w300,
                       ),
                       value:
-                          "-${(cartInfo.totalCart() * (state.promotion!.discount_price / 100)).toDouble().toVndCurrency()}",
+                          "-${(cartInfo.totalCart() * (state.promotion.discount_price / 100)).toDouble().toVndCurrency()}",
                     );
                   },
                 ),
@@ -90,7 +91,7 @@ class DetailOrderView extends StatelessWidget {
                       title: AppLocalizations.of(context)!.total_amount,
                       value: (cartInfo.totalCart() -
                               cartInfo.totalCart() *
-                                  (state.promotion!.discount_price / 100))
+                                  (state.promotion.discount_price / 100))
                           .toDouble()
                           .toVndCurrency(),
                     );

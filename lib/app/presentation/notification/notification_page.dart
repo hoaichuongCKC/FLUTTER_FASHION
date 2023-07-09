@@ -8,6 +8,7 @@ import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/extensions/list.dart';
 
 import 'components/item_noti_normal.dart';
+import 'overylay_menu.dart';
 
 class NotificationPage extends ScrollStateful {
   const NotificationPage({super.key});
@@ -20,6 +21,9 @@ class _NotificationPageState extends ScrollState<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return AppBackgroundBlur.withAppBar(
+      onTap: () {
+        MenuOverlay.instance.remove();
+      },
       isHasBackground: false,
       leading: const SizedBox(),
       title: AppLocalizations.of(context)!.notificationPage,
@@ -28,10 +32,11 @@ class _NotificationPageState extends ScrollState<NotificationPage> {
       ],
       child: BlocBuilder<NotificationCubit, NotificationState>(
         buildWhen: (p, c) =>
-            p.isFirstLoad != c.isFirstLoad ||
             c.notifications != p.notifications ||
-            p.reads != c.reads,
+            p.reads != c.reads ||
+            p.status != c.status,
         builder: (context, state) {
+          print("builder notificationCubit");
           final status = state.status;
 
           if (status == AppStatus.loading) {
@@ -98,7 +103,7 @@ class _NotificationPageState extends ScrollState<NotificationPage> {
                         AppLocalizations.of(context)!.loading,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
-                          color: textDisable,
+                          color: blackColor,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -124,6 +129,7 @@ class _NotificationPageState extends ScrollState<NotificationPage> {
 
   @override
   void scrollListen(ScrollController controller) {
+    MenuOverlay.instance.remove();
     context.read<NotificationCubit>().loadMore(controller);
   }
 }

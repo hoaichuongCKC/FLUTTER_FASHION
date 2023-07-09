@@ -27,7 +27,7 @@ class PhoneUserEdit extends StatelessWidget {
                   "(${applocalizations.changed_information})",
                   style: theme.textTheme.bodySmall!.copyWith(
                     fontSize: 10.0,
-                    color: successfullyColor,
+                    color: secondaryColor,
                   ),
                 )
               : null;
@@ -40,7 +40,7 @@ class PhoneUserEdit extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 onChanged: (value) => bloc.onChangedPhone(value),
                 prefixIcon: const Icon(
-                  Icons.phone_outlined,
+                  Icons.phone,
                   size: 12.0,
                   color: secondaryColor,
                 ),

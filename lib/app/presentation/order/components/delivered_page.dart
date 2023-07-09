@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
 
@@ -31,7 +32,7 @@ class DeliveredView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  "assets/icons/empty_list.svg",
+                  Assets.emptyListSVG,
                   width: 80.0,
                   height: 80.0,
                 ),
@@ -56,7 +57,7 @@ class DeliveredView extends StatelessWidget {
           itemBuilder: (context, index) => ItemOrder(
             index: index,
             onPressed: () {
-              AppRoutes.router.pushNamed( 
+              AppRoutes.router.pushNamed(
                 Names.ORDER_DETAIL,
                 queryParams: {
                   "index": index.toString(),

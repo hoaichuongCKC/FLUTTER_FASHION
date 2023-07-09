@@ -6,7 +6,6 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_fashion/common/widgets/constrained_box.dart';
 export 'package:flutter_fashion/config/constant.dart';
 export 'package:flutter_fashion/app/presentation/login/components/footer_login.dart';
-export '../../../common/components/aurora/aurora_page.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 // export 'package:flutter_fashion/app/blocs/auth/auth_bloc.dart';
 export 'package:flutter_fashion/dependency_injection.dart';

@@ -60,7 +60,7 @@ class ServiceFrame extends StatelessWidget {
             DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: secondaryColor),
+                border: Border.all(color: darkColor),
               ),
               child: AnimatedCrossFade(
                 duration: const Duration(milliseconds: 450),
@@ -76,7 +76,7 @@ class ServiceFrame extends StatelessWidget {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: secondaryColor,
+                      color: darkColor,
                     ),
                     child: SizedBox(
                       width: 15,

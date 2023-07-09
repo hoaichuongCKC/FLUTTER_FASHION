@@ -1,6 +1,7 @@
 import 'package:flutter_fashion/app/blocs/edit_information/edit_information_cubit.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 
+import '../../../../config/svg_files.dart';
 import '../export.dart';
 
 class FullnameUserEdit extends StatelessWidget {
@@ -27,7 +28,7 @@ class FullnameUserEdit extends StatelessWidget {
                   "(${applocalizations.changed_information})",
                   style: theme.textTheme.bodySmall!.copyWith(
                     fontSize: 10.0,
-                    color: successfullyColor,
+                    color: secondaryColor,
                   ),
                 )
               : null;
@@ -35,7 +36,7 @@ class FullnameUserEdit extends StatelessWidget {
             title: AppLocalizations.of(context)!.fullname,
             onChanged: (value) => bloc.onChangedFullname(value),
             prefixIcon: SvgPicture.asset(
-              "assets/icons/user1.svg",
+              Assets.userSVG,
               width: 12.0,
               height: 12.0,
               fit: BoxFit.scaleDown,

@@ -65,13 +65,16 @@ class CreateReviewPage extends StatelessWidget {
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 14.0, vertical: 10.0),
                     enabledBorder: theme.inputDecorationTheme.border!.copyWith(
-                      borderSide: const BorderSide(color: secondaryColor),
+                      borderSide:
+                          const BorderSide(color: darkColor, width: 0.5),
                     ),
                     border: theme.inputDecorationTheme.border!.copyWith(
-                      borderSide: const BorderSide(color: secondaryColor),
+                      borderSide:
+                          const BorderSide(color: darkColor, width: 0.5),
                     ),
                     focusedBorder: theme.inputDecorationTheme.border!.copyWith(
-                      borderSide: const BorderSide(color: secondaryColor),
+                      borderSide:
+                          const BorderSide(color: darkColor, width: 0.5),
                     ),
                   ),
                 ),

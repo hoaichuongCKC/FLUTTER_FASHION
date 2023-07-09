@@ -3,9 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 mixin FirebaseMixin {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance
+   ;
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+      // scopes: [
+      //   'nhchuong2001@gmail.com',
+      //   'https://www.googleapis.com/auth/contacts.readonly',
+      // ],
+      );
 
   Future<void> verifyPhoneNumber(
       {required String phoneNumber,

@@ -162,7 +162,7 @@ class AddressManagementBloc {
 
   void getCurrentLocation(BuildContext context) async {
     loadingAlert(context: context);
-    Position position = await _determinePosition();
+    Position position = await _determinePosition(context);
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
 
@@ -175,7 +175,7 @@ class AddressManagementBloc {
     Future.delayed(const Duration(seconds: 1), () => reset());
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> _determinePosition(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -185,6 +185,15 @@ class AddressManagementBloc {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
+      AppRoutes.router.pop();
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text("Vui lòng bật vị trí của điện thoại"),
+          );
+        },
+      );
       return Future.error('Location services are disabled.');
     }
 

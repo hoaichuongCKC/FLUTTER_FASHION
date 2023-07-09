@@ -49,7 +49,7 @@ class EnterTheOtpCpnState extends State<EnterTheOtpCpn> {
       height: size.width * 0.2,
       textStyle: theme.textTheme.bodySmall!.copyWith(
         fontSize: 14.0,
-        color: secondaryColor,
+        color: darkColor,
         fontWeight: FontWeight.w500,
       ),
       decoration: BoxDecoration(

@@ -1,6 +1,8 @@
 import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
+import '../../../../config/svg_files.dart';
+
 class TopHeaderHome extends StatelessWidget {
   const TopHeaderHome({super.key});
 
@@ -50,7 +52,7 @@ class TopHeaderHome extends StatelessWidget {
                         tag: "icon-search",
                         transitionOnUserGestures: true,
                         child: SvgPicture.asset(
-                          "assets/icons/search.svg",
+                          Assets.searchSVG,
                           colorFilter: ColorFilter.mode(
                             Theme.of(context).iconTheme.color!,
                             BlendMode.srcIn,
@@ -80,7 +82,7 @@ class TopHeaderHome extends StatelessWidget {
                                 clipBehavior: Clip.none,
                                 children: [
                                   SvgPicture.asset(
-                                    "assets/icons/cart.svg",
+                                    Assets.cartSVG,
                                     colorFilter: ColorFilter.mode(
                                       Theme.of(context).iconTheme.color!,
                                       BlendMode.srcIn,

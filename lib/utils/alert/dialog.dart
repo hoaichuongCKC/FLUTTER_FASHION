@@ -26,13 +26,13 @@ Future<T?> showCustomDialog<T>(
         title: Text(title),
         titleTextStyle: PrimaryFont.instance.copyWith(
           fontSize: 14.0,
-          color: darkColor,
+          color: blackColor,
           fontWeight: FontWeight.w700,
         ),
         iconPadding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
         contentTextStyle: PrimaryFont.instance.copyWith(
           fontSize: 12.0,
-          color: darkColor,
+          color: blackColor,
           fontWeight: FontWeight.w300,
         ),
         content:
@@ -47,7 +47,7 @@ Future<T?> showCustomDialog<T>(
                   child: Text(
                     submitNameFirst,
                     style: theme.textTheme.bodySmall!.copyWith(
-                      color: secondaryColor,
+                      color: darkColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -59,7 +59,7 @@ Future<T?> showCustomDialog<T>(
                   child: Text(
                     submitNameSecond,
                     style: theme.textTheme.bodySmall!.copyWith(
-                      color: secondaryColor,
+                      color: darkColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

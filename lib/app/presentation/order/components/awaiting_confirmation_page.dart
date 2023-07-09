@@ -2,6 +2,7 @@
 import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class ToPay extends StatelessWidget {
@@ -32,7 +33,7 @@ class ToPay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  "assets/icons/empty_list.svg",
+                  Assets.emptyListSVG,
                   width: 80.0,
                   height: 80.0,
                 ),
@@ -106,7 +107,7 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
       ),
       backgroundColor: lightColor,
       icon: Image.asset(
-        "assets/images/warning.png",
+        Assets.warningPNG,
         width: 60,
         height: 60,
       ),
@@ -114,13 +115,13 @@ class _ShowDialogTimerState extends State<ShowDialogTimer> {
       title: Text(applocalizations.order_cancel),
       titleTextStyle: PrimaryFont.instance.copyWith(
         fontSize: 14.0,
-        color: darkColor,
+        color: blackColor,
         fontWeight: FontWeight.w700,
       ),
       iconPadding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       contentTextStyle: PrimaryFont.instance.copyWith(
         fontSize: 12.0,
-        color: darkColor,
+        color: blackColor,
         fontWeight: FontWeight.w300,
       ),
       content: Text(applocalizations.are_you_sure_cancel_order,

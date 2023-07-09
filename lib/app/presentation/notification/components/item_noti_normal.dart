@@ -2,6 +2,7 @@ import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class ItemNotiNormal extends StatelessWidget {
@@ -61,75 +62,25 @@ class ItemNotiNormal extends StatelessWidget {
                           const Spacer(),
                           InkWell(
                             onTap: () {
-                              showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                elevation: 0.0,
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 14.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ButtonWidget(
-                                          onPressed: () => context
-                                              .read<NotificationCubit>()
-                                              .deleteAll(),
-                                          background: lightColor,
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .delete_all,
-                                            style:
-                                                PrimaryFont.instance.copyWith(
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        ButtonWidget(
-                                          onPressed: () => context
-                                              .read<NotificationCubit>()
-                                              .delete(notification.id),
-                                          background: lightColor,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/icons/trash.svg",
-                                                width: 18,
-                                                height: 18,
-                                                colorFilter:
-                                                    const ColorFilter.mode(
-                                                  primaryColor,
-                                                  BlendMode.srcIn,
-                                                ),
-                                                fit: BoxFit.contain,
-                                              ),
-                                              const SizedBox(width: 8.0),
-                                              Text(
-                                                AppLocalizations.of(context)!
-                                                    .delete,
-                                                style: PrimaryFont.instance
-                                                    .copyWith(
-                                                  fontSize: 14.0,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
+                              final String smg = AppLocalizations.of(context)!
+                                  .deleted_successful;
+                              final notificationCubit =
+                                  context.read<NotificationCubit>();
+                              notificationCubit.delete(notification.id, smg);
                             },
-                            child: const Icon(Icons.more_horiz, size: 18.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SvgPicture.asset(
+                                Assets.trashSVG,
+                                fit: BoxFit.contain,
+                                width: 18,
+                                height: 18,
+                                colorFilter: ColorFilter.mode(
+                                  textDisable,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -137,7 +88,7 @@ class ItemNotiNormal extends StatelessWidget {
                       Row(
                         children: [
                           Image.asset(
-                            "assets/images/loudspeaker.png",
+                            Assets.loudspeakerPNG,
                             width: 18.0,
                             height: 18.0,
                           ),
@@ -147,7 +98,7 @@ class ItemNotiNormal extends StatelessWidget {
                               notification.subtitle,
                               style: PrimaryFont.instance.copyWith(
                                 fontSize: 11.0,
-                                color: darkColor.withOpacity(0.6),
+                                color: blackColor.withOpacity(0.6),
                                 fontWeight: FontWeight.w300,
                               ),
                               maxLines: 4,
@@ -162,7 +113,7 @@ class ItemNotiNormal extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SvgPicture.asset(
-                            "assets/icons/calendar.svg",
+                            Assets.calendarSVG,
                             width: 18.0,
                             height: 18.0,
                             colorFilter: const ColorFilter.mode(
@@ -173,7 +124,7 @@ class ItemNotiNormal extends StatelessWidget {
                             notification.created_at.formatDateTime(),
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 12.0,
-                              color: darkColor.withOpacity(0.6),
+                              color: blackColor.withOpacity(0.6),
                               fontWeight: FontWeight.w300,
                             ),
                             softWrap: true,

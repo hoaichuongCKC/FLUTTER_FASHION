@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter_fashion/app/presentation/location_management/components/show_action.dart';
 import 'package:flutter_fashion/core/models/address.dart';
+import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class ItemLocationUser extends StatelessWidget {
@@ -24,7 +25,7 @@ class ItemLocationUser extends StatelessWidget {
         context,
         onDelete,
         onUseDefault,
-        item.isSelected,
+        item,
       ),
       child: ConstrainedBoxWidget(
         currentHeight: 0.11,
@@ -36,7 +37,7 @@ class ItemLocationUser extends StatelessWidget {
                 ? null
                 : [
                     BoxShadow(
-                      color: darkColor.withOpacity(0.05),
+                      color: blackColor.withOpacity(0.05),
                       blurRadius: 8.0,
                       offset: const Offset(0, 1),
                     ),
@@ -50,7 +51,7 @@ class ItemLocationUser extends StatelessWidget {
                 Align(
                   alignment: Alignment.topCenter,
                   child: SvgPicture.asset(
-                    "assets/icons/map_address.svg",
+                    Assets.mapAddressSVG,
                     width: 20.0,
                     height: 20.0,
                     color: secondaryColor,

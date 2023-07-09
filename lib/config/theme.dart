@@ -26,9 +26,9 @@ class ThemeDataApp {
   static ThemeData appThemeLight = ThemeData.light(useMaterial3: true).copyWith(
     scaffoldBackgroundColor: scaffoldBackgroundColor,
     cardColor: lightColor.withOpacity(0.9),
-    indicatorColor: secondaryColor,
+    indicatorColor: darkColor,
     dividerColor: scaffoldBackgroundColor,
-    iconTheme: const IconThemeData(size: 18.0, color: darkColor),
+    iconTheme: const IconThemeData(size: 18.0, color: blackColor),
     cardTheme: const CardTheme(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -61,11 +61,11 @@ class ThemeDataApp {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       isDense: true,
-      iconColor: secondaryColor.withOpacity(0.7),
+      iconColor: darkColor.withOpacity(0.7),
       hintStyle: PrimaryFont.instance.copyWith(
         fontSize: 12.0,
         fontWeight: FontWeight.w300,
-        color: darkColor.withOpacity(0.65),
+        color: blackColor.withOpacity(0.65),
       ),
       fillColor: lightColor,
       border: const OutlineInputBorder(
@@ -78,14 +78,14 @@ class ThemeDataApp {
   );
 
   static ThemeData appThemeDark = ThemeData.dark(useMaterial3: true).copyWith(
-    scaffoldBackgroundColor: darkColor,
+    scaffoldBackgroundColor: blackColor,
     indicatorColor: lightColor.withOpacity(0.75),
     cardColor: lightColor.withOpacity(0.1),
     dividerColor: scaffoldBackgroundColor.withOpacity(0.4),
     iconTheme: IconThemeData(size: 18.0, color: lightColor.withOpacity(0.75)),
     appBarTheme: const AppBarTheme(
-      backgroundColor: darkColor,
-      surfaceTintColor: darkColor,
+      backgroundColor: blackColor,
+      surfaceTintColor: blackColor,
       centerTitle: true,
     ),
     textTheme: TextTheme(

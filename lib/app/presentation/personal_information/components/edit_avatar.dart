@@ -5,6 +5,8 @@ import 'package:flutter_fashion/app/models/user/user_model.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/widgets/choose_image_widget.dart';
 
+import '../../../../config/svg_files.dart';
+
 const size = 130.0;
 
 class EditAvatarCpn extends StatelessWidget {
@@ -62,7 +64,7 @@ class EditAvatarCpn extends StatelessWidget {
                 bottom: 8,
                 right: 8,
                 child: SvgPicture.asset(
-                  "assets/icons/edit.svg",
+                  Assets.editSVG,
                   colorFilter: const ColorFilter.mode(
                     secondaryColor,
                     BlendMode.srcIn,

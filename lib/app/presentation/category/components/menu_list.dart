@@ -36,7 +36,7 @@ class MenuList extends StatelessWidget {
           bloc.changeTab(categories[index].id);
         },
         indicator: const BoxDecoration(
-          color: secondaryColor,
+          color: darkColor,
           borderRadius: BorderRadius.all(
             Radius.circular(
               radiusBtn * 3,

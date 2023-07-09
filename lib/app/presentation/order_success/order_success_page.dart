@@ -1,6 +1,8 @@
 import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../config/svg_files.dart';
+
 class OrderSuccessPage extends StatelessWidget {
   const OrderSuccessPage({super.key});
 
@@ -27,20 +29,25 @@ class OrderSuccessPage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () => AppRoutes.router.go(Routes.HOME),
-              icon: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/home.svg",
-                    colorFilter:
-                        const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
-                  ),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    AppLocalizations.of(context)!.homePage,
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                ],
+              icon: SizedBox(
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      Assets.homeSVG,
+                      colorFilter: const ColorFilter.mode(
+                          secondaryColor, BlendMode.srcIn),
+                    ),
+                    const SizedBox(width: 5.0),
+                    Text(
+                      AppLocalizations.of(context)!.homePage,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        color: darkColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

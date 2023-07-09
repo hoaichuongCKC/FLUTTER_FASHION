@@ -45,6 +45,7 @@ class PusherBeamsApp {
   void _onMessageReceivedInTheForeground(Map<dynamic, dynamic> data) {
     try {
       final type = data["data"]["type"];
+      print(data);
 
       if (type == PusherConfig.inNotification) {
         _handleNotificationPage(data);

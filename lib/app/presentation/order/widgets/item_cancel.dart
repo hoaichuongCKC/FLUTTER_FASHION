@@ -4,6 +4,7 @@ import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
+import '../../../../config/svg_files.dart';
 import '../components/show_action_buy_again.dart';
 
 class ItemCancel extends StatelessWidget {
@@ -31,184 +32,178 @@ class ItemCancel extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'You&Me',
-                      style: PrimaryFont.instance.copyWith(fontSize: 16.0),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ColoredBox(
-                          color: primaryColor.withOpacity(0.5),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 3.0),
-                            child: Text(
-                              AppLocalizations.of(context)!.canceled,
-                              style: PrimaryFont.instance.copyWith(
-                                fontSize: 9.0,
-                                color: lightColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () => context
-                              .read<OrderCancelCubit>()
-                              .remove(order.id!),
-                          child: SvgPicture.asset(
-                            "assets/icons/trash.svg",
-                            colorFilter: const ColorFilter.mode(
-                              primaryColor,
-                              BlendMode.srcIn,
-                            ),
-                            width: 20.0,
-                            height: 20.0,
-                            fit: BoxFit.scaleDown,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: order.order_detail!.map(
-                      (e) {
-                        return ListTile(
-                          dense: true,
-                          leading: CachedNetworkImage(
-                            imageUrl: ApiService.imageUrl + e.photo,
-                          ),
-                          title: Text(
-                            e.product.name!,
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                            ),
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Text(
-                                e.product.regular_price!
-                                    .toDouble()
-                                    .toVndCurrency(),
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 10.0,
-                                  color: !(e.product.sale_price != null)
-                                      ? const Color(0xFFFF7262)
-                                      : disableDarkColor,
-                                  decoration: !(e.product.sale_price != null)
-                                      ? null
-                                      : TextDecoration.lineThrough,
-                                ),
-                              ),
-                              e.product.sale_price != null
-                                  ? ColoredBox(
-                                      color: errorColor.withOpacity(0.2),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1.0),
-                                        child: Text(
-                                          "-${(e.product.regular_price!.toDouble() - e.product.sale_price!.toDouble()).toVndCurrency()}",
-                                          style: PrimaryFont.instance.copyWith(
-                                            fontSize: 7.0,
-                                            fontWeight: FontWeight.w700,
-                                            color: primaryColor.withAlpha(150),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                              !(e.product.sale_price != null)
-                                  ? const SizedBox()
-                                  : const SizedBox(width: 5.0),
-                              !(e.product.sale_price != null)
-                                  ? const SizedBox()
-                                  : Text(
-                                      e.product.sale_price!
-                                          .toDouble()
-                                          .toVndCurrency(),
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 10.0,
-                                        height: 1.0,
-                                        color: const Color(0xFFFF7262),
-                                      ),
-                                    ),
-                            ],
-                          ),
-                          trailing: Text(
-                            "x${e.quantity}",
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 8.0,
-                              color: textDisable,
-                            ),
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  ),
+                Text(
+                  'FC665',
+                  style: PrimaryFont.instance.copyWith(fontSize: 16.0),
                 ),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                      child: Hero(
-                        tag: "calendar${order.id}",
-                        child: SvgPicture.asset(
-                          "assets/icons/calendar.svg",
-                          colorFilter: const ColorFilter.mode(
-                              secondaryColor, BlendMode.srcIn),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Text(
-                      order.created_at!.formatDateTime(),
-                      style: PrimaryFont.instance.copyWith(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w300,
-                        color: darkColor.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: Row(
-                    children: [
-                      Padding(
+                    ColoredBox(
+                      color: primaryColor.withOpacity(0.5),
+                      child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                        child: SvgPicture.asset(
-                          "assets/icons/wallet.svg",
-                          colorFilter: const ColorFilter.mode(
-                              secondaryColor, BlendMode.srcIn),
-                          width: 18.0,
-                          height: 19.0,
+                        child: Text(
+                          AppLocalizations.of(context)!.canceled,
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 9.0,
+                            color: lightColor,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 8.0),
-                      Text(
-                        order.total_price!.toDouble().toVndCurrency(),
+                    ),
+                    InkWell(
+                      onTap: () =>
+                          context.read<OrderCancelCubit>().remove(order.id!),
+                      child: SvgPicture.asset(
+                        Assets.trashSVG,
+                        colorFilter: ColorFilter.mode(
+                          textDisable,
+                          BlendMode.srcIn,
+                        ),
+                        width: 20.0,
+                        height: 20.0,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: order.order_detail!.map(
+                  (e) {
+                    return ListTile(
+                      dense: true,
+                      leading: SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CachedNetworkImage(
+                          imageUrl: ApiService.imageUrl + e.photo,
+                          cacheKey: "${e.photo}order-cancel",
+                        ),
+                      ),
+                      title: Text(
+                        e.product.name!,
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 12.0,
-                          fontWeight: FontWeight.w700,
-                          color: primaryColor.withAlpha(150),
                         ),
                       ),
-                    ],
+                      subtitle: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            e.product.regular_price!.toDouble().toVndCurrency(),
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 10.0,
+                              color: !(e.product.sale_price != null)
+                                  ? const Color(0xFFFF7262)
+                                  : disableDarkColor,
+                              decoration: !(e.product.sale_price != null)
+                                  ? null
+                                  : TextDecoration.lineThrough,
+                            ),
+                          ),
+                          e.product.sale_price != null
+                              ? ColoredBox(
+                                  color: errorColor.withOpacity(0.2),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    child: Text(
+                                      "-${(e.product.regular_price!.toDouble() - e.product.sale_price!.toDouble()).toVndCurrency()}",
+                                      style: PrimaryFont.instance.copyWith(
+                                        fontSize: 7.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: primaryColor.withAlpha(150),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          !(e.product.sale_price != null)
+                              ? const SizedBox()
+                              : const SizedBox(width: 5.0),
+                          !(e.product.sale_price != null)
+                              ? const SizedBox()
+                              : Text(
+                                  e.product.sale_price!
+                                      .toDouble()
+                                      .toVndCurrency(),
+                                  style: PrimaryFont.instance.copyWith(
+                                    fontSize: 10.0,
+                                    height: 1.0,
+                                    color: const Color(0xFFFF7262),
+                                  ),
+                                ),
+                        ],
+                      ),
+                      trailing: Text(
+                        "x${e.quantity}",
+                        style: PrimaryFont.instance.copyWith(
+                          fontSize: 8.0,
+                          color: textDisable,
+                        ),
+                      ),
+                    );
+                  },
+                ).toList(),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: SvgPicture.asset(
+                    Assets.calendarSVG,
+                    colorFilter:
+                        const ColorFilter.mode(darkColor, BlendMode.srcIn),
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                Text(
+                  order.created_at!.formatDateTime(),
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w300,
+                    color: blackColor.withOpacity(0.5),
                   ),
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                    child: SvgPicture.asset(
+                      Assets.walletSVG,
+                      colorFilter: const ColorFilter.mode(
+                          secondaryColor, BlendMode.srcIn),
+                      width: 18.0,
+                      height: 19.0,
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  Text(
+                    order.total_price!.toDouble().toVndCurrency(),
+                    style: PrimaryFont.instance.copyWith(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w700,
+                      color: primaryColor.withAlpha(150),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.centerRight,

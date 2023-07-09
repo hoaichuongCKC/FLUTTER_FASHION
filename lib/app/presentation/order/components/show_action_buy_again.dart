@@ -4,6 +4,8 @@ import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
+import '../../../../config/svg_files.dart';
+
 showActionBuyAgain(BuildContext context, OrderModel order) {
   final size = MediaQuery.of(context).size;
   final applocalization = AppLocalizations.of(context)!;
@@ -58,7 +60,7 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3.0),
                     child: SvgPicture.asset(
-                      "assets/icons/user1.svg",
+                      Assets.userSVG,
                       width: 18.0,
                       height: 18,
                       colorFilter: const ColorFilter.mode(
@@ -88,7 +90,7 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    "assets/icons/calendar.svg",
+                    Assets.calendarSVG,
                     colorFilter:
                         const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                   ),
@@ -237,9 +239,9 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3.0),
                     child: SvgPicture.asset(
-                      "assets/icons/wallet.svg",
-                      colorFilter: const ColorFilter.mode(
-                          secondaryColor, BlendMode.srcIn),
+                      Assets.walletSVG,
+                      colorFilter:
+                          const ColorFilter.mode(darkColor, BlendMode.srcIn),
                       width: 18.0,
                       height: 19.0,
                     ),

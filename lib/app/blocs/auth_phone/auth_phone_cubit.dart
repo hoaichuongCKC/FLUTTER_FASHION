@@ -33,12 +33,12 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
     final result = await _auth.checkPhone(phoneNumber);
 
     result.fold(
-      (l) => emit(const AuthPhoneState.error()),
+      (error) => emit(const AuthPhoneState.error()),
       (response) async {
-        final statusCode = response.data[0];
+        final bool isExistsPhone = response.data[0];
 
         if (payload == Names.REGISTER) {
-          if (statusCode != 201) {
+          if (isExistsPhone) {
             AppRoutes.router.pop();
             showErrorToast(
               AppLocalizations.of(context)!
@@ -48,7 +48,7 @@ class AuthPhoneCubit extends Cubit<AuthPhoneState> with FirebaseMixin {
             return;
           }
         } else {
-          if (statusCode != 200) {
+          if (!isExistsPhone) {
             AppRoutes.router.pop();
             showErrorToast(
               AppLocalizations.of(context)!

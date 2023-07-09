@@ -4,6 +4,8 @@ import 'package:flutter_fashion/app/presentation/order_detail/inherited.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 
+import '../../../../config/svg_files.dart';
+
 class OrderDeliveredStatus extends StatelessWidget {
   const OrderDeliveredStatus({super.key});
 
@@ -20,7 +22,7 @@ class OrderDeliveredStatus extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Align(
               child: SvgPicture.asset(
-                "assets/icons/check_sucessfully.svg",
+                Assets.checkSuccessSVG,
                 width: 100.0,
                 height: 100.0,
               ),
@@ -41,7 +43,7 @@ class OrderDeliveredStatus extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: SvgPicture.asset(
-                  "assets/icons/user1.svg",
+                  Assets.userSVG,
                   colorFilter:
                       const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                 ),
@@ -55,7 +57,7 @@ class OrderDeliveredStatus extends StatelessWidget {
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,
-                        color: darkColor.withOpacity(0.5),
+                        color: blackColor.withOpacity(0.5),
                       ),
                     ),
                     const SizedBox(width: 8.0),
@@ -64,7 +66,7 @@ class OrderDeliveredStatus extends StatelessWidget {
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,
-                        color: darkColor.withOpacity(0.5),
+                        color: blackColor.withOpacity(0.5),
                       ),
                     ),
                   ],
@@ -78,7 +80,7 @@ class OrderDeliveredStatus extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SvgPicture.asset(
-                  "assets/icons/location.svg",
+                  Assets.locationSVG,
                   colorFilter:
                       const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                 ),
@@ -89,7 +91,7 @@ class OrderDeliveredStatus extends StatelessWidget {
                     style: PrimaryFont.instance.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w300,
-                      color: darkColor.withOpacity(0.5),
+                      color: blackColor.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -100,7 +102,7 @@ class OrderDeliveredStatus extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                "assets/icons/calendar.svg",
+                Assets.calendarSVG,
                 colorFilter:
                     const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
               ),
@@ -111,7 +113,7 @@ class OrderDeliveredStatus extends StatelessWidget {
                   style: PrimaryFont.instance.copyWith(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w300,
-                    color: darkColor.withOpacity(0.5),
+                    color: blackColor.withOpacity(0.5),
                   ),
                 ),
               ),
@@ -123,11 +125,11 @@ class OrderDeliveredStatus extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 3.0),
             minLeadingWidth: 0.0,
             horizontalTitleGap: 8.0,
-            leading: SvgPicture.asset("assets/icons/order_box.svg"),
+            leading: SvgPicture.asset(Assets.orderBoxSVG),
             title: Text(
-              'Đơn hàng đã đặt',
+              AppLocalizations.of(context)!.orders_placed,
               style: PrimaryFont.instance.copyWith(
-                fontSize: 18.0,
+                fontSize: 16.0,
               ),
             ),
           ),
@@ -154,16 +156,15 @@ class OrderDeliveredStatus extends StatelessWidget {
                   ),
                   WidgetSpan(
                     child: ColoredBox(
-                      color: successfullyColor.withAlpha(150),
+                      color: successfullyColor.withOpacity(0.5),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 3),
+                        padding: const EdgeInsets.symmetric(horizontal: 3.0),
                         child: Text(
                           order.status_id!.getOrderStatus(context),
-                          style: theme.textTheme.bodySmall!.copyWith(
-                            color: lightColor,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 10.0,
+                            color: darkColor,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                       ),

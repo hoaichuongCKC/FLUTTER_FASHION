@@ -2,6 +2,8 @@ import 'package:flutter_fashion/app/presentation/personal_information/export.dar
 
 import 'package:lottie/lottie.dart';
 
+import '../../../config/svg_files.dart';
+
 class ReviewSuccessPage extends StatelessWidget {
   const ReviewSuccessPage({super.key, required this.indexParam});
   final int indexParam;
@@ -40,12 +42,12 @@ class ReviewSuccessPage extends StatelessWidget {
                     5,
                     (index) => Padding(
                       padding: const EdgeInsets.only(left: 5.0),
-                      child: SvgPicture.asset("assets/icons/star.svg",
+                      child: SvgPicture.asset(Assets.starSVG,
                           width: 30,
                           height: 30.0,
                           colorFilter: indexParam + 1 <= index
                               ? ColorFilter.mode(
-                                  darkColor.withOpacity(0.2), BlendMode.srcIn)
+                                  blackColor.withOpacity(0.2), BlendMode.srcIn)
                               : ColorFilter.mode(
                                   Colors.yellow.shade700, BlendMode.srcIn)),
                     ),

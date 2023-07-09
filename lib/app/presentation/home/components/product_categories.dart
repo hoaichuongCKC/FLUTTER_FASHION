@@ -114,9 +114,11 @@ class ProductCategoriesHome extends StatelessWidget {
                               children: [
                                 DecoratedBox(
                                   decoration: BoxDecoration(
-                                    color: Color(int.parse(
-                                        "0xFF${item.background_color}")),
+                                    color: lightColor,
                                     shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: textDisable.withOpacity(0.3),
+                                        width: 0.5),
                                     image: DecorationImage(
                                       fit: BoxFit.contain,
                                       image: CachedNetworkImageProvider(

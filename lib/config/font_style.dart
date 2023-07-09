@@ -11,7 +11,7 @@ class PrimaryFont {
   final double _fontSize = 14.0;
 
   /// It's a default value for the color.
-  final Color _color = darkColor;
+  final Color _color = blackColor;
 
   /// It's a default value for the fontWeight.
   final FontWeight _fontWeight = FontWeight.w500;

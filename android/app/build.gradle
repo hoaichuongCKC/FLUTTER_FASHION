@@ -72,11 +72,18 @@ dependencies {
     //flutter notification 
     // coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     //-
+     // Import the BoM for the Firebase platform
+    //implementation platform("com.google.firebase:firebase-bom:32.1.1")
+
+    // Add the dependency for the App Check library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    //implementation 'com.google.firebase:firebase-appcheck-ktx'
     implementation 'androidx.work:work-runtime:2.7.1'
+    //implementation 'com.google.firebase:firebase-auth:20.0.1'
     implementation 'com.google.firebase:firebase-messaging:21.1.0'
     implementation 'com.pusher:push-notifications-android:1.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+    //implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'org.conscrypt:conscrypt-android:2.4.0'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'

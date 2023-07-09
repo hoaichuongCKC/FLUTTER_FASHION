@@ -50,7 +50,7 @@ class _FormSearchState extends State<FormSearch> {
               boxShadow: ThemeDataApp.instance.isLight
                   ? [
                       BoxShadow(
-                        color: darkColor.withOpacity(0.05),
+                        color: blackColor.withOpacity(0.05),
                         blurRadius: 8.0,
                         offset: const Offset(0, 1),
                       )
@@ -85,14 +85,14 @@ class _FormSearchState extends State<FormSearch> {
                     fit: BoxFit.scaleDown,
                     width: 18.0,
                     height: 18.0,
-                    color: darkColor,
+                    color: blackColor,
                   ),
                 ),
                 hintText: "vd: Quần jean",
                 fillColor: lightColor,
                 hintStyle: PrimaryFont.instance.copyWith(
                   fontSize: 10.0,
-                  color: darkColor.withOpacity(0.4),
+                  color: blackColor.withOpacity(0.4),
                   fontWeight: FontWeight.w400,
                 ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -114,7 +114,7 @@ class _FormSearchState extends State<FormSearch> {
                         icon: const Icon(
                           Icons.clear,
                           size: 18.0,
-                          color: darkColor,
+                          color: blackColor,
                         ),
                       )
                     : InkWell(

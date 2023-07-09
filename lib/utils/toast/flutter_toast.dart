@@ -6,7 +6,7 @@ void showErrorToast(String msg,
     Toast? toastLength = Toast.LENGTH_LONG}) {
   Fluttertoast.showToast(
     msg: msg,
-    textColor: darkColor,
+    textColor: blackColor,
     backgroundColor: disablePrimaryColor,
     gravity: gravity,
     fontSize: 14.0,
@@ -19,7 +19,7 @@ void showSuccessToast(String msg,
     Toast? toastLength = Toast.LENGTH_LONG}) {
   Fluttertoast.showToast(
     msg: msg,
-    textColor: darkColor,
+    textColor: blackColor,
     backgroundColor: successfullyColor,
     gravity: gravity,
     fontSize: 14.0,

@@ -32,7 +32,7 @@ class RulesAppView extends StatelessWidget {
                                 key: const ValueKey(true),
                                 decoration: BoxDecoration(
                                   color: ThemeDataApp.instance.isLight
-                                      ? secondaryColor
+                                      ? darkColor
                                       : theme.cardColor,
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(3.0),
@@ -61,7 +61,7 @@ class RulesAppView extends StatelessWidget {
                                   color: theme.cardColor,
                                   border: !ThemeDataApp.instance.isLight
                                       ? null
-                                      : Border.all(color: secondaryColor),
+                                      : Border.all(color: darkColor),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(3.0),
                                   ),
@@ -181,7 +181,7 @@ class _DialogOrderState extends State<DialogOrder>
               AppLocalizations.of(context)!.please_await,
               style: PrimaryFont.instance.copyWith(
                 fontSize: 14.0,
-                color: secondaryColor,
+                color: darkColor,
               ),
             )
           ],
