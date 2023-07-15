@@ -995,6 +995,37 @@
         "example": "1"
       }
     }
+  },
+
+  "read_notification" : "Read notification",
+  "@read_notification": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "add_to_cart_successful" : "Add to cart successful",
+  "@add_to_cart_successful": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "email_invalid" : "Email invalid",
+  "@email_invalid": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "buy" : "Buy",
+  "@buy": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "pr_price_has_changed" : "Product price has chaned",
+  "@pr_price_has_changed": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "pls_add_new_pr" : "Please add new product",
+  "@pls_add_new_pr": {
+    "description": "nó là chỉnh sửa"
   }
+
 
 }

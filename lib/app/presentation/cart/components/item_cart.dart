@@ -1,8 +1,6 @@
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/counter_cart.dart';
-import 'package:flutter_fashion/core/base/api/api.dart';
-import 'package:flutter_fashion/utils/extensions/double.dart';
 import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
@@ -37,129 +35,23 @@ class ItemCart extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      child: AspectRatio(
-                        aspectRatio: 1.0,
-                        child: CachedNetworkImage(
-                          imageUrl: ApiService.imageUrl + item.photo,
-                          fit: BoxFit.fitWidth,
-                          placeholder: (context, url) {
-                            return ColoredBox(
-                              color: skeletonColor,
-                              child: const SizedBox(),
-                            );
-                          },
-                          cacheKey: item.photo,
-                        ),
-                      ),
-                    ),
+                    _buildImage(),
                     const SizedBox(width: 8.0),
                     Expanded(
                       flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    item.product.name!,
-                                    style: PrimaryFont.instance.copyWith(
-                                      fontSize: 14.0,
-                                    ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                isItemCart
-                                    ? InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<CartCubit>()
-                                              .removeFromCart(index, context);
-                                        },
-                                        child: FractionallySizedBox(
-                                          alignment: const Alignment(0, -0.8),
-                                          heightFactor: 0.35,
-                                          child: SvgPicture.asset(
-                                            Assets.trashSVG,
-                                            colorFilter: ColorFilter.mode(
-                                              textDisable,
-                                              BlendMode.srcIn,
-                                            ),
-                                            fit: BoxFit.scaleDown,
-                                          ),
-                                        ),
-                                      )
-                                    : const SizedBox()
-                              ],
-                            ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    item.product.regular_price!
-                                        .toDouble()
-                                        .toVndCurrency(),
-                                    style: theme.textTheme.bodySmall!.copyWith(
-                                      fontSize: 10.0,
-                                      color: item.product.sale_price == null
-                                          ? primaryColor
-                                          : disableDarkColor,
-                                      decoration:
-                                          item.product.sale_price == null
-                                              ? null
-                                              : TextDecoration.lineThrough,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 3.0),
-                                  item.product.sale_price != null
-                                      ? Text(
-                                          item.product.sale_price!
-                                              .toDouble()
-                                              .toVndCurrency(),
-                                          style: PrimaryFont.instance.copyWith(
-                                            fontSize: 12.0,
-                                            color: const Color(0xFFFF7262),
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        )
-                                      : const SizedBox()
-                                ],
-                              ),
-                              isItemCart
-                                  ? CounterCart(
-                                      value: item.quantity,
-                                      ins: () =>
-                                          context.read<CartCubit>().ins(index),
-                                      des: () =>
-                                          context.read<CartCubit>().des(index),
-                                    )
-                                  : Text(
-                                      'x${item.quantity}',
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: blackColor.withOpacity(0.5),
-                                      ),
-                                    )
-                            ],
-                          ),
-                          item.product.sale_price != null
+                          _buildName(context),
+                          _buildPriceQuantity(theme, context),
+                          item.sale_price != null
                               ? ColoredBox(
                                   color: errorColor.withOpacity(0.2),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 1.0),
                                     child: Text(
-                                      "-${(item.product.regular_price!.toDouble() - item.product.sale_price!.toDouble()).toVndCurrency()}",
+                                      "-${(item.price.toDouble() - item.sale_price!.toDouble()).toVndCurrency()}",
                                       style: PrimaryFont.instance.copyWith(
                                         fontSize: 7.0,
                                         color: errorColor,
@@ -175,74 +67,185 @@ class ItemCart extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              Text.rich(
-                TextSpan(
+              _buildDetail(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Text _buildDetail(BuildContext context) {
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: "${AppLocalizations.of(context)!.detail}: ",
+            style: PrimaryFont.instance.copyWith(
+              fontSize: 12.0,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          item.size.isEmpty
+              ? const WidgetSpan(child: SizedBox(width: 0.0))
+              : TextSpan(
+                  text: "size ",
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w300,
+                  ),
                   children: [
                     TextSpan(
-                      text: "${AppLocalizations.of(context)!.detail}: ",
+                      text: "${item.size}, ",
                       style: PrimaryFont.instance.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w300,
                       ),
-                    ),
-                    item.size.isEmpty
-                        ? const WidgetSpan(child: SizedBox(width: 0.0))
-                        : TextSpan(
-                            text: "size ",
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: "${item.size}, ",
-                                style: PrimaryFont.instance.copyWith(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              )
-                            ],
-                          ),
-                    item.color.isEmpty
-                        ? const WidgetSpan(child: SizedBox(width: 0.0))
-                        : TextSpan(
-                            text: "${AppLocalizations.of(context)!.color}: ",
-                            style: PrimaryFont.instance.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            children: [
-                              WidgetSpan(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    color: Color(int.parse(
-                                        "0xFF${item.color.substring(1)}")),
-                                    shape: BoxShape.circle,
-                                    boxShadow: item.color != "ffffff"
-                                        ? null
-                                        : const [
-                                            BoxShadow(
-                                              color: darkColor,
-                                              blurRadius: 0.0,
-                                              spreadRadius: 0.5,
-                                              blurStyle: BlurStyle.inner,
-                                            )
-                                          ],
-                                  ),
-                                  child: const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                    const WidgetSpan(child: SizedBox(width: 5.0)),
+                    )
                   ],
                 ),
+          item.color.isEmpty
+              ? const WidgetSpan(child: SizedBox(width: 0.0))
+              : TextSpan(
+                  text: "${AppLocalizations.of(context)!.color}: ",
+                  style: PrimaryFont.instance.copyWith(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                  children: [
+                    WidgetSpan(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Color(
+                              int.parse("0xFF${item.color.substring(1)}")),
+                          shape: BoxShape.circle,
+                          boxShadow: item.color != "ffffff"
+                              ? null
+                              : const [
+                                  BoxShadow(
+                                    color: darkColor,
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.5,
+                                    blurStyle: BlurStyle.inner,
+                                  )
+                                ],
+                        ),
+                        child: const SizedBox(
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+          const WidgetSpan(child: SizedBox(width: 5.0)),
+        ],
+      ),
+    );
+  }
+
+  Row _buildPriceQuantity(ThemeData theme, BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              item.price.toDouble().toVndCurrency(),
+              style: theme.textTheme.bodySmall!.copyWith(
+                fontSize: 10.0,
+                color:
+                    item.sale_price == null ? primaryColor : disableDarkColor,
+                decoration:
+                    item.sale_price == null ? null : TextDecoration.lineThrough,
               ),
-            ],
+            ),
+            const SizedBox(width: 3.0),
+            item.sale_price != null
+                ? Text(
+                    item.sale_price!.toDouble().toVndCurrency(),
+                    style: PrimaryFont.instance.copyWith(
+                      fontSize: 12.0,
+                      color: const Color(0xFFFF7262),
+                      fontWeight: FontWeight.w300,
+                    ),
+                  )
+                : const SizedBox()
+          ],
+        ),
+        isItemCart
+            ? CounterCart(
+                value: item.quantity,
+                ins: () => context.read<CartCubit>().ins(index),
+                des: () => context.read<CartCubit>().des(index),
+              )
+            : Text(
+                'x${item.quantity}',
+                style: PrimaryFont.instance.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300,
+                  color: blackColor.withOpacity(0.5),
+                ),
+              )
+      ],
+    );
+  }
+
+  Expanded _buildName(BuildContext context) {
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(
+              item.product.name!,
+              style: PrimaryFont.instance.copyWith(
+                fontSize: 14.0,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
+          isItemCart
+              ? InkWell(
+                  onTap: () {
+                    context.read<CartCubit>().removeFromCart(index, context);
+                  },
+                  child: FractionallySizedBox(
+                    alignment: const Alignment(0, -0.8),
+                    heightFactor: 0.35,
+                    child: SvgPicture.asset(
+                      Assets.trashSVG,
+                      colorFilter: ColorFilter.mode(
+                        textDisable,
+                        BlendMode.srcIn,
+                      ),
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                )
+              : const SizedBox()
+        ],
+      ),
+    );
+  }
+
+  Expanded _buildImage() {
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 1.0,
+        child: CachedNetworkImage(
+          imageUrl: ApiService.imageUrl + item.photo,
+          fit: BoxFit.fitWidth,
+          placeholder: (context, url) {
+            return ColoredBox(
+              color: skeletonColor,
+              child: const SizedBox(),
+            );
+          },
+          cacheKey: item.photo,
         ),
       ),
     );

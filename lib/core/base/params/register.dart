@@ -17,10 +17,10 @@ class RegisterParams extends Equatable {
   });
 
   Map<String, String> toJson() => {
-        "fullname": fullname,
-        "phone": phone,
-        "email": email,
-        "password": password,
+        "fullname": fullname.trimLeft().trimRight(),
+        "phone": phone.trimLeft().trimRight(),
+        "email": email.trimLeft().trimRight(),
+        "password": password.trimLeft().trimRight(),
       };
 
   @override

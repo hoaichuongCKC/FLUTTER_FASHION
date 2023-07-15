@@ -1,18 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
 import 'package:flutter_fashion/core/pusher/pusher_app.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
-class PusherUserApp with PusherMixin implements PusherApp {
+class ChannelUserApp with PusherMixin implements PusherApp {
   final ApiService apiService;
 
-  PusherUserApp({required this.apiService});
+  ChannelUserApp({required this.apiService});
 
   String get currentLocation => AppRoutes.router.location;
 

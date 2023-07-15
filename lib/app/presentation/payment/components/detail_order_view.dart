@@ -2,7 +2,6 @@
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import '../../../../config/svg_files.dart';
-import '../../../blocs/cart/cart_cubit.dart';
 import '../../../blocs/payment/payment_state.dart';
 
 class DetailOrderView extends StatelessWidget {

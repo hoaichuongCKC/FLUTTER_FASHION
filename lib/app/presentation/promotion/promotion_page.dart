@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
 
 import '../../../common/components/promotion.dart';

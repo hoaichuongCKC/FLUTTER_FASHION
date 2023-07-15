@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
-import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/app/presentation/category/components/menu_list.dart';
 import 'package:flutter_fashion/app/presentation/category/components/product_list.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/config/task.dart';
-import 'package:workmanager/workmanager.dart';
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {

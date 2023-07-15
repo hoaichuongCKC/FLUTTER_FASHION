@@ -39,12 +39,15 @@ class ReviewCubit extends Cubit<ReviewState> {
   }
 
   void fetchData(int idProduct, ProductDetailUiCubit bloc) async {
+    print(_reviewsCache.keys);
     if (!_reviewsCache.containsKey(idProduct)) {
+      print('1231231');
       final result = await productRepo.fetchReviewProduct(1, idProduct);
 
       result.fold(
         (error) => emit(ReviewState.failure(error)),
         (reviews) {
+          print('1231231');
           if (reviews.reviews.isEmpty) {
             emit(ReviewState.success(reviews));
 
@@ -106,11 +109,7 @@ class ReviewCubit extends Cubit<ReviewState> {
   }
 
   void onRefresh(int idProduct, ProductDetailUiCubit bloc) {
-    print('danh sách review với idProduct: $idProduct');
-
     _reviewsCache.remove(idProduct);
-    print('My list: ${_reviewsCache.containsKey(idProduct)}');
-
     fetchData(idProduct, bloc);
   }
 }

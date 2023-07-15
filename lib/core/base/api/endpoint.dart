@@ -32,7 +32,7 @@ class ApiEndpoint {
   static const String fetchOrder = "order/fetch-order";
   static const String deleteOrder = "order/delete-order";
   static const String checkPromotion = "order/check-promotion";
-  static const String updateLimitOrder = "product/update-promotion";
+  static const String checkOrderBuyAgain = "order/check-order-buy-again";
 
   static const String fetchNotification = "noti/fetch";
   static const String deleteNoti = "noti/delete";

@@ -10,6 +10,9 @@ class CartModel with _$CartModel {
   @JsonSerializable(explicitToJson: true)
   const factory CartModel({
     required ProductModel product,
+    required int product_detail_id,
+    required int price,
+    required int? sale_price,
     required int quantity,
     required String color,
     required String size,
@@ -20,7 +23,10 @@ class CartModel with _$CartModel {
   factory CartModel.init(Map<String, dynamic> json) => CartModel(
         product: json["product"],
         quantity: json["quantity"],
+        price: json["price"],
+        product_detail_id: json["product_detail_id"],
         color: json["color"],
+        sale_price: json['sale_price'],
         size: json["size"],
         photo: json["photo"],
         created_at: DateTime.now(),

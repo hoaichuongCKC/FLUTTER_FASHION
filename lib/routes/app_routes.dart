@@ -1,34 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter_fashion/app/presentation/category/category_page.dart';
-import 'package:flutter_fashion/app/presentation/change_password/change_password_page.dart';
-import 'package:flutter_fashion/app/presentation/create_review/create_review_page.dart';
-import 'package:flutter_fashion/app/presentation/filter/filter_page.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/app/presentation/location_management/location_management_page.dart';
-import 'package:flutter_fashion/app/presentation/order/order_page.dart';
-import 'package:flutter_fashion/app/presentation/order_success/order_success_page.dart';
-import 'package:flutter_fashion/app/presentation/payment/payment_page.dart';
-import 'package:flutter_fashion/app/presentation/personal_information/personal_information.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/product_detail_page.dart';
-import 'package:flutter_fashion/app/presentation/promotion/promotion_page.dart';
-import 'package:flutter_fashion/app/presentation/search/search_page.dart';
-import 'package:flutter_fashion/app/presentation/setting/setting_page.dart';
-import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
-import 'package:flutter_fashion/common/components/bottom_navigation_bar.dart';
-import 'package:flutter_fashion/app/presentation/notification/notification_page.dart';
-import 'package:flutter_fashion/app/presentation/profile/profile_page.dart';
-import 'package:flutter_fashion/common/transition/fade.dart';
-import 'package:flutter_fashion/common/transition/right_to_left.dart';
-import 'package:flutter_fashion/core/storage/key.dart';
-import 'package:flutter_fashion/routes/export.dart';
-import '../app/presentation/cart/cart_page.dart';
 import 'dart:developer';
 
-import '../app/presentation/favorites/favorite_page.dart';
-import '../app/presentation/forgot_password/forgot_password_page.dart';
-import '../app/presentation/order_detail/order_detail_page.dart';
-import '../app/presentation/review_success/review_success_page.dart';
+import 'package:flutter_fashion/routes/export.dart';
 
 abstract class Routes {
   Routes._();
@@ -139,11 +113,11 @@ class AppRoutes {
     // observers: [GoRouterObserver()],
     redirect: (context, state) {
       if (state.subloc == Routes.INTRODUCTION) {
-        String? isAuthenticated = HydratedBloc.storage.read(KeyStorage.token);
+        String isAuthenticated = KeyStorage.getToken;
 
         log("Your Token: $isAuthenticated", name: "Local storage");
 
-        if (isAuthenticated != null) {
+        if (isAuthenticated.isEmpty) {
           return Routes.HOME;
         }
         return null;

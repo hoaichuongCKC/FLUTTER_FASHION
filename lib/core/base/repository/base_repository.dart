@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
-import 'package:flutter_fashion/core/network/network_info.dart';
-
 import '../exception/login_exception.dart';
 
 class BaseRepository {

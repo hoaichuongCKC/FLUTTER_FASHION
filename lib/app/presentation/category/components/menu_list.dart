@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
-import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/common/widgets/new_widget.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 import '../../../../export.dart';

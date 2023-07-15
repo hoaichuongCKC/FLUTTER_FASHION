@@ -1,6 +1,4 @@
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
-
 import '../../../../config/svg_files.dart';
 import '../../../../core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
@@ -15,6 +13,7 @@ class DeliveredView extends StatelessWidget {
           previous.status != current.status ||
           previous.completedList != current.completedList,
       builder: (context, state) {
+
         if (state.status == AppStatus.loading) {
           return const Center(
             child: CircularProgressIndicator(),

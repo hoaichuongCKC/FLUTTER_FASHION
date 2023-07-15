@@ -9,6 +9,7 @@ part of 'promotion_model.dart';
 _$_PromotionModel _$$_PromotionModelFromJson(Map<String, dynamic> json) =>
     _$_PromotionModel(
       id: json['id'] as int,
+      name: json['name'] as String,
       code: json['code'] as String,
       product_id: json['product_id'] as int?,
       desc: json['desc'] as String,
@@ -27,6 +28,7 @@ _$_PromotionModel _$$_PromotionModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_PromotionModelToJson(_$_PromotionModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'name': instance.name,
       'code': instance.code,
       'product_id': instance.product_id,
       'desc': instance.desc,

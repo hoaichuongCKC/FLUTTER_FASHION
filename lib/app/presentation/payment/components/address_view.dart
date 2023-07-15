@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
-
 import '../../../../config/svg_files.dart';
 
 class AddressPaymentView extends StatelessWidget {

@@ -18,27 +18,29 @@ class OptionColorSizeDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
-          buildWhen: (previous, current) => previous.color != current.color,
+          buildWhen: (p, c) => c.color != p.color,
           builder: (context, state) {
             return _buildOptionColors(
               theme,
               title: AppLocalizations.of(context)!.colors,
               options: product.product_detail!,
-              colorCode: state.color,
-              onPressed: (code, index) => blocDetailUi.changeColor(code, index),
+              color: state.color,
+              onPressed: (color, index) =>
+                  blocDetailUi.selectImage(color, index),
             );
           },
         ),
         const SizedBox(height: 10.0),
         BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
-          buildWhen: (previous, current) => previous.size != current.size,
+          buildWhen: (p, c) => c.size != p.size || c.color != p.color,
           builder: (context, state) {
             return _buildOptionSizes(
               theme,
               title: AppLocalizations.of(context)!.sizes,
-              options: product.properties!.sizes!,
+              options: product.product_detail!,
+              color: state.color,
               size: state.size,
-              onPressed: (size) => blocDetailUi.changeSize(size),
+              onPressed: (size, id) => blocDetailUi.changeSize(size, id),
             );
           },
         ),
@@ -50,7 +52,7 @@ class OptionColorSizeDetail extends StatelessWidget {
     ThemeData theme, {
     required String title,
     required List<ProductDetailModel> options,
-    String colorCode = "",
+    required String color,
     required Function(String, int) onPressed,
   }) {
     if (options.isEmpty) {
@@ -67,25 +69,31 @@ class OptionColorSizeDetail extends StatelessWidget {
         ),
         const SizedBox(height: 5.0),
         Wrap(
-          spacing: 10.0,
-          children: options.map((e) {
-            final isSelected = colorCode == e.color;
+          spacing: 5.0,
+          children: options.map((item) {
+            final index = options.indexOf(item);
 
-            final hex = "0xFF${e.color!.substring(1)}";
+            if (index != 0) {
+              final bool isColor =
+                  options[index - 1].color == options[index].color;
+              if (isColor) return const SizedBox();
+            }
 
-            final color = int.parse(hex);
+            final isSelected = color == item.color;
 
-            final index = options.indexOf(e);
+            final hex = "0xFF${item.color!.substring(1)}";
+
+            final parseColor = int.parse(hex);
 
             const padding = EdgeInsets.all(3.5);
 
-            final bool isStock = e.stock! > 0;
+            final bool isStock = item.stock! > 0;
 
             late final Widget itemColor;
 
             if (isStock) {
               itemColor = InkWell(
-                onTap: () => onPressed(e.color!, index),
+                onTap: () => onPressed(item.color!, index),
                 customBorder: const CircleBorder(),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
@@ -96,7 +104,7 @@ class OptionColorSizeDetail extends StatelessWidget {
                     padding: padding,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: Color(color),
+                        color: Color(parseColor),
                         shape: BoxShape.circle,
                       ),
                       child: const SizedBox(
@@ -116,7 +124,7 @@ class OptionColorSizeDetail extends StatelessWidget {
                   padding: padding,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: Color(color),
+                      color: Color(parseColor),
                       shape: BoxShape.circle,
                     ),
                     child: SizedBox(
@@ -154,11 +162,12 @@ class OptionColorSizeDetail extends StatelessWidget {
   _buildOptionSizes(
     ThemeData theme, {
     required String title,
-    required List options,
-    String size = "",
-    required Function(String) onPressed,
+    required List<ProductDetailModel> options,
+    required String color,
+    required String size,
+    required Function(String, int id) onPressed,
   }) {
-    if (options.isEmpty) {
+    if (options[0].size == null || options[0].size!.isEmpty) {
       return const SizedBox();
     }
 
@@ -173,17 +182,17 @@ class OptionColorSizeDetail extends StatelessWidget {
         ),
         const SizedBox(height: 5.0),
         Wrap(
-          spacing: 14.0,
-          children: options.map((e) {
-            e = e.toString();
-            final isSelected = size == e;
+          spacing: 5.0,
+          children:
+              options.where((element) => element.color == color).map((item) {
+            final isSelected = size == item.size;
 
             final color = isSelected ? darkColor : lightColor;
 
             final textColor = isSelected ? lightColor : blackColor;
 
             return InkWell(
-              onTap: () => onPressed(e),
+              onTap: () => onPressed(item.size!, item.id),
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: color,
@@ -198,7 +207,7 @@ class OptionColorSizeDetail extends StatelessWidget {
                     width: 35,
                     child: Align(
                       child: Text(
-                        e,
+                        item.size.toString(),
                         style: PrimaryFont.instance.copyWith(
                           fontSize: 14.0,
                           color: textColor,

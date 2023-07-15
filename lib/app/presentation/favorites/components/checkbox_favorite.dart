@@ -1,4 +1,4 @@
-import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
+
 import 'package:flutter_fashion/app/models/product/product.dart';
 
 import '../../../../export.dart';

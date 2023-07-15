@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
+
 import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import '../../../../config/svg_files.dart';

@@ -15,7 +15,7 @@ import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/network/network_info.dart';
-import 'package:flutter_fashion/core/pusher/order.dart';
+import 'package:flutter_fashion/core/pusher/channels.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'app/blocs/address_user/address_user_cubit.dart';
@@ -30,7 +30,7 @@ Future<void> init() async {
   //bloc storage
   getIt.registerLazySingleton(() => SearchCubit(getIt()));
 
-  getIt.registerLazySingleton(() => OrderCancelCubit());
+  getIt.registerLazySingleton(() => OrderCancelCubit(getIt()));
 
   getIt.registerLazySingleton(() => Connectivity());
 
@@ -41,7 +41,7 @@ Future<void> init() async {
   //internal app
   getIt.registerLazySingleton(() => NetworkInfoImpl(getIt()));
 
-  getIt.registerLazySingleton(() => PusherUserApp(apiService: getIt()));
+  getIt.registerLazySingleton(() => ChannelUserApp(apiService: getIt()));
 
   getIt.registerLazySingleton(() => BaseRepository(networkInfoImpl: getIt()));
 

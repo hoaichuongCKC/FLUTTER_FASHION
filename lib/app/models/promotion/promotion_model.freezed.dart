@@ -21,6 +21,7 @@ PromotionModel _$PromotionModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PromotionModel {
   int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
   int? get product_id => throw _privateConstructorUsedError;
   String get desc => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $PromotionModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
+      String name,
       String code,
       int? product_id,
       String desc,
@@ -68,6 +70,7 @@ class _$PromotionModelCopyWithImpl<$Res, $Val extends PromotionModel>
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
     Object? code = null,
     Object? product_id = freezed,
     Object? desc = null,
@@ -82,6 +85,10 @@ class _$PromotionModelCopyWithImpl<$Res, $Val extends PromotionModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -128,6 +135,7 @@ abstract class _$$_PromotionModelCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
+      String name,
       String code,
       int? product_id,
       String desc,
@@ -150,6 +158,7 @@ class __$$_PromotionModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
     Object? code = null,
     Object? product_id = freezed,
     Object? desc = null,
@@ -164,6 +173,10 @@ class __$$_PromotionModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -206,6 +219,7 @@ class __$$_PromotionModelCopyWithImpl<$Res>
 class _$_PromotionModel implements _PromotionModel {
   const _$_PromotionModel(
       {required this.id,
+      required this.name,
       required this.code,
       this.product_id,
       required this.desc,
@@ -220,6 +234,8 @@ class _$_PromotionModel implements _PromotionModel {
 
   @override
   final int id;
+  @override
+  final String name;
   @override
   final String code;
   @override
@@ -239,7 +255,7 @@ class _$_PromotionModel implements _PromotionModel {
 
   @override
   String toString() {
-    return 'PromotionModel(id: $id, code: $code, product_id: $product_id, desc: $desc, order_price_conditions: $order_price_conditions, discount_price: $discount_price, limit: $limit, end_date: $end_date, created_at: $created_at)';
+    return 'PromotionModel(id: $id, name: $name, code: $code, product_id: $product_id, desc: $desc, order_price_conditions: $order_price_conditions, discount_price: $discount_price, limit: $limit, end_date: $end_date, created_at: $created_at)';
   }
 
   @override
@@ -248,6 +264,7 @@ class _$_PromotionModel implements _PromotionModel {
         (other.runtimeType == runtimeType &&
             other is _$_PromotionModel &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.product_id, product_id) ||
                 other.product_id == product_id) &&
@@ -265,7 +282,7 @@ class _$_PromotionModel implements _PromotionModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, code, product_id, desc,
+  int get hashCode => Object.hash(runtimeType, id, name, code, product_id, desc,
       order_price_conditions, discount_price, limit, end_date, created_at);
 
   @JsonKey(ignore: true)
@@ -285,6 +302,7 @@ class _$_PromotionModel implements _PromotionModel {
 abstract class _PromotionModel implements PromotionModel {
   const factory _PromotionModel(
       {required final int id,
+      required final String name,
       required final String code,
       final int? product_id,
       required final String desc,
@@ -299,6 +317,8 @@ abstract class _PromotionModel implements PromotionModel {
 
   @override
   int get id;
+  @override
+  String get name;
   @override
   String get code;
   @override

@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
@@ -96,14 +95,15 @@ class ItemCancel extends StatelessWidget {
                           fontSize: 12.0,
                         ),
                       ),
-                      subtitle: Row(
-                        mainAxisSize: MainAxisSize.min,
+                      subtitle: Wrap(
+                        spacing: 8.0,
+                        runSpacing: 3.0,
                         children: [
                           Text(
-                            e.product.regular_price!.toDouble().toVndCurrency(),
+                            e.price.toDouble().toVndCurrency(),
                             style: PrimaryFont.instance.copyWith(
                               fontSize: 10.0,
-                              color: !(e.product.sale_price != null)
+                              color: !(e.sale_price != null)
                                   ? const Color(0xFFFF7262)
                                   : disableDarkColor,
                               decoration: !(e.product.sale_price != null)
@@ -111,14 +111,14 @@ class ItemCancel extends StatelessWidget {
                                   : TextDecoration.lineThrough,
                             ),
                           ),
-                          e.product.sale_price != null
+                          e.sale_price != null
                               ? ColoredBox(
                                   color: errorColor.withOpacity(0.2),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 1.0),
                                     child: Text(
-                                      "-${(e.product.regular_price!.toDouble() - e.product.sale_price!.toDouble()).toVndCurrency()}",
+                                      "-${(e.price.toDouble() - e.price.toDouble()).toVndCurrency()}",
                                       style: PrimaryFont.instance.copyWith(
                                         fontSize: 7.0,
                                         fontWeight: FontWeight.w700,
@@ -128,15 +128,13 @@ class ItemCancel extends StatelessWidget {
                                   ),
                                 )
                               : const SizedBox(),
-                          !(e.product.sale_price != null)
+                          !(e.sale_price != null)
                               ? const SizedBox()
                               : const SizedBox(width: 5.0),
-                          !(e.product.sale_price != null)
+                          !(e.sale_price != null)
                               ? const SizedBox()
                               : Text(
-                                  e.product.sale_price!
-                                      .toDouble()
-                                      .toVndCurrency(),
+                                  e.sale_price!.toDouble().toVndCurrency(),
                                   style: PrimaryFont.instance.copyWith(
                                     fontSize: 10.0,
                                     height: 1.0,
@@ -165,7 +163,7 @@ class ItemCancel extends StatelessWidget {
                   child: SvgPicture.asset(
                     Assets.calendarSVG,
                     colorFilter:
-                        const ColorFilter.mode(darkColor, BlendMode.srcIn),
+                        const ColorFilter.mode(secondaryColor, BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(width: 8.0),

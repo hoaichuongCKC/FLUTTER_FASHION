@@ -1,12 +1,8 @@
-import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/common/widgets/flash_sale_widget.dart';
 import 'package:flutter_fashion/common/widgets/new_widget.dart';
 import 'package:flutter_fashion/common/widgets/popular.dart';
-import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
-import 'package:flutter_fashion/utils/extensions/double.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 import 'package:flutter_fashion/utils/extensions/list.dart';
 import '../../export.dart';

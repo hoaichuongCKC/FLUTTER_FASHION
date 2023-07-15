@@ -21,12 +21,11 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ProductModel {
   int? get id => throw _privateConstructorUsedError;
-  String? get code => throw _privateConstructorUsedError;
+  String? get SKU => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   int? get regular_price => throw _privateConstructorUsedError;
   double? get discount => throw _privateConstructorUsedError;
   int? get sale_price => throw _privateConstructorUsedError;
-  Properties? get properties => throw _privateConstructorUsedError;
   String? get desc => throw _privateConstructorUsedError;
   int? get view => throw _privateConstructorUsedError;
   double? get star => throw _privateConstructorUsedError;
@@ -51,12 +50,11 @@ abstract class $ProductModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? code,
+      String? SKU,
       String? name,
       int? regular_price,
       double? discount,
       int? sale_price,
-      Properties? properties,
       String? desc,
       int? view,
       double? star,
@@ -66,7 +64,6 @@ abstract class $ProductModelCopyWith<$Res> {
       List<ProductDetailModel>? product_detail,
       DateTime? created_at});
 
-  $PropertiesCopyWith<$Res>? get properties;
   $CategoryCopyWith<$Res>? get category;
 }
 
@@ -84,12 +81,11 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   @override
   $Res call({
     Object? id = freezed,
-    Object? code = freezed,
+    Object? SKU = freezed,
     Object? name = freezed,
     Object? regular_price = freezed,
     Object? discount = freezed,
     Object? sale_price = freezed,
-    Object? properties = freezed,
     Object? desc = freezed,
     Object? view = freezed,
     Object? star = freezed,
@@ -104,9 +100,9 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      SKU: freezed == SKU
+          ? _value.SKU
+          : SKU // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -124,10 +120,6 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.sale_price
           : sale_price // ignore: cast_nullable_to_non_nullable
               as int?,
-      properties: freezed == properties
-          ? _value.properties
-          : properties // ignore: cast_nullable_to_non_nullable
-              as Properties?,
       desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
@@ -165,18 +157,6 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $PropertiesCopyWith<$Res>? get properties {
-    if (_value.properties == null) {
-      return null;
-    }
-
-    return $PropertiesCopyWith<$Res>(_value.properties!, (value) {
-      return _then(_value.copyWith(properties: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $CategoryCopyWith<$Res>? get category {
     if (_value.category == null) {
       return null;
@@ -198,12 +178,11 @@ abstract class _$$_ProductModelCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      String? code,
+      String? SKU,
       String? name,
       int? regular_price,
       double? discount,
       int? sale_price,
-      Properties? properties,
       String? desc,
       int? view,
       double? star,
@@ -213,8 +192,6 @@ abstract class _$$_ProductModelCopyWith<$Res>
       List<ProductDetailModel>? product_detail,
       DateTime? created_at});
 
-  @override
-  $PropertiesCopyWith<$Res>? get properties;
   @override
   $CategoryCopyWith<$Res>? get category;
 }
@@ -231,12 +208,11 @@ class __$$_ProductModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? code = freezed,
+    Object? SKU = freezed,
     Object? name = freezed,
     Object? regular_price = freezed,
     Object? discount = freezed,
     Object? sale_price = freezed,
-    Object? properties = freezed,
     Object? desc = freezed,
     Object? view = freezed,
     Object? star = freezed,
@@ -251,9 +227,9 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      SKU: freezed == SKU
+          ? _value.SKU
+          : SKU // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -271,10 +247,6 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.sale_price
           : sale_price // ignore: cast_nullable_to_non_nullable
               as int?,
-      properties: freezed == properties
-          ? _value.properties
-          : properties // ignore: cast_nullable_to_non_nullable
-              as Properties?,
       desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
@@ -317,12 +289,11 @@ class __$$_ProductModelCopyWithImpl<$Res>
 class _$_ProductModel implements _ProductModel {
   const _$_ProductModel(
       {this.id,
-      this.code,
+      this.SKU,
       this.name,
       this.regular_price,
       this.discount,
       this.sale_price,
-      this.properties,
       this.desc,
       this.view,
       this.star,
@@ -339,7 +310,7 @@ class _$_ProductModel implements _ProductModel {
   @override
   final int? id;
   @override
-  final String? code;
+  final String? SKU;
   @override
   final String? name;
   @override
@@ -348,8 +319,6 @@ class _$_ProductModel implements _ProductModel {
   final double? discount;
   @override
   final int? sale_price;
-  @override
-  final Properties? properties;
   @override
   final String? desc;
   @override
@@ -377,7 +346,7 @@ class _$_ProductModel implements _ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, code: $code, name: $name, regular_price: $regular_price, discount: $discount, sale_price: $sale_price, properties: $properties, desc: $desc, view: $view, star: $star, sold: $sold, is_popular: $is_popular, category: $category, product_detail: $product_detail, created_at: $created_at)';
+    return 'ProductModel(id: $id, SKU: $SKU, name: $name, regular_price: $regular_price, discount: $discount, sale_price: $sale_price, desc: $desc, view: $view, star: $star, sold: $sold, is_popular: $is_popular, category: $category, product_detail: $product_detail, created_at: $created_at)';
   }
 
   @override
@@ -386,7 +355,7 @@ class _$_ProductModel implements _ProductModel {
         (other.runtimeType == runtimeType &&
             other is _$_ProductModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.code, code) || other.code == code) &&
+            (identical(other.SKU, SKU) || other.SKU == SKU) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.regular_price, regular_price) ||
                 other.regular_price == regular_price) &&
@@ -394,8 +363,6 @@ class _$_ProductModel implements _ProductModel {
                 other.discount == discount) &&
             (identical(other.sale_price, sale_price) ||
                 other.sale_price == sale_price) &&
-            (identical(other.properties, properties) ||
-                other.properties == properties) &&
             (identical(other.desc, desc) || other.desc == desc) &&
             (identical(other.view, view) || other.view == view) &&
             (identical(other.star, star) || other.star == star) &&
@@ -415,12 +382,11 @@ class _$_ProductModel implements _ProductModel {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      code,
+      SKU,
       name,
       regular_price,
       discount,
       sale_price,
-      properties,
       desc,
       view,
       star,
@@ -447,12 +413,11 @@ class _$_ProductModel implements _ProductModel {
 abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
       {final int? id,
-      final String? code,
+      final String? SKU,
       final String? name,
       final int? regular_price,
       final double? discount,
       final int? sale_price,
-      final Properties? properties,
       final String? desc,
       final int? view,
       final double? star,
@@ -468,7 +433,7 @@ abstract class _ProductModel implements ProductModel {
   @override
   int? get id;
   @override
-  String? get code;
+  String? get SKU;
   @override
   String? get name;
   @override
@@ -477,8 +442,6 @@ abstract class _ProductModel implements ProductModel {
   double? get discount;
   @override
   int? get sale_price;
-  @override
-  Properties? get properties;
   @override
   String? get desc;
   @override
@@ -690,169 +653,6 @@ abstract class _Category implements Category {
       throw _privateConstructorUsedError;
 }
 
-Properties _$PropertiesFromJson(Map<String, dynamic> json) {
-  return _Properties.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Properties {
-  List<dynamic>? get sizes => throw _privateConstructorUsedError;
-  String? get origin => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $PropertiesCopyWith<Properties> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PropertiesCopyWith<$Res> {
-  factory $PropertiesCopyWith(
-          Properties value, $Res Function(Properties) then) =
-      _$PropertiesCopyWithImpl<$Res, Properties>;
-  @useResult
-  $Res call({List<dynamic>? sizes, String? origin});
-}
-
-/// @nodoc
-class _$PropertiesCopyWithImpl<$Res, $Val extends Properties>
-    implements $PropertiesCopyWith<$Res> {
-  _$PropertiesCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? sizes = freezed,
-    Object? origin = freezed,
-  }) {
-    return _then(_value.copyWith(
-      sizes: freezed == sizes
-          ? _value.sizes
-          : sizes // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
-      origin: freezed == origin
-          ? _value.origin
-          : origin // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_PropertiesCopyWith<$Res>
-    implements $PropertiesCopyWith<$Res> {
-  factory _$$_PropertiesCopyWith(
-          _$_Properties value, $Res Function(_$_Properties) then) =
-      __$$_PropertiesCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<dynamic>? sizes, String? origin});
-}
-
-/// @nodoc
-class __$$_PropertiesCopyWithImpl<$Res>
-    extends _$PropertiesCopyWithImpl<$Res, _$_Properties>
-    implements _$$_PropertiesCopyWith<$Res> {
-  __$$_PropertiesCopyWithImpl(
-      _$_Properties _value, $Res Function(_$_Properties) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? sizes = freezed,
-    Object? origin = freezed,
-  }) {
-    return _then(_$_Properties(
-      sizes: freezed == sizes
-          ? _value._sizes
-          : sizes // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
-      origin: freezed == origin
-          ? _value.origin
-          : origin // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_Properties implements _Properties {
-  const _$_Properties({final List<dynamic>? sizes, this.origin})
-      : _sizes = sizes;
-
-  factory _$_Properties.fromJson(Map<String, dynamic> json) =>
-      _$$_PropertiesFromJson(json);
-
-  final List<dynamic>? _sizes;
-  @override
-  List<dynamic>? get sizes {
-    final value = _sizes;
-    if (value == null) return null;
-    if (_sizes is EqualUnmodifiableListView) return _sizes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  final String? origin;
-
-  @override
-  String toString() {
-    return 'Properties(sizes: $sizes, origin: $origin)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Properties &&
-            const DeepCollectionEquality().equals(other._sizes, _sizes) &&
-            (identical(other.origin, origin) || other.origin == origin));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_sizes), origin);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_PropertiesCopyWith<_$_Properties> get copyWith =>
-      __$$_PropertiesCopyWithImpl<_$_Properties>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_PropertiesToJson(
-      this,
-    );
-  }
-}
-
-abstract class _Properties implements Properties {
-  const factory _Properties(
-      {final List<dynamic>? sizes, final String? origin}) = _$_Properties;
-
-  factory _Properties.fromJson(Map<String, dynamic> json) =
-      _$_Properties.fromJson;
-
-  @override
-  List<dynamic>? get sizes;
-  @override
-  String? get origin;
-  @override
-  @JsonKey(ignore: true)
-  _$$_PropertiesCopyWith<_$_Properties> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 ProductDetailModel _$ProductDetailModelFromJson(Map<String, dynamic> json) {
   return _ProductDetailModel.fromJson(json);
 }
@@ -863,6 +663,7 @@ mixin _$ProductDetailModel {
   String get photo => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
   int? get stock => throw _privateConstructorUsedError;
+  String? get size => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -876,7 +677,7 @@ abstract class $ProductDetailModelCopyWith<$Res> {
           ProductDetailModel value, $Res Function(ProductDetailModel) then) =
       _$ProductDetailModelCopyWithImpl<$Res, ProductDetailModel>;
   @useResult
-  $Res call({int id, String photo, String? color, int? stock});
+  $Res call({int id, String photo, String? color, int? stock, String? size});
 }
 
 /// @nodoc
@@ -896,6 +697,7 @@ class _$ProductDetailModelCopyWithImpl<$Res, $Val extends ProductDetailModel>
     Object? photo = null,
     Object? color = freezed,
     Object? stock = freezed,
+    Object? size = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -914,6 +716,10 @@ class _$ProductDetailModelCopyWithImpl<$Res, $Val extends ProductDetailModel>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
+      size: freezed == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -926,7 +732,7 @@ abstract class _$$_ProductDetailModelCopyWith<$Res>
       __$$_ProductDetailModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String photo, String? color, int? stock});
+  $Res call({int id, String photo, String? color, int? stock, String? size});
 }
 
 /// @nodoc
@@ -944,6 +750,7 @@ class __$$_ProductDetailModelCopyWithImpl<$Res>
     Object? photo = null,
     Object? color = freezed,
     Object? stock = freezed,
+    Object? size = freezed,
   }) {
     return _then(_$_ProductDetailModel(
       id: null == id
@@ -962,6 +769,10 @@ class __$$_ProductDetailModelCopyWithImpl<$Res>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
+      size: freezed == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -970,7 +781,11 @@ class __$$_ProductDetailModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ProductDetailModel implements _ProductDetailModel {
   const _$_ProductDetailModel(
-      {required this.id, required this.photo, this.color, this.stock});
+      {required this.id,
+      required this.photo,
+      this.color,
+      this.stock,
+      this.size});
 
   factory _$_ProductDetailModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDetailModelFromJson(json);
@@ -983,10 +798,12 @@ class _$_ProductDetailModel implements _ProductDetailModel {
   final String? color;
   @override
   final int? stock;
+  @override
+  final String? size;
 
   @override
   String toString() {
-    return 'ProductDetailModel(id: $id, photo: $photo, color: $color, stock: $stock)';
+    return 'ProductDetailModel(id: $id, photo: $photo, color: $color, stock: $stock, size: $size)';
   }
 
   @override
@@ -997,12 +814,13 @@ class _$_ProductDetailModel implements _ProductDetailModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.color, color) || other.color == color) &&
-            (identical(other.stock, stock) || other.stock == stock));
+            (identical(other.stock, stock) || other.stock == stock) &&
+            (identical(other.size, size) || other.size == size));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, photo, color, stock);
+  int get hashCode => Object.hash(runtimeType, id, photo, color, stock, size);
 
   @JsonKey(ignore: true)
   @override
@@ -1024,7 +842,8 @@ abstract class _ProductDetailModel implements ProductDetailModel {
       {required final int id,
       required final String photo,
       final String? color,
-      final int? stock}) = _$_ProductDetailModel;
+      final int? stock,
+      final String? size}) = _$_ProductDetailModel;
 
   factory _ProductDetailModel.fromJson(Map<String, dynamic> json) =
       _$_ProductDetailModel.fromJson;
@@ -1037,6 +856,8 @@ abstract class _ProductDetailModel implements ProductDetailModel {
   String? get color;
   @override
   int? get stock;
+  @override
+  String? get size;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDetailModelCopyWith<_$_ProductDetailModel> get copyWith =>

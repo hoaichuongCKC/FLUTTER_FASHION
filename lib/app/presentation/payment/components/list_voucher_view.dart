@@ -1,12 +1,9 @@
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
-import 'package:flutter_fashion/app/blocs/promotion/promotion_cubit.dart';
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/common/components/promotion.dart';
-
 import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 
 class ListVoucherView extends StatelessWidget {
   const ListVoucherView({super.key});
@@ -38,7 +35,6 @@ class ListVoucherView extends StatelessWidget {
         ),
         BlocBuilder<PaymentCubit, PaymentState>(
           builder: (context, state) {
-            print('builder');
             final bool isApplyPromotion = state.promotion.id != 0;
 
             if (isApplyPromotion) {
@@ -176,8 +172,19 @@ class ListVoucherView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final promotion = promotionBloc.promotions[index];
 
-                      final bool isChecked = cartBloc.totalCart() >=
+                      bool isChecked = cartBloc.totalCart() >=
                           promotion.order_price_conditions.toInt();
+
+                      if (promotion.product_id != null) {
+                        for (var element in cartBloc.items) {
+                          if (element.product.id == promotion.id) {
+                            isChecked = true;
+                          } else {
+                            isChecked = false;
+                          }
+                          break;
+                        }
+                      }
 
                       return SizedBox(
                         height: 150.0,

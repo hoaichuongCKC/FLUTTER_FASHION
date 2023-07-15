@@ -1,11 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
 import 'package:flutter_fashion/app/repositories/auth_repository.dart';
-import 'package:flutter_fashion/app_lifecycle.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:flutter_fashion/core/firebase/firebase_service.dart';
-import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';

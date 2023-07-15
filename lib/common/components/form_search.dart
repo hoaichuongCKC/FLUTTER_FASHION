@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
-import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 
 class FormSearch extends StatefulWidget {

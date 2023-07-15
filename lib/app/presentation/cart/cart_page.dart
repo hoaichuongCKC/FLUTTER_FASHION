@@ -1,4 +1,4 @@
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
+
 import 'package:flutter_fashion/app/presentation/cart/components/bottom_nav_cart.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/item_cart.dart';
 import 'package:flutter_fashion/export.dart';

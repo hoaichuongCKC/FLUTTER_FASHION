@@ -45,17 +45,15 @@ class PusherBeamsApp {
   void _onMessageReceivedInTheForeground(Map<dynamic, dynamic> data) {
     try {
       final type = data["data"]["type"];
-      print(data);
-
+      log(data.toString(), name: 'Beams data');
       if (type == PusherConfig.inNotification) {
         _handleNotificationPage(data);
       }
-
       if (type == PusherConfig.inOrder) {
         _handleOrderPage(data);
       }
     } catch (e) {
-      print("==== == $e==== ===");
+      log("==== == $e==== ===", name: 'Try catch Beams');
     }
   }
 

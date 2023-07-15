@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 
 import '../../../../config/svg_files.dart';

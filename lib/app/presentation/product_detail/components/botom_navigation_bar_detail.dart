@@ -2,7 +2,6 @@ import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/app_bar_product_detail.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/overlay_animation/product_overlay.dart';
-import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/export.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -59,9 +58,12 @@ class BottomNavigationbarDetail extends StatelessWidget {
     );
 
     showSuccessToast(
-      "Thêm giỏ hàng thành công",
+      AppLocalizations.of(context)!.add_to_cart_successful,
       toastLength: Toast.LENGTH_SHORT,
     );
+
+    AppRoutes.router.go(Routes.HOME);
+    AppRoutes.router.push(Routes.CART);
   }
 }
 

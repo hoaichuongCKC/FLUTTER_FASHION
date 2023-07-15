@@ -2,6 +2,8 @@ import 'package:flutter_fashion/app/models/reviews/review.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
+import '../../config/svg_files.dart';
+
 class ReviewListCpn extends StatelessWidget {
   const ReviewListCpn(
       {super.key, required this.reviews, this.shrinkWrap = true});
@@ -21,12 +23,12 @@ class ReviewListCpn extends StatelessWidget {
       itemBuilder: (context, index) {
         final review = reviews[index];
 
-        final checkImages = review.images == null || review.images!.isEmpty;
+        final checkImages = review.photos.isEmpty || review.photos.isEmpty;
 
         Widget imageWidget = const SizedBox();
 
         final contentWidget = Text(
-          review.content!,
+          review.content,
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -39,9 +41,9 @@ class ReviewListCpn extends StatelessWidget {
               maxHeight: 70.0,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: review.images!
+                children: review.photos
                     .map(
-                      (e) => Padding( 
+                      (item) => Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: AspectRatio(
                           aspectRatio: 1.0,
@@ -49,7 +51,7 @@ class ReviewListCpn extends StatelessWidget {
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(radiusBtn)),
                             child: CachedNetworkImage(
-                              imageUrl: ApiService.imageUrl + e.photo,
+                              imageUrl: ApiService.imageUrl + item,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -68,11 +70,19 @@ class ReviewListCpn extends StatelessWidget {
             ListTile(
               dense: true,
               contentPadding: EdgeInsets.zero,
-              leading: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                  ApiService.imageUrl + review.user.photo,
-                ),
-              ),
+              leading: review.user.photo.isEmpty
+                  ? CircleAvatar(
+                      backgroundColor: lightColor,
+                      child: SvgPicture.asset(
+                        Assets.userSVG,
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(
+                        ApiService.imageUrl + review.user.photo,
+                      ),
+                    ),
               title: Text(
                 review.user.fullName,
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -80,7 +90,7 @@ class ReviewListCpn extends StatelessWidget {
                     ),
               ),
               subtitle: Text(
-                review.created_at!.formatDateTime(),
+                review.created_at.formatDateTime(),
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,

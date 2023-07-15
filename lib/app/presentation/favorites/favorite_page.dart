@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
 import 'package:flutter_fashion/app/presentation/favorites/components/action_appbar_favorite.dart';
 import 'package:flutter_fashion/app/presentation/favorites/components/bottom_navigationbar.dart';
 import 'package:flutter_fashion/app/presentation/favorites/components/checkbox_favorite.dart';
@@ -55,8 +53,7 @@ class FavoritePage extends StatelessWidget {
                 children: [
                   ItemProduct(
                     onTap: () {
-                      final bloc =
-                          BlocProvider.of<ProductDetailCubit>(context);
+                      final bloc = BlocProvider.of<ProductDetailCubit>(context);
 
                       bloc.getProduct(product.id!);
 

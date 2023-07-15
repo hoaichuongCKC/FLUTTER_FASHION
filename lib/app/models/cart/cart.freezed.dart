@@ -21,6 +21,9 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CartModel {
   ProductModel get product => throw _privateConstructorUsedError;
+  int get product_detail_id => throw _privateConstructorUsedError;
+  int get price => throw _privateConstructorUsedError;
+  int? get sale_price => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   String get color => throw _privateConstructorUsedError;
   String get size => throw _privateConstructorUsedError;
@@ -40,6 +43,9 @@ abstract class $CartModelCopyWith<$Res> {
   @useResult
   $Res call(
       {ProductModel product,
+      int product_detail_id,
+      int price,
+      int? sale_price,
       int quantity,
       String color,
       String size,
@@ -63,6 +69,9 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
   @override
   $Res call({
     Object? product = null,
+    Object? product_detail_id = null,
+    Object? price = null,
+    Object? sale_price = freezed,
     Object? quantity = null,
     Object? color = null,
     Object? size = null,
@@ -74,6 +83,18 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
+      product_detail_id: null == product_detail_id
+          ? _value.product_detail_id
+          : product_detail_id // ignore: cast_nullable_to_non_nullable
+              as int,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+      sale_price: freezed == sale_price
+          ? _value.sale_price
+          : sale_price // ignore: cast_nullable_to_non_nullable
+              as int?,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -115,6 +136,9 @@ abstract class _$$_CartModelCopyWith<$Res> implements $CartModelCopyWith<$Res> {
   @useResult
   $Res call(
       {ProductModel product,
+      int product_detail_id,
+      int price,
+      int? sale_price,
       int quantity,
       String color,
       String size,
@@ -137,6 +161,9 @@ class __$$_CartModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? product = null,
+    Object? product_detail_id = null,
+    Object? price = null,
+    Object? sale_price = freezed,
     Object? quantity = null,
     Object? color = null,
     Object? size = null,
@@ -148,6 +175,18 @@ class __$$_CartModelCopyWithImpl<$Res>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
+      product_detail_id: null == product_detail_id
+          ? _value.product_detail_id
+          : product_detail_id // ignore: cast_nullable_to_non_nullable
+              as int,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+      sale_price: freezed == sale_price
+          ? _value.sale_price
+          : sale_price // ignore: cast_nullable_to_non_nullable
+              as int?,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -178,6 +217,9 @@ class __$$_CartModelCopyWithImpl<$Res>
 class _$_CartModel implements _CartModel {
   const _$_CartModel(
       {required this.product,
+      required this.product_detail_id,
+      required this.price,
+      required this.sale_price,
       required this.quantity,
       required this.color,
       required this.size,
@@ -189,6 +231,12 @@ class _$_CartModel implements _CartModel {
 
   @override
   final ProductModel product;
+  @override
+  final int product_detail_id;
+  @override
+  final int price;
+  @override
+  final int? sale_price;
   @override
   final int quantity;
   @override
@@ -202,7 +250,7 @@ class _$_CartModel implements _CartModel {
 
   @override
   String toString() {
-    return 'CartModel(product: $product, quantity: $quantity, color: $color, size: $size, photo: $photo, created_at: $created_at)';
+    return 'CartModel(product: $product, product_detail_id: $product_detail_id, price: $price, sale_price: $sale_price, quantity: $quantity, color: $color, size: $size, photo: $photo, created_at: $created_at)';
   }
 
   @override
@@ -211,6 +259,11 @@ class _$_CartModel implements _CartModel {
         (other.runtimeType == runtimeType &&
             other is _$_CartModel &&
             (identical(other.product, product) || other.product == product) &&
+            (identical(other.product_detail_id, product_detail_id) ||
+                other.product_detail_id == product_detail_id) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.sale_price, sale_price) ||
+                other.sale_price == sale_price) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.color, color) || other.color == color) &&
@@ -222,8 +275,8 @@ class _$_CartModel implements _CartModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, product, quantity, color, size, photo, created_at);
+  int get hashCode => Object.hash(runtimeType, product, product_detail_id,
+      price, sale_price, quantity, color, size, photo, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -242,6 +295,9 @@ class _$_CartModel implements _CartModel {
 abstract class _CartModel implements CartModel {
   const factory _CartModel(
       {required final ProductModel product,
+      required final int product_detail_id,
+      required final int price,
+      required final int? sale_price,
       required final int quantity,
       required final String color,
       required final String size,
@@ -253,6 +309,12 @@ abstract class _CartModel implements CartModel {
 
   @override
   ProductModel get product;
+  @override
+  int get product_detail_id;
+  @override
+  int get price;
+  @override
+  int? get sale_price;
   @override
   int get quantity;
   @override

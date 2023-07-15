@@ -26,7 +26,7 @@ class OrderState extends Equatable {
       toReceiveList,
       completedList,
       cancleList,
-      status,
+      status
     ];
   }
 

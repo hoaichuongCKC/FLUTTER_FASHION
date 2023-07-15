@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/core/base/exception/exception.dart';
-import 'package:flutter_fashion/core/pusher/beams.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
 
@@ -10,6 +9,7 @@ mixin HandlerErrorCubit<T> on Cubit<T> {
     if (error == AuthenticatedException.message) {
       showCustomDialog(
         context,
+        barrierDismissible: false,
         content: error,
         title: "Token",
         submitNameSecond: AppLocalizations.of(context)!.ok,

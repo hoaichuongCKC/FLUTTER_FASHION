@@ -1,6 +1,3 @@
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/export.dart';
 
@@ -108,7 +105,9 @@ class ActionAppbarNotification extends StatelessWidget {
         children: [
           ListTile(
             onTap: () {
-              context.read<NotificationCubit>().readAll();
+              context.read<NotificationCubit>().readAll(
+                    AppLocalizations.of(context)!.read_notification,
+                  );
               MenuOverlay.instance.remove();
             },
             title: Text(

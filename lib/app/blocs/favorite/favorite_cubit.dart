@@ -1,8 +1,6 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/core/storage/key.dart';

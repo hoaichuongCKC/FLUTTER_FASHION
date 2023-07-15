@@ -1,6 +1,3 @@
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
@@ -8,7 +5,7 @@ import 'package:flutter_fashion/app/presentation/payment/components/rules_app_vi
 import 'package:flutter_fashion/app/repositories/order_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
-
+import 'package:flutter_fashion/core/base/params/payment.dart';
 class PaymentCubit extends Cubit<PaymentState> {
   final OrderRepositoryImpl _orderRepositoryImpl;
 
@@ -35,6 +32,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     emit(state.copyWith(
       promotion: const PromotionModel(
           id: 0,
+          name:'',
           code: '',
           desc: '',
           order_price_conditions: 0,
@@ -82,7 +80,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
     int tempPrice = 0;
 
-    if (state.promotion != null) {
+    if (state.promotion.id != 0) {
       tempPrice = cartTotal;
 
       total = (cartTotal - cartTotal * (state.promotion.discount_price / 100))
@@ -99,7 +97,7 @@ class PaymentCubit extends Cubit<PaymentState> {
       shippingPhone: state.phone,
       total: total,
       tempPrice: tempPrice,
-      idPromotion: state.promotion != null ? state.promotion.id : 0,
+      idPromotion: state.promotion.id != 0 ? state.promotion.id : 0,
     );
 
     final result = await _orderRepositoryImpl.create(params);

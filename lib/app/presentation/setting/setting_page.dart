@@ -1,6 +1,5 @@
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
-import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
 import 'package:flutter_fashion/app/presentation/setting/export.dart';
 import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';

@@ -1,8 +1,6 @@
 /// The `AppBarProductDetail` class is a stateless widget that displays the app bar for the product
 /// detail screen, including icons for adding/removing the product from favorites and displaying the
 /// number of items in the cart.
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/utils/extensions/list.dart';
 

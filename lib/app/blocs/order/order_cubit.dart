@@ -140,27 +140,47 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(completedList: updatedList));
   }
 
-  void delete(int orderId, BuildContext context) async {
+  void delete(int orderId, BuildContext context, int status) async {
     loadingAlert(context: context);
+
     final result = await _orderRepositoryImpl.delete(orderId);
+    //remove popup alert loading
     AppRoutes.router.pop();
+
     result.fold(
-      (l) {
-        log("error delete order: $l");
-      },
+      (l) => log("error delete order: $l"),
       (statusCode) {
         final state = this.state;
+        switch (status) {
+          case toShipStatus: //pop dialog and page
+            final updatedList = List<OrderModel>.from(state.toShipList)
+              ..removeWhere((e) => e.id == orderId);
 
-        //pop dialog and page
-        AppRoutes.router.pop();
-        AppRoutes.router.pop();
+            emit(state.copyWith(toShipList: updatedList));
+            break;
 
-        emit(state.copyWith(
-            toPayList: List<OrderModel>.from(state.toPayList)
-              ..removeWhere((e) => e.id == orderId)));
+          case toPayStatus:
+            final updatedList = List<OrderModel>.from(state.toPayList)
+              ..removeWhere((e) => e.id == orderId);
+            emit(state.copyWith(toPayList: updatedList));
+            break;
+          case toReceive:
+            final updatedList = List<OrderModel>.from(state.toReceiveList)
+              ..removeWhere((e) => e.id == orderId);
+            emit(state.copyWith(toReceiveList: updatedList));
+            break;
+
+          case deliveredStatus:
+            final updatedList = List<OrderModel>.from(state.completedList)
+              ..removeWhere((e) => e.id == orderId);
+            emit(state.copyWith(completedList: updatedList));
+            break;
+        }
 
         showSuccessToast(
             AppLocalizations.of(context)!.order_deleted_successfully);
+        AppRoutes.router.pop();
+        AppRoutes.router.pop();
       },
     );
   }

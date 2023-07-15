@@ -3,7 +3,6 @@ import 'package:flutter_fashion/app/blocs/create_review/create_review_cubit.dart
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
 import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
-import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
@@ -81,11 +80,12 @@ class ProductProviderImpl extends ProductProvider {
     var response = await _apiService
         .post("${ApiEndpoint.fetchReview}?page=$page&id_product=$idProduct");
 
-    final data = await response.stream.bytesToString();
-
     if (response.statusCode != 200) {
+      final test = await response.stream.bytesToString();
+      print(test);
       throw ServerException();
     }
+    final data = await response.stream.bytesToString();
     final dataConvert = jsonDecode(data)["data"];
 
     return ReviewsModel.fromJson(dataConvert);

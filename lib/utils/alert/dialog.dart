@@ -4,6 +4,7 @@ Future<T?> showCustomDialog<T>(
   BuildContext context, {
   required String content,
   required String title,
+  bool barrierDismissible = true,
   String? submitNameFirst,
   String? submitNameSecond,
   VoidCallback? onFirst,
@@ -12,6 +13,7 @@ Future<T?> showCustomDialog<T>(
 }) async {
   return await showDialog<T>(
     context: context,
+    barrierDismissible: barrierDismissible,
     builder: (context) {
       final theme = Theme.of(context);
       return AlertDialog(

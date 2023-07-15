@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/models/cart/cart.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/export_detail.dart';
@@ -8,18 +8,15 @@ part 'product_detail_ui_state.dart';
 class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
   ProductDetailUiCubit() : super(const ProductDetailUiState());
 
-  void changeColor(String code, int index) {
-    final state = this.state;
-    emit(state.copyWith(color: code, indexImage: index));
+  void selectImage(String color, int indexImage) {
+    emit(state.copyWith(color: color, indexImage: indexImage));
   }
 
-  void changeSize(String size) {
-    final state = this.state;
-    emit(state.copyWith(size: size));
+  void changeSize(String size, int id) {
+    emit(state.copyWith(size: size, productDetailID: id));
   }
 
   void changeQuantity(int qunatity) {
-    final state = this.state;
     emit(state.copyWith(quantity: qunatity));
   }
 
@@ -40,24 +37,32 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
   ) {
     final state = this.state;
 
-    final ProductModel product =
-        InheritedDataApp.of<ProductModel>(context)!.data;
-
     if (state.color.isEmpty) {
       showErrorToast(AppLocalizations.of(context)!.please_choose_color);
 
       return;
     }
-    if (product.properties!.sizes!.isNotEmpty) {
-      if (state.size.isEmpty) {
-        showErrorToast(AppLocalizations.of(context)!.please_choose_size);
 
-        return;
+    if (product.product_detail![0].size != null) {
+      if (product.product_detail![0].size!.isNotEmpty) {
+        if (state.size.isEmpty) {
+          showErrorToast(AppLocalizations.of(context)!.please_choose_size);
+
+          return;
+        }
       }
     }
-
+    log('${state.productDetailID}', name: 'Product Detail UI Cubit');
+    final bool isCheck =
+        product.product_detail![state.indexImage].size == null ||
+            product.product_detail![state.indexImage].size!.isEmpty;
     final CartModel cartItem = CartModel.init(
       {
+        "price": product.regular_price,
+        "sale_price": product.sale_price,
+        "product_detail_id": isCheck
+            ? product.product_detail![state.indexImage].id
+            : state.productDetailID,
         "product": product,
         "color": state.color,
         "quantity": state.quantity,
@@ -68,7 +73,8 @@ class ProductDetailUiCubit extends Cubit<ProductDetailUiState> {
 
     BlocProvider.of<CartCubit>(context).addToCart(cartItem);
 
-    completed(
-        product.product_detail![state.indexImage].photo, cartItem.quantity);
+    final String photo = product.product_detail![state.indexImage].photo;
+
+    completed(photo, cartItem.quantity);
   }
 }

@@ -51,10 +51,16 @@ class BodyProductDetail extends StatelessWidget {
                       return ListView.separated(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10.0),
+                            const SizedBox(height: 5.0),
                         scrollDirection: Axis.vertical,
                         itemCount: images!.length,
                         itemBuilder: (ctx, index) {
+                          if (index != 0) {
+                            final isPhoto =
+                                images[index - 1].photo == images[index].photo;
+                            if (isPhoto) return const SizedBox();
+                          }
+
                           final image = images[index];
 
                           final isSelected = state.color == image.color;
@@ -83,7 +89,7 @@ class BodyProductDetail extends StatelessWidget {
                             duration: const Duration(milliseconds: 500),
                             child: !isSelected
                                 ? InkWell(
-                                    onTap: () => blocDetailUi.changeColor(
+                                    onTap: () => blocDetailUi.selectImage(
                                         image.color!, index),
                                     child: imageWidget,
                                   )
@@ -109,8 +115,7 @@ class BodyProductDetail extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       BlocBuilder<ProductDetailUiCubit, ProductDetailUiState>(
-                        buildWhen: (p, c) =>
-                            p.color != c.color || p.indexImage != c.indexImage,
+                        buildWhen: (p, c) => p.indexImage != c.indexImage,
                         builder: (context, state) {
                           return CachedNetworkImage(
                             imageUrl: ApiService.imageUrl +
@@ -169,7 +174,9 @@ class BodyProductDetail extends StatelessWidget {
           child: Text.rich(
             TextSpan(
               text: product.name,
-              style: theme.textTheme.bodyMedium,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
               children: [
                 product.sale_price == null
                     ? const WidgetSpan(child: SizedBox())

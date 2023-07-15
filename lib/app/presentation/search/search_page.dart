@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/presentation/search/components/product_list_search.dart';
 import 'package:flutter_fashion/common/components/form_search.dart';
 import 'package:flutter_fashion/app/presentation/search/components/search_history.dart';

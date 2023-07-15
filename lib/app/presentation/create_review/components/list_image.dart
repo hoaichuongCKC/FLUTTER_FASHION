@@ -52,10 +52,23 @@ class _ListImageRatingState extends State<ListImageRating> {
                       ValueListenableBuilder<bool>(
                         valueListenable: _removeNotifier,
                         builder: (context, bool isRemove, child) {
+                          if (isRemove) {
+                            return InkWell(
+                              onTap: () => _removeNotifier.value = !isRemove,
+                              child: Text(
+                                AppLocalizations.of(context)!.cancel,
+                                style: const TextStyle(
+                                  fontSize: 14.0,
+                                  color: darkColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            );
+                          }
                           return GestureDetector(
                             onTap: () => _removeNotifier.value = !isRemove,
                             child: SvgPicture.asset(
-                             Assets.trashSVG,
+                              Assets.trashSVG,
                               width: 20,
                               height: 20,
                               colorFilter: const ColorFilter.mode(

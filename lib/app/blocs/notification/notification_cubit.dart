@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/app/repositories/notification_repository.dart';
@@ -83,7 +82,7 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
     emit(state.copyWith(notifications: updatedList));
   }
 
-  void read(int id) async {
+  void read(int id,String smg) async {
     final state = this.state;
 
     bool isCheck = await _checkExists(id) != -1;
@@ -94,10 +93,10 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
 
     emit(state.copyWith(reads: updatedList));
 
-    showSuccessToast("Đã đọc thông báo", toastLength: Toast.LENGTH_SHORT);
+    showSuccessToast(smg, toastLength: Toast.LENGTH_SHORT);
   }
 
-  void readAll() {
+  void readAll(String smg) {
     for (var item in state.notifications) {
       if (state.reads.checkExistsId(state.reads, item.id) == -1) {
         final updatedList = [...state.reads, item.id]..sort();
@@ -105,7 +104,7 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
         emit(state.copyWith(reads: updatedList));
       }
     }
-    showSuccessToast("Đã đọc thông báo", toastLength: Toast.LENGTH_SHORT);
+    showSuccessToast(smg, toastLength: Toast.LENGTH_SHORT);
   }
 
   void delete(int id, String smg) async {

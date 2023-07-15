@@ -17,9 +17,11 @@ class KeyStorage {
 
   static const String userCancelOrder = "user-cancel-order-";
 
-  static const String notification = "user-notification-";
+  static const String isFirstViewIntroKey = "is-first-intro-key";
 
-  static String get getToken => HydratedBloc.storage.read(token);
+  static String get getToken => HydratedBloc.storage.read(token) ?? "";
+
+  static String get isFirstViewIntro =>
+      HydratedBloc.storage.read(isFirstViewIntroKey) ?? "";
 }
 
-// my_hydrated_storage.dart

@@ -3,9 +3,11 @@
 part of 'product_detail_ui_cubit.dart';
 
 class ProductDetailUiState extends Equatable {
-  final int indexImage;
+  //handle when choose photo
+  final int productDetailID;
 
-  final int idImage;
+  final int indexImage;
+  //end
 
   final String color;
 
@@ -13,13 +15,15 @@ class ProductDetailUiState extends Equatable {
 
   final int quantity;
 
+  //handle button view to up
   final bool isShow;
+  //end
 
   final bool hasLoadMore;
 
   const ProductDetailUiState({
+    this.productDetailID = 0,
     this.indexImage = 0,
-    this.idImage = 0,
     this.color = "",
     this.size = "",
     this.quantity = 1,
@@ -29,11 +33,11 @@ class ProductDetailUiState extends Equatable {
 
   @override
   List<Object> get props =>
-      [idImage, indexImage, color, size, quantity, isShow, hasLoadMore];
+      [indexImage, color, size, quantity, isShow, hasLoadMore, productDetailID];
 
   ProductDetailUiState copyWith({
+    int? productDetailID,
     int? indexImage,
-    int? idImage,
     String? color,
     String? size,
     int? quantity,
@@ -41,8 +45,8 @@ class ProductDetailUiState extends Equatable {
     bool? hasLoadMore,
   }) {
     return ProductDetailUiState(
+      productDetailID: productDetailID ?? this.productDetailID,
       indexImage: indexImage ?? this.indexImage,
-      idImage: idImage ?? this.idImage,
       color: color ?? this.color,
       size: size ?? this.size,
       quantity: quantity ?? this.quantity,

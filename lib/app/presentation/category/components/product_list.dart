@@ -1,8 +1,4 @@
-import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-
-import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
-import 'package:flutter_fashion/common/widgets/skeleton_grid_view.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
 import '../../../../export.dart';

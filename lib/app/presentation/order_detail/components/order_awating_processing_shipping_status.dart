@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
-import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/presentation/cart/components/item_cart.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/order/components/awaiting_confirmation_page.dart';
@@ -255,7 +253,7 @@ class ToPayShipReceiveDetail extends StatelessWidget {
                             onCancel: () {
                               context
                                   .read<OrderCubit>()
-                                  .delete(order.id!, context);
+                                  .delete(order.id!, context, order.status_id!);
                               context.read<OrderCancelCubit>().addOrder(order);
                             },
                           ),

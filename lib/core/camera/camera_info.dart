@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
+import 'dart:developer';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class CameraInfo {
@@ -68,7 +69,7 @@ class CameraInfo {
 
       return result;
     } catch (e) {
-      print('convert file image $e');
+      log('convert file image $e', name: "Func compress file");
     }
     return null;
   }

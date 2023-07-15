@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:flutter_fashion/core/base/api/api.dart';
-
+import '../../config/svg_files.dart';
 import '../../export.dart';
 
 class UserAvatarApp extends StatelessWidget {
@@ -41,7 +40,7 @@ class UserAvatarApp extends StatelessWidget {
                       padding: const EdgeInsets.all(7.0),
                       child: Align(
                         child: SvgPicture.asset(
-                          "assets/icons/user1.svg",
+                          Assets.userSVG,
                           fit: BoxFit.contain,
                           color: isLight
                               ? blackColor.withOpacity(0.7)

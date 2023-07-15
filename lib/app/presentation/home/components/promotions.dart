@@ -4,7 +4,6 @@ import 'package:flutter_fashion/config/svg_files.dart';
 import '../../../../common/components/promotion.dart';
 
 const double _maxHeightCardPromotion = 130.0;
-const double _maxWidthCardPromotion = 280.0;
 
 class PromotionList extends StatelessWidget {
   const PromotionList({super.key});

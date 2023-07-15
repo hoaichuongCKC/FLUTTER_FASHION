@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/models/notification/notification_model.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
 
@@ -19,7 +18,10 @@ class ItemNotiNormal extends StatelessWidget {
         InkWell(
           onTap: isRead
               ? null
-              : () => context.read<NotificationCubit>().read(notification.id),
+              : () => context.read<NotificationCubit>().read(
+                    notification.id,
+                    AppLocalizations.of(context)!.read_notification,
+                  ),
           child: Container(
             padding: const EdgeInsets.symmetric(
                 horizontal: horizontalPadding - 4,
@@ -28,14 +30,15 @@ class ItemNotiNormal extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 (isRead)
-                    ? const SizedBox()
-                    : Container(
-                        width: 8.0,
-                        height: 8.0,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: secondaryColor,
-                        ),
+                    ? Image.asset(
+                        Assets.noNotiPNG,
+                        width: 60,
+                        height: 60,
+                      )
+                    : Image.asset(
+                        Assets.hasNotiPNG,
+                        width: 60,
+                        height: 60,
                       ),
                 (isRead)
                     ? const SizedBox()

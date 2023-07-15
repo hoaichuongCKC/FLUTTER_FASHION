@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';

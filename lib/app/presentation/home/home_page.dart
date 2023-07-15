@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/product_new/product_new_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_sale/product_sale_cubit.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/presentation/home/components/product_new_month.dart';
 import 'package:flutter_fashion/app/presentation/home/components/product_sale_area.dart';
@@ -125,9 +123,12 @@ class _HomePageState extends ScrollState<HomePage> {
                     child: Center(
                         child: SizedBox(height: 200, child: Text(error))),
                   ),
-                  fetchCompleted: (List<ProductModel> list) => PopularHome(
-                    listProduct: list,
-                  ),
+                  fetchCompleted: (List<ProductModel> list) {
+                    if (list.isEmpty) {
+                      return const SliverToBoxAdapter();
+                    }
+                    return PopularHome(listProduct: list);
+                  },
                 );
               },
             ),

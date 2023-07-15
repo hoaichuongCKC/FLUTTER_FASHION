@@ -18,11 +18,14 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
       );
   static bool get checkMatchPassword => data["password"] == data["confirm"];
 
-  static String get password => data["password"];
+  static String get password => data["password"] ?? "";
 
-  static String get confirm => data["confirm"];
+  static String get confirm => data["confirm"] ?? "";
 
   static XFile? get image => data["avatar"];
+
+  static String get email => data["email"];
+
 
   @override
   Widget build(BuildContext context) {

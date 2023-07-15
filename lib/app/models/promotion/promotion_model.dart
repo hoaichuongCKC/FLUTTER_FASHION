@@ -9,6 +9,7 @@ class PromotionModel with _$PromotionModel {
   @JsonSerializable(explicitToJson: true)
   const factory PromotionModel({
     required int id,
+    required String name,
     required String code,
     int? product_id,
     required String desc,

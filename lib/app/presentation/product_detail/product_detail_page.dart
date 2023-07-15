@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/reviews/review_cubit.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/app_bar_product_detail.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/body_product_detail.dart';
 import 'package:flutter_fashion/app/presentation/product_detail/components/tabbar_desc_reviews.dart';
@@ -9,12 +7,24 @@ import 'package:flutter_fashion/app/presentation/product_detail/export_detail.da
 import '../../../export.dart';
 import 'components/botom_navigation_bar_detail.dart';
 
-class ProductDetailPage extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   const ProductDetailPage({super.key});
 
   @override
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  final controller = ScrollController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller = ScrollController();
     return BlocBuilder<ProductDetailCubit, ProductDetailState>(
       builder: (context, state) {
         return state.when(
@@ -66,7 +76,7 @@ class ProductDetailPage extends StatelessWidget {
                 body: Builder(
                   builder: (context) {
                     final bloc = context.read<ProductDetailUiCubit>();
-
+                    bloc.selectImage(product.product_detail![0].color!, 0);
                     return NotificationListener<ScrollNotification>(
                       onNotification: (ScrollNotification notification) {
                         final currentOffset = (notification.metrics.pixels);

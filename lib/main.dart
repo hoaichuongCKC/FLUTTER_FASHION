@@ -1,32 +1,11 @@
 import 'dart:developer';
-
-import 'package:firebase_app_check/firebase_app_check.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
-import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
-import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_new/product_new_cubit.dart';
-import 'package:flutter_fashion/app/blocs/product_sale/product_sale_cubit.dart';
-import 'package:flutter_fashion/app/blocs/reviews/review_cubit.dart';
-import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
-import 'package:flutter_fashion/app/presentation/category/blocs/category_tab_cubit.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/app_lifecycle.dart';
-import 'package:flutter_fashion/core/pusher/beams.dart';
-import 'package:flutter_fashion/core/pusher/order.dart';
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-import 'package:workmanager/workmanager.dart';
-
-import 'core/task_manager.dart';
+import 'package:flutter_fashion/export.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  log('Handling a background message ${message.notification!.body}');
+  log('Handling a background message ${message.notification!.body}',
+      name: "Background noti mod");
   log('Handling a background message ${message.notification!.title}');
 }
 
@@ -41,6 +20,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  PusherBeamsApp.instance.initDeviceIntest();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -111,17 +92,11 @@ class FashionApp extends StatefulWidget {
 class _FashionAppState extends State<FashionApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> _subscription;
 
-  late PusherUserApp _pusherUserApp;
+  late ChannelUserApp _channelUserApp;
 
   @override
   void initState() {
     super.initState();
-    // FirebaseAppCheck.instance.onTokenChange.listen(
-    //   (token) {
-    //     print('Appcheck: $token');
-    //   },
-    // );
-    // getAppCheckToken();
     //listen connect internet
     _subscription = getIt.get<Connectivity>().onConnectivityChanged.listen(
       (ConnectivityResult result) {
@@ -138,11 +113,13 @@ class _FashionAppState extends State<FashionApp> with WidgetsBindingObserver {
             //register notfication with authentication userId
             PusherBeamsApp.instance.initToUser(user.id);
 
-            _pusherUserApp = getIt<PusherUserApp>()
+            //  PusherBeamsApp.instance.initDeviceIntest();
+
+            _channelUserApp = getIt<ChannelUserApp>()
               ..initialize(
                 onEvent: (PusherEvent? onEvent) {
                   if (onEvent!.data != null && onEvent.data.isNotEmpty) {
-                    _pusherUserApp.handleData(onEvent.data);
+                    _channelUserApp.handleData(onEvent.data);
                   }
                 },
               );
@@ -162,8 +139,8 @@ class _FashionAppState extends State<FashionApp> with WidgetsBindingObserver {
   void dispose() {
     _subscription.cancel();
     WidgetsBinding.instance.removeObserver(AppLifecycleObserver());
-    if (getIt.isRegistered<PusherUserApp>()) {
-      _pusherUserApp.dispose();
+    if (getIt.isRegistered<ChannelUserApp>()) {
+      _channelUserApp.dispose();
     }
     PusherBeamsApp.instance.dispose();
     super.dispose();

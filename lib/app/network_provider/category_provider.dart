@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_fashion/app/models/category/category.dart';
 import 'package:flutter_fashion/app/models/product/product.dart';
-import 'package:flutter_fashion/core/base/api/api.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/parse_json_isolate/product.dart';

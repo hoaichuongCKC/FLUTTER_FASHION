@@ -77,8 +77,8 @@ class AuthProviderImpl extends AuthProvider {
   @override
   Future<ResponseData> loginGoogle(String fullname, String email) async {
     final body = {
-      "fullname": fullname,
-      "email": email,
+      "fullname": fullname.trimLeft().trimRight(),
+      "email": email.trimLeft().trimRight(),
     };
 
     var response = await _apiService.post(ApiEndpoint.loginGoogle,
@@ -96,7 +96,7 @@ class AuthProviderImpl extends AuthProvider {
   Future<ResponseData> checkPhone(String phone) async {
     var response = await _apiService.post(
       ApiEndpoint.checkPhone,
-      body: {"phone": phone},
+      body: {"phone": phone.trimLeft().trimRight()},
     );
 
     if (response.statusCode != 200) {
@@ -113,8 +113,8 @@ class AuthProviderImpl extends AuthProvider {
       ApiEndpoint.forgotPassword,
       isRequestHeader: false,
       body: {
-        "phone": phone,
-        "new_password": newPassword,
+        "phone": phone.trimLeft().trimRight(),
+        "new_password": newPassword.trimLeft().trimRight(),
       },
     );
     if (response.statusCode != 200) {

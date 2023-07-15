@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/favorite/favorite_cubit.dart';
-
 import '../../../../export.dart';
 
 class BottomNavigationBarFavorite extends StatelessWidget {

@@ -1,6 +1,4 @@
-import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/presentation/order/widgets/item_order.dart';
-
 import '../../../../config/svg_files.dart';
 import '../../../../core/status_cubit/status_cubit.dart';
 import '../../../../export.dart';
@@ -11,10 +9,10 @@ class OrderProcessingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
-      buildWhen: (previous, current) =>
-          previous.status != current.status ||
-          previous.toShipList != current.toShipList,
+      buildWhen: (p, c) => p.status != c.status || p.toShipList != c.toShipList,
       builder: (context, state) {
+        print("Chờ lấy hàng ${state.toShipList.length}");
+
         if (state.status == AppStatus.loading) {
           return const Center(
             child: CircularProgressIndicator(),

@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
-import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
 import 'package:flutter_fashion/config/svg_files.dart';
 import 'package:flutter_fashion/export.dart';
 

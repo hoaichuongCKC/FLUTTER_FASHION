@@ -1,5 +1,4 @@
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
-import 'package:flutter_fashion/utils/extensions/double.dart';
 import 'package:flutter_fashion/utils/extensions/int.dart';
 
 import '../../../../config/svg_files.dart';
@@ -39,9 +38,23 @@ class ItemOrder extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'FC665',
-                        style: PrimaryFont.instance.copyWith(fontSize: 16.0),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'FC665 ',
+                            style:
+                                PrimaryFont.instance.copyWith(fontSize: 16.0),
+                          ),
+                          Text(
+                            order.code!,
+                            style: PrimaryFont.instance.copyWith(
+                              fontSize: 12.0,
+                              color: textDisable,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
                       ),
                       ColoredBox(
                         color: darkColor.withOpacity(0.5),
@@ -88,13 +101,10 @@ class ItemOrder extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                        child: Hero(
-                          tag: "calendar${order.id}",
-                          child: SvgPicture.asset(
-                            Assets.calendarSVG,
-                            colorFilter: const ColorFilter.mode(
-                                secondaryColor, BlendMode.srcIn),
-                          ),
+                        child: SvgPicture.asset(
+                          Assets.calendarSVG,
+                          colorFilter: const ColorFilter.mode(
+                              secondaryColor, BlendMode.srcIn),
                         ),
                       ),
                       const SizedBox(width: 8.0),

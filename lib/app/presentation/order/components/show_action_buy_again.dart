@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
-import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
@@ -8,8 +6,11 @@ import '../../../../config/svg_files.dart';
 
 showActionBuyAgain(BuildContext context, OrderModel order) {
   final size = MediaQuery.of(context).size;
+
   final applocalization = AppLocalizations.of(context)!;
+
   final theme = Theme.of(context);
+
   showModalBottomSheet(
     backgroundColor: lightColor,
     elevation: 0,
@@ -107,72 +108,79 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                 physics: const NeverScrollableScrollPhysics(),
                 children: order.order_detail!.map(
                   (e) {
-                    return ListTile(
-                      dense: true,
-                      leading: CachedNetworkImage(
-                        imageUrl: ApiService.imageUrl + e.photo,
-                      ),
-                      title: Text(
-                        e.product.name!,
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 12.0,
+                    return SizedBox(
+                      height: 70.0,
+                      child: ListTile(
+                        dense: true,
+                        leading: CachedNetworkImage(
+                          imageUrl: ApiService.imageUrl + e.photo,
+                          width: 70,
+                          height: 70,
                         ),
-                      ),
-                      subtitle: Row(
-                        children: [
-                          Text(
-                            e.product.regular_price!.toDouble().toVndCurrency(),
-                            style: theme.textTheme.bodySmall!.copyWith(
-                              fontSize: 10.0,
-                              color: !(e.product.sale_price != null)
-                                  ? const Color(0xFFFF7262)
-                                  : disableDarkColor,
-                              decoration: !(e.product.sale_price != null)
-                                  ? null
-                                  : TextDecoration.lineThrough,
-                            ),
+                        title: Text(
+                          e.product.name!,
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 12.0,
                           ),
-                          e.product.sale_price != null
-                              ? ColoredBox(
-                                  color: errorColor.withOpacity(0.2),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
-                                    child: Text(
-                                      "-${(e.product.regular_price!.toDouble() - e.product.sale_price!.toDouble()).toVndCurrency()}",
-                                      style: PrimaryFont.instance.copyWith(
-                                        fontSize: 7.0,
-                                        color: errorColor,
+                        ),
+                        subtitle: Row(
+                          children: [
+                            Text(
+                              e.product.regular_price!
+                                  .toDouble()
+                                  .toVndCurrency(),
+                              style: theme.textTheme.bodySmall!.copyWith(
+                                fontSize: 10.0,
+                                color: !(e.product.sale_price != null)
+                                    ? const Color(0xFFFF7262)
+                                    : disableDarkColor,
+                                decoration: !(e.product.sale_price != null)
+                                    ? null
+                                    : TextDecoration.lineThrough,
+                              ),
+                            ),
+                            e.product.sale_price != null
+                                ? ColoredBox(
+                                    color: errorColor.withOpacity(0.2),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      child: Text(
+                                        "-${(e.product.regular_price!.toDouble() - e.product.sale_price!.toDouble()).toVndCurrency()}",
+                                        style: PrimaryFont.instance.copyWith(
+                                          fontSize: 7.0,
+                                          color: errorColor,
+                                        ),
                                       ),
                                     ),
+                                  )
+                                : const SizedBox(),
+                            !(e.product.sale_price != null)
+                                ? const SizedBox()
+                                : const SizedBox(width: 5.0),
+                            !(e.product.sale_price != null)
+                                ? const SizedBox()
+                                : Text(
+                                    e.product.sale_price!
+                                        .toDouble()
+                                        .toVndCurrency(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          fontSize: 10.0,
+                                          height: 1.0,
+                                          color: const Color(0xFFFF7262),
+                                        ),
                                   ),
-                                )
-                              : const SizedBox(),
-                          !(e.product.sale_price != null)
-                              ? const SizedBox()
-                              : const SizedBox(width: 5.0),
-                          !(e.product.sale_price != null)
-                              ? const SizedBox()
-                              : Text(
-                                  e.product.sale_price!
-                                      .toDouble()
-                                      .toVndCurrency(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 10.0,
-                                        height: 1.0,
-                                        color: const Color(0xFFFF7262),
-                                      ),
-                                ),
-                        ],
-                      ),
-                      trailing: Text(
-                        "x${e.quantity}",
-                        style: PrimaryFont.instance.copyWith(
-                          fontSize: 8.0,
-                          color: textDisable,
+                          ],
+                        ),
+                        trailing: Text(
+                          "x${e.quantity}",
+                          style: PrimaryFont.instance.copyWith(
+                            fontSize: 8.0,
+                            color: textDisable,
+                          ),
                         ),
                       ),
                     );
@@ -240,8 +248,8 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
                     padding: const EdgeInsets.symmetric(horizontal: 3.0),
                     child: SvgPicture.asset(
                       Assets.walletSVG,
-                      colorFilter:
-                          const ColorFilter.mode(darkColor, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(
+                          secondaryColor, BlendMode.srcIn),
                       width: 18.0,
                       height: 19.0,
                     ),
@@ -266,14 +274,11 @@ showActionBuyAgain(BuildContext context, OrderModel order) {
               ),
               const Spacer(),
               ButtonWidget(
-                onPressed: () {
-                  getIt.get<CartCubit>().addToListCart(order.order_detail!);
-                  context.read<OrderCancelCubit>().remove(order.id!);
-                  AppRoutes.router.go(Routes.HOME);
-                  AppRoutes.router.push(Routes.CART);
-                },
+                onPressed: () => context
+                    .read<OrderCancelCubit>()
+                    .checkBuyAgain(context, order.id!),
                 child: Text(
-                  applocalization.add_to_cart,
+                  applocalization.mua_lai,
                   style: theme.textTheme.bodySmall!.copyWith(
                     fontSize: 14.0,
                     color: lightColor,

@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/notification/notification_cubit.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 import 'package:flutter_fashion/app/presentation/notification/components/action_appbar.dart';
 import 'package:flutter_fashion/app/presentation/notification/components/skeleton_noti.dart';

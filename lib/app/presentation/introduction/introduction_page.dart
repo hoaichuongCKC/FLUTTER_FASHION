@@ -1,8 +1,6 @@
 import 'package:flutter_fashion/app/presentation/introduction/cubit/intro_cubit_cubit.dart';
 import 'package:flutter_fashion/export.dart';
-
 import '../../../common/components/aurora/aurora_page.dart';
-import '../../../common/components/dot_page.dart';
 
 class IntroductionPage extends StatelessWidget {
   const IntroductionPage({super.key});

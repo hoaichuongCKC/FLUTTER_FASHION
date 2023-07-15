@@ -1,5 +1,3 @@
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-
 import '../../export.dart';
 
 mixin PusherMixin {

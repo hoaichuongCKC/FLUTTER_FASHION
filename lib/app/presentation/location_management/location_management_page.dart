@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter_fashion/app/blocs/address_user/address_user_cubit.dart';
 import 'package:flutter_fashion/app/presentation/create_address/create_address_page.dart';
 import 'package:flutter_fashion/common/components/app/background_app.dart';
 import 'package:flutter_fashion/app/presentation/location_management/components/item_location_user.dart';

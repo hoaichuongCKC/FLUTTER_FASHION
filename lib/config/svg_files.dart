@@ -71,4 +71,8 @@ class Assets {
   static const String warningPNG = "assets/images/warning.png";
 
   static const String loudspeakerPNG = "assets/images/loudspeaker.png";
+
+  static const String hasNotiPNG = "assets/images/has_noti.png";
+
+  static const String noNotiPNG = "assets/images/no_noti.png";
 }

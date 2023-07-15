@@ -1,15 +1,23 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
+import 'package:flutter_fashion/core/base/params/payment.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
 import 'package:flutter_fashion/app/network_provider/order_provider.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
+import '../models/cart/cart.dart';
+
 abstract class OrderRepository {
   Future<Either<String, OrderModel>> create(OrderParams params);
+
   Future<Either<String, Map<String, dynamic>>> fetchOrder();
+
   Future<Either<String, int>> delete(int orderId);
+
   Future<Either<String, ResponseData>> checkPromotion(int idPromotion);
+
+  Future<Either<String, ResponseData>> checkOrderBuyAgain(
+      List<CartModel> carts);
 }
 
 class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
@@ -54,6 +62,17 @@ class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
     final result = await baseRepo<ResponseData>(
       excuteFunction: () async {
         return await _orderProviderImpl.checkPromotion(idPromotion);
+      },
+    );
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, ResponseData>> checkOrderBuyAgain(
+      List<CartModel> carts) async {
+    final result = await baseRepo<ResponseData>(
+      excuteFunction: () async {
+        return await _orderProviderImpl.checkOrderBuyAgain(carts);
       },
     );
     return result.fold((error) => Left(error), (data) => Right(data));

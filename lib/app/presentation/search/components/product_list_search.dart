@@ -1,6 +1,3 @@
-import 'package:flutter_fashion/app/blocs/product_detail/product_detail_cubit.dart';
-
-import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/common/components/item_product.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 

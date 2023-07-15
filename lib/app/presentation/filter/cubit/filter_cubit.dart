@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/core/models/range_pice/range_price.dart';
 import 'package:flutter_fashion/app/presentation/home/export.dart';
 

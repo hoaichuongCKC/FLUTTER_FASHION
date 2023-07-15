@@ -10,12 +10,11 @@ class ProductModel with _$ProductModel {
   @JsonSerializable(explicitToJson: true)
   const factory ProductModel({
     int? id,
-    String? code,
+    String? SKU,
     String? name,
     int? regular_price,
     double? discount,
     int? sale_price,
-    Properties? properties,
     String? desc,
     int? view,
     double? star,
@@ -49,16 +48,6 @@ class Category with _$Category {
       _$CategoryFromJson(json);
 }
 
-@freezed
-class Properties with _$Properties {
-  const factory Properties({
-    List<dynamic>? sizes,
-    String? origin,
-  }) = _Properties;
-
-  factory Properties.fromJson(Map<String, dynamic> json) =>
-      _$PropertiesFromJson(json);
-}
 
 @freezed
 class ProductDetailModel with _$ProductDetailModel {
@@ -67,6 +56,7 @@ class ProductDetailModel with _$ProductDetailModel {
     required String photo,
     String? color,
     int? stock,
+    String? size,
   }) = _ProductDetailModel;
 
   factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>

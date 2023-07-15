@@ -76,7 +76,7 @@ extension StringX on String {
     return '($prefix) *** *** $thirdPart';
   }
 
-  bool isValidEmail() {
+  bool get isValidEmail{
     // Kiểm tra xem chuỗi có rỗng hay không
     if (isEmpty) return false;
 

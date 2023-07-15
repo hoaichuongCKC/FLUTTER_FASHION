@@ -11,6 +11,7 @@ class SubmitSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final applocalization = AppLocalizations.of(context)!;
+
     final textTheme = Theme.of(context).textTheme;
 
     final bloc = context.read<AuthPhoneCubit>();
@@ -19,49 +20,62 @@ class SubmitSignUp extends StatelessWidget {
 
     final blocUI = context.read<SignUpUICubit>();
 
-    final blocListen = context.watch<SignUpUICubit>();
-    return ButtonWidget(
-      onPressed: () {
-        if (blocListen.state == 0) {
-          bloc.phoneAuth(SignUpPage.phoneNumber, context, Names.REGISTER);
-        }
-        if (blocListen.state == 1) {
-          bloc.verifyOtp(SignUpPage.phoneNumber, SignUpPage.codeOTP, context,
-              SignUpPage.verificationId);
-        }
-        if (blocListen.state == 2) {
-          blocUI.nextStep(SignUpUIState.enterPassword);
-        }
-        if (blocListen.state == 3) {
-          if (!FillingOutInformationPersonalCpn.password.isValidPassword ||
-              !FillingOutInformationPersonalCpn.confirm.isValidPassword) {
-            showErrorToast(applocalization.text_validate_valid_pass);
+    return BlocBuilder<SignUpUICubit, int>(
+      builder: (context, step) {
+        return ButtonWidget(
+          onPressed: () {
+            switch (step) {
+              case 0:
+                bloc.phoneAuth(SignUpPage.phoneNumber, context, Names.REGISTER);
+                break;
+              case 1:
+                bloc.verifyOtp(SignUpPage.phoneNumber, SignUpPage.codeOTP,
+                    context, SignUpPage.verificationId);
+                break;
+              case 2:
+                if (FillingOutInformationPersonalCpn.email.isValidEmail) {
+                  blocUI.nextStep(SignUpUIState.enterPassword);
+                }
+                showErrorToast(applocalization.email_invalid);
 
-            return;
-          }
-          if (!FillingOutInformationPersonalCpn.checkMatchPassword) {
-            showErrorToast(applocalization.password_not_match);
+                break;
+              case 3:
+                if (!FillingOutInformationPersonalCpn.checkMatchPassword) {
+                  showErrorToast(applocalization.password_not_match);
+                
+                  return;
+                }
+                if (!FillingOutInformationPersonalCpn
+                        .password.isValidPassword ||
+                    !FillingOutInformationPersonalCpn.confirm.isValidPassword) {
+               
+                  showErrorToast(applocalization.text_validate_valid_pass);
 
-            return;
-          }
-          if (FillingOutInformationPersonalCpn.image == null) {
-            showErrorToast(applocalization.please_choose_avatar);
+                  return;
+                }
 
-            return;
-          }
-          authBloc.accountRegister(
-              FillingOutInformationPersonalCpn.params, context);
-        }
+                if (FillingOutInformationPersonalCpn.image == null) {
+                  showErrorToast(applocalization.please_choose_avatar);
+                 
+                  return;
+                }
+                authBloc.accountRegister(
+                    FillingOutInformationPersonalCpn.params, context);
+                break;
+              default:
+            }
+          },
+          child: Text(
+            (step == 3)
+                ? applocalization.completed
+                : applocalization.continue_r,
+            style: textTheme.bodyMedium!.copyWith(
+              fontSize: 14.0,
+              color: lightColor,
+            ),
+          ),
+        );
       },
-      child: Text(
-        (blocListen.state == 3)
-            ? applocalization.completed
-            : applocalization.continue_r,
-        style: textTheme.bodyMedium!.copyWith(
-          fontSize: 14.0,
-          color: lightColor,
-        ),
-      ),
     );
   }
 }

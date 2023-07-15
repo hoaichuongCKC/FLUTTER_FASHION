@@ -1,4 +1,3 @@
-import 'package:flutter_fashion/app/blocs/cart/cart_cubit.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment.dart';
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/presentation/payment/components/address_view.dart';
