@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import '../exception/login_exception.dart';
 

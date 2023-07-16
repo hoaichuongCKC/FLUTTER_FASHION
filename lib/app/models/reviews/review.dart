@@ -16,7 +16,7 @@ class ReviewModel extends Equatable {
   @Default("")
   final String content;
   @Default("")
-  final DateTime created_at;
+  final DateTime updated_at;
   @Default([])
   final List<String> photos;
 
@@ -26,7 +26,7 @@ class ReviewModel extends Equatable {
     required this.product_id,
     required this.star,
     required this.content,
-    required this.created_at,
+    required this.updated_at,
     required this.photos,
   });
 
@@ -37,7 +37,7 @@ class ReviewModel extends Equatable {
       product_id: json['product_id'],
       star: json['star'],
       content: json['content'],
-      created_at: DateTime.parse(json['created_at']),
+      updated_at: DateTime.parse(json['updated_at']),
       photos: List<String>.from(jsonDecode(json['photos']) as List),
     );
   }
@@ -47,7 +47,7 @@ class ReviewModel extends Equatable {
         'product_id': product_id,
         'star': star,
         'content': content,
-        'created_at': created_at,
+        'updated_at': updated_at,
         'photos': photos,
       };
 
@@ -62,7 +62,7 @@ class ReviewModel extends Equatable {
       product_id,
       star,
       content,
-      created_at,
+      updated_at,
       photos,
     ];
   }

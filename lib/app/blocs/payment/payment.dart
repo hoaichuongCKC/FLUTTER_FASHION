@@ -1,7 +1,7 @@
 import 'package:flutter_fashion/app/blocs/payment/payment_state.dart';
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/app/presentation/payment/components/rules_app_view.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/payment/components/rules_app_view.dart';
 import 'package:flutter_fashion/app/repositories/order_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';

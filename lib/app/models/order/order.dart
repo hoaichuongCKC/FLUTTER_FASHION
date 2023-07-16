@@ -21,7 +21,7 @@ class OrderModel with _$OrderModel {
     PromotionModel? promotion,
     String? notes,
     int? status_id,
-    DateTime? created_at,
+    DateTime? updated_at,
     List<CartModel>? order_detail,
     bool? evaluated,
   }) = _OrderModel;

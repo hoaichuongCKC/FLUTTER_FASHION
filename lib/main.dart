@@ -1,11 +1,12 @@
 import 'dart:developer';
+import 'package:flutter_fashion/app/presentation/modules/user/category/blocs/category_tab_cubit.dart';
 import 'package:flutter_fashion/export.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   log('Handling a background message ${message.notification!.body}',
-      name: "Background noti mod");
+      name: "Background noti mode");
   log('Handling a background message ${message.notification!.title}');
 }
 
@@ -21,8 +22,6 @@ Future<void> main() async {
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  PusherBeamsApp.instance.initDeviceIntest();
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -35,6 +34,8 @@ Future<void> main() async {
   //HydratedBloc.storage.clear();
 
   await PusherBeamsApp.instance.getStarted();
+
+  await PusherBeamsApp.instance.initDeviceIntest();
 
   await init();
 
@@ -109,9 +110,9 @@ class _FashionAppState extends State<FashionApp> with WidgetsBindingObserver {
         event.when(
           initial: () {},
           loading: () {},
-          fetchCompleted: (user) {
+          fetchCompleted: (user) async {
             //register notfication with authentication userId
-            PusherBeamsApp.instance.initToUser(user.id);
+            await PusherBeamsApp.instance.initToUser(user.id);
 
             //  PusherBeamsApp.instance.initDeviceIntest();
 

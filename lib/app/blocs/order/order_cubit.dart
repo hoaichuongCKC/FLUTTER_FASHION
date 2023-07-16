@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/app/repositories/order_repository.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
@@ -42,7 +42,6 @@ class OrderCubit extends Cubit<OrderState> {
   ///   status (int): The "status" parameter is an integer value representing the updated status of an
   /// order. It is used to update the "status_id" field of an order in the "toPayList" list.
   void _updateToShip(int id, int status) {
-    print('_updateToShip');
     OrderModel getOrder = List<OrderModel>.from(state.toPayList)
         .firstWhere((element) => element.id == id);
 
@@ -68,7 +67,6 @@ class OrderCubit extends Cubit<OrderState> {
   ///   status (int): The "status" parameter is an integer representing the updated status of an order.
   /// It is used to update the "status_id" field of an order in the "getOrder" variable.
   void _updateToReceive(int id, int status) {
-    print('updateToReceive');
     OrderModel getOrder = List<OrderModel>.from(state.toShipList)
         .firstWhere((element) => element.id == id);
 
@@ -92,7 +90,6 @@ class OrderCubit extends Cubit<OrderState> {
   ///   status (int): The "status" parameter is an integer representing the new status ID that the order
   /// should be updated to.
   void _updateToCompleted(int id, int status) {
-    print('_updateToCompleted');
     OrderModel getOrder = List<OrderModel>.from(state.toReceiveList)
         .firstWhere((element) => element.id == id);
 

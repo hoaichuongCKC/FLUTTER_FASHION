@@ -1,8 +1,6 @@
 import 'package:flutter_fashion/app/models/reviews/review.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/utils/extensions/datetime.dart';
-
-import '../../config/svg_files.dart';
 
 class ReviewListCpn extends StatelessWidget {
   const ReviewListCpn(
@@ -27,7 +25,7 @@ class ReviewListCpn extends StatelessWidget {
 
         Widget imageWidget = const SizedBox();
 
-        final contentWidget = Text(
+        final Widget contentWidget = Text(
           review.content,
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 fontWeight: FontWeight.w500,
@@ -90,7 +88,7 @@ class ReviewListCpn extends StatelessWidget {
                     ),
               ),
               subtitle: Text(
-                review.created_at.formatDateTime(),
+                review.updated_at.viewDate(context),
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fashion/app/presentation/order/constant.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/order/constant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
 

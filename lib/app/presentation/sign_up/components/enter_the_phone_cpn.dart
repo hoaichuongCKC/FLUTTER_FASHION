@@ -3,8 +3,6 @@ import 'package:flutter_fashion/app/presentation/forgot_password/forgot_password
 import 'package:flutter_fashion/app/presentation/sign_up/cubit/sign_up_cubit.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
-
-import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class EnterThePhoneCpn extends StatelessWidget {

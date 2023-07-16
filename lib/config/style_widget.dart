@@ -1,5 +1,3 @@
-import 'package:flutter_fashion/config/colors.dart';
-
 import '../routes/export.dart';
 
 final shadowBox = BoxShadow(

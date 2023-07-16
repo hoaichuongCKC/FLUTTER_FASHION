@@ -2,8 +2,6 @@ import 'package:flutter_fashion/app/models/product/product.dart';
 import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
 import 'package:flutter_fashion/export.dart';
 
-import '../../config/svg_files.dart';
-
 class ChartReviewCpn extends StatelessWidget {
   const ChartReviewCpn({super.key, required this.data});
   final ReviewsModel data;

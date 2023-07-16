@@ -1025,7 +1025,25 @@
   "pls_add_new_pr" : "Please add new product",
   "@pls_add_new_pr": {
     "description": "nó là chỉnh sửa"
+  },
+
+  "hour_left" : "hour left",
+  "@hour_left": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "minutes_left" : "minutes left",
+  "@minutes_left": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "second_left" : "seconds left",
+  "@second_left": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "vua_xong" : "Just finished",
+  "@vua_xong": {
+    "description": "nó là chỉnh sửa"
   }
-
-
 }

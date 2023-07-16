@@ -1,8 +1,7 @@
 /// The PromotionWidget class is a custom painted widget that displays a promotion card with a teal
 /// background.
 import 'package:flutter_fashion/app/models/promotion/promotion_model.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
-import '../../config/svg_files.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 
 const double _maxHeightCardPromotion = 130.0;
 const double _maxWidthCardPromotion = 280.0;

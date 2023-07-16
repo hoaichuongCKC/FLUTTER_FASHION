@@ -31,7 +31,7 @@ mixin _$OrderModel {
   PromotionModel? get promotion => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
   int? get status_id => throw _privateConstructorUsedError;
-  DateTime? get created_at => throw _privateConstructorUsedError;
+  DateTime? get updated_at => throw _privateConstructorUsedError;
   List<CartModel>? get order_detail => throw _privateConstructorUsedError;
   bool? get evaluated => throw _privateConstructorUsedError;
 
@@ -59,7 +59,7 @@ abstract class $OrderModelCopyWith<$Res> {
       PromotionModel? promotion,
       String? notes,
       int? status_id,
-      DateTime? created_at,
+      DateTime? updated_at,
       List<CartModel>? order_detail,
       bool? evaluated});
 
@@ -90,7 +90,7 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? promotion = freezed,
     Object? notes = freezed,
     Object? status_id = freezed,
-    Object? created_at = freezed,
+    Object? updated_at = freezed,
     Object? order_detail = freezed,
     Object? evaluated = freezed,
   }) {
@@ -139,9 +139,9 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.status_id
           : status_id // ignore: cast_nullable_to_non_nullable
               as int?,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       order_detail: freezed == order_detail
           ? _value.order_detail
@@ -187,7 +187,7 @@ abstract class _$$_OrderModelCopyWith<$Res>
       PromotionModel? promotion,
       String? notes,
       int? status_id,
-      DateTime? created_at,
+      DateTime? updated_at,
       List<CartModel>? order_detail,
       bool? evaluated});
 
@@ -217,7 +217,7 @@ class __$$_OrderModelCopyWithImpl<$Res>
     Object? promotion = freezed,
     Object? notes = freezed,
     Object? status_id = freezed,
-    Object? created_at = freezed,
+    Object? updated_at = freezed,
     Object? order_detail = freezed,
     Object? evaluated = freezed,
   }) {
@@ -266,9 +266,9 @@ class __$$_OrderModelCopyWithImpl<$Res>
           ? _value.status_id
           : status_id // ignore: cast_nullable_to_non_nullable
               as int?,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       order_detail: freezed == order_detail
           ? _value._order_detail
@@ -298,7 +298,7 @@ class _$_OrderModel implements _OrderModel {
       this.promotion,
       this.notes,
       this.status_id,
-      this.created_at,
+      this.updated_at,
       final List<CartModel>? order_detail,
       this.evaluated})
       : _order_detail = order_detail;
@@ -329,7 +329,7 @@ class _$_OrderModel implements _OrderModel {
   @override
   final int? status_id;
   @override
-  final DateTime? created_at;
+  final DateTime? updated_at;
   final List<CartModel>? _order_detail;
   @override
   List<CartModel>? get order_detail {
@@ -345,7 +345,7 @@ class _$_OrderModel implements _OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, code: $code, shipping_fullname: $shipping_fullname, shipping_phone: $shipping_phone, shipping_address: $shipping_address, order_payment: $order_payment, temp_price: $temp_price, total_price: $total_price, promotion: $promotion, notes: $notes, status_id: $status_id, created_at: $created_at, order_detail: $order_detail, evaluated: $evaluated)';
+    return 'OrderModel(id: $id, code: $code, shipping_fullname: $shipping_fullname, shipping_phone: $shipping_phone, shipping_address: $shipping_address, order_payment: $order_payment, temp_price: $temp_price, total_price: $total_price, promotion: $promotion, notes: $notes, status_id: $status_id, updated_at: $updated_at, order_detail: $order_detail, evaluated: $evaluated)';
   }
 
   @override
@@ -372,8 +372,8 @@ class _$_OrderModel implements _OrderModel {
             (identical(other.notes, notes) || other.notes == notes) &&
             (identical(other.status_id, status_id) ||
                 other.status_id == status_id) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at) &&
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at) &&
             const DeepCollectionEquality()
                 .equals(other._order_detail, _order_detail) &&
             (identical(other.evaluated, evaluated) ||
@@ -395,7 +395,7 @@ class _$_OrderModel implements _OrderModel {
       promotion,
       notes,
       status_id,
-      created_at,
+      updated_at,
       const DeepCollectionEquality().hash(_order_detail),
       evaluated);
 
@@ -426,7 +426,7 @@ abstract class _OrderModel implements OrderModel {
       final PromotionModel? promotion,
       final String? notes,
       final int? status_id,
-      final DateTime? created_at,
+      final DateTime? updated_at,
       final List<CartModel>? order_detail,
       final bool? evaluated}) = _$_OrderModel;
 
@@ -456,7 +456,7 @@ abstract class _OrderModel implements OrderModel {
   @override
   int? get status_id;
   @override
-  DateTime? get created_at;
+  DateTime? get updated_at;
   @override
   List<CartModel>? get order_detail;
   @override

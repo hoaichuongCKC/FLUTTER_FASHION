@@ -1,7 +1,7 @@
 import 'package:flutter_fashion/app/models/review_chart/review_chart_model.dart';
 import 'package:flutter_fashion/app/models/star/star_model.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/cubit/product_detail_ui_cubit.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/product_detail/cubit/product_detail_ui_cubit.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -39,15 +39,12 @@ class ReviewCubit extends Cubit<ReviewState> {
   }
 
   void fetchData(int idProduct, ProductDetailUiCubit bloc) async {
-    print(_reviewsCache.keys);
     if (!_reviewsCache.containsKey(idProduct)) {
-      print('1231231');
       final result = await productRepo.fetchReviewProduct(1, idProduct);
 
       result.fold(
         (error) => emit(ReviewState.failure(error)),
         (reviews) {
-          print('1231231');
           if (reviews.reviews.isEmpty) {
             emit(ReviewState.success(reviews));
 

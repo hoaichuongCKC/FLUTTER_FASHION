@@ -15,6 +15,8 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
   NotificationCubit({required NotificationRepositoryImpl noti})
       : _notificationRepositoryImpl = noti,
         super(const NotificationState());
+
+  // ignore: invalid_override_of_non_virtual_member
   @override
   String get storageToken =>
       KeyStorage.userCancelOrder + getIt.get<UserCubit>().user.id.toString();
@@ -82,7 +84,7 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
     emit(state.copyWith(notifications: updatedList));
   }
 
-  void read(int id,String smg) async {
+  void read(int id, String smg) async {
     final state = this.state;
 
     bool isCheck = await _checkExists(id) != -1;
@@ -120,6 +122,7 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
 
     result.fold(
       (error) {
+        // ignore: avoid_print
         print(
             '-----------------------------------$error --------------------------');
       },
@@ -136,11 +139,13 @@ class NotificationCubit extends HydratedCubit<NotificationState> {
 
     result.fold(
       (error) {
+        // ignore: avoid_print
         print(
             '-----------------------------------$error --------------------------');
       },
       (response) {
         emit(state.copyWith(reads: []));
+        // ignore: avoid_print
         print(
             '-----------------------------------$response --------------------------');
       },

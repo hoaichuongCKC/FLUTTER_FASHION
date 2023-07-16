@@ -1,10 +1,7 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter_fashion/core/models/item_bottom_nav.dart';
 import "package:flutter_fashion/export.dart";
-
-import '../../app/presentation/notification/overylay_menu.dart';
-import '../../config/svg_files.dart';
+import '../../app/presentation/modules/user/notification/overylay_menu.dart';
 
 final bottomData = [
   ItemBottomNavModel(path: Routes.HOME, urlIcon: Assets.homeSVG),

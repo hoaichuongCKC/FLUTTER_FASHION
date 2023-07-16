@@ -25,7 +25,7 @@ mixin _$NotificationModel {
   String get title => throw _privateConstructorUsedError;
   String get subtitle => throw _privateConstructorUsedError;
   int? get is_read => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
+  DateTime get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +45,7 @@ abstract class $NotificationModelCopyWith<$Res> {
       String title,
       String subtitle,
       int? is_read,
-      DateTime created_at});
+      DateTime updated_at});
 }
 
 /// @nodoc
@@ -66,7 +66,7 @@ class _$NotificationModelCopyWithImpl<$Res, $Val extends NotificationModel>
     Object? title = null,
     Object? subtitle = null,
     Object? is_read = freezed,
-    Object? created_at = null,
+    Object? updated_at = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -89,9 +89,9 @@ class _$NotificationModelCopyWithImpl<$Res, $Val extends NotificationModel>
           ? _value.is_read
           : is_read // ignore: cast_nullable_to_non_nullable
               as int?,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
   }
@@ -111,7 +111,7 @@ abstract class _$$_NotificationModelCopyWith<$Res>
       String title,
       String subtitle,
       int? is_read,
-      DateTime created_at});
+      DateTime updated_at});
 }
 
 /// @nodoc
@@ -130,7 +130,7 @@ class __$$_NotificationModelCopyWithImpl<$Res>
     Object? title = null,
     Object? subtitle = null,
     Object? is_read = freezed,
-    Object? created_at = null,
+    Object? updated_at = null,
   }) {
     return _then(_$_NotificationModel(
       id: null == id
@@ -153,9 +153,9 @@ class __$$_NotificationModelCopyWithImpl<$Res>
           ? _value.is_read
           : is_read // ignore: cast_nullable_to_non_nullable
               as int?,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -171,7 +171,7 @@ class _$_NotificationModel implements _NotificationModel {
       required this.title,
       required this.subtitle,
       this.is_read,
-      required this.created_at});
+      required this.updated_at});
 
   factory _$_NotificationModel.fromJson(Map<String, dynamic> json) =>
       _$$_NotificationModelFromJson(json);
@@ -187,11 +187,11 @@ class _$_NotificationModel implements _NotificationModel {
   @override
   final int? is_read;
   @override
-  final DateTime created_at;
+  final DateTime updated_at;
 
   @override
   String toString() {
-    return 'NotificationModel(id: $id, order_id: $order_id, title: $title, subtitle: $subtitle, is_read: $is_read, created_at: $created_at)';
+    return 'NotificationModel(id: $id, order_id: $order_id, title: $title, subtitle: $subtitle, is_read: $is_read, updated_at: $updated_at)';
   }
 
   @override
@@ -206,14 +206,14 @@ class _$_NotificationModel implements _NotificationModel {
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
             (identical(other.is_read, is_read) || other.is_read == is_read) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, order_id, title, subtitle, is_read, created_at);
+      runtimeType, id, order_id, title, subtitle, is_read, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +237,7 @@ abstract class _NotificationModel implements NotificationModel {
       required final String title,
       required final String subtitle,
       final int? is_read,
-      required final DateTime created_at}) = _$_NotificationModel;
+      required final DateTime updated_at}) = _$_NotificationModel;
 
   factory _NotificationModel.fromJson(Map<String, dynamic> json) =
       _$_NotificationModel.fromJson;
@@ -253,7 +253,7 @@ abstract class _NotificationModel implements NotificationModel {
   @override
   int? get is_read;
   @override
-  DateTime get created_at;
+  DateTime get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_NotificationModelCopyWith<_$_NotificationModel> get copyWith =>

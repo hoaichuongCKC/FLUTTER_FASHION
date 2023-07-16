@@ -75,4 +75,6 @@ class Assets {
   static const String hasNotiPNG = "assets/images/has_noti.png";
 
   static const String noNotiPNG = "assets/images/no_noti.png";
+
+  static const String emptyCartPNG = "assets/images/empty_cart.png";
 }

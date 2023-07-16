@@ -5,7 +5,7 @@ import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/models/response_data.dart';
 
 import '../../core/parse_json_isolate/notification.dart';
-import '../presentation/home/export.dart';
+import '../presentation/modules/user/home/export.dart';
 
 abstract class NotificationProvider {
   Future<List<NotificationModel>> fetchData(int page);

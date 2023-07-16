@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
-import '../../config/svg_files.dart';
 import '../../export.dart';
 
 class UserAvatarApp extends StatelessWidget {

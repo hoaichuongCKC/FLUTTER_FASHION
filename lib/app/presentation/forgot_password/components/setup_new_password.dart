@@ -1,8 +1,6 @@
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/export.dart';
 
-import '../../../../config/svg_files.dart';
-
 class SetupNewPasswordCpn extends StatelessWidget {
   const SetupNewPasswordCpn({super.key});
   static final Map<String, dynamic> data = {};

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/app/repositories/product_repository.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';

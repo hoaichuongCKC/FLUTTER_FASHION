@@ -4,12 +4,13 @@ import 'package:flutter_fashion/app/blocs/order/order_cubit.dart';
 import 'package:flutter_fashion/app/blocs/order_cancel/order_cancel_cubit.dart';
 import 'package:flutter_fashion/app/blocs/search/search_cubit.dart';
 import 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
-import 'package:flutter_fashion/app/presentation/home/di_injection_home.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/category/di_category.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/di_injection_home.dart';
 import 'package:flutter_fashion/app/presentation/login/di_login.dart';
-import 'package:flutter_fashion/app/presentation/payment/dependency_injection.dart';
-import 'package:flutter_fashion/app/presentation/product_detail/depedency_injection.dart';
-import 'package:flutter_fashion/app/presentation/profile/di_profile.dart';
-import 'package:flutter_fashion/app/presentation/setting/di_setting.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/payment/dependency_injection.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/product_detail/depedency_injection.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/profile/di_profile.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/setting/di_setting.dart';
 import 'package:flutter_fashion/app/presentation/sign_up/di_sign_up.dart';
 import 'package:flutter_fashion/core/base/repository/base_repository.dart';
 import 'package:flutter_fashion/core/base/api/api.dart';
@@ -21,8 +22,7 @@ import 'package:image_picker/image_picker.dart';
 import 'app/blocs/address_user/address_user_cubit.dart';
 import 'app/blocs/cart/cart_cubit.dart';
 import 'app/blocs/favorite/favorite_cubit.dart';
-import 'app/presentation/category/di_category.dart';
-import 'app/presentation/personal_information/di_personal_info.dart';
+import 'app/presentation/modules/user/personal_information/di_personal_info.dart';
 
 GetIt getIt = GetIt.instance;
 

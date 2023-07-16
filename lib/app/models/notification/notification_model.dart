@@ -13,7 +13,7 @@ class NotificationModel with _$NotificationModel {
     required String title,
     required String subtitle,
     int? is_read,
-    required DateTime created_at,
+    required DateTime updated_at,
   }) = _NotificationModel;
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>

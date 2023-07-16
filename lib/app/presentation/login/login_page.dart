@@ -4,8 +4,6 @@ import 'package:flutter_fashion/app/presentation/login/export.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/core/status_cubit/status_cubit.dart';
 
-import '../../../config/svg_files.dart';
-
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 

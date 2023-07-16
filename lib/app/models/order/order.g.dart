@@ -21,9 +21,9 @@ _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
           : PromotionModel.fromJson(json['promotion'] as Map<String, dynamic>),
       notes: json['notes'] as String?,
       status_id: json['status_id'] as int?,
-      created_at: json['created_at'] == null
+      updated_at: json['updated_at'] == null
           ? null
-          : DateTime.parse(json['created_at'] as String),
+          : DateTime.parse(json['updated_at'] as String),
       order_detail: (json['order_detail'] as List<dynamic>?)
           ?.map((e) => CartModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -43,7 +43,7 @@ Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
       'promotion': instance.promotion?.toJson(),
       'notes': instance.notes,
       'status_id': instance.status_id,
-      'created_at': instance.created_at?.toIso8601String(),
+      'updated_at': instance.updated_at?.toIso8601String(),
       'order_detail': instance.order_detail?.map((e) => e.toJson()).toList(),
       'evaluated': instance.evaluated,
     };

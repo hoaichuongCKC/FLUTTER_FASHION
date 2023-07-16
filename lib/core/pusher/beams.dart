@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/config/pusher.dart';
 import 'package:flutter_fashion/core/base/api/endpoint.dart';
 import 'package:flutter_fashion/core/notification/notification_service.dart';

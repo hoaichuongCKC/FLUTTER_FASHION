@@ -1,7 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:developer';
-
+import 'package:flutter_fashion/app/presentation/modules/user/filter/filter_page.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/introduction/introduction_page.dart';
 import 'package:flutter_fashion/routes/export.dart';
 
 abstract class Routes {
@@ -117,7 +118,7 @@ class AppRoutes {
 
         log("Your Token: $isAuthenticated", name: "Local storage");
 
-        if (isAuthenticated.isEmpty) {
+        if (isAuthenticated.isNotEmpty) {
           return Routes.HOME;
         }
         return null;

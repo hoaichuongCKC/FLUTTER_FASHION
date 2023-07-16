@@ -1027,7 +1027,24 @@
   "pls_add_new_pr" : "Vui lòng thêm sản phẩm mới!!",
   "@pls_add_new_pr": {
     "description": "nó là chỉnh sửa"
+  },
+
+  "hour_left" : "giờ trước",
+  "@hour_left": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "minutes_left" : "phút trước",
+  "@minutes_left": {
+    "description": "nó là chỉnh sửa"
+  },
+
+  "second_left" : "giây trước",
+  "@second_left": {
+    "description": "nó là chỉnh sửa"
+  },
+  "vua_xong" : "Vừa xong",
+  "@vua_xong": {
+    "description": "nó là chỉnh sửa"
   }
-
-
 }

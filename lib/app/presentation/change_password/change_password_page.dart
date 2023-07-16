@@ -1,8 +1,6 @@
 import 'package:flutter_fashion/app/blocs/change_password/change_password_cubit.dart';
-import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/personal_information/export.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
-
-import '../../../config/svg_files.dart';
 
 class ChangePasswordPage extends StatelessWidget {
   const ChangePasswordPage({super.key});

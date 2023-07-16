@@ -1,4 +1,4 @@
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 
 class ButtonWidget extends StatelessWidget {
   const ButtonWidget({

@@ -1,5 +1,5 @@
 import 'package:flutter_fashion/app/models/category/category.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/app/repositories/category_repository.dart';
 import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

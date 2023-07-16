@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_override_of_non_virtual_member
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/core/models/address.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 part 'address_user_state.dart';

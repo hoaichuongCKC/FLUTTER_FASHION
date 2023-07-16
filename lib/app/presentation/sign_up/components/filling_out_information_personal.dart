@@ -2,8 +2,6 @@ import 'package:flutter_fashion/app/presentation/sign_up/sign_up_page.dart';
 import 'package:flutter_fashion/common/widgets/text_form_field_app.dart';
 import 'package:flutter_fashion/core/base/params/register.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../../config/svg_files.dart';
 import '../../../../export.dart';
 
 class FillingOutInformationPersonalCpn extends StatelessWidget {
@@ -25,7 +23,6 @@ class FillingOutInformationPersonalCpn extends StatelessWidget {
   static XFile? get image => data["avatar"];
 
   static String get email => data["email"];
-
 
   @override
   Widget build(BuildContext context) {

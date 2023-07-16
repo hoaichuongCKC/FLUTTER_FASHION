@@ -1,8 +1,6 @@
 import 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_fashion/app/presentation/login/export.dart';
 
-import '../../../../config/svg_files.dart';
-
 class FooterLogin extends StatelessWidget {
   const FooterLogin({super.key});
 

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_fashion/app/presentation/personal_information/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/personal_information/export.dart';
 import 'package:flutter_fashion/app/repositories/user_repository.dart';
 import 'package:flutter_fashion/core/camera/camera_info.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';

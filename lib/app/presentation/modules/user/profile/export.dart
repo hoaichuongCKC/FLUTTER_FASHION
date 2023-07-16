@@ -1,0 +1,16 @@
+export 'package:flutter/services.dart';
+export 'package:flutter_fashion/common/components/item_feature.dart';
+export 'package:flutter_fashion/common/components/user_avatar.dart';
+export 'package:flutter_fashion/config/colors.dart';
+export 'package:flutter_fashion/config/constant.dart';
+export 'package:flutter_fashion/config/font_style.dart';
+export 'package:flutter_fashion/app/presentation/modules/user/profile/components/user_information.dart';
+export 'package:flutter_fashion/app/presentation/modules/user/profile/constant.dart';
+export 'components/build_frame_feature.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:flutter_fashion/app/blocs/auth/auth_cubit.dart';
+export 'package:flutter_fashion/app/blocs/auth/auth_event.dart';
+export 'package:flutter_fashion/app/blocs/user/user_cubit.dart';
+export 'package:flutter_fashion/app/presentation/modules/user/profile/components/data_body.dart';
+export 'package:flutter_fashion/dependency_injection.dart';
+export 'package:flutter_fashion/export.dart';

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fashion/app/models/order/order.dart';
-import 'package:flutter_fashion/app/presentation/home/export.dart';
+import 'package:flutter_fashion/app/presentation/modules/user/home/export.dart';
 import 'package:flutter_fashion/utils/alert/loading.dart';
 import '../../../core/storage/key.dart';
 import '../../repositories/order_repository.dart';

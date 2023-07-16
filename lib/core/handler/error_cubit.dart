@@ -2,7 +2,7 @@ import 'package:flutter_fashion/core/base/exception/exception.dart';
 import 'package:flutter_fashion/core/storage/key.dart';
 import 'package:flutter_fashion/utils/alert/dialog.dart';
 
-import '../../app/presentation/home/export.dart';
+import '../../app/presentation/modules/user/home/export.dart';
 
 mixin HandlerErrorCubit<T> on Cubit<T> {
   void handlerError(BuildContext context, String error, T state) {
